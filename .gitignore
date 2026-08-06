@@ -1,0 +1,24 @@
+# Secrets and credentials
+.env
+*.key
+*.pem
+*.cert
+secrets/
+
+# Generated artifacts
+outputs/
+graphify-out/
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.obsidian/
+.vscode/
+.idea/
+
+# Runtime
+gateway.pid

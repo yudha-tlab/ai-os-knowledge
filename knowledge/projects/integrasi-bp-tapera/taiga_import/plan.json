@@ -1,0 +1,67 @@
+{
+  "project_slug": "test-project",
+  "team": {
+    "nam: internal": "yudha",
+    "yudha": "96"
+  },
+  "epics": [
+    {
+      "subject": "Integrasi Modul Pengajuan",
+      "description": "Fungsi end-to-end untuk modul pengajuan pembiayaan (PIC, Inbox, Unit Kerja, SP3K, Pengembang).",
+      "stories": [
+        {
+          "subject": "1. Administrasi & Perencanaan",
+          "description": "Persiapan dokumen pendukung dan administrasi sebelum development dimulai.",
+          "points": 3,
+          "assignee": "yudha",
+          "tasks": [
+            {
+              "subject": "Review FSD & Validasi Kebutuhan",
+              "description": "Verifikasi FSD v1.2 dengan kebutuhan BSB."
+            },
+            {
+              "subject": "Penyusunan Jadwal & Milestone",
+              "description": "Finalisasi target deliverable per sprint."
+            }
+          ]
+        },
+        {
+          "subject": "2. Implementasi Fungsional (FE/BE)",
+          "description": "Pengembangan fitur utama untuk operasional cabang.",
+          "points": 8,
+          "assignee": "yudha",
+          "tasks": [
+            {
+              "subject": "Dev: API Integration (NestJS)",
+              "description": "Proxy integrasi ke sistem Tapera."
+            },
+            {
+              "subject": "Dev: UI Dashboard Pengajuan",
+              "description": "Implementasi antarmuka untuk operator/supervisor."
+            },
+            {
+              "subject": "DK: Unit Test & Integration Test",
+              "description": "Verifikasi integrasi API & UI."
+            }
+          ]
+        },
+        {
+          "subject": "3. QA & Testing (Kiwi TCMS)",
+          "description": "Verifikasi kualitas fitur sesuai standar perbankan.",
+          "points": 5,
+          "assignee": "yudha",
+          "tasks": [
+            {
+              "subject": "Drafting Test Case di Kiwi TCMS",
+              "description": "Penulisan skenario uji untuk seluruh alur 1-5."
+            },
+            {
+              "subject": "UAT Support",
+              "description": "Pendampingan saat verifikasi user."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "hermes-agent",
+  "elements": [
+    {"type":"text","id":"title","x":200,"y":20,"width":900,"height":40,"text":"High-Level Sequence Diagram — Integrasi BP Tapera (Semua Aktor + Sistem)","fontSize":24,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center","verticalAlign":"middle","originalText":"High-Level Sequence Diagram — Semua Aktor + Sistem","autoResize":true},
+
+    {"type":"text","id":"subtitle","x":250,"y":60,"width":700,"height":20,"text":"Aktor Internal (BSB) → Sistem TLab Integration → Sistem Eksternal","fontSize":14,"fontFamily":1,"strokeColor":"#868e96","textAlign":"center","verticalAlign":"middle","originalText":"Aktor Internal → Sistem TLab → Sistem Eksternal","autoResize":true},
+
+    {"type":"rectangle","id":"r_superadmin","x":10,"y":100,"width":100,"height":40,"backgroundColor":"#a5d8ff","fillStyle":"solid","roundness":{"type":3},"boundElements":[{"id":"t_superadmin","type":"text"}]},
+    {"type":"text","id":"t_superadmin","x":18,"y":108,"width":84,"height":20,"text":"Superadmin","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center","verticalAlign":"middle","containerId":"r_superadmin","originalText":"Superadmin","autoResize":true},
+
+    {"type":"rectangle","id":"r_admin","x":130,"y":100,"width":100,"height":40,"backgroundColor":"#a5d8ff","fillStyle":"solid","roundness":{"type":3},"boundElements":[{"id":"t_admin","type":"text"}]},
+    {"type":"text","id":"t_admin","x":150,"y":108,"width":60,"height":20,"text":"Admin HQ","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center","verticalAlign":"middle","containerId":"r_admin","originalText":"Admin HQ","autoResize":true},
+
+    {"type":"rectangle","id":"r_operator","x":250,"y":100,"width":100,"height":40,"backgroundColor":"#a5d8ff","fillStyle":"solid","roundness":{"type":3},"boundElements":[{"id":"t_operator","type":"text"}]},
+    {"type":"text","id":"t_operator","x":260,"y":108,"width":80,"height":20,"text":"Operator","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center","verticalAlign":"middle","containerId":"r_operator","originalText":"Operator","autoResize":true},
+
+    {"type":"rectangle","id":"r_supervisor","x":370,"y":100,"width":100,"height":40,"backgroundColor":"#b2f2bb","fillStyle":"solid","roundness":{"type":3},"boundElements":[{"id":"t_supervisor","type":"text"}]},
+    {"type":"text","id":"t_supervisor","x":382,"y":108,"width":76,"height":20,"text":"Supervisor","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center","verticalAlign":"middle","containerId":"r_supervisor","originalText":"Supervisor","autoResize":true},
+
+    {"type":"rectangle","id":"r_finance","x":490,"y":100,"width":100,"height":40,"backgroundColor":"#b2f2bb","fillStyle":"solid","roundness":{"type":3},"boundElements":[{"id":"t_finance","type":"text"}]},
+    {"type":"text","id":"t_finance","x":508,"y":108,"width":64,"height":20,"text":"Finance","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center","verticalAlign":"middle","containerId":"r_finance","originalText":"Finance","autoResize":true},
+
+    {"type":"rectangle","id":"r_sistem","x":680,"y":100,"width":160,"height":50,"backgroundColor":"#d0bfff","fillStyle":"solid","roundness":{"type":3},"boundElements":[{"id":"t_sistem","type":"text"}]},
+    {"type":"text","id":"t_sistem","x":705,"y":110,"width":110,"height":25,"text":"Sistem TLab\n(Integration Layer)","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center","verticalAlign":"middle","containerId":"r_sistem","originalText":"Sistem TLab","autoResize":true},
+
+    {"type":"rectangle","id":"r_tapera","x":960,"y":100,"width":140,"height":40,"backgroundColor":"#ffd8a8","fillStyle":"solid","roundness":{"type":3},"boundElements":[{"id":"t_tapera","type":"text"}]},
+    {"type":"text","id":"t_tapera","x":978,"y":108,"width":104,"height":20,"text":"BP Tapera API","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center","verticalAlign":"middle","containerId":"r_tapera","originalText":"BP Tapera API","autoResize":true},
+
+    {"type":"rectangle","id":"r_corebank","x":1120,"y":100,"width":140,"height":40,"backgroundColor":"#ffc9c9","fillStyle":"solid","roundness":{"type":3},"boundElements":[{"id":"t_corebank","type":"text"}]},
+    {"type":"text","id":"t_corebank","x":1138,"y":108,"width":104,"height":20,"text":"Core Banking","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center","verticalAlign":"middle","containerId":"r_corebank","originalText":"Core Banking","autoResize":true},
+
+    {"type":"line","id":"l_superadmin","x":60,"y":140,"width":0,"height":900,"strokeColor":"#a5d8ff","strokeStyle":"dashed","points":[[0,0],[0,900]]},
+    {"type":"line","id":"l_admin","x":180,"y":140,"width":0,"height":900,"strokeColor":"#a5d8ff","strokeStyle":"dashed","points":[[0,0],[0,900]]},
+    {"type":"line","id":"l_operator","x":300,"y":140,"width":0,"height":900,"strokeColor":"#a5d8ff","strokeStyle":"dashed","points":[[0,0],[0,900]]},
+    {"type":"line","id":"l_supervisor","x":420,"y":140,"width":0,"height":900,"strokeColor":"#b2f2bb","strokeStyle":"dashed","points":[[0,0],[0,900]]},
+    {"type":"line","id":"l_finance","x":540,"y":140,"width":0,"height":900,"strokeColor":"#b2f2bb","strokeStyle":"dashed","points":[[0,0],[0,900]]},
+    {"type":"line","id":"l_sistem","x":760,"y":150,"width":0,"height":890,"strokeColor":"#d0bfff","strokeStyle":"dashed","points":[[0,0],[0,890]]},
+    {"type":"line","id":"l_tapera","x":1030,"y":140,"width":0,"height":900,"strokeColor":"#ffd8a8","strokeStyle":"dashed","points":[[0,0],[0,900]]},
+    {"type":"line","id":"l_corebank","x":1190,"y":140,"width":0,"height":900,"strokeColor":"#ffc9c9","strokeStyle":"dashed","points":[[0,0],[0,900]]},
+
+    {"type":"text","id":"sec1","x":10,"y":160,"width":900,"height":20,"text":"1. MASTER DATA (Sebelum pengajuan — setup environment)","fontSize":15,"fontFamily":1,"strokeColor":"#1971c2","autoResize":true},
+
+    {"type":"arrow","id":"hl1","x":180,"y":190,"width":580,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_admin","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht1","x":300,"y":178,"width":230,"height":20,"text":"CRUD Cabang, Perumahan, Rumah","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"CRUD Cabang, Perumahan, Rumah","autoResize":true},
+
+    {"type":"arrow","id":"hl1b","x":60,"y":215,"width":700,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_superadmin","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht1b","x":200,"y":203,"width":250,"height":20,"text":"Manage Unit Kerja & PIC + Assign Role","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"Manage Unit Kerja & PIC + Assign Role","autoResize":true},
+
+    {"type":"arrow","id":"hl1c","x":180,"y":240,"width":580,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_admin","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht1c","x":300,"y":228,"width":200,"height":20,"text":"Setup Parameter / Referensi","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"Setup Parameter / Referensi","autoResize":true},
+
+    {"type":"text","id":"sec2","x":10,"y":275,"width":900,"height":20,"text":"2. PENGAJUAN PEMBIAYAAN","fontSize":15,"fontFamily":1,"strokeColor":"#1971c2","autoResize":true},
+
+    {"type":"arrow","id":"hl2","x":300,"y":305,"width":460,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_operator","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht2","x":430,"y":293,"width":230,"height":20,"text":"Input pengajuan (31 field)","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"Input pengajuan (31 field)","autoResize":true},
+
+    {"type":"arrow","id":"hl2b","x":760,"y":330,"width":430,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_corebank","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht2b","x":"890","y":318,"width":180,"height":20,"text":"CIF lookup by NIK","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"CIF lookup by NIK","autoResize":true},
+
+    {"type":"arrow","id":"hl2c","x":1190,"y":355,"width":430,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_corebank","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht2c","x":"900","y":343,"width":170,"height":20,"text":"Return data nasabah","fontSize":13,"fontFamily":1,"strokeColor":"#868e96","originalText":"Return data nasabah","autoResize":true},
+
+    {"type":"arrow","id":"hl2d","x":760,"y":380,"width":270,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_tapera","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht2d","x":"820","y":368,"width":200,"height":20,"text":"POST /v1/pembiayaan/submission","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"POST /pembiayaan/submission","autoResize":true},
+
+    {"type":"arrow","id":"hl2e","x":1030,"y":405,"width":270,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_tapera","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht2e","x":"840","y":393,"width":210,"height":20,"text":"Return: ID Pengajuan (24 char)","fontSize":13,"fontFamily":1,"strokeColor":"#868e96","originalText":"Return: ID Pengajuan","autoResize":true},
+
+    {"type":"text","id":"sec3","x":10,"y":440,"width":900,"height":20,"text":"3. FOLLOW UP — SP3K — VERIFIKASI","fontSize":15,"fontFamily":1,"strokeColor":"#1971c2","autoResize":true},
+
+    {"type":"arrow","id":"hl3","x":300,"y":470,"width":460,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_operator","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht3","x":"430","y":458,"width":"240","height":20,"text":"Follow-up: data agunan + upload foto","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"Follow-up: data agunan + upload foto","autoResize":true},
+
+    {"type":"arrow","id":"hl3b","x":300,"y":500,"width":460,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_operator","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht3b","x":"430","y":488,"width":"220","height":20,"text":"Inbox: cek data perlu tindak lanjut","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"Inbox: cek data perlu tindak lanjut","autoResize":true},
+
+    {"type":"arrow","id":"hl3c","x":420,"y":530,"width":340,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_supervisor","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht3c","x":500,"y":518,"width":180,"height":20,"text":"Approve → Terbitkan SP3K","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"Approve → Terbitkan SP3K","autoResize":true},
+
+    {"type":"arrow","id":"hl3d","x":760,"y":555,"width":270,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_tapera","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht3d","x":820,"y":543,"width":"210","height":20,"text":"POST /pembiayaan/updated","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"POST /pembiayaan/updated","autoResize":true},
+
+    {"type":"arrow","id":"hl3e","x":300,"y":585,"width":460,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_operator","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht3e","x":"430","y":573,"width":"250","height":20,"text":"Verifikasi Layak Huni + Cek Kelayakan","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"Verifikasi Layak Huni + Cek Kelayakan","autoResize":true},
+
+    {"type":"text","id":"sec4","x":10,"y":620,"width":900,"height":20,"text":"4. AKAD — PENCAIRAN","fontSize":15,"fontFamily":1,"strokeColor":"#1971c2","autoResize":true},
+
+    {"type":"arrow","id":"hl4","x":300,"y":650,"width":460,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_operator","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht4","x":"430","y":638,"width":"200","height":20,"text":"Input Akad + Generate Angsuran","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"Input Akad + Generate Angsuran","autoResize":true},
+
+    {"type":"arrow","id":"hl4b","x":760,"y":680,"width":270,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_tapera","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht4b","x":810,"y":668,"width":"220","height":20,"text":"POST jadwal angsuran","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"POST jadwal angsuran","autoResize":true},
+
+    {"type":"arrow","id":"hl4c","x":540,"y":710,"width":220,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_finance","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht4c","x":560,"y":698,"width":"180","height":20,"text":"Ajukan Pencairan TAPERA","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"Ajukan Pencairan TAPERA","autoResize":true},
+
+    {"type":"arrow","id":"hl4d","x":760,"y":740,"width":270,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_tapera","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht4d","x":810,"y":728,"width":"210","height":20,"text":"POST /pencairan/tapera","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"POST /pencairan/tapera","autoResize":true},
+
+    {"type":"arrow","id":"hl4e","x":540,"y":770,"width":220,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_finance","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht4e","x":560,"y":758,"width":"180","height":20,"text":"Ajukan Pencairan FLPP","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"Ajukan Pencairan FLPP","autoResize":true},
+
+    {"type":"arrow","id":"hl4f","x":760,"y":800,"width":270,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_tapera","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht4f","x":810,"y":788,"width":"210","height":20,"text":"POST /pencairan/flpp","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"POST /pencairan/flpp","autoResize":true},
+
+    {"type":"text","id":"sec5","x":10,"y":830,"width":900,"height":20,"text":"5. OUTPUT AKHIR (Angsuran, Tagihan, Laporan)","fontSize":15,"fontFamily":1,"strokeColor":"#1971c2","autoResize":true},
+
+    {"type":"arrow","id":"hl5","x":1190,"y":860,"width":430,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_corebank","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht5","x":880,"y":848,"width":250,"height":20,"text":"Webhook: Pembayaran angsuran","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"Webhook: Pembayaran angsuran","autoResize":true},
+
+    {"type":"arrow","id":"hl5b","x":180,"y":890,"width":580,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_admin","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht5b","x":320,"y":878,"width":230,"height":20,"text":"Review & Approve Tagihan FLPP","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"Review & Approve Tagihan FLPP","autoResize":true},
+
+    {"type":"arrow","id":"hl5c","x":760,"y":920,"width":270,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_tapera","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht5c","x":810,"y":908,"width":"210","height":20,"text":"POST /tagihan/flpp","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"POST /tagihan/flpp","autoResize":true},
+
+    {"type":"arrow","id":"hl5d","x":180,"y":950,"width":580,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_admin","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht5d","x":320,"y":938,"width":"240","height":20,"text":"Review → Approve Laporan Outstanding","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"Review → Approve Laporan Outstanding","autoResize":true},
+
+    {"type":"arrow","id":"hl5e","x":760,"y":980,"width":270,"height":0,"endArrowhead":"arrow","startBinding":{"elementId":"l_sistem","fixedPoint":[0,0.5]},"endBinding":{"elementId":"l_tapera","fixedPoint":[0,0.5]}},
+    {"type":"text","id":"ht5e","x":810,"y":968,"width":"210","height":20,"text":"POST /outstanding/submit","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","originalText":"POST /outstanding/submit","autoResize":true}
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff"
+  }
+}

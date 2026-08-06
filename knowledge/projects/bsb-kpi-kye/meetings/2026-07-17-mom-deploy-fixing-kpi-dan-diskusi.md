@@ -1,0 +1,3 @@
+- Bu Febby menanyakan terkait fixing nya
+- TLab mengirimkan file dan dari BSB (Pak Jimmi) perlu download dan meletakkannya di server production
+- 
