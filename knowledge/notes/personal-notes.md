@@ -11,7 +11,7 @@ Lokasi: root knowledge repo (`knowledge/notes/personal-notes.md`).
 
 | Status | Prioritas | Tugas | Deadline | Catatan / Link |
 | ------ | --------- | ----- | -------- | -------------- |
-| ⬜      |           |       |          |                |
+| ⬜ | | Mengirimkan dokumentasi KYE berupa dokumen dan video penggunaan ke PIC KYE | | PIC KYE [Perlu validasi] — kandidat dari stakeholder-register.md: Bu Taca (PIC uji fungsi KYE), Pak Zakky (Deployment PIC BSB) |
 
 ### Keterangan Status
 - ⬜ Belum dikerjakan
