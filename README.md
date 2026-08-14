@@ -6,6 +6,7 @@ Company-specific knowledge repository for AI OS.
 - `knowledge/company/` — Company identity, profile, hub
 - `knowledge/clients/` — Client registry and profiles
 - `knowledge/projects/` — All project bounded contexts
+- `knowledge/notes/personal-notes.md` — Personal notes PM (shared, multi-profile update)
 - `manifest/` — Company Manifest layer
 - `plugins/` — Company-specific tool plugins
 

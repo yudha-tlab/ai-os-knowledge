@@ -1,0 +1,320 @@
+{
+  "project_slug": "dpad-chatbot",
+  "team": {},
+  "epics": [
+    {
+      "subject": "EPIC-01 — Knowledge Base & Setup RAGA",
+      "description": "Setup workspace DPAD di RAGA + ingest dokumen akreditasi/layanan umum.\nSumber: US-001, UC1, KAK #1\nPrioritas: P0",
+      "stories": [
+        {
+          "subject": "US-001 — Kelola Knowledge Base",
+          "description": "Sebagai Tim Internal, saya ingin meng-extract dokumen instrumen akreditasi & materi layanan ke RAGA, sehingga chatbot punya knowledge base akurat.\nTrace: source-docs US-001, UC1, FR-1.x\nAcceptance Criteria: (1) Dokumen PDF/DOCX/XLSX dari folder Drive DPAD ter-extract & terindeks; (2) Kategori benar (akreditasi vs layanan umum); (3) Dokumen gagal-extract tidak dirujuk sebagai sumber jawaban.",
+          "assignee": null,
+          "tasks": [
+            {
+              "subject": "IS-101 — Setup Workspace Chatbot DPAD di RAGA (system prompt, konfigurasi model, RBAC)",
+              "assignee": null
+            },
+            {
+              "subject": "IS-102 — Monitor folder Drive DPAD & ingest dokumen contoh dari DPAD",
+              "assignee": null
+            },
+            {
+              "subject": "IS-103 — Verifikasi hasil ekstraksi & indeks per kategori (akreditasi / layanan umum)",
+              "assignee": null
+            },
+            {
+              "subject": "IS-104 — Penanganan dokumen gagal-extract (status GAGAL + notifikasi)",
+              "assignee": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "subject": "EPIC-02 — Halaman Chat & Integrasi Website DPAD",
+      "description": "Landing page chat (embed RAGA), tombol 'Tanya DPAD', konsultasi akreditasi & layanan umum, penanganan sesi/error/out-of-scope, pre-chat data capture.\nSumber: US-002..007, US-015, UC2..7, FR-001/002/003, MOM req tambahan #1\nPrioritas: P0",
+      "stories": [
+        {
+          "subject": "US-002 — Tampilkan Halaman Chat",
+          "description": "Sebagai Pengelola Perpustakaan/Pemustaka, saya ingin mengakses halaman chat dari website DPAD, sehingga bisa bertanya tanpa berpindah platform.\nTrace: source-docs US-002, UC2, FR-2.x",
+          "assignee": null,
+          "tasks": [
+            {
+              "subject": "IS-201 — Develop landing page chat (embed RAGA via iframe/API), session_id per kunjungan",
+              "assignee": "decky"
+            },
+            {
+              "subject": "IS-202 — Pesan pembuka & instruksi penggunaan",
+              "assignee": "decky"
+            },
+            {
+              "subject": "IS-203 — Pesan fallback saat koneksi RAGA gagal (bukan halaman kosong)",
+              "assignee": "decky"
+            },
+            {
+              "subject": "IS-204 — Snippet tombol 'Tanya DPAD' + dokumentasi pemasangan untuk DPAD/vendor",
+              "assignee": "decky"
+            },
+            {
+              "subject": "IS-205 — Desain halaman sesuai identitas visual DPAD (warna, logo)",
+              "assignee": null
+            }
+          ]
+        },
+        {
+          "subject": "US-015 — Input Data Diri Sebelum Chat",
+          "description": "Sebagai pengguna, saya ingin diminta input nama, email, dan instansi sebelum memulai percakapan, sehingga data pengguna tercatat untuk keperluan pelaporan.\nTrace: MOM-20260812 req tambahan #1 (BARU)",
+          "assignee": null,
+          "tasks": [
+            {
+              "subject": "IS-215 — Form pre-chat wajib: nama, email, instansi + validasi",
+              "assignee": "decky"
+            },
+            {
+              "subject": "IS-216 — Simpan data pengguna & kaitkan dengan session_id",
+              "assignee": null
+            },
+            {
+              "subject": "IS-217 — Tambahkan persetujuan/kebijakan privasi data pribadi pada form pre-chat (NFR-004, standar ISO)",
+              "assignee": "decky"
+            }
+          ]
+        },
+        {
+          "subject": "US-003 — Konsultasi Akreditasi",
+          "description": "Sebagai Pengelola Perpustakaan, saya ingin bertanya seputar instrumen akreditasi, sehingga dapat jawaban cepat dengan sitasi sumber.\nTrace: source-docs US-003, UC3, FR-3.x",
+          "assignee": null,
+          "tasks": [
+            {
+              "subject": "IS-206 — Integrasi API kirim-pesan ke Workspace RAGA (HTTPS)",
+              "assignee": null
+            },
+            {
+              "subject": "IS-207 — Tampilan jawaban + sitasi sumber dokumen",
+              "assignee": null
+            },
+            {
+              "subject": "IS-208 — Verifikasi response time < 5 detik (p95)",
+              "assignee": null
+            }
+          ]
+        },
+        {
+          "subject": "US-004 — Konsultasi Layanan Umum",
+          "description": "Sebagai Pemustaka, saya ingin bertanya seputar layanan perpustakaan umum, sehingga mendapat info cepat tanpa datang langsung.\nTrace: source-docs US-004, UC4, FR-4.x",
+          "assignee": null,
+          "tasks": [
+            {
+              "subject": "IS-209 — Rute pertanyaan layanan umum → knowledge base layanan umum",
+              "assignee": null
+            },
+            {
+              "subject": "IS-210 — Klarifikasi pertanyaan ambigu (akreditasi vs layanan umum)",
+              "assignee": null
+            }
+          ]
+        },
+        {
+          "subject": "US-005 — Kelola Sesi Percakapan",
+          "description": "Sebagai pengguna chatbot, saya ingin percakapan diingat dalam satu sesi, sehingga bisa bertanya lanjutan tanpa mengulang konteks.\nTrace: source-docs US-005, UC5, FR-5.x",
+          "assignee": null,
+          "tasks": [
+            {
+              "subject": "IS-211 — Simpan pasangan tanya-jawab per session_id ke log",
+              "assignee": null
+            },
+            {
+              "subject": "IS-212 — Status sesi BERAKHIR saat refresh/tutup halaman",
+              "assignee": null
+            }
+          ]
+        },
+        {
+          "subject": "US-006 — Tangani Pertanyaan Di Luar Cakupan",
+          "description": "Sebagai pengguna, saya ingin diberi tahu jika pertanyaan di luar cakupan, sehingga tidak menerima jawaban mengarang.\nTrace: source-docs US-006, UC6, FR-6.x",
+          "assignee": null,
+          "tasks": [
+            {
+              "subject": "IS-213 — Deteksi out-of-scope + pesan keterbatasan cakupan (tanpa sitasi)",
+              "assignee": null
+            }
+          ]
+        },
+        {
+          "subject": "US-007 — Tangani Error/Timeout RAGA",
+          "description": "Sebagai pengguna, saya ingin melihat pesan error jelas saat sistem bermasalah, sehingga tahu harus mencoba lagi.\nTrace: source-docs US-007, UC7, FR-7.x",
+          "assignee": null,
+          "tasks": [
+            {
+              "subject": "IS-214 — Pesan error informatif + tombol 'Coba Lagi'",
+              "assignee": "decky"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "subject": "EPIC-03 — CMS & Kemandirian Admin DPAD",
+      "description": "Akses CMS admin, training Pak Zulfa & tim (maks 3×4 jam), user guide CMS, laporan analitik pengguna chat.\nSumber: US-008..009, US-016, UC8..9, KAK #1/#3, MOM req tambahan #2\nPrioritas: P0",
+      "stories": [
+        {
+          "subject": "US-008 — Kelola Konten via CMS",
+          "description": "Sebagai Admin Online DPAD, saya ingin mengelola konten chatbot via CMS RAGA, sehingga bisa update knowledge base mandiri.\nTrace: source-docs US-008, UC8, FR-8.x, KAK #1/#3",
+          "assignee": null,
+          "tasks": [
+            {
+              "subject": "IS-301 — Buat akun admin DPAD + validasi masa akses 6 bulan",
+              "assignee": "nadhira ferita kusuma"
+            },
+            {
+              "subject": "IS-302 — Verifikasi unggah konten → re-index knowledge base otomatis",
+              "assignee": null
+            },
+            {
+              "subject": "IS-303 — Konfirmasi update konten berhasil di UI",
+              "assignee": "nadhira ferita kusuma"
+            }
+          ]
+        },
+        {
+          "subject": "US-009 — Ikuti Pelatihan Sistem",
+          "description": "Sebagai Admin Online DPAD (Pak Zulfa & tim), saya ingin mengikuti pelatihan CMS online, sehingga mampu mengoperasikan chatbot mandiri.\nTrace: source-docs US-009, UC9, FR-9.x, KAK #1",
+          "assignee": null,
+          "tasks": [
+            {
+              "subject": "IS-304 — Jadwalkan 3 sesi @4 jam dengan Pak Zulfa & tim (online)",
+              "assignee": "yudha"
+            },
+            {
+              "subject": "IS-305 — Siapkan materi pelatihan CMS",
+              "assignee": "nadhira ferita kusuma"
+            },
+            {
+              "subject": "IS-306 — Eksekusi sesi pelatihan 1-3 + evaluasi kompetensi",
+              "assignee": "yudha"
+            },
+            {
+              "subject": "IS-307 — User Guide CMS (dokumentasi lengkap, Bahasa Indonesia)",
+              "assignee": "nadhira ferita kusuma"
+            }
+          ]
+        },
+        {
+          "subject": "US-016 — Laporan Analitik Pengguna Chat",
+          "description": "Sebagai Admin Online DPAD, saya ingin melihat laporan jumlah pengguna chat dengan filter rentang tanggal, sehingga bisa memantau utilisasi chatbot.\nTrace: MOM-20260812 req tambahan #2 (BARU)\nAcceptance Criteria: (1) Default menampilkan jumlah session yang melakukan chat; (2) Tersedia checkbox 'unique users' untuk memfilter berdasarkan unique users (per email/instansi); (3) Dapat difilter berdasarkan rentang tanggal; (4) Data berasal dari data diri yang diinput pre-chat (nama/email/instansi) + log sesi.",
+          "assignee": null,
+          "tasks": [
+            {
+              "subject": "IS-505 — Query agregasi jumlah session & unique users per rentang tanggal (dari log sesi)",
+              "assignee": null
+            },
+            {
+              "subject": "IS-506 — UI laporan analitik sederhana di CMS admin (filter tanggal + checkbox unique users)",
+              "assignee": "nadhira ferita kusuma"
+            },
+            {
+              "subject": "IS-507 — Verifikasi akurasi angka laporan vs data log",
+              "assignee": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "subject": "EPIC-04 — Security, WCAG & Quality Assurance",
+      "description": "VAPT ZAP Proxy, SAST SonarQube, WCAG compliance untuk landing page.\nSumber: KAK #4/#5/#6, NFR\nPrioritas: P0",
+      "stories": [
+        {
+          "subject": "US-010 — VAPT ZAP Proxy untuk Landing Page",
+          "description": "Sebagai stakeholder proyek, saya ingin landing page lolos vulnerability assessment, sehingga memenuhi standar keamanan yang dijanjikan.\nTrace: KAK #4 (BARU)",
+          "assignee": null,
+          "tasks": [
+            {
+              "subject": "IS-401 — Jalankan ZAP Proxy scan pada landing page",
+              "assignee": null
+            },
+            {
+              "subject": "IS-402 — Remediasi temuan + re-scan sampai clean",
+              "assignee": null
+            },
+            {
+              "subject": "IS-403 — Susun laporan VAPT untuk diserahkan",
+              "assignee": null
+            }
+          ]
+        },
+        {
+          "subject": "US-011 — SAST SonarQube untuk Landing Page",
+          "description": "Sebagai stakeholder proyek, saya ingin kode landing page lolos static analysis, sehingga kualitas kode terjamin.\nTrace: KAK #5 (BARU)",
+          "assignee": null,
+          "tasks": [
+            {
+              "subject": "IS-404 — Setup SonarQube scan di pipeline repo chatbot-dpad",
+              "assignee": null
+            },
+            {
+              "subject": "IS-405 — Perbaiki issues/code smells hingga quality gate pass",
+              "assignee": null
+            }
+          ]
+        },
+        {
+          "subject": "US-012 — WCAG Compliance (Disability Friendly)",
+          "description": "Sebagai pengguna dengan keterbatasan, saya ingin halaman chat aksesibel, sehingga layanan DPAD inklusif.\nTrace: KAK #6 (BARU)",
+          "assignee": null,
+          "tasks": [
+            {
+              "subject": "IS-406 — Audit aksesibilitas (kontras, tab-order, ARIA, keyboard nav)",
+              "assignee": null
+            },
+            {
+              "subject": "IS-407 — Remediasi temuan aksesibilitas",
+              "assignee": "decky"
+            },
+            {
+              "subject": "IS-408 — Verifikasi akhir & checklist WCAG",
+              "assignee": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "subject": "EPIC-05 — Hosting & Deployment",
+      "description": "Hosting sementara di TLab, penyiapan link untuk Komdigi, dukungan integrasi domain jogjaprov.go.id.\nSumber: KAK #2/#7, MOM\nPrioritas: P1",
+      "stories": [
+        {
+          "subject": "US-013 — Deploy Landing Page di Hosting TLab",
+          "description": "Sebagai tim proyek, saya ingin landing page live di TLab dahulu, sehingga DPAD bisa melihat hasil sambil menunggu Komdigi.\nTrace: KAK #2, MOM (BARU)",
+          "assignee": null,
+          "tasks": [
+            {
+              "subject": "IS-501 — Siapkan environment hosting TLab (subdomain/URL sementara)",
+              "assignee": null
+            },
+            {
+              "subject": "IS-502 — Deploy landing page + verifikasi smoke test",
+              "assignee": null
+            }
+          ]
+        },
+        {
+          "subject": "US-014 — Dukungan Integrasi Komdigi",
+          "description": "Sebagai tim proyek, saya ingin menyediakan link halaman chat & dukungan teknis untuk Komdigi, sehingga integrasi ke domain jogjaprov.go.id berjalan tanpa menggagalkan kontrak.\nTrace: KAK #7, MOM 'DPAD komunikasikan link ke Komdigi' (BARU)",
+          "assignee": null,
+          "tasks": [
+            {
+              "subject": "IS-503 — Siapkan paket teknis untuk Komdigi (link, requirement hosting, panduan)",
+              "assignee": "yudha"
+            },
+            {
+              "subject": "IS-504 — Dampingi komunikasi teknis DPAD ↔ Komdigi (on-demand)",
+              "assignee": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

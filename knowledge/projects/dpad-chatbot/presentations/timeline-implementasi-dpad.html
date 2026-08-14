@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timeline Implementasi · Chatbot DPAD</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #f5f5f5;
+      --color-ink:     #2d3142;
+      --color-muted:   #4f5d75;
+      --color-accent:  #eb6c36;
+      --font-sans:     'Geist', system-ui, sans-serif;
+      --font-serif:    'Instrument Serif', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+
+    .frame { max-width: 1200px; width: 100%; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--color-ink);
+      margin-bottom: 1.5rem;
+    }
+
+    svg { width: 100%; min-width: 900px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Timeline · DPAD Chatbot</p>
+    <h1>Implementasi Chatbot DPAD · 14 Hari Kerja</h1>
+
+    <svg viewBox="0 0 1000 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="timeline-title timeline-desc">
+      <title id="timeline-title">Implementasi Chatbot DPAD · 14 Hari Kerja</title>
+      <desc id="timeline-desc">Timeline implementasi chatbot AI Knowledge Center DPAD DIY dalam 5 fase selama 14 hari kerja, dari setup workspace RAGA hingga go-live dan pelatihan admin.</desc>
+      <defs>
+        <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+          <circle cx="1" cy="1" r="0.9" fill="rgba(45,49,66,0.10)"/>
+        </pattern>
+      </defs>
+
+      <rect width="100%" height="100%" fill="#f5f5f5"/>
+      <rect width="100%" height="100%" fill="url(#dots)" opacity="0.55"/>
+
+      <!-- Week markers (background) -->
+      <text x="60" y="340" fill="rgba(45,49,66,0.06)" font-size="64" font-weight="600" font-family="'Geist Mono', monospace">MINGGU 1</text>
+      <text x="500" y="340" fill="rgba(45,49,66,0.06)" font-size="64" font-weight="600" font-family="'Geist Mono', monospace">MINGGU 2</text>
+
+      <!-- Baseline -->
+      <line x1="80" y1="240" x2="920" y2="240" stroke="rgba(79,93,117,0.45)" stroke-width="1"/>
+
+      <!-- Week boundary tick -->
+      <line x1="480" y1="232" x2="480" y2="248" stroke="rgba(45,49,66,0.20)" stroke-width="1"/>
+      <text x="480" y="260" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">HARI 7</text>
+
+      <!-- Start / end caps -->
+      <line x1="80" y1="232" x2="80" y2="248" stroke="rgba(45,49,66,0.20)" stroke-width="1"/>
+      <text x="80" y="260" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">H+0</text>
+      <line x1="920" y1="232" x2="920" y2="248" stroke="rgba(45,49,66,0.20)" stroke-width="1"/>
+      <text x="920" y="260" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">H+14</text>
+
+      <!-- Phase 1: Setup RAGA + ingest knowledge (below) — 2 hari -->
+      <line x1="170" y1="240" x2="170" y2="296" stroke="rgba(45,49,66,0.30)" stroke-width="1"/>
+      <circle cx="170" cy="240" r="4" fill="#2d3142"/>
+      <text x="170" y="312" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">FASE 1 · 2 HARI</text>
+      <text x="170" y="328" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Setup RAGA</text>
+      <text x="170" y="344" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">workspace + ingest knowledge</text>
+
+      <!-- Phase 2: Pengembangan chat + tombol (above) — 4 hari -->
+      <line x1="350" y1="184" x2="350" y2="240" stroke="rgba(45,49,66,0.30)" stroke-width="1"/>
+      <circle cx="350" cy="240" r="4" fill="#2d3142"/>
+      <text x="350" y="152" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">FASE 2 · 4 HARI</text>
+      <text x="350" y="168" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Pengembangan</text>
+      <text x="350" y="184" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">halaman chat + tombol "Tanya DPAD"</text>
+
+      <!-- Phase 3: Testing (below) — 4 hari -->
+      <line x1="590" y1="240" x2="590" y2="296" stroke="rgba(45,49,66,0.30)" stroke-width="1"/>
+      <circle cx="590" cy="240" r="4" fill="#2d3142"/>
+      <text x="590" y="312" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">FASE 3 · 4 HARI</text>
+      <text x="590" y="328" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Testing</text>
+      <text x="590" y="344" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">unit · performa · security · usability</text>
+
+      <!-- Phase 4: Deployment & handover (above) — 2 hari -->
+      <line x1="770" y1="164" x2="770" y2="240" stroke="rgba(45,49,66,0.30)" stroke-width="1"/>
+      <circle cx="770" cy="240" r="4" fill="#2d3142"/>
+      <text x="770" y="132" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">FASE 4 · 2 HARI</text>
+      <text x="770" y="148" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Deployment &amp; Handover</text>
+      <text x="770" y="164" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">koordinasi hosting Komdigi</text>
+
+      <!-- Phase 5: Go-live + pelatihan (below, coral major milestone) — 2 hari -->
+      <line x1="890" y1="240" x2="890" y2="296" stroke="#eb6c36" stroke-width="1"/>
+      <circle cx="890" cy="240" r="6" fill="#eb6c36"/>
+      <text x="890" y="312" fill="#eb6c36" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">FASE 5 · GO-LIVE</text>
+      <text x="890" y="328" fill="#2d3142" font-size="14" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Pelatihan &amp; Go-Live</text>
+      <text x="890" y="344" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">admin 3×4 jam · dukungan konten</text>
+
+      <!-- Legend -->
+      <line x1="40" y1="376" x2="960" y2="376" stroke="rgba(45,49,66,0.10)" stroke-width="0.8"/>
+      <text x="40" y="392" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.18em">LEGEND</text>
+
+      <circle cx="52" cy="408" r="4" fill="#2d3142"/>
+      <text x="68" y="412" fill="#4f5d75" font-size="8.5" font-family="'Geist', sans-serif">Fase</text>
+
+      <circle cx="148" cy="408" r="6" fill="#eb6c36"/>
+      <text x="164" y="412" fill="#4f5d75" font-size="8.5" font-family="'Geist', sans-serif">Go-live</text>
+
+      <text x="296" y="412" fill="#4f5d75" font-size="8.5" font-family="'Geist', sans-serif" font-style="italic">Spasi sebanding dengan durasi nyata — mulai H+0, target ±14 hari kerja.</text>
+    </svg>
+  </div>
+</body>
+</html>

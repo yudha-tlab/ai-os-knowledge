@@ -11,7 +11,8 @@
 | 7 | 2024-02-01 | Status penilaian: Belum Dinilai, Ternilai, Draft | Perubahan variabel status (dari kickoff) | TLab + BSB | Applied | FSD KYE di-update |
 | 8 | 2024-03-21 | FSD KYE v1.1: penambahan Master Pegawai Kontrak, revisi desain | Kebutuhan tambahan dari BSB | TLab | Applied | FSD KYE v1.1 |
 | 9 | 2024-04-23 | TSD KYE v1.2: perubahan arsitektur level tinggi aplikasi | Penyesuaian deployment & integrasi | TLab | Applied | TSD KYE v1.2 |
-| 10 | 2025 | CR Kurva 2025 — perubahan skema nilai (akhir → rata-rata → akhir) | Perubahan kebijakan internal BSB | BSB | Applied | FSD & TSD KPI 2025 |
+|| 10 | 2025 | CR Kurva 2025 — perubahan skema nilai (akhir → rata-rata → akhir) | Perubahan kebijakan internal BSB | BSB | Applied | FSD & TSD KPI 2025 |
+|| 11 | 2026-08-07 | CR-20260807-001 – Penyesuaian fitur KPI (Supervisor view, filter periode, filter cabang) | Menambah fungsi RBAC Supervisor & filter laporan KPI | Yudha (TLab) & Pak Noverdian (BSB) | Pending | Impact: High (perubahan akses & UI) |
 
 ---
 
@@ -19,4 +20,4 @@
 |---------|------|--------|---------|
 | v1 | 2026-07-17 | Hermes (AOS) | Initial dari dokumen history + meeting notes |
 
-*Last updated: 2026-07-17*
+*Last updated: 2026-07-17 *

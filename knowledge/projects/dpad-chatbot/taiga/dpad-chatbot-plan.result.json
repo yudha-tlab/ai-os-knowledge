@@ -1,0 +1,302 @@
+{
+  "epics": [
+    {
+      "id": 693,
+      "subject": "EPIC-01 — Knowledge Base & Setup RAGA",
+      "stories": [
+        {
+          "id": 4292,
+          "subject": "US-001 — Kelola Knowledge Base",
+          "tasks": [
+            {
+              "id": 11868,
+              "subject": "IS-101 — Setup Workspace Chatbot DPAD di RAGA (system prompt, konfigurasi model, RBAC)"
+            },
+            {
+              "id": 11869,
+              "subject": "IS-102 — Monitor folder Drive DPAD & ingest dokumen contoh dari DPAD"
+            },
+            {
+              "id": 11870,
+              "subject": "IS-103 — Verifikasi hasil ekstraksi & indeks per kategori (akreditasi / layanan umum)"
+            },
+            {
+              "id": 11871,
+              "subject": "IS-104 — Penanganan dokumen gagal-extract (status GAGAL + notifikasi)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 694,
+      "subject": "EPIC-02 — Halaman Chat & Integrasi Website DPAD",
+      "stories": [
+        {
+          "id": 4293,
+          "subject": "US-002 — Tampilkan Halaman Chat",
+          "tasks": [
+            {
+              "id": 11872,
+              "subject": "IS-201 — Develop landing page chat (embed RAGA via iframe/API), session_id per kunjungan"
+            },
+            {
+              "id": 11873,
+              "subject": "IS-202 — Pesan pembuka & instruksi penggunaan"
+            },
+            {
+              "id": 11874,
+              "subject": "IS-203 — Pesan fallback saat koneksi RAGA gagal (bukan halaman kosong)"
+            },
+            {
+              "id": 11875,
+              "subject": "IS-204 — Snippet tombol 'Tanya DPAD' + dokumentasi pemasangan untuk DPAD/vendor"
+            },
+            {
+              "id": 11876,
+              "subject": "IS-205 — Desain halaman sesuai identitas visual DPAD (warna, logo)"
+            }
+          ]
+        },
+        {
+          "id": 4294,
+          "subject": "US-015 — Input Data Diri Sebelum Chat",
+          "tasks": [
+            {
+              "id": 11877,
+              "subject": "IS-215 — Form pre-chat wajib: nama, email, instansi + validasi"
+            },
+            {
+              "id": 11878,
+              "subject": "IS-216 — Simpan data pengguna & kaitkan dengan session_id"
+            },
+            {
+              "id": 11879,
+              "subject": "IS-217 — Tambahkan persetujuan/kebijakan privasi data pribadi pada form pre-chat (NFR-004, standar ISO)"
+            }
+          ]
+        },
+        {
+          "id": 4295,
+          "subject": "US-003 — Konsultasi Akreditasi",
+          "tasks": [
+            {
+              "id": 11880,
+              "subject": "IS-206 — Integrasi API kirim-pesan ke Workspace RAGA (HTTPS)"
+            },
+            {
+              "id": 11881,
+              "subject": "IS-207 — Tampilan jawaban + sitasi sumber dokumen"
+            },
+            {
+              "id": 11882,
+              "subject": "IS-208 — Verifikasi response time < 5 detik (p95)"
+            }
+          ]
+        },
+        {
+          "id": 4296,
+          "subject": "US-004 — Konsultasi Layanan Umum",
+          "tasks": [
+            {
+              "id": 11883,
+              "subject": "IS-209 — Rute pertanyaan layanan umum → knowledge base layanan umum"
+            },
+            {
+              "id": 11884,
+              "subject": "IS-210 — Klarifikasi pertanyaan ambigu (akreditasi vs layanan umum)"
+            }
+          ]
+        },
+        {
+          "id": 4297,
+          "subject": "US-005 — Kelola Sesi Percakapan",
+          "tasks": [
+            {
+              "id": 11885,
+              "subject": "IS-211 — Simpan pasangan tanya-jawab per session_id ke log"
+            },
+            {
+              "id": 11886,
+              "subject": "IS-212 — Status sesi BERAKHIR saat refresh/tutup halaman"
+            }
+          ]
+        },
+        {
+          "id": 4298,
+          "subject": "US-006 — Tangani Pertanyaan Di Luar Cakupan",
+          "tasks": [
+            {
+              "id": 11887,
+              "subject": "IS-213 — Deteksi out-of-scope + pesan keterbatasan cakupan (tanpa sitasi)"
+            }
+          ]
+        },
+        {
+          "id": 4299,
+          "subject": "US-007 — Tangani Error/Timeout RAGA",
+          "tasks": [
+            {
+              "id": 11888,
+              "subject": "IS-214 — Pesan error informatif + tombol 'Coba Lagi'"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 695,
+      "subject": "EPIC-03 — CMS & Kemandirian Admin DPAD",
+      "stories": [
+        {
+          "id": 4300,
+          "subject": "US-008 — Kelola Konten via CMS",
+          "tasks": [
+            {
+              "id": 11889,
+              "subject": "IS-301 — Buat akun admin DPAD + validasi masa akses 6 bulan"
+            },
+            {
+              "id": 11890,
+              "subject": "IS-302 — Verifikasi unggah konten → re-index knowledge base otomatis"
+            },
+            {
+              "id": 11891,
+              "subject": "IS-303 — Konfirmasi update konten berhasil di UI"
+            }
+          ]
+        },
+        {
+          "id": 4301,
+          "subject": "US-009 — Ikuti Pelatihan Sistem",
+          "tasks": [
+            {
+              "id": 11892,
+              "subject": "IS-304 — Jadwalkan 3 sesi @4 jam dengan Pak Zulfa & tim (online)"
+            },
+            {
+              "id": 11893,
+              "subject": "IS-305 — Siapkan materi pelatihan CMS"
+            },
+            {
+              "id": 11894,
+              "subject": "IS-306 — Eksekusi sesi pelatihan 1-3 + evaluasi kompetensi"
+            },
+            {
+              "id": 11895,
+              "subject": "IS-307 — User Guide CMS (dokumentasi lengkap, Bahasa Indonesia)"
+            }
+          ]
+        },
+        {
+          "id": 4302,
+          "subject": "US-016 — Laporan Analitik Pengguna Chat",
+          "tasks": [
+            {
+              "id": 11896,
+              "subject": "IS-505 — Query agregasi jumlah session & unique users per rentang tanggal (dari log sesi)"
+            },
+            {
+              "id": 11897,
+              "subject": "IS-506 — UI laporan analitik sederhana di CMS admin (filter tanggal + checkbox unique users)"
+            },
+            {
+              "id": 11898,
+              "subject": "IS-507 — Verifikasi akurasi angka laporan vs data log"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 696,
+      "subject": "EPIC-04 — Security, WCAG & Quality Assurance",
+      "stories": [
+        {
+          "id": 4303,
+          "subject": "US-010 — VAPT ZAP Proxy untuk Landing Page",
+          "tasks": [
+            {
+              "id": 11899,
+              "subject": "IS-401 — Jalankan ZAP Proxy scan pada landing page"
+            },
+            {
+              "id": 11900,
+              "subject": "IS-402 — Remediasi temuan + re-scan sampai clean"
+            },
+            {
+              "id": 11901,
+              "subject": "IS-403 — Susun laporan VAPT untuk diserahkan"
+            }
+          ]
+        },
+        {
+          "id": 4304,
+          "subject": "US-011 — SAST SonarQube untuk Landing Page",
+          "tasks": [
+            {
+              "id": 11902,
+              "subject": "IS-404 — Setup SonarQube scan di pipeline repo chatbot-dpad"
+            },
+            {
+              "id": 11903,
+              "subject": "IS-405 — Perbaiki issues/code smells hingga quality gate pass"
+            }
+          ]
+        },
+        {
+          "id": 4305,
+          "subject": "US-012 — WCAG Compliance (Disability Friendly)",
+          "tasks": [
+            {
+              "id": 11904,
+              "subject": "IS-406 — Audit aksesibilitas (kontras, tab-order, ARIA, keyboard nav)"
+            },
+            {
+              "id": 11905,
+              "subject": "IS-407 — Remediasi temuan aksesibilitas"
+            },
+            {
+              "id": 11906,
+              "subject": "IS-408 — Verifikasi akhir & checklist WCAG"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 697,
+      "subject": "EPIC-05 — Hosting & Deployment",
+      "stories": [
+        {
+          "id": 4306,
+          "subject": "US-013 — Deploy Landing Page di Hosting TLab",
+          "tasks": [
+            {
+              "id": 11907,
+              "subject": "IS-501 — Siapkan environment hosting TLab (subdomain/URL sementara)"
+            },
+            {
+              "id": 11908,
+              "subject": "IS-502 — Deploy landing page + verifikasi smoke test"
+            }
+          ]
+        },
+        {
+          "id": 4307,
+          "subject": "US-014 — Dukungan Integrasi Komdigi",
+          "tasks": [
+            {
+              "id": 11909,
+              "subject": "IS-503 — Siapkan paket teknis untuk Komdigi (link, requirement hosting, panduan)"
+            },
+            {
+              "id": 11910,
+              "subject": "IS-504 — Dampingi komunikasi teknis DPAD ↔ Komdigi (on-demand)"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

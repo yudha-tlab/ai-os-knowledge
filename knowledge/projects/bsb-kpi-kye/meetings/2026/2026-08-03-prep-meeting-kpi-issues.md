@@ -215,7 +215,7 @@ Data yang diperlukan (minimal):
 ## Referensi
 
 - [MOM 27 Juli 2026](../2026-07-27-mom-kpi-bsb.md)
-- [Business FAQ KPI](../faq/kpi/business-faq.md)
+- [Business FAQ KPI](ai-os-knowledge/knowledge/projects/bsb-kpi-kye/faq/kpi/business-faq.md)
 - [Taiga Support BSB](https://taiga.tlab.co.id/project/support-bsb/)
-- [FSD KPI v1.0](../initial-docs/FSD-KPI.md)
-- [FSD KPI 2025 v2 (Kurva Normal)](../initial-docs/FSD-KPI-2025-v2.md)
+- [FSD KPI v1.0](FSD-KPI.md)
+- [FSD KPI 2025 v2 (Kurva Normal)](FSD-KPI-2025-v2.md)
