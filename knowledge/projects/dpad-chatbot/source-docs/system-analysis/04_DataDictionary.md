@@ -339,7 +339,7 @@ Kamus data ini mencakup **7 entitas** (Workspace, KnowledgeDocument, CMSContent,
 | mengutip | KnowledgeDocument (via CitationReference) | M:N | CASCADE | CASCADE |
 
 #### Aturan Bisnis
-- `kategori_jawaban` harus salah satu dari: 'AKREDITASI', 'LAYANAN_UMUM', 'DI_LUAR_CAKUPAN' (domain lihat §4.1).
+- `kategori_jawaban` harus salah satu dari: 'AKREDITASI', 'DI_LUAR_CAKUPAN' (domain lihat §4.3).
 - Jika `is_out_of_scope = TRUE`, maka tidak boleh ada baris terkait di `CitationReference` (jawaban di luar cakupan tidak mengutip dokumen apa pun — mencegah halusinasi, rujukan spec.md Unwanted Behavior).
 - Jika `is_error = TRUE`, `jawaban_chatbot` berisi pesan error/timeout standar, bukan jawaban substantif.
 
@@ -510,7 +510,7 @@ Kamus data ini mencakup **7 entitas** (Workspace, KnowledgeDocument, CMSContent,
 | Domain | Nilai Valid | Digunakan Oleh |
 |--------|-------------|----------------|
 | kategori (KnowledgeDocument) | 'akreditasi', 'layanan_umum' | KnowledgeDocument |
-| kategori_jawaban (ConversationLog) | 'AKREDITASI', 'LAYANAN_UMUM', 'DI_LUAR_CAKUPAN' | ConversationLog |
+| kategori_jawaban (ConversationLog) | 'AKREDITASI', 'DI_LUAR_CAKUPAN' | ConversationLog |
 | format_file | 'PDF', 'DOCX', 'DOC', 'XLSX', 'XLS' | KnowledgeDocument |
 | tipe_konten | 'DOKUMEN', 'TEKS' | CMSContent |
 | mode (TrainingSession) | 'ONLINE', 'ONSITE' | TrainingSession |
@@ -555,7 +555,7 @@ Kamus data ini mencakup **7 entitas** (Workspace, KnowledgeDocument, CMSContent,
 | tbl_admin | status_akses | CHECK | status_akses IN ('AKTIF', 'KEDALUWARSA') |
 | tbl_admin | tanggal_akhir_akses | CHECK | tanggal_akhir_akses <= tanggal_mulai_akses + INTERVAL '6 months' |
 | tbl_session | status_sesi | CHECK | status_sesi IN ('AKTIF', 'BERAKHIR') |
-| tbl_conversation_log | kategori_jawaban | CHECK | kategori_jawaban IN ('AKREDITASI', 'LAYANAN_UMUM', 'DI_LUAR_CAKUPAN') |
+| tbl_conversation_log | kategori_jawaban | CHECK | kategori_jawaban IN ('AKREDITASI', 'DI_LUAR_CAKUPAN') |
 | tbl_training_session | sesi_ke | CHECK | sesi_ke BETWEEN 1 AND 3 |
 | tbl_training_session | mode | CHECK | mode IN ('ONLINE', 'ONSITE') |
 | tbl_training_session | status | CHECK | status IN ('TERJADWAL', 'SELESAI', 'DIBATALKAN') |
@@ -694,7 +694,7 @@ CREATE TABLE tbl_conversation_log (
     is_error           BOOLEAN NOT NULL DEFAULT FALSE,
     timestamp          TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT chk_log_kategori CHECK (kategori_jawaban IN ('AKREDITASI', 'LAYANAN_UMUM', 'DI_LUAR_CAKUPAN'))
+    CONSTRAINT chk_log_kategori CHECK (kategori_jawaban IN ('AKREDITASI', 'DI_LUAR_CAKUPAN'))
 );
 
 CREATE INDEX idx_log_session   ON tbl_conversation_log(session_id);

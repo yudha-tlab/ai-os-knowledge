@@ -1,3 +1,16 @@
+---
+type: specification
+title: Diagram Aktivitas — AI Knowledge Center DPAD DIY
+status: active
+created: 2026-08-11
+modified: 2026-08-24
+version: 1.2
+changelog:
+  - date: 2026-08-24
+    purpose: "Hapus referensi UC4 Konsultasi Layanan Umum (deferred keluar MVP) dari catatan diagram & asumsi — konsisten dengan 05_UseCase v1.2 & 07_FSD v1.2; DS2 dipertahankan sebagai data store kategori layanan_umum"
+  - date: 2026-08-18
+    purpose: "Selaraskan AD-UC3 dengan widget SDK RAGA dan jalur eskalasi UC10 (kontak Pustakawan Pembina + flag eskalasi di log)"
+---
 # DIAGRAM AKTIVITAS — AI Knowledge Center DPAD DIY
 ## Chatbot Konsultasi & Akreditasi Perpustakaan
 
@@ -17,7 +30,7 @@
 | AD-UC8 | UC8 (+ include UC1) | Kelola Konten via CMS | Melibatkan validasi akses time-bound (6 bulan) dan trigger re-index — aturan bisnis kritis |
 | AD-UC1 | UC1 | Kelola Knowledge Base | Proses ekstraksi OCR dengan dua pemicu berbeda (setup awal vs re-index dari CMS) |
 
-> UC2 (Tampilkan Halaman Chat), UC4 (Konsultasi Layanan Umum), dan UC9 (Ikuti Pelatihan Sistem) tidak didiagramkan terpisah — UC2 bersifat linear tanpa titik keputusan berarti, UC4 mengikuti pola identik dengan UC3 (hanya beda sumber knowledge base, tanpa kewajiban sitasi), dan UC9 adalah aktivitas administratif non-sistem yang cukup didokumentasikan sebagai deskripsi use case (05_UseCase.md §4).
+> UC2 (Tampilkan Halaman Chat) dan UC9 (Ikuti Pelatihan Sistem) tidak didiagramkan terpisah — UC2 bersifat linear tanpa titik keputusan berarti, dan UC9 adalah aktivitas administratif non-sistem yang cukup didokumentasikan sebagai deskripsi use case (05_UseCase.md §4).
 
 ---
 
@@ -104,8 +117,10 @@ start
 :Ketik pertanyaan seputar\ninstrumen akreditasi;
 
 |Halaman Chat|
-:Terima user_message +\nsession_id;
-:Teruskan pertanyaan ke\nWorkspace RAGA (API/Iframe);
+:Terima user_message +
+session_id;
+:Teruskan pertanyaan ke
+Workspace RAGA (Widget SDK);
 note right
   Baca DS3 (Data Sesi Percakapan)
   untuk ambil konteks jika ada
@@ -139,21 +154,27 @@ if (RAGA merespons dalam\nbatas waktu?) then (Ya)
     stop
 
   else (Tidak — di luar cakupan)
-    :Tandai sebagai\ndi luar cakupan;
+    :Tandai sebagai
+di luar cakupan;
 
     |Halaman Chat|
-    :Tampilkan pesan\n"topik di luar cakupan";
+    :Tampilkan pesan
+"topik di luar cakupan";
+    :Tampilkan kontak Pustakawan
+Pembina (eskalasi, UC10);
 
     |Halaman Chat|
     :Catat ke log percakapan;
     note right
       Simpan DS4 (Log Percakapan)
       is_out_of_scope = TRUE
+      flag eskalasi = TRUE
       Tanpa sitasi dokumen
     end note
 
     |Pengelola Perpustakaan|
-    :Terima pesan keterbatasan\ncakupan;
+    :Terima pesan keterbatasan
+cakupan + kontak eskalasi;
     stop
   endif
 
@@ -184,7 +205,7 @@ endif
 | Titik Keputusan | 2 (RAGA merespons dalam batas waktu?, Pertanyaan relevan dengan topik?) |
 | Aktivitas Paralel | Tidak ada (alur sekuensial dengan percabangan) |
 | Data Store | DS1 (baca), DS3 (baca/tulis), DS4 (tulis), `tbl_citation_reference` (tulis) |
-| Referensi Sumber | spec.md Event-Driven & Unwanted Behavior EARS, 05_UseCase.md UC3/UC5/UC6/UC7 |
+| Referensi Sumber | spec.md Event-Driven & Unwanted Behavior EARS, 05_UseCase.md UC3/UC5/UC6/UC7/UC10 |
 
 ### 2.3 Rincian Aktivitas
 
@@ -200,8 +221,9 @@ endif
 | 8 | Tampilkan jawaban + sitasi | Halaman Chat | Tindakan | — |
 | 9 | Catat ke log percakapan (sukses) | Halaman Chat | Tindakan | DS4 (tulis), citation (tulis) |
 | 10 | Tampilkan pesan "di luar cakupan" | Halaman Chat | Tindakan | — |
-| 11 | Catat ke log percakapan (out-of-scope) | Halaman Chat | Tindakan | DS4 (tulis) |
-| 12 | Tampilkan pesan error/timeout | Halaman Chat | Tindakan | — |
+| 11 | Tampilkan kontak Pustakawan Pembina (eskalasi, UC10) | Halaman Chat | Tindakan | — |
+| 12 | Catat ke log percakapan (out-of-scope + eskalasi) | Halaman Chat | Tindakan | DS4 (tulis) |
+| 13 | Tampilkan pesan error/timeout | Halaman Chat | Tindakan | — |
 
 ### 2.4 Ringkasan Alur Aktivitas
 
@@ -212,7 +234,7 @@ MULAI → Ketik Pertanyaan → Teruskan ke RAGA
       → [Ya] → Retrieval Knowledge Base
           → [D2: Pertanyaan relevan?]
               → [Ya] → Susun Jawaban + Sitasi → Tampilkan → Catat Log → AKHIR
-              → [Tidak] → Tampilkan "Di Luar Cakupan" → Catat Log → AKHIR
+              → [Tidak] → Tampilkan "Di Luar Cakupan" → Tampilkan Kontak Pustakawan Pembina (eskalasi UC10) → Catat Log → AKHIR
 ```
 
 ---
@@ -476,8 +498,7 @@ if (Format didukung\n(PDF/DOCX/XLSX)?) then (Ya)
   :Ekstrak isi dokumen\nmenggunakan OCR;
 
   if (Ekstraksi berhasil?) then (Ya)
-    :Tentukan kategori\n(akreditasi/layanan_umum);
-    :Indeks dokumen ke\nknowledge base;
+    :Indeks dokumen ke\nknowledge base sesuai\nkategori yang dipilih;
     note right
       Simpan DS1 (jika akreditasi)
       atau DS2 (jika layanan_umum)
@@ -610,11 +631,12 @@ Catatan: DS1 = Data Knowledge Base Akreditasi
 
 ### 6.3 Catatan & Asumsi
 
-1. **AD-UC3 mewakili juga alur UC4 (Konsultasi Layanan Umum)** secara struktural — perbedaan utama hanya pada data store yang dibaca (DS2, bukan DS1) dan tidak adanya kewajiban sitasi eksplisit. Tidak dibuat diagram terpisah untuk UC4 guna menghindari duplikasi.
-2. **AD-UC8 mengasumsikan validasi masa akses CMS terjadi di titik login**, bukan di setiap aksi unggah — ini pilihan desain yang perlu dikonfirmasi ke tim teknis (alternatif: validasi ulang di setiap submit untuk sesi yang sudah lama terbuka).
-3. **AD-UC1 menggabungkan dua pemicu** (setup awal oleh Tim Internal, operasional oleh Admin Online via CMS) dalam satu diagram karena logika pemrosesan di sisi RAGA identik — hanya sumber pemicu di swimlane awal yang berbeda.
-4. **Tidak ada aktivitas paralel (fork/join)** ditemukan di ketiga proses inti — mencerminkan sifat sistem yang sederhana secara arsitektur (thin integration layer), bukan kekurangan analisis.
-5. **Titik keputusan "Ekstraksi berhasil?" (AD-UC1)** dan "Format file didukung & tidak corrupt? (AD-UC8)" pada dasarnya menguji hal yang tumpang tindih — dipertahankan terpisah karena AD-UC8 menguji dari perspektif CMS (validasi awal sebelum trigger) sedangkan AD-UC1 menguji dari perspektif RAGA (hasil aktual proses OCR).
+1. **AD-UC8 mengasumsikan validasi masa akses CMS terjadi di titik login**, bukan di setiap aksi unggah — ini pilihan desain yang perlu dikonfirmasi ke tim teknis (alternatif: validasi ulang di setiap submit untuk sesi yang sudah lama terbuka).
+2. **AD-UC1 menggabungkan dua pemicu** (setup awal oleh Tim Internal, operasional oleh Admin Online via CMS) dalam satu diagram karena logika pemrosesan di sisi RAGA identik — hanya sumber pemicu di swimlane awal yang berbeda.
+3. **Tidak ada aktivitas paralel (fork/join)** ditemukan di ketiga proses inti — mencerminkan sifat sistem yang sederhana secara arsitektur (thin integration layer), bukan kekurangan analisis.
+4. **Titik keputusan "Ekstraksi berhasil?" (AD-UC1)** dan "Format file didukung & tidak corrupt? (AD-UC8)" pada dasarnya menguji hal yang tumpang tindih — dipertahankan terpisah karena AD-UC8 menguji dari perspektif CMS (validasi awal sebelum trigger) sedangkan AD-UC1 menguji dari perspektif RAGA (hasil aktual proses OCR).
+5. **Jalur eskalasi UC10** dimodelkan sebagai perluasan cabang "di luar cakupan" pada AD-UC3 — saat pertanyaan tidak relevan/tidak terjawab, sistem menampilkan pesan keterbatasan cakupan sekaligus kontak Pustakawan Pembina (eskalasi), lalu mencatat kejadian ke log dengan flag eskalasi = TRUE (mendukung metrik "jumlah eskalasi" KAK).
+6. **UC11 (Monitoring Pemanfaatan Layanan)** tidak memiliki diagram aktivitas terpisah — merupakan use case analitik yang membaca log percakapan (DS3/DS4) dan ditangani sebagai dashboard, bukan alur proses runtime.
 
 ---
 

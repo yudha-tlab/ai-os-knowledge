@@ -5,7 +5,7 @@
 |----------|-------|
 | **Sistem** | AI Knowledge Center DPAD — Chatbot Konsultasi & Akreditasi Perpustakaan |
 | **Sumber** | 01_Requirement_Extraction.md, 02_DFD_Level0.md |
-| **Sub-Proses** | 7 proses (1.0 – 7.0) |
+| **Sub-Proses** | 6 proses (1.0–3.0, 5.0–7.0; 4.0 dihapus — UC4 deferred) |
 | **Data Store** | 7 stores (DS1 – DS7) |
 
 ---
@@ -74,7 +74,6 @@ scale max 1700 height
 
 ' ── ENTITAS ──
 rectangle "E1\nPengelola\nPerpustakaan" as E1
-rectangle "E2\nPemustaka" as E2
 rectangle "E3\nAdmin Online\nDPAD" as E3
 rectangle "E5\nWebsite\nDPAD" as E5
 rectangle "E7\nWorkspace\nRAGA" as E7
@@ -83,7 +82,6 @@ rectangle "E7\nWorkspace\nRAGA" as E7
 usecase "1.0\nPengelolaan\nKnowledge Base" as P1
 usecase "2.0\nPenyediaan\nHalaman Chat" as P2
 usecase "3.0\nKonsultasi\nAkreditasi (Q&A)" as P3
-usecase "4.0\nKonsultasi\nLayanan Umum (Q&A)" as P4
 usecase "5.0\nManajemen Sesi\n& Log Percakapan" as P5
 usecase "6.0\nPengelolaan\nKonten via CMS" as P6
 usecase "7.0\nPenanganan\nError & Out-of-Scope" as P7
@@ -98,13 +96,11 @@ database "DS6\nRegistrasi\nWorkspace" as DS6
 
 ' ── ALIRAN DATA: Eksternal → Proses ──
 E1 --> P3 : "[F01] Pertanyaan akreditasi"
-E2 --> P4 : "[F02] Pertanyaan layanan umum"
 E3 --> P6 : "[F03] Konten CMS"
 E5 --> P2 : "Request tampilkan chat"
 
 ' ── ALIRAN DATA: Proses → Eksternal ──
 P3 --> E1 : "[F04] Jawaban + sitasi"
-P4 --> E2 : "[F05] Jawaban layanan umum"
 P6 --> E3 : "[F06] Konfirmasi update"
 P2 --> E5 : "[F07] UI halaman chat"
 
@@ -112,10 +108,8 @@ P2 --> E5 : "[F07] UI halaman chat"
 P1 --> DS1 : "Simpan: KB akreditasi"
 P1 --> DS2 : "Simpan: KB layanan umum"
 DS1 --> P3 : "Baca: KB akreditasi"
-DS2 --> P4 : "Baca: KB layanan umum"
 P5 --> DS3 : "Simpan/Update: sesi"
 DS3 --> P3 : "Baca: konteks sesi"
-DS3 --> P4 : "Baca: konteks sesi"
 P5 --> DS4 : "Simpan: log percakapan"
 P6 --> DS5 : "Simpan: konten CMS"
 DS5 --> P1 : "Baca: konten CMS baru"
@@ -123,11 +117,8 @@ P2 --> DS6 : "Baca: konfigurasi workspace"
 
 ' ── ALIRAN DATA: Antar-Proses (Internal) ──
 P3 --> P5 : "[Internal] Catat percakapan"
-P4 --> P5 : "[Internal] Catat percakapan"
 P3 --> P7 : "[Internal] Cek cakupan/timeout"
-P4 --> P7 : "[Internal] Cek cakupan/timeout"
 P7 --> E1 : "[Internal] Pesan error/di luar cakupan"
-P7 --> E2 : "[Internal] Pesan error/di luar cakupan"
 P6 --> P1 : "[Internal] Trigger re-index KB"
 
 ' ── ALIRAN DATA: Ke Workspace RAGA (External System) ──
@@ -157,9 +148,8 @@ P1 --> E7 : "Extract & index dokumen (OCR)"
 | ID | Nama | Deskripsi | Aktor Internal | Rujukan |
 |----|------|-----------|----------------|---------|
 | 1.0 | Pengelolaan Knowledge Base | Meng-extract dokumen instrumen akreditasi & materi layanan umum ke Dashboard RAGA via OCR; juga menerima trigger re-index dari konten CMS baru | Tim Internal / Sistem RAGA | P1 (Fase 1) |
-| 2.0 | Penyediaan Halaman Chat | Menyediakan & menampilkan UI chatbot yang ditempel (embed) di Website DPAD, terhubung ke Workspace RAGA via API/Iframe | Sistem (Halaman Chat) | P2, P3, P4 (Fase 1) |
+| 2.0 | Penyediaan Halaman Chat | Menyediakan & menampilkan UI chatbot yang ditempel (embed) di Website DPAD, terhubung ke Workspace RAGA via API/Iframe | Sistem (Halaman Chat) | P2, P3 (Fase 1) |
 | 3.0 | Konsultasi Akreditasi (Q&A) | Menjawab pertanyaan seputar instrumen akreditasi berdasarkan knowledge base, dengan sitasi sumber dokumen | Workspace RAGA | P5 (Fase 1) |
-| 4.0 | Konsultasi Layanan Umum (Q&A) | Menjawab pertanyaan umum layanan perpustakaan (jam buka, prosedur peminjaman, katalog) | Workspace RAGA | P6 (Fase 1) |
 | 5.0 | Manajemen Sesi & Log Percakapan | Menjaga konteks percakapan dalam sesi aktif dan mencatat log percakapan untuk audit | Sistem (Session Manager) | P7, P8 (Fase 1) |
 | 6.0 | Pengelolaan Konten via CMS | Menerima upload/update konten dari admin online melalui CMS di Website TLab, memicu re-index knowledge base | Admin Online / CMS RAGA | P9 (Fase 1) |
 | 7.0 | Penanganan Error & Out-of-Scope | Mendeteksi pertanyaan di luar cakupan atau kegagalan/timeout Workspace RAGA, menampilkan pesan sesuai | Sistem (Error Handler) | P11, P12 (Fase 1) |
@@ -170,14 +160,14 @@ P1 --> E7 : "Extract & index dokumen (OCR)"
 
 ## 4. Matriks Akses Data Store
 
-| Data Store | 1.0 | 2.0 | 3.0 | 4.0 | 5.0 | 6.0 | 7.0 |
-|------------|-----|-----|-----|-----|-----|-----|-----|
-| DS1 Knowledge Base Akreditasi | W | — | R | — | — | — | — |
-| DS2 Knowledge Base Layanan Umum | W | — | — | R | — | — | — |
-| DS3 Data Sesi Percakapan | — | — | R | R | R/W | — | — |
-| DS4 Log Percakapan (Audit) | — | — | — | — | W | — | — |
-| DS5 Data Konten CMS | — | — | — | — | — | W | — |
-| DS6 Registrasi Workspace | — | R | — | — | — | — | — |
+| Data Store | 1.0 | 2.0 | 3.0 | 5.0 | 6.0 | 7.0 |
+|------------|-----|-----|-----|-----|-----|-----|
+| DS1 Knowledge Base Akreditasi | W | — | R | — | — | — |
+| DS2 Knowledge Base Layanan Umum | W | — | — | — | — | — |
+| DS3 Data Sesi Percakapan | — | — | R | R/W | — | — |
+| DS4 Log Percakapan (Audit) | — | — | — | W | — | — |
+| DS5 Data Konten CMS | — | — | — | — | W | — |
+| DS6 Registrasi Workspace | — | R | — | — | — | — |
 
 > DS7 (Data Peserta & Jadwal Pelatihan) tidak muncul di matriks karena terkait P10 (aktivitas non-sistem) — dikelola secara administratif, bukan diakses oleh sub-proses DFD.
 
@@ -188,10 +178,8 @@ P1 --> E7 : "Extract & index dokumen (OCR)"
 | Kode | Aliran | Proses Terkait | Deskripsi |
 |------|--------|-----------------|-----------|
 | F01 | Pertanyaan akreditasi | E1 → 3.0 | user_message dari pengelola perpustakaan |
-| F02 | Pertanyaan layanan umum | E2 → 4.0 | user_message dari pemustaka |
 | F03 | Konten CMS | E3 → 6.0 | cms_content (dokumen/teks) |
 | F04 | Jawaban + sitasi | 3.0 → E1 | Jawaban teks + referensi dokumen |
-| F05 | Jawaban layanan umum | 4.0 → E2 | Jawaban teks |
 | F06 | Konfirmasi update | 6.0 → E3 | Notifikasi konten berhasil diperbarui |
 | F07 | UI halaman chat | 2.0 → E5 | Tampilan chatbot ter-embed |
 | F08 | Teruskan pertanyaan / retrieve jawaban | 3.0 ↔ E7 | Komunikasi API/Iframe dengan Workspace RAGA |
@@ -203,9 +191,7 @@ P1 --> E7 : "Extract & index dokumen (OCR)"
 | Dari | Ke | Aliran Data | Pemicu |
 |------|----|-----------|--------|
 | 3.0 | 5.0 | [Internal] Catat percakapan akreditasi | Setiap jawaban chatbot dihasilkan (P3) |
-| 4.0 | 5.0 | [Internal] Catat percakapan layanan umum | Setiap jawaban chatbot dihasilkan (P4) |
 | 3.0 | 7.0 | [Internal] Cek cakupan/timeout | Pertanyaan diproses, sebelum jawaban final dikirim |
-| 4.0 | 7.0 | [Internal] Cek cakupan/timeout | Pertanyaan diproses, sebelum jawaban final dikirim |
 | 6.0 | 1.0 | [Internal] Trigger re-index knowledge base | Admin online submit konten baru via CMS |
 
 ---
@@ -242,7 +228,7 @@ P1 --> E7 : "Extract & index dokumen (OCR)"
 ### 7.3 Alur Error — Pertanyaan di Luar Cakupan / Timeout
 
 ```
-[E1/E2 Pengguna]     [3.0/4.0 Konsultasi]     [7.0 Error Handler]
+[E1 Pengguna]        [3.0 Konsultasi Akreditasi]     [7.0 Error Handler]
       │                      │                        │
       │──Pertanyaan─────────►│                        │
       │                      │──[Internal] Cek cakupan/timeout──►│
@@ -254,10 +240,9 @@ P1 --> E7 : "Extract & index dokumen (OCR)"
 
 ## 8. Batas Sistem dan Catatan
 
-- **Batas sistem** mencakup sub-proses 1.0–7.0; entitas E1, E2, E3, E5, E7 berada di luar batas.
+- **Batas sistem** mencakup sub-proses 1.0–3.0 dan 5.0–7.0; entitas E1, E3, E5, E7 berada di luar batas.
 - Sub-proses 1.0 (Pengelolaan Knowledge Base) melibatkan dua pemicu: ekstraksi awal oleh Tim Internal (di luar cakupan DFD operasional harian) dan re-index otomatis dari CMS (6.0) — keduanya bermuara ke DS1/DS2.
-- Sub-proses 3.0 dan 4.0 sengaja dipisah (bukan digabung jadi satu "Konsultasi Chatbot") karena sumber knowledge base berbeda (DS1 vs DS2) dan prioritas fitur berbeda (Tinggi vs Tinggi, tapi domain konten terpisah sesuai PRD Fitur 6 & 7).
-- 7.0 (Error Handler) bersifat lintas-proses (cross-cutting) — dipanggil oleh 3.0 dan 4.0, bukan berdiri sendiri sebagai entry point.
+- 7.0 (Error Handler) bersifat lintas-proses (cross-cutting) — dipanggil oleh 3.0, bukan berdiri sendiri sebagai entry point.
 - Item terbuka dari Fase 1 (peran Sibinakawan, user utama tunggal/ganda, regulasi data) belum tercermin sebagai elemen DFD terpisah — akan direvisi jika ada konfirmasi klien yang mengubah cakupan.
 
 ---

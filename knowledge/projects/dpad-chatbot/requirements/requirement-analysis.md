@@ -40,8 +40,6 @@ Chatbot Konsultasi & Akreditasi Perpustakaan — Dinas Perpustakaan dan Arsip Da
 | Pelaksanaan | 02. Akses & Konsultasi Chatbot | 02.01 Akses Halaman Chat        | 02.01.04 Input data diri pengguna (nama, email, instansi) sebelum chat |
 | Pelaksanaan | 02. Akses & Konsultasi Chatbot | 02.02 Konsultasi Akreditasi     | 02.02.01 Teruskan pertanyaan ke RAGA (HTTPS)                           |
 | Pelaksanaan | 02. Akses & Konsultasi Chatbot | 02.02 Konsultasi Akreditasi     | 02.02.02 Tampilkan jawaban + sitasi sumber                             |
-| Pelaksanaan | 02. Akses & Konsultasi Chatbot | 02.03 Konsultasi Layanan Umum   | 02.03.01 Jawab pertanyaan layanan umum                                 |
-| Pelaksanaan | 02. Akses & Konsultasi Chatbot | 02.03 Konsultasi Layanan Umum   | 02.03.02 Klarifikasi pertanyaan ambigu (akreditasi vs layanan umum)    |
 | Pelaksanaan | 02. Akses & Konsultasi Chatbot | 02.04 Manajemen Sesi & Log      | 02.04.01 Simpan tanya-jawab per session (log audit)                    |
 | Pelaksanaan | 02. Akses & Konsultasi Chatbot | 02.04 Manajemen Sesi & Log      | 02.04.02 Sesi BERAKHIR saat refresh/tutup                              |
 | Pelaksanaan | 02. Akses & Konsultasi Chatbot | 02.05 Penanganan Kondisi Khusus | 02.05.01 Deteksi out-of-scope + pesan keterbatasan (tanpa sitasi)      |
@@ -73,7 +71,7 @@ Chatbot Konsultasi & Akreditasi Perpustakaan — Dinas Perpustakaan dan Arsip Da
 | No | Stakeholder | Sub Stakeholder | Jenis | Kebutuhan & Harapan | Dampak Jika Tidak Terpenuhi | Tindakan | Proses Terkait | Pemantauan | Frekuensi |
 |----|-------------|-----------------|-------|----------------------|------------------------------|----------|----------------|------------|-----------|
 | SH001 | Pengelola Perpustakaan | Pengelola yang mempersiapkan akreditasi | Eksternal | Jawaban cepat seputar instrumen akreditasi dengan sitasi sumber; akses dari website DPAD yang sudah dikenal | Akreditasi terhambat; konsultasi manual memakan waktu | Halaman Chat; Konsultasi Akreditasi; Sesi & Log | 02. Akses & Konsultasi Chatbot | Log percakapan & survei kepuasan | Tinggi saat musim akreditasi |
-| SH002 | Pemustaka | Pengguna layanan perpustakaan umum | Eksternal | Informasi cepat layanan umum (jam buka, prosedur, katalog) tanpa datang langsung | Antrean layanan informasi; kepuasan rendah | Halaman Chat; Konsultasi Layanan Umum | 02. Akses & Konsultasi Chatbot | Log percakapan | Harian/insidental |
+| SH002 | Pemustaka | Pengguna layanan perpustakaan (masyarakat umum) | Eksternal | Akses halaman chat dari website DPAD *(layanan umum deferred keluar MVP)* | Antrean layanan informasi; kepuasan rendah | Halaman Chat | 02. Akses & Konsultasi Chatbot | Log percakapan | Harian/insidental |
 | SH003 | Admin Online DPAD | Pak Zulfa & Tim DPAD | Eksternal | Mengelola konten chatbot mandiri via CMS; mendapat pelatihan (maks 3×4 jam); user guide lengkap; melihat laporan analitik pengguna chat | Konten basi; ketergantungan pada TLab; tidak bisa memantau utilisasi | CMS; Pelatihan; User Guide; Laporan Analitik | 03. Pengelolaan Konten CMS; 04. Pelatihan & Enablement; 07. Pelaporan Analitik | Uji kompetensi pasca pelatihan | Berkala |
 | SH004 | Tim Internal TLab | PM, BE, FE, QA, DevOps, Design | Internal | Backlog terstruktur & traceable; deliverable KAK terpenuhi; kualitas keamanan/WCAG terjaga | Scope tidak jelas; kualitas tidak terukur | Backlog Taiga; QA Pipeline; VAPT/SAST/WCAG | Semua proses | Status sprint mingguan | Harian |
 | SH005 | Website DPAD | Website existing DPAD | System | Menampilkan tombol & halaman chat tanpa perubahan arsitektur besar | Chatbot tidak dapat diakses publik | Snippet Tombol; Embed Halaman | 02.01 Akses Halaman Chat | Monitoring uptime | Real-time |
@@ -128,8 +126,6 @@ Chatbot Konsultasi & Akreditasi Perpustakaan — Dinas Perpustakaan dan Arsip Da
 | 02.01 Akses Halaman Chat | SH001 - Pengelola Perpustakaan | Menyetujui | OB-022-Persetujuan Privasi | Consent pengumpulan data pribadi |
 | 02.02 Konsultasi Akreditasi | SH001 - Pengelola Perpustakaan | Mengirim | OB-001-Dokumen Instrumen Akreditasi | Pertanyaan diteruskan ke RAGA |
 | 02.02 Konsultasi Akreditasi | SH007 - Workspace RAGA | Menghasilkan | OB-009-Jawaban + Sitasi Sumber | Retrieval dari knowledge base |
-| 02.03 Konsultasi Layanan Umum | SH002 - Pemustaka | Mengirim | OB-002-Materi Layanan Perpustakaan | Pertanyaan layanan umum |
-| 02.03 Konsultasi Layanan Umum | SH007 - Workspace RAGA | Menghasilkan | OB-002-Materi Layanan Perpustakaan | Klarifikasi ambigu bila perlu |
 | 02.04 Manajemen Sesi & Log | SH007 - Workspace RAGA | Mencatat | OB-008-Log Percakapan | Per session_id, untuk audit |
 | 02.04 Manajemen Sesi & Log | SH007 - Workspace RAGA | Mengakhiri | OB-007-Sesi Percakapan | Saat refresh/tutup halaman |
 | 02.05 Penanganan Kondisi Khusus | SH007 - Workspace RAGA | Menampilkan | OB-010-Pesan Keterbatasan Cakupan | Out-of-scope tanpa sitasi |
@@ -201,7 +197,6 @@ Chatbot Konsultasi & Akreditasi Perpustakaan — Dinas Perpustakaan dan Arsip Da
 | US-001 | Sebagai Tim Internal, saya ingin mengonfigurasi workspace & mengunggah dokumen akreditasi/layanan ke RAGA, sehingga chatbot punya knowledge base akurat dengan kontrol akses benar. | EPIC-01 | F - Fungsional Awal | SPOK 01.01+01.02; source-docs US-001 |
 | US-002 | Sebagai Pengelola Perpustakaan/Pemustaka, saya ingin mengakses halaman chat dari website DPAD, sehingga bisa bertanya tanpa berpindah platform. | EPIC-02 | F - Fungsional Awal | SPOK 02.01; source-docs US-002 |
 | US-003 | Sebagai Pengelola Perpustakaan, saya ingin bertanya seputar instrumen akreditasi, sehingga mendapat jawaban cepat dengan sitasi sumber. | EPIC-02 | F - Fungsional Awal | SPOK 02.02; source-docs US-003 |
-| US-004 | Sebagai Pemustaka, saya ingin bertanya layanan perpustakaan umum, sehingga mendapat info cepat tanpa datang langsung. | EPIC-02 | F - Fungsional Awal | SPOK 02.03; source-docs US-004 |
 | US-005 | Sebagai pengguna, saya ingin percakapan diingat dalam satu sesi, sehingga bisa bertanya lanjutan tanpa mengulang konteks. | EPIC-02 | F - Fungsional Awal | SPOK 02.04; source-docs US-005 |
 | US-006 | Sebagai pengguna, saya ingin diberi tahu jika pertanyaan di luar cakupan, sehingga tidak menerima jawaban mengarang. | EPIC-02 | F - Fungsional Awal | SPOK 02.05; source-docs US-006 |
 | US-007 | Sebagai pengguna, saya ingin melihat pesan error jelas saat sistem bermasalah, sehingga tahu harus mencoba lagi. | EPIC-02 | F - Fungsional Awal | SPOK 02.05; source-docs US-007 |
@@ -251,8 +246,7 @@ Chatbot Konsultasi & Akreditasi Perpustakaan — Dinas Perpustakaan dan Arsip Da
 |------------|---------|------|------------------|
 | US-001 | IS-101 | Setup Workspace Chatbot DPAD di RAGA (system prompt, konfigurasi model, RBAC) | Musa (BE) |
 | US-001 | IS-102 | Monitor folder Drive DPAD & ingest dokumen contoh dari DPAD | Musa (BE) |
-| US-001 | IS-103 | Verifikasi hasil ekstraksi & indeks per kategori (akreditasi / layanan umum) | Musa (BE) + QA |
-| US-001 | IS-104 | Penanganan dokumen gagal-extract (status GAGAL + notifikasi) | Musa (BE) |
+| US-001 | IS-103 | Verifikasi hasil ekstraksi & indeks per kategori (akreditasi / layanan umum) — jalur normal + jalur gagal (status GAGAL & notifikasi) | Musa (BE) + QA |
 
 ### EPIC-02 — Halaman Chat & Integrasi Website DPAD
 
@@ -269,8 +263,6 @@ Chatbot Konsultasi & Akreditasi Perpustakaan — Dinas Perpustakaan dan Arsip Da
 | US-003 | IS-206 | Integrasi API kirim-pesan ke Workspace RAGA (HTTPS) | Musa (BE) |
 | US-003 | IS-207 | Tampilan jawaban + sitasi sumber dokumen | Musa (BE) + Raihan (FE) |
 | US-003 | IS-208 | Verifikasi response time < 5 detik (p95) | QA (Anantya) |
-| US-004 | IS-209 | Rute pertanyaan layanan umum → knowledge base layanan umum | Musa (BE) |
-| US-004 | IS-210 | Klarifikasi pertanyaan ambigu (akreditasi vs layanan umum) | Musa (BE) |
 | US-005 | IS-211 | Simpan pasangan tanya-jawab per session_id ke log | Musa (BE) |
 | US-005 | IS-212 | Status sesi BERAKHIR saat refresh/tutup halaman | Musa (BE) |
 | US-006 | IS-213 | Deteksi out-of-scope + pesan keterbatasan cakupan (tanpa sitasi) | Musa (BE) |

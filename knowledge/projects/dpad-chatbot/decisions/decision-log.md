@@ -10,6 +10,7 @@ created: 2026-08-11
 
 | ID | Date | Decision | Rationale | Status |
 |----|------|----------|-----------|--------|
+| DEC-008 | 2026-08-24 | US-004 (Konsultasi Layanan Umum) dihapus total dari MVP & seluruh pipeline dokumen — bukan sekadar deferred | Keputusan PM 21-Agt "untuk yang deferred hapus aja": US-004/FR-003/UC4/FR-4.x/IS-209/IS-210 dihapus dari PRD v2.1, FSD v1.2, 05/06/09, 02_DFD, 04, 08, 10, requirement-backlog, requirement-analysis, backlog-plan; semi-cleanup tanpa renumber (24-Agt); DS2 (KB layanan umum) & kategori 'layanan_umum' dipertahankan sebagai data store dokumen. | Active |
 | DEC-001 | 2026-08-11 | Client onboarding DPAD DIY dimulai | Client baru: Dinas Perpustakaan dan Arsip Daerah Yogyakarta. Project: AI Knowledge Center — Chatbot DPAD. Scope: halaman chat + CMS + pelatihan. | Active |
 | DEC-005 | 2026-08-19 | Halaman kebijakan privasi dibuat terpisah (keputusan PM) | Gap AC-015.3: checkbox persetujuan menyebut kebijakan privasi tapi belum ada halamannya. Keputusan: buat halaman terpisah + link dari checkbox. Implementasi: task Taiga IS-221 (ref 82, US-015, decky). | Active |
 | DEC-006 | 2026-08-19 | Acceptance Criteria (AC) menjadi acuan QA untuk test scenario/test case/UAT | MOM-20260819 item 6–7. Dokumen `requirements/acceptance-criteria.md` (73 AC) disetujui jadi acuan; implementasi: task Taiga IS-222 (ref 83, anantya). | Active |

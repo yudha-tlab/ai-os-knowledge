@@ -78,7 +78,7 @@ PI2 --> PM1 : (prasyarat kompetensi\nsebelum akses CMS)
 
 | **System Span** | **Pages** | **User Stories Coverage** |
 | --------------- | --------- | ------------------------ |
-| **MVP** | PAGE-CHAT-001, PAGE-INT-001, PAGE-INT-003 | US-001, US-002, US-003, US-004, US-005, US-006, US-007 |
+| **MVP** | PAGE-CHAT-001, PAGE-INT-001, PAGE-INT-003 | US-001, US-002, US-003, US-005, US-006, US-007 |
 | **Release 1** | PAGE-CMS-001, PAGE-CMS-002, PAGE-CMS-003, PAGE-CMS-004, PAGE-INT-002 | US-008, US-009 |
 | **Release 2 (backlog)** | *(belum ada — menunggu konfirmasi Sibinakawan)* | — |
 
@@ -90,7 +90,7 @@ PI2 --> PM1 : (prasyarat kompetensi\nsebelum akses CMS)
 
 | **Module** | **Description** | **Entity Source** | **Pages** | **User Stories** |
 | ---------- | --------------- | ----------------- | --------- | ---------------- |
-| Halaman Chat (Publik) | Antarmuka tanya-jawab chatbot untuk pengelola perpustakaan & pemustaka, ditempel di website DPAD | Session, ConversationLog, KnowledgeDocument (via citation) | 1 | US-002, US-003, US-004, US-005, US-006, US-007 |
+| Halaman Chat (Publik) | Antarmuka tanya-jawab chatbot untuk pengelola perpustakaan, ditempel di website DPAD | Session, ConversationLog, KnowledgeDocument (via citation) | 1 | US-002, US-003, US-005, US-006, US-007 |
 | CMS Admin (Website TLab) | Antarmuka pengelolaan konten chatbot oleh admin online, termasuk login time-bound | Admin, CMSContent, KnowledgeDocument | 4 | US-008 |
 | Internal (Setup & Pelatihan) | Halaman/aktivitas administratif tim internal — setup awal knowledge base, konfigurasi workspace, jadwal pelatihan | Workspace, KnowledgeDocument, TrainingSession, Admin | 3 | US-001, US-009 |
 
@@ -117,7 +117,6 @@ PI2 --> PM1 : (prasyarat kompetensi\nsebelum akses CMS)
 | ------------- | ------------ | --------------- |
 | US-002 | Full | Menampilkan halaman chat & membuat session baru |
 | US-003 | Full | Menampilkan jawaban akreditasi + sitasi |
-| US-004 | Full | Menampilkan jawaban layanan umum |
 | US-005 | Full | Mempertahankan konteks percakapan dalam sesi (transparan bagi pengguna) |
 | US-006 | Full | Menampilkan pesan di luar cakupan sebagai bagian dari alur chat |
 | US-007 | Full | Menampilkan pesan error/timeout sebagai bagian dari alur chat |
@@ -144,7 +143,6 @@ PI2 --> PM1 : (prasyarat kompetensi\nsebelum akses CMS)
 │ - Pesan Pembuka/Instruksi (saat pertama dibuka)              │
 │ - Riwayat Percakapan (bubble chat: pertanyaan & jawaban)     │
 │   - Bubble jawaban akreditasi disertai badge sitasi sumber   │
-│   - Bubble jawaban layanan umum tanpa badge sitasi           │
 │   - Bubble pesan "di luar cakupan" (styling berbeda)         │
 │   - Bubble pesan error/timeout (alert, styling berbeda)      │
 │                                                              │
@@ -187,18 +185,18 @@ PI2 --> PM1 : (prasyarat kompetensi\nsebelum akses CMS)
 
 | **Field** | **Sample Data 1** | **Sample Data 2** | **Sample Data 3** |
 | --------- | ----------------- | ----------------- | ----------------- |
-| user_message | "Apa syarat akreditasi perpustakaan sekolah?" | "Jam berapa perpustakaan buka?" | "Bagaimana cuaca hari ini di Yogyakarta?" |
-| jawaban_chatbot | "Berdasarkan Instrumen Akreditasi Perpustakaan 2026 Bab III, syarat akreditasi perpustakaan sekolah meliputi..." | "Perpustakaan DPAD DIY buka Senin–Jumat pukul 08.00–16.00 WIB." | "Maaf, pertanyaan ini di luar cakupan layanan chatbot kami. Saya dapat membantu seputar layanan perpustakaan dan instrumen akreditasi." |
-| kategori_jawaban | AKREDITASI | LAYANAN_UMUM | DI_LUAR_CAKUPAN |
-| bagian_dokumen (sitasi) | "Instrumen Akreditasi Perpustakaan 2026, Bab III Pasal 5" | *(tidak tampil)* | *(tidak tampil)* |
+| user_message | "Apa syarat akreditasi perpustakaan sekolah?" | "Bagaimana cuaca hari ini di Yogyakarta?" |
+| jawaban_chatbot | "Berdasarkan Instrumen Akreditasi Perpustakaan 2026 Bab III, syarat akreditasi perpustakaan sekolah meliputi..." | "Maaf, pertanyaan ini di luar cakupan layanan chatbot kami. Saya dapat membantu seputar instrumen akreditasi." |
+| kategori_jawaban | AKREDITASI | DI_LUAR_CAKUPAN |
+| bagian_dokumen (sitasi) | "Instrumen Akreditasi Perpustakaan 2026, Bab III Pasal 5" | *(tidak tampil)* |
 
-**Sample Data Discussion:** Data mencerminkan tiga jalur utama UC3/UC4/UC6 dari FSD — pertanyaan akreditasi dengan sitasi, pertanyaan layanan umum tanpa sitasi, dan pertanyaan di luar cakupan dengan pesan penolakan sopan. Format bahasa Indonesia formal sesuai konteks instansi pemerintah daerah.
+**Sample Data Discussion:** Data mencerminkan dua jalur utama UC3/UC6 dari FSD — pertanyaan akreditasi dengan sitasi, dan pertanyaan di luar cakupan dengan pesan penolakan sopan. Format bahasa Indonesia formal sesuai konteks instansi pemerintah daerah.
 
 ### Actions & Buttons
 
 | **Action** | **Button Label** | **Type** | **Target** | **Validation** | **User Story** |
 | ---------- | ---------------- | -------- | ---------- | -------------- | ------------- |
-| Kirim pertanyaan | Kirim (ikon panah) | Primary | Submit ke UC3/UC4 via API/Iframe | Input tidak boleh kosong | US-003, US-004 |
+| Kirim pertanyaan | Kirim (ikon panah) | Primary | Submit ke UC3 via API/Iframe | Input tidak boleh kosong | US-003 |
 | Kirim ulang setelah error | Coba Lagi | Primary (kondisional) | Re-submit pertanyaan terakhir | Muncul hanya saat status error | US-007 |
 | Klik badge sitasi | *(nama dokumen)* | Link/tooltip | Tampilkan detail sumber (modal/tooltip) | Muncul hanya untuk jawaban akreditasi | US-003 |
 
@@ -1078,7 +1076,6 @@ Sama seperti sample data PAGE-CMS-003 §Sample Data, karena struktur data yang m
 | US-001 | PAGE-INT-001 (Upload KB Awal), PAGE-INT-003 (Konfigurasi Workspace) | Full |
 | US-002 | PAGE-CHAT-001 | Full |
 | US-003 | PAGE-CHAT-001 | Full |
-| US-004 | PAGE-CHAT-001 | Full |
 | US-005 | PAGE-CHAT-001 | Full (transparan bagi pengguna) |
 | US-006 | PAGE-CHAT-001 | Full |
 | US-007 | PAGE-CHAT-001 | Full |
@@ -1206,9 +1203,9 @@ Sama seperti sample data PAGE-CMS-003 §Sample Data, karena struktur data yang m
 
 | **Field** | **Sample 1** | **Sample 2** | **Sample 3** |
 | --------- | ------------ | ------------ | ------------ |
-| user_message | "Apa syarat akreditasi perpustakaan sekolah?" | "Jam berapa perpustakaan buka?" | "Bagaimana cuaca hari ini?" |
-| kategori_jawaban | AKREDITASI | LAYANAN_UMUM | DI_LUAR_CAKUPAN |
-| is_out_of_scope | FALSE | FALSE | TRUE |
+| user_message | "Apa syarat akreditasi perpustakaan sekolah?" | "Bagaimana cuaca hari ini?" |
+| kategori_jawaban | AKREDITASI | DI_LUAR_CAKUPAN |
+| is_out_of_scope | FALSE | TRUE |
 
 ---
 

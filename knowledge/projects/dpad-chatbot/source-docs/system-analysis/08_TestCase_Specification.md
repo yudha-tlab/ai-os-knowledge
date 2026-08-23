@@ -21,13 +21,12 @@
 | UC-1: Kelola Knowledge Base | 1 | 1 | 1 | 3 |
 | UC-2: Tampilkan Halaman Chat | 1 | 1 | 1 | 3 |
 | UC-3: Konsultasi Akreditasi | 1 | 1 | 1 | 3 |
-| UC-4: Konsultasi Layanan Umum | 1 | 1 | 1 | 3 |
 | UC-5: Kelola Sesi Percakapan | 1 | 1 | 1 | 3 |
 | UC-6: Tangani Pertanyaan Di Luar Cakupan | 1 | 1 | 1 | 3 |
 | UC-7: Tangani Error/Timeout RAGA | 1 | 1 | 1 | 3 |
 | UC-8: Kelola Konten via CMS | 1 | 1 | 1 | 3 |
 | UC-9: Ikuti Pelatihan Sistem | 1 | 1 | 1 | 3 |
-| **TOTAL** | **9** | **9** | **9** | **27** |
+| **TOTAL** | **8** | **8** | **8** | **24** |
 
 ---
 
@@ -69,7 +68,7 @@
 | --------- | --------- |
 | **User Story** | Sebagai Tim Internal/Admin Online, saya ingin meng-extract dokumen ke RAGA, sehingga chatbot punya sumber knowledge base akurat |
 | **Reference Document** | 07_FSD.md §3.1 |
-| **Test Case Description** | Verifikasi ekstraksi dokumen instrumen akreditasi/layanan umum ke knowledge base via OCR |
+| **Test Case Description** | Verifikasi ekstraksi dokumen instrumen akreditasi & materi layanan umum ke knowledge base via OCR |
 | **Pre-Condition** | Workspace Chatbot DPAD sudah dikonfigurasi |
 | **Post-Condition** | Dokumen ter-index di knowledge base dan dapat dirujuk chatbot |
 | **Primary Actor** | Tim Internal / Tim Proyek, Admin Online DPAD |
@@ -488,147 +487,6 @@
 
 ---
 
-## Test Cases for UC-4: Konsultasi Layanan Umum
-
-### UC-4 Metadata
-
-| **Field** | **Value** |
-| --------- | --------- |
-| **Test Case ID** | TC-QNA-4 |
-| **Use Case ID** | UC-4 |
-| **Use Case Name** | Konsultasi Layanan Umum |
-| **Module** | Chatbot Q&A — Layanan Umum |
-| **Priority** | High |
-| **Test Type** | Functional |
-| **Test Category** | Positive/Negative/Boundary |
-| **Source** | FSD Section 3.4 |
-
-### UC-4 Test Case Description
-
-| **Field** | **Value** |
-| --------- | --------- |
-| **User Story** | Sebagai Pemustaka, saya ingin bertanya ke chatbot tentang layanan perpustakaan umum |
-| **Reference Document** | 07_FSD.md §3.4 |
-| **Test Case Description** | Verifikasi chatbot menjawab pertanyaan layanan umum tanpa kewajiban sitasi eksplisit |
-| **Pre-Condition** | UC2 sudah berjalan; knowledge base layanan umum tersedia |
-| **Post-Condition** | Jawaban ditampilkan; percakapan tercatat dalam sesi & log |
-| **Primary Actor** | Pemustaka, Pengelola Perpustakaan |
-
-### UC-4 Related Requirements
-
-| **Spec ID** | **Requirement Description** | **Test Approach** |
-| ----------- | --------------------------- | ----------------- |
-| FR-4.1 | Sistem harus meneruskan pertanyaan layanan umum & mengembalikan jawaban teks | Verifikasi jawaban dari DS2 |
-| FR-4.2 | Sistem harus mengklarifikasi pertanyaan ambigu antara akreditasi vs layanan umum | Verifikasi UC6 terpicu pada kasus ambigu |
-| FR-4.3 | Sistem harus mencatat log dengan kategori_jawaban='LAYANAN_UMUM' | Verifikasi entri log |
-
----
-
-#### TC-QNA-4-01: Pertanyaan Layanan Umum Dijawab Tanpa Sitasi Wajib (Positive - Happy Path)
-
-| **Field** | **Value** |
-| --------- | --------- |
-| **Test Case ID** | TC-QNA-4-01 |
-| **Test Case Name** | Chatbot menjawab pertanyaan jam buka perpustakaan |
-| **Test Category** | Positive |
-| **Priority** | High |
-| **Pre-Condition** | Halaman chat terbuka; knowledge base layanan umum terindeks |
-| **Post-Condition** | Jawaban tampil tanpa badge sitasi wajib; log tercatat kategori_jawaban='LAYANAN_UMUM' |
-| **Reference** | FSD 3.4.2 - Main Success Scenario |
-
-**Test Steps:**
-
-| **No.** | **Langkah Uji** | **Data Uji** | **Hasil yang Diharapkan** | **Status** |
-| ----- | ------------------------------------------------ | ------------------------------ | ------------------------------------------- | ---------- |
-| 1 | Ketik pertanyaan layanan umum | "Jam berapa perpustakaan buka?" | Pertanyaan terkirim | ⬜ |
-| 2 | Halaman chat meneruskan ke RAGA | — | Request terkirim | ⬜ |
-| 3 | RAGA retrieval dari knowledge base layanan umum | — | Konteks ditemukan dari DS2 | ⬜ |
-| 4 | Jawaban teks ditampilkan | — | Jawaban tampil tanpa badge sitasi wajib | ⬜ |
-| 5 | Sistem mencatat log | — | kategori_jawaban='LAYANAN_UMUM' (FR-4.3) | ⬜ |
-
-**Test Data:**
-
-| **Variable** | **Type** | **Value** | **Description** |
-| ------------ | -------- | --------- | --------------- |
-| user_message | TEXT | "Jam berapa perpustakaan buka?" | Pertanyaan layanan umum valid |
-| kategori_jawaban | VARCHAR(20) | LAYANAN_UMUM | Domain kategori |
-
-**Pass Criteria:**
-
-- [ ] Jawaban relevan dan akurat (FR-4.1)
-- [ ] Badge sitasi sumber tidak ditampilkan (beda dari UC3)
-- [ ] Log tercatat dengan kategori benar
-
----
-
-#### TC-QNA-4-02: Pertanyaan Ambigu Antara Akreditasi dan Layanan Umum (Negative - Invalid Data)
-
-| **Field** | **Value** |
-| --------- | --------- |
-| **Test Case ID** | TC-QNA-4-02 |
-| **Test Case Name** | Sistem mengklarifikasi pertanyaan yang ambigu antara dua topik |
-| **Test Category** | Negative |
-| **Priority** | Medium |
-| **Pre-Condition** | Halaman chat terbuka |
-| **Post-Condition** | Sistem menampilkan permintaan klarifikasi, bukan jawaban langsung yang berpotensi salah kategori |
-| **Reference** | FSD 3.4.2 - Extensions |
-
-**Test Steps:**
-
-| **No.** | **Langkah Uji** | **Data Uji** | **Hasil yang Diharapkan** | **Status** |
-| ----- | ------------------------------------------------ | ------------------------------ | ------------------------------------------- | ---------- |
-| 1 | Ketik pertanyaan ambigu | "Bagaimana prosedur akreditasi peminjaman buku?" | Pertanyaan tercampur dua topik terkirim | ⬜ |
-| 2 | Sistem mendeteksi ambiguitas | — | UC6 terpicu untuk klarifikasi (FR-4.2) | ⬜ |
-| 3 | Sistem menampilkan permintaan klarifikasi | — | Pesan meminta pengguna memperjelas maksud | ⬜ |
-
-**Test Data (Invalid):**
-
-| **Variable** | **Type** | **Invalid Value** | **Error Expected** |
-| ------------ | -------- | ----------------- | ------------------ |
-| user_message | TEXT | "Bagaimana prosedur akreditasi peminjaman buku?" | Permintaan klarifikasi, bukan jawaban langsung |
-
-**Pass Criteria:**
-
-- [ ] Sistem tidak langsung menjawab dengan asumsi kategori yang salah
-- [ ] No system crash
-- [ ] Log tetap tercatat untuk keperluan audit (dengan flag ambigu, jika diimplementasikan)
-
----
-
-#### TC-QNA-4-03: Pertanyaan Layanan Umum dalam Bahasa Campuran/Typo (Boundary - Edge Case)
-
-| **Field** | **Value** |
-| --------- | --------- |
-| **Test Case ID** | TC-QNA-4-03 |
-| **Test Case Name** | Uji ketahanan chatbot terhadap typo dan bahasa campuran |
-| **Test Category** | Boundary |
-| **Priority** | Medium |
-| **Pre-Condition** | Halaman chat terbuka |
-| **Post-Condition** | Sistem tetap memberikan jawaban relevan atau meminta klarifikasi, tidak error |
-| **Reference** | FSD 3.4.5 - Field Level Specifications |
-
-**Test Steps:**
-
-| **No.** | **Langkah Uji** | **Data Uji** | **Hasil yang Diharapkan** | **Status** |
-| ----- | ------------------------------------------------ | ------------------------------ | ------------------------------------------- | ---------- |
-| 1 | Ketik pertanyaan dengan typo | "jm bukaaa perpus?" | Sistem tetap mencoba memahami maksud | ⬜ |
-| 2 | Ketik pertanyaan campuran Indonesia-Inggris | "What time perpustakaan open?" | Sistem merespons sesuai kapabilitas bahasa yang didukung | ⬜ |
-| 3 | Verifikasi tidak ada error sistem | — | Tidak ada crash, jawaban atau klarifikasi tetap muncul | ⬜ |
-
-**Boundary Test Data:**
-
-| **Condition** | **Input Value** | **Expected Result** |
-| ------------- | --------------- | ------------------- |
-| Typo ringan | "jm bukaaa perpus?" | Jawaban relevan (toleransi NLP RAGA) |
-| Bahasa campuran | "What time perpustakaan open?" | Jawaban dalam Bahasa Indonesia (bahasa utama) atau Inggris jika multi-bahasa aktif (spec.md Optional Features) |
-
-**Pass Criteria:**
-
-- [ ] Tidak ada crash pada input dengan typo/bahasa campuran
-- [ ] Perilaku multi-bahasa terdokumentasi sesuai status fitur (WHERE fitur multi-bahasa diaktifkan — spec.md Optional Features)
-
----
-
 ## Test Cases for UC-5: Kelola Sesi Percakapan
 
 ### UC-5 Metadata
@@ -653,7 +511,7 @@
 | **Test Case Description** | Verifikasi konteks sesi terjaga dan log tercatat konsisten |
 | **Pre-Condition** | Sesi (session_id) sudah dibuat saat halaman chat dibuka (UC2) |
 | **Post-Condition** | Konteks sesi ter-update; entri baru tercatat di log percakapan |
-| **Primary Actor** | (Tidak ada aktor langsung — dipicu otomatis oleh UC3/UC4) |
+| **Primary Actor** | (Tidak ada aktor langsung — dipicu otomatis oleh UC3) |
 
 ### UC-5 Related Requirements
 
@@ -791,9 +649,9 @@
 | **User Story** | (Extending behavior — mendukung US-011) |
 | **Reference Document** | 07_FSD.md §3.6 |
 | **Test Case Description** | Verifikasi chatbot tidak mengarang jawaban untuk pertanyaan di luar topik |
-| **Pre-Condition** | UC3 atau UC4 sedang berjalan |
+| **Pre-Condition** | UC3 sedang berjalan |
 | **Post-Condition** | Pesan "di luar cakupan" ditampilkan; is_out_of_scope=TRUE tercatat di log |
-| **Primary Actor** | (Tidak ada aktor langsung — dipicu kondisional dari UC3/UC4) |
+| **Primary Actor** | (Tidak ada aktor langsung — dipicu kondisional dari UC3) |
 
 ### UC-6 Related Requirements
 
@@ -801,7 +659,7 @@
 | ----------- | --------------------------- | ----------------- |
 | FR-6.1 | Sistem harus menampilkan pesan di luar cakupan, tanpa mengarang jawaban | Verifikasi jawaban tidak berisi informasi fabrikasi |
 | FR-6.2 | Sistem tidak boleh membuat baris tbl_citation_reference untuk jawaban di luar cakupan | Verifikasi tidak ada sitasi pada log is_out_of_scope=TRUE |
-| FR-6.3 | Sistem harus mengklarifikasi pertanyaan ambigu sebelum menandai di luar cakupan | Verifikasi UC6↔UC4 interaksi |
+| FR-6.3 | Sistem harus mengklarifikasi pertanyaan ambigu sebelum menandai di luar cakupan | Verifikasi interaksi UC6 |
 
 ---
 
@@ -884,7 +742,7 @@
 | **Test Case Name** | Uji batas keputusan relevansi untuk pertanyaan yang sangat mirip topik namun tidak persis |
 | **Test Category** | Boundary |
 | **Priority** | Medium |
-| **Pre-Condition** | Knowledge base akreditasi & layanan umum terindeks |
+| **Pre-Condition** | Knowledge base akreditasi terindeks |
 | **Post-Condition** | Sistem konsisten dalam mengklasifikasikan pertanyaan borderline |
 | **Reference** | FSD 3.6.2 - Pertanyaan Terbuka (threshold deteksi) |
 
@@ -932,9 +790,9 @@
 | **User Story** | (Extending behavior — mendukung US-012) |
 | **Reference Document** | 07_FSD.md §3.7 |
 | **Test Case Description** | Verifikasi sistem menampilkan pesan error yang informatif saat RAGA down/timeout |
-| **Pre-Condition** | UC3 atau UC4 sedang berjalan |
+| **Pre-Condition** | UC3 sedang berjalan |
 | **Post-Condition** | Pesan error/timeout ditampilkan; pengguna disarankan mencoba lagi |
-| **Primary Actor** | (Tidak ada aktor langsung — dipicu kondisional dari UC3/UC4) |
+| **Primary Actor** | (Tidak ada aktor langsung — dipicu kondisional dari UC3) |
 
 ### UC-7 Related Requirements
 
@@ -993,7 +851,7 @@
 | **Priority** | High |
 | **Pre-Condition** | Halaman chat terbuka; Workspace RAGA dimatikan sepenuhnya (simulasi) |
 | **Post-Condition** | Pesan error ditampilkan konsisten untuk setiap percobaan pertanyaan |
-| **Reference** | FSD 3.7.2 - (jalur pengecualian UC3/UC4) |
+| **Reference** | FSD 3.7.2 - (jalur pengecualian UC3) |
 
 **Test Steps:**
 
@@ -1363,9 +1221,6 @@
 | TC-QNA-3-01 | UC-3 | Pertanyaan Akreditasi Dijawab dengan Sitasi | Positive | High | §UC-3 |
 | TC-QNA-3-02 | UC-3 | Pertanyaan Kosong Dikirim ke Chatbot | Negative | High | §UC-3 |
 | TC-QNA-3-03 | UC-3 | Pertanyaan dengan Panjang Teks Ekstrem | Boundary | Medium | §UC-3 |
-| TC-QNA-4-01 | UC-4 | Pertanyaan Layanan Umum Dijawab Tanpa Sitasi Wajib | Positive | High | §UC-4 |
-| TC-QNA-4-02 | UC-4 | Pertanyaan Ambigu Antara Akreditasi dan Layanan Umum | Negative | Medium | §UC-4 |
-| TC-QNA-4-03 | UC-4 | Pertanyaan Layanan Umum dengan Typo/Bahasa Campuran | Boundary | Medium | §UC-4 |
 | TC-SESS-5-01 | UC-5 | Konteks Percakapan Terjaga dalam Sesi Aktif | Positive | High | §UC-5 |
 | TC-SESS-5-02 | UC-5 | Sesi Terputus Kehilangan Konteks | Negative | Medium | §UC-5 |
 | TC-SESS-5-03 | UC-5 | Percakapan Panjang dalam Satu Sesi | Boundary | Low | §UC-5 |
