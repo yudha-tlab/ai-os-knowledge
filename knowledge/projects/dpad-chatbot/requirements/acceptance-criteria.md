@@ -31,7 +31,7 @@ Dokumen ini menyediakan **acceptance criteria (AC)** sebagai acuan QA untuk meny
 |--------|-----------|
 | FSD v1.1 | `source-docs/system-analysis/07_FSD.md` (FR-1.1 s.d. FR-11.5, ERR-01..06, UC1–UC11) |
 | User Story Mapping v1.1 | `source-docs/system-analysis/09_UserStory_Mapping.md` (AC baseline per US) |
-| Requirement Backlog v1.3 | `requirements/requirement-backlog.md` (FR-001..012, NFR-001..004) |
+| Requirement Backlog v1.4 | `requirements/requirement-backlog.md` (FR-001..002, FR-004..012, NFR-001..004) |
 | Requirement Analysis v2.0 | `requirements/requirement-analysis.md` (proses bisnis, task breakdown IS-xxx) |
 | Backlog Plan v0.7 | `taiga/backlog-plan-draft.md` (sprint split, assignee) |
 | MOM Sprint Meeting | `meetings/MOM-20260819-sprint-progress-checkpoint.md` |
@@ -279,7 +279,7 @@ Untuk **Anan (QA)** dan tim:
 
 - **FSD v1.1:** `source-docs/system-analysis/07_FSD.md`
 - **User Story Mapping v1.1:** `source-docs/system-analysis/09_UserStory_Mapping.md`
-- **Requirement Backlog v1.3:** `requirements/requirement-backlog.md`
+- **Requirement Backlog v1.4:** `requirements/requirement-backlog.md`
 - **Backlog Plan v0.7:** `taiga/backlog-plan-draft.md`
 - **MOM Sprint Meeting:** `meetings/MOM-20260819-sprint-progress-checkpoint.md`
 - **Project Hub:** `project-profile.md`

@@ -22,6 +22,7 @@ changelog:
 
 > **STATUS: v1.1 — keputusan PM final.** Eksekusi dokumen (FSD, 05, 09, dll) dilakukan PI agent; eksekusi backlog & Taiga dilakukan PM.
 > **Provenance:** seluruh perbandingan berasal dari data aktual dokumen (git diff + pembacaan langsung + KAK asli klien), bukan asumsi.
+> **UPDATE 2026-08-24 (DEC-008):** dokumen ini adalah catatan historis keputusan K1–K8 per 18-Agt. Sejak 24-Agt, US-004 **dihapus total** (bukan deferred): US-004/IS-209 terhapus dari Taiga, FR-003 dihapus dari requirement-backlog, UC4/FR-4.x dihapus dari seluruh dokumen system-analysis. Pernyataan "US-004 tetap ada di Taiga (deferred)" di §3.3 **sudah tidak berlaku**.
 
 ---
 

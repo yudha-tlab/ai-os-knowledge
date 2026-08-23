@@ -768,11 +768,11 @@ INSERT INTO ref_kategori_dokumen (kode, label) VALUES
 
 | Entitas | Digunakan di User Story |
 |---------|----------------------|
-| Workspace | US-002, US-003, US-004 |
+| Workspace | US-002, US-003 |
 | KnowledgeDocument | US-001, US-005, US-006, US-009 |
 | CMSContent | US-009 |
 | Admin | US-009, US-010 |
-| Session | US-004, US-005, US-006, US-007 |
+| Session | US-005, US-006, US-007 |
 | ConversationLog | US-005, US-006, US-008, US-011, US-012 |
 | TrainingSession | US-010 |
 | CitationReference | US-005 |

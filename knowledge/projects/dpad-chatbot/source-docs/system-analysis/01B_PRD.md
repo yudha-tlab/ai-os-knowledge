@@ -238,7 +238,7 @@ Konsultasi pembinaan perpustakaan saat ini bergantung pada interaksi langsung & 
 | Epic | User Story | AC | FR/NFR |
 |------|-----------|----|--------|
 | EPIC-01 | US-001, US-018 | AC-001.x, AC-018.x | FR-001 |
-| EPIC-02 | US-002, US-015, US-003, US-005, US-006, US-007, US-017 | AC-002/015/003/005/006/007/017.x | FR-001..005, FR-009, FR-011, NFR-003, NFR-004 |
+| EPIC-02 | US-002, US-015, US-003, US-005, US-006, US-007, US-017 | AC-002/015/003/005/006/007/017.x | FR-001, FR-002, FR-004, FR-005, FR-009, FR-011, NFR-003, NFR-004 |
 | EPIC-03 | US-008, US-009, US-016 | AC-008/009/016.x | FR-006..008, FR-010, FR-012, NFR-002 |
 | EPIC-04 | US-010, US-011 | AC-010/011.x | NFR-005 |
 | EPIC-05 | US-013, US-014 | AC-013/014.x | NFR-001 |

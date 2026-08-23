@@ -952,8 +952,8 @@ Tidak berlaku sebagai "konversi" dalam pengertian migrasi sistem lama — melain
 | Use Case | Fitur PRD (01B_PRD.md) | User Story (01B_PRD.md) |
 |----------|--------------------------|---------------------------|
 | UC1 Kelola Knowledge Base | FT-P1 | US-001 |
-| UC2 Tampilkan Halaman Chat | FT-P4 | US-004 |
-| UC3 Konsultasi Akreditasi | FT-P5 | US-005 |
+| UC2 Tampilkan Halaman Chat | FT-P4 | US-002 |
+| UC3 Konsultasi Akreditasi | FT-P5 | US-003 |
 | UC5 Kelola Sesi Percakapan | FT-P7, FT-P8 | US-007, US-008 |
 | UC6 Tangani Pertanyaan Di Luar Cakupan | FT-P11 | US-011 |
 | UC7 Tangani Error/Timeout RAGA | FT-P12 | US-012 |
