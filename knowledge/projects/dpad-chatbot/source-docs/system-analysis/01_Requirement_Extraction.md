@@ -137,7 +137,7 @@
 
 Item berikut memengaruhi hasil ekstraksi di atas dan masih menunggu konfirmasi klien (rujukan: Discovery & Kick-off Notes §7, spec.md §Open Items):
 
-1. User utama chatbot — apakah E1 (Pengelola Perpustakaan) dan E2 (Pemustaka) keduanya prioritas fase awal, atau hanya salah satu.
+1. Prioritas aktor chatbot: E1 (Pengelola Perpustakaan) adalah prioritas utama. E2 (Pemustaka) bukan fokus development fase ini.
 2. Peran E8 (Sibinakawan) — saat ini diasumsikan tidak aktif sebagai sumber data (out of scope).
 3. Cakupan detail instrumen akreditasi yang akan di-extract (versi/tahun, jenis perpustakaan).
 4. Regulasi/kepatuhan data (UU PDP / aturan Pemda DIY) yang berlaku terhadap DS3, DS4 (data sesi & log percakapan).

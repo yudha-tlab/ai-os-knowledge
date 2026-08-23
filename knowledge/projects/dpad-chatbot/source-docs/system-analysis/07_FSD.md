@@ -1,3 +1,16 @@
+---
+type: specification
+title: Dokumen Spesifikasi Fungsional — AI Knowledge Center DPAD DIY
+status: active
+created: 2026-08-11
+modified: 2026-08-21
+version: 1.2
+changelog:
+  - date: 2026-08-21
+    purpose: "Hapus UC4 (Konsultasi Layanan Umum) & FR-4.x sesuai keputusan PM — deferred keluar MVP; FSD final 10 UC aktif"
+  - date: 2026-08-18
+    purpose: "Terapkan keputusan PM K1–K8 (gap-analysis v1.1): hapus FR-4.2, integrasi widget SDK RAGA, tambah UC10 eskalasi ke Pustakawan Pembina & UC11 monitoring 5 metrik KAK, tandai UC4 deferred, catat feedback pengguna out-of-scope"
+---
 # Dokumen Spesifikasi Fungsional — AI Knowledge Center DPAD DIY
 ## Chatbot Konsultasi & Akreditasi Perpustakaan
 
@@ -11,11 +24,11 @@ Dokumen Spesifikasi Fungsional (FSD) ini menyediakan informasi detail tentang ba
 
 ### 1.2 Lingkup Proyek
 
-Proyek ini membangun lapisan integrasi (thin integration layer) yang menghubungkan RAGA TLab (engine RAG existing) dengan tiga titik akses: (1) halaman chat yang ditempel di website DPAD untuk konsultasi publik seputar layanan perpustakaan dan instrumen akreditasi, (2) CMS di website TLab (Knowledge AI RAAGA) bagi admin online DPAD untuk mengelola konten knowledge base, dan (3) pelatihan penggunaan sistem bagi admin online tersebut. Sistem tidak membangun engine RAG baru — seluruh kapabilitas retrieval dan generation bersumber dari RAGA TLab yang sudah ada.
+Proyek ini membangun lapisan integrasi (thin integration layer) yang menghubungkan RAGA TLab (engine RAG existing) dengan tiga titik akses: (1) halaman chat yang ditempel di website DPAD untuk konsultasi publik seputar layanan perpustakaan dan instrumen akreditasi, (2) CMS di website TLab (Knowledge AI RAGA) bagi admin online DPAD untuk mengelola konten knowledge base, dan (3) pelatihan penggunaan sistem bagi admin online tersebut. Sistem tidak membangun engine RAG baru — seluruh kapabilitas retrieval dan generation bersumber dari RAGA TLab yang sudah ada.
 
 ### 1.3 Lingkup Dokumen
 
-Dokumen ini mencakup seluruh 9 use case yang teridentifikasi pada Fase 5 (05_UseCase.md): UC1–UC9. Tidak ada FSD terpisah untuk sub-sistem lain — proyek ini cukup ringkas untuk dicakup dalam satu FSD tunggal.
+Dokumen ini mencakup seluruh 10 use case aktif yang teridentifikasi pada Fase 5 (05_UseCase.md): UC1–UC3, UC5–UC11 (termasuk UC10 Eskalasi ke Pustakawan Pembina dan UC11 Monitoring Pemanfaatan Layanan — deliverable mandatory KAK SAPA PUSTAKA). Tidak ada FSD terpisah untuk sub-sistem lain — proyek ini cukup ringkas untuk dicakup dalam satu FSD tunggal.
 
 ### 1.4 Dokumen Terkait
 
@@ -39,12 +52,16 @@ Dokumen ini mencakup seluruh 9 use case yang teridentifikasi pada Fase 5 (05_Use
 | RAG | Retrieval-Augmented Generation | Teknik AI yang menggabungkan pencarian dokumen (retrieval) dengan generasi jawaban (generation) |
 | Workspace Chatbot DPAD | — | Instance/ruang kerja khusus DPAD di dalam RAGA, terhubung ke knowledge base akreditasi & layanan umum |
 | Halaman Chat | — | UI chatbot yang ditempel (embed) pada website DPAD existing |
-| CMS | Content Management System | Antarmuka pengelolaan konten chatbot di website TLab (Knowledge AI RAAGA) |
+| CMS | Content Management System | Antarmuka pengelolaan konten chatbot di website TLab (Knowledge AI RAGA) |
 | Admin Online | — | 1 orang staf DPAD yang diberi akses dan pelatihan mengelola konten chatbot |
 | OCR | Optical Character Recognition | Teknologi ekstraksi teks dari dokumen PDF/Word/Excel |
 | session_id | — | Identifier sesi percakapan untuk menjaga konteks tanya-jawab |
 | Anti-halusinasi | — | Prinsip chatbot tidak mengarang jawaban di luar knowledge base yang tersedia |
 | Sibinakawan | — | Sistem existing DPAD yang berpotensi menjadi sumber data/KMS tambahan (out of scope fase ini) |
+| Pustakawan Pembina | — | Pustakawan DPAD DIY yang menangani eskalasi pertanyaan yang tidak dapat dijawab chatbot (kontak WA +62 881-0821-52119) |
+| SAPA PUSTAKA | Sahabat Asistensi dan Pendampingan Perpustakaan | Nama layanan KMS + AI milik DPAD DIY; chatbot ini merupakan perwujudan SAPA PUSTAKA sebagai layanan konsultasi tingkat pertama (first level support) |
+| Eskalasi | — | Mekanisme pengalihan pertanyaan dari chatbot ke Pustakawan Pembina saat pertanyaan tidak dapat dijawab atau butuh analisis/pendampingan |
+| Widget SDK RAGA | — | Skrip embed client-side (`<raga-chat>`) milik RAGA TLab untuk menampilkan halaman chat di website DPAD |
 
 ### 1.6 Risiko dan Asumsi
 
@@ -53,7 +70,7 @@ Dokumen ini mencakup seluruh 9 use case yang teridentifikasi pada Fase 5 (05_Use
 | Risiko | Timeline 1 bulan sejak kick-off (27 Agustus 2026) bersifat agresif untuk cakupan fitur final | Berpotensi menunda go-live atau memaksa pengurangan scope |
 | Risiko | Kapasitas RAGA TLab menangani beban akses bersamaan belum divalidasi | Berpotensi timeout massal saat musim akreditasi (volume tinggi) |
 | Risiko | Skema data logis di FSD ini (KnowledgeDocument, CMSContent, Workspace) mungkin tidak identik dengan skema aktual RAGA TLab | Perlu klarifikasi ke tim teknis RAGA sebelum implementasi |
-| Asumsi | Dokumen instrumen akreditasi tersedia dalam format yang bisa di-extract ke RAGA (PDF/DOCX/XLSX) | Jika tidak, perlu konversi manual tambahan |
+| Asumsi | Dokumen instrumen akreditasi tersedia dalam format yang bisa di-extract ke RAGA (PDF/DOCX/DOC/XLSX/XLS/TXT) | Jika tidak, perlu konversi manual tambahan |
 | Asumsi | Chatbot bersifat publik tanpa autentikasi pengguna akhir (E1/E2) | Konsisten dengan spec.md §Out of Scope |
 | Asumsi | Hanya 1 admin online aktif pada fase ini | Sesuai Discovery Notes §3 — pelatihan untuk 1 orang |
 | Komponen Pihak Ketiga | RAGA TLab (engine RAG) — komponen commercial/existing, bukan dibangun proyek ini | Ketergantungan penuh pada ketersediaan & kapabilitas RAGA TLab |
@@ -81,24 +98,24 @@ Lihat [02_DFD_Level0.md](02_DFD_Level0.md) untuk diagram PlantUML lengkap. Ringk
 
 #### 2.2.1 Peran dan Tanggung Jawab Pengguna / Persyaratan Otoritas
 
-| Peran/Pengguna | Contoh | Frekuensi Penggunaan | Keamanan/Akses, Fitur yang Digunakan | Catatan Tambahan |
-|-----------|---------|------------------|--------------------------------|------------------|
-| Pengelola Perpustakaan | Staf perpustakaan mempersiapkan akreditasi | Tinggi saat musim akreditasi | Publik, tanpa login — Konsultasi Akreditasi (UC3), Konsultasi Layanan Umum (UC4) | Aktor primer utama |
-| Pemustaka | Pengguna layanan perpustakaan umum | Harian/insidental | Publik, tanpa login — Konsultasi Layanan Umum (UC4) | Aktor primer sekunder |
-| Admin Online DPAD | 1 orang staf DPAD (identitas belum dikonfirmasi) | Berkala sesuai kebutuhan update konten | Login CMS — Kelola Konten (UC8), Kelola Knowledge Base (UC1) | Akses time-bound maksimal 6 bulan |
-| Tim Internal / Tim Proyek | Tim proyek AI Knowledge Center | Sekali di awal (setup) + saat pelatihan | Akses langsung Dashboard RAGA — Kelola Knowledge Base (UC1), pemberi Pelatihan (UC9) | Aktor latar, tidak berinteraksi runtime |
+| Peran/Pengguna            | Contoh                                           | Frekuensi Penggunaan                    | Keamanan/Akses, Fitur yang Digunakan                                                 | Catatan Tambahan                                                     |
+| ------------------------- | ------------------------------------------------ | --------------------------------------- | ------------------------------------------------------------------------------------ | -------------------------------------------------------------------- |
+| Pengelola Perpustakaan    | Staf perpustakaan mempersiapkan akreditasi       | Tinggi saat musim akreditasi            | Publik, tanpa login — Konsultasi Akreditasi (UC3)                                   | Aktor primer utama                                                   |
+| Pemustaka                 | Pengguna layanan perpustakaan umum           | Harian/insidental                   | Publik, tanpa login — akses halaman chat (UC2)                             | Aktor primer sekunder. Bukan fokus development fase ini. |
+| Admin Online DPAD         | 1 orang staf DPAD (identitas belum dikonfirmasi) | Berkala sesuai kebutuhan update konten  | Login CMS — Kelola Konten (UC8), Kelola Knowledge Base (UC1)                         | Akses time-bound maksimal 6 bulan                                    |
+| Tim Internal / Tim Proyek | Tim proyek AI Knowledge Center                   | Sekali di awal (setup) + saat pelatihan | Akses langsung Dashboard RAGA — Kelola Knowledge Base (UC1), pemberi Pelatihan (UC9) | Aktor latar, tidak berinteraksi runtime                              |
 
 #### 2.2.2 Deskripsi Aktor
 
-| Aktor | Deskripsi | Interaksi dengan Sistem |
-|-------|-------------|------------------------|
-| Pengelola Perpustakaan | Staf perpustakaan yang mempersiapkan dokumen akreditasi dan melayani pemustaka | Mengetik pertanyaan di halaman chat; menerima jawaban + sitasi sumber |
-| Pemustaka | Pengguna layanan perpustakaan (masyarakat umum) | Mengetik pertanyaan layanan umum di halaman chat; menerima jawaban teks |
-| Admin Online DPAD | Staf DPAD yang ditunjuk mengelola konten chatbot | Login CMS; unggah/update dokumen; menerima konfirmasi update; mengikuti pelatihan |
-| Website DPAD | Platform website resmi DPAD existing | Menghosting halaman chat yang ditempel (embed) |
-| Website TLab (Knowledge AI RAAGA) | Platform CMS milik TLab | Menghosting antarmuka CMS untuk admin online |
-| Workspace Chatbot DPAD (RAGA) | Instance engine RAG TLab khusus DPAD | Menerima pertanyaan via API/Iframe, melakukan retrieval & generation, mengembalikan jawaban |
-| Tim Internal / Tim Proyek | Tim pelaksana proyek AI Knowledge Center | Setup awal knowledge base; memberi pelatihan kepada admin online |
+| Aktor                         | Deskripsi                                                                      | Interaksi dengan Sistem                                                                     |
+| ----------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
+| Pengelola Perpustakaan        | Staf perpustakaan yang mempersiapkan dokumen akreditasi dan melayani pemustaka | Mengetik pertanyaan di halaman chat; menerima jawaban + sitasi sumber                       |
+| Pemustaka                      | Pengguna layanan perpustakaan (masyarakat umum)                            | Mengetik pertanyaan di halaman chat; menerima jawaban teks                          |
+| Admin Online DPAD             | Staf DPAD yang ditunjuk mengelola konten chatbot                               | Login CMS; unggah/update dokumen; menerima konfirmasi update; mengikuti pelatihan           |
+| Website DPAD                  | Platform website resmi DPAD existing                                           | Mengintegrasikan halaman chat yang ditempel (embed)                                         |
+| Platform RAGA                 | Platform CMS milik TLab                                                        | Antarmuka CMS untuk admin online                                                            |
+| Workspace Chatbot DPAD (RAGA) | Instance engine RAG TLab khusus DPAD                                           | Menerima pertanyaan via Widget SDK RAGA, melakukan retrieval & generation, mengembalikan jawaban |
+| Tim Internal / Tim Proyek     | Tim pelaksana proyek AI Knowledge Center                                       | Setup awal knowledge base; memberi pelatihan kepada admin online                            |
 
 ### 2.3 Ketergantungan dan Dampak Perubahan
 
@@ -106,7 +123,7 @@ Lihat [02_DFD_Level0.md](02_DFD_Level0.md) untuk diagram PlantUML lengkap. Ringk
 
 - **RAGA TLab** — seluruh kapabilitas retrieval, generation, dan penyimpanan knowledge base bergantung penuh pada platform RAGA TLab existing. Sistem ini tidak berfungsi tanpa RAGA aktif.
 - **Website DPAD existing** — halaman chat harus dapat ditempel tanpa mengubah arsitektur website secara signifikan (constraint spec.md).
-- **Website TLab (Knowledge AI RAAGA)** — CMS disediakan di platform ini, bukan dibangun sebagai aplikasi terpisah.
+- **Knowledge AI RAGA** — CMS disediakan di platform ini, bukan dibangun sebagai aplikasi terpisah.
 
 #### 2.3.2 Dampak Perubahan
 
@@ -129,19 +146,19 @@ Lihat [02_DFD_Level0.md](02_DFD_Level0.md) untuk diagram PlantUML lengkap. Ringk
 
 #### 3.1.2 Use Case
 
-| | |
-|-|-|
-| **UC-1** | **Kelola Knowledge Base** |
-| **Aktor Utama** | Tim Internal / Tim Proyek (setup awal), Admin Online DPAD (operasional, via UC8) |
-| **Pemangku Kepentingan dan Minat** | DPAD (butuh knowledge base akurat), Pengelola Perpustakaan & Pemustaka (bergantung pada kualitas jawaban) |
-| **Pemicu** | Dokumen instrumen akreditasi atau materi layanan umum baru/revisi tersedia |
-| **Pre-kondisi** | Workspace Chatbot DPAD sudah dikonfigurasi (UC di luar cakupan operasional harian) |
-| **Post-kondisi** | Dokumen ter-index di knowledge base dan dapat dirujuk chatbot |
-| **Skenario Sukses Utama** | 1. Aktor menyiapkan dokumen (PDF/Word/Excel) 2. Dokumen diunggah ke Dashboard RAGA 3. RAGA mendeteksi format file 4. RAGA mengekstrak isi dokumen via OCR 5. RAGA menentukan kategori (akreditasi/layanan_umum) 6. RAGA mengindeks dokumen ke knowledge base N. TUJUAN TERCAPAI — dokumen terindeks & siap dirujuk |
-| **Ekstensi** | Jika format tidak didukung, maka dokumen ditolak dan notifikasi dikirim. Jika ekstraksi OCR gagal, maka status_index ditandai GAGAL dan dokumen tidak dirujuk chatbot |
-| **Prioritas** | Tinggi |
-| **Persyaratan Khusus** | Sistem harus mendukung format PDF, DOCX, DOC, XLSX, XLS |
-| **Pertanyaan Terbuka** | Cakupan detail instrumen akreditasi (versi/tahun, jenis perpustakaan) belum dikonfirmasi klien (01_Requirement_Extraction.md #3) |
+|                                    |                                                                                                                                                                                                                                                                               |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **UC-1**                           | **Kelola Knowledge Base**                                                                                                                                                                                                                                                     |
+| **Aktor Utama**                    | Tim Internal / Tim Proyek (setup awal), Admin Online DPAD (operasional, via UC8)                                                                                                                                                                                              |
+| **Pemangku Kepentingan dan Minat** | DPAD (butuh knowledge base akurat), Pengelola Perpustakaan                                                                                                                                                                                                                    |
+| **Pemicu**                         | Dokumen instrumen akreditasi atau materi layanan umum baru/revisi tersedia                                                                                                                                                                                                    |
+| **Pre-kondisi**                    | Workspace Chatbot DPAD sudah dikonfigurasi (UC di luar cakupan operasional harian)                                                                                                                                                                                            |
+| **Post-kondisi**                   | Dokumen ter-index di knowledge base dan dapat dirujuk chatbot                                                                                                                                                                                                                 |
+| **Skenario Sukses Utama**          | 1. Aktor menyiapkan dokumen (PDF/Word/Excel) 2. Dokumen diunggah ke Dashboard RAGA 3. RAGA mendeteksi format file 4. RAGA mengekstrak isi dokumen via OCR 5. RAGA mengindeks dokumen ke knowledge base N. TUJUAN TERCAPAI — dokumen terindeks & siap dirujuk                  |
+| **Ekstensi**                       | Jika format tidak didukung, maka dokumen ditolak dan notifikasi dikirim. Jika ekstraksi OCR gagal, maka status_index ditandai GAGAL dan dokumen tidak dirujuk chatbot                                                                                                         |
+| **Prioritas**                      | Tinggi                                                                                                                                                                                                                                                                        |
+| **Persyaratan Khusus**             | Sistem harus mendukung format PDF, DOCX, DOC, XLSX, XLS, TXT                                                                                                                                                                                                                                  |
+| **Pertanyaan Terbuka**             | Cakupan detail instrumen akreditasi (versi/tahun, jenis perpustakaan) belum dikonfirmasi klien (01_Requirement_Extraction.md #3) -> saat ini merujuk ke contoh dokumen yang sudah diberikan klien di https://drive.google.com/drive/folders/10VdfsX7W74K5mx_2MlNJAaXYm0PZ0urp |
 
 #### 3.1.3 Diagram Aktivitas
 
@@ -149,28 +166,28 @@ Lihat [06_Activity_Diagram.md §4](06_Activity_Diagram.md#4-ad-uc1--kelola-knowl
 
 #### 3.1.4 Persyaratan Fungsional
 
-| ID Spesifikasi | Deskripsi Spesifikasi | Aturan Bisnis/Ketergantungan Data |
-|---------|---------------------------|--------------------------------|
-| FR-1.1 | Sistem harus menerima dokumen dalam format PDF, DOCX, DOC, XLSX, XLS | tbl_knowledge_document.format_file (CHECK constraint, 04_DataDictionary.md §6.1) |
-| FR-1.2 | Sistem harus mengekstrak isi dokumen menggunakan OCR dan mengindeksnya sesuai kategori | tbl_knowledge_document.kategori IN ('akreditasi', 'layanan_umum') |
-| FR-1.3 | Sistem harus menandai status_index = 'GAGAL' jika ekstraksi tidak berhasil, dan dokumen tersebut tidak boleh dirujuk sebagai sumber jawaban | tbl_knowledge_document.status_index |
-| FR-1.4 | Sistem harus mengirim notifikasi error jika dokumen berformat tidak didukung/corrupt | — |
+| ID Spesifikasi | Deskripsi Spesifikasi                                                                                                                       | Aturan Bisnis/Ketergantungan Data                                                |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| FR-1.1         | Sistem harus menerima dokumen dalam format PDF, DOCX, DOC, XLSX, XLS, TXT                                                                   | tbl_knowledge_document.format_file (CHECK constraint, 04_DataDictionary.md §6.1) |
+| FR-1.2         | Sistem harus mengekstrak isi dokumen menggunakan OCR                                                                                        | tbl_knowledge_document.kategori IN ('akreditasi', 'layanan_umum')            |
+| FR-1.3         | Sistem harus menandai status_index = 'GAGAL' jika ekstraksi tidak berhasil, dan dokumen tersebut tidak boleh dirujuk sebagai sumber jawaban | tbl_knowledge_document.status_index                                              |
+| FR-1.4         | Sistem harus mengirim notifikasi error jika dokumen berformat tidak didukung/corrupt                                                        | —                                                                                |
 
 #### 3.1.5 Spesifikasi Tingkat Bidang
 
 **Elemen Formulir (Form Upload Dokumen — bagian dari UC8 CMS, direferensikan di sini):**
 
-| Call-out | Label Bidang | Kontrol UI | Wajib? | Dapat Diedit | Tipe Data | Set Nilai | Nilai Default | Contoh Data | Sumber Data |
-|----------|-------------|------------|-------|----------|-----------|-----------|---------------|---------------|-------------|
-| 1 | Pilih File Dokumen | File upload | Ya | Ya | File (PDF/DOCX/DOC/XLSX/XLS) | — | — | Instrumen Akreditasi 2026.pdf | Upload pengguna |
-| 2 | Kategori Konten | Dropdown | Ya | Ya | Enum | [Akreditasi, Layanan Umum] | — | Akreditasi | Pilihan admin |
+| Call-out | Label Bidang       | Kontrol UI  | Wajib? | Dapat Diedit | Tipe Data           | Set Nilai                  | Nilai Default | Contoh Data                   | Sumber Data     |
+| -------- | ------------------ | ----------- | ------ | ------------ | ------------------- | -------------------------- | ------------- | ----------------------------- | --------------- |
+| 1        | Pilih File Dokumen | File upload | Ya     | Ya           | File (PDF/DOCX/DOC/XLSX/XLS/TXT) | —                          | —             | Instrumen Akreditasi 2026.pdf | Upload pengguna |
+| 2        | Kategori Konten    | Dropdown    | Ya     | Ya           | Enum                | [Akreditasi, Layanan Umum] | —             | Akreditasi                    | Pilihan admin   |
 
 **Aturan dan Ketergantungan Bisnis Formulir:**
 
-| Label Bidang | Validasi/Aturan Bisnis | Pesan Kesalahan | Ketergantungan Data | Info/Catatan Tambahan |
-|-------------|---------------------------|---------------|-------------------|----------------------|
-| Pilih File Dokumen | Format harus PDF/DOCX/DOC/XLSX/XLS | "Format file tidak didukung" | tbl_knowledge_document.format_file | Ukuran maksimum file belum ditentukan — perlu klarifikasi |
-| Kategori Konten | Wajib salah satu dari dua nilai domain | "Kategori tidak valid" | tbl_knowledge_document.kategori | — |
+| Label Bidang       | Validasi/Aturan Bisnis                 | Pesan Kesalahan              | Ketergantungan Data                | Info/Catatan Tambahan                                                      |
+| ------------------ | -------------------------------------- | ---------------------------- | ---------------------------------- | -------------------------------------------------------------------------- |
+| Pilih File Dokumen | Format harus PDF/DOCX/DOC/XLSX/XLS/TXT              | "Format file tidak didukung" | tbl_knowledge_document.format_file | Ukuran maksimum file mengikuti validasi yang sudah berjalan di produk RAGA |
+| Kategori Konten    | Wajib salah satu dari dua nilai domain | "Kategori tidak valid"       | tbl_knowledge_document.kategori    | —                                                                          |
 
 **Tombol, Tautan, dan Ikon:**
 
@@ -184,25 +201,25 @@ Lihat [06_Activity_Diagram.md §4](06_Activity_Diagram.md#4-ad-uc1--kelola-knowl
 
 #### 3.2.1 Tujuan/Deskripsi
 
-**Tujuan:** Menyediakan titik akses tunggal bagi Pengelola Perpustakaan dan Pemustaka untuk berinteraksi dengan chatbot, langsung dari website DPAD.
+**Tujuan:** Menyediakan titik akses tunggal bagi Pengelola Perpustakaan untuk berinteraksi dengan chatbot, langsung dari website DPAD.
 
 **Deskripsi:** Use case ini mencakup pemuatan UI chatbot yang ditempel (embed) di website DPAD dan inisialisasi sesi percakapan baru.
 
 #### 3.2.2 Use Case
 
-| | |
-|-|-|
-| **UC-2** | **Tampilkan Halaman Chat** |
-| **Aktor Utama** | Pengelola Perpustakaan, Pemustaka |
-| **Pemangku Kepentingan dan Minat** | DPAD (butuh titik akses publik yang mudah dijangkau) |
-| **Pemicu** | Pengguna membuka website DPAD dan mengakses menu/halaman chat |
-| **Pre-kondisi** | Halaman chat sudah ditempel (embed) di website DPAD dan Workspace RAGA aktif |
-| **Post-kondisi** | UI chatbot tampil dan siap menerima pertanyaan; session_id baru dibuat |
-| **Skenario Sukses Utama** | 1. Pengguna membuka website DPAD 2. Pengguna mengakses menu/link menuju halaman chat 3. Halaman chat memuat UI chatbot, terhubung ke Workspace RAGA 4. Sistem membuat session_id baru 5. Sistem menampilkan pesan pembuka/instruksi penggunaan N. TUJUAN TERCAPAI — pengguna siap mengetik pertanyaan |
-| **Ekstensi** | Jika halaman chat gagal dimuat (error jaringan/API), maka sistem menampilkan pesan fallback, bukan halaman kosong |
-| **Prioritas** | Tinggi |
-| **Persyaratan Khusus** | Halaman chat harus dapat ditempel tanpa mengubah arsitektur website DPAD secara signifikan |
-| **Pertanyaan Terbuka** | Tidak ada |
+|                                    |                                                                                                                                                                                                                                                                                                       |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **UC-2**                           | **Tampilkan Halaman Chat**                                                                                                                                                                                                                                                                            |
+| **Aktor Utama**                    | Pengelola Perpustakaan, Pemustaka                                                                                                                                                                                                                                                                     |
+| **Pemangku Kepentingan dan Minat** | DPAD (butuh titik akses publik yang mudah dijangkau)                                                                                                                                                                                                                                                  |
+| **Pemicu**                         | Pengguna membuka website DPAD dan mengklik tombol chat yang ada di halaman website DPAD                                                                                                                                                                                                               |
+| **Pre-kondisi**                    | Snippet code yang sudah siap dipasang di website DPAD dan Workspace RAGA aktif                                                                                                                                                                                                                        |
+| **Post-kondisi**                   | UI chatbot tampil dan siap menerima pertanyaan; session_id baru dibuat                                                                                                                                                                                                                                |
+| **Skenario Sukses Utama**          | 1. Pengguna membuka website DPAD 2. Pengguna mengakses menu/link menuju halaman chat 3. Halaman chat memuat UI chatbot, terhubung ke Workspace RAGA 4. Sistem membuat session_id baru 5. Sistem menampilkan pesan pembuka/instruksi penggunaan N. TUJUAN TERCAPAI — pengguna siap mengetik pertanyaan |
+| **Ekstensi**                       | Jika halaman chat gagal dimuat (error jaringan/API), maka sistem menampilkan pesan fallback, bukan halaman kosong                                                                                                                                                                                     |
+| **Prioritas**                      | Tinggi                                                                                                                                                                                                                                                                                                |
+| **Persyaratan Khusus**             | Halaman chat harus dapat ditempel tanpa mengubah arsitektur website DPAD secara signifikan                                                                                                                                                                                                            |
+| **Pertanyaan Terbuka**             | Tidak ada                                                                                                                                                                                                                                                                                             |
 
 #### 3.2.3 Diagram Aktivitas
 
@@ -294,11 +311,12 @@ endif
 
 #### 3.2.4 Persyaratan Fungsional
 
-| ID Spesifikasi | Deskripsi Spesifikasi | Aturan Bisnis/Ketergantungan Data |
-|---------|---------------------------|--------------------------------|
-| FR-2.1 | Sistem harus membuat session_id unik setiap kali halaman chat dibuka | tbl_session.session_id |
-| FR-2.2 | Sistem harus menampilkan pesan pembuka/instruksi saat halaman chat pertama dibuka | — |
-| FR-2.3 | Sistem harus menampilkan pesan fallback (bukan halaman kosong) jika koneksi ke Workspace RAGA gagal | — |
+| ID Spesifikasi | Deskripsi Spesifikasi                                                                               | Aturan Bisnis/Ketergantungan Data |
+| -------------- | --------------------------------------------------------------------------------------------------- | --------------------------------- |
+| FR-2.1         | Sistem harus membuat session_id unik setiap kali halaman chat dibuka pertama kali                   | tbl_session.session_id            |
+| FR-2.2         | Sistem harus menampilkan pesan pembuka/instruksi saat halaman chat pertama dibuka                   | —                                 |
+| FR-2.3         | Sistem harus menampilkan pesan fallback (bukan halaman kosong) jika koneksi ke Workspace RAGA gagal | —                                 |
+| FR-2.4         | Sistem harus menampilkan riwayat percakapan sebelumnya (dengan syarat local storage belum dihapus)  |                                   |
 
 #### 3.2.5 Spesifikasi Tingkat Bidang
 
@@ -318,7 +336,7 @@ endif
 
 | Label Tombol, Tautan, Ikon | Event OnClick | Event Lain | Terlihat | Aktif vs Dinonaktifkan | Navigasi Ke | Validasi | Ketergantungan |
 |---------------------------|---------------|-------------|---------|---------------------|-------------|------------|--------------|
-| Kirim (ikon panah/send) | Kirim pertanyaan ke Workspace RAGA | OnHover: tooltip | Ya | Dinonaktifkan jika input kosong | Tetap di halaman chat, tampilkan jawaban | Validasi input tidak kosong | Bergantung pada UC3/UC4 |
+| Kirim (ikon panah/send) | Kirim pertanyaan ke Workspace RAGA | OnHover: tooltip | Ya | Dinonaktifkan jika input kosong | Tetap di halaman chat, tampilkan jawaban | Validasi input tidak kosong | Bergantung pada UC3 |
 
 ---
 
@@ -332,19 +350,19 @@ endif
 
 #### 3.3.2 Use Case
 
-| | |
-|-|-|
-| **UC-3** | **Konsultasi Akreditasi** |
-| **Aktor Utama** | Pengelola Perpustakaan |
-| **Pemangku Kepentingan dan Minat** | DPAD (akurasi jawaban krusial untuk reputasi layanan), Workspace RAGA (penyedia jawaban) |
-| **Pemicu** | Pengguna mengetik pertanyaan seputar instrumen akreditasi di halaman chat |
-| **Pre-kondisi** | UC2 (Tampilkan Halaman Chat) sudah berjalan; knowledge base akreditasi tersedia |
-| **Post-kondisi** | Jawaban + sitasi sumber ditampilkan; percakapan tercatat dalam sesi & log |
-| **Skenario Sukses Utama** | 1. Pengelola perpustakaan mengetik pertanyaan 2. Halaman chat meneruskan pertanyaan ke Workspace RAGA via API/Iframe 3. RAGA melakukan retrieval dari knowledge base akreditasi 4. RAGA menghasilkan jawaban disertai referensi dokumen sumber 5. Jawaban + sitasi ditampilkan ke pengguna 6. Sistem mencatat pasangan tanya-jawab ke log percakapan (include UC5) N. TUJUAN TERCAPAI — pengguna mendapat jawaban akurat tanpa konsultasi manual |
-| **Ekstensi** | Jika pertanyaan di luar cakupan akreditasi/layanan perpustakaan, maka UC6 (Tangani Pertanyaan Di Luar Cakupan) dijalankan. Jika Workspace RAGA timeout/tidak merespons, maka UC7 (Tangani Error/Timeout RAGA) dijalankan |
-| **Prioritas** | Tinggi |
-| **Persyaratan Khusus** | Jawaban wajib bersumber dari dokumen resmi terindeks — dilarang mengarang jawaban (anti-halusinasi) |
-| **Pertanyaan Terbuka** | Waktu respons target < 5 detik p95 perlu divalidasi terhadap kapasitas RAGA TLab (spec.md §Non-Functional Requirements) |
+|                                    |                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **UC-3**                           | **Konsultasi Akreditasi**                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| **Aktor Utama**                    | Pengelola Perpustakaan                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| **Pemangku Kepentingan dan Minat** | DPAD (akurasi jawaban krusial untuk reputasi layanan), Workspace RAGA (penyedia jawaban)                                                                                                                                                                                                                                                                                                                                                  |
+| **Pemicu**                         | Pengguna mengetik pertanyaan seputar instrumen akreditasi di halaman chat                                                                                                                                                                                                                                                                                                                                                                 |
+| **Pre-kondisi**                    | UC2 (Tampilkan Halaman Chat) sudah berjalan; knowledge base akreditasi tersedia                                                                                                                                                                                                                                                                                                                                                           |
+| **Post-kondisi**                   | Jawaban + sitasi sumber ditampilkan; percakapan tercatat dalam sesi & log                                                                                                                                                                                                                                                                                                                                                                 |
+| **Skenario Sukses Utama**          | 1. Pengelola perpustakaan mengetik pertanyaan 2. Halaman chat meneruskan pertanyaan ke Workspace RAGA via Widget SDK RAGA 3. RAGA melakukan retrieval dari knowledge base akreditasi 4. RAGA menghasilkan jawaban disertai referensi dokumen sumber 5. Jawaban + sitasi ditampilkan ke pengguna 6. Sistem mencatat pasangan tanya-jawab ke log percakapan (include UC5) N. TUJUAN TERCAPAI — pengguna mendapat jawaban akurat tanpa konsultasi manual |
+| **Ekstensi**                       | Jika pertanyaan di luar cakupan akreditasi/layanan perpustakaan, maka UC6 (Tangani Pertanyaan Di Luar Cakupan) dijalankan. Jika Workspace RAGA timeout/tidak merespons, maka UC7 (Tangani Error/Timeout RAGA) dijalankan                                                                                                                                                                                                                  |
+| **Prioritas**                      | Tinggi                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| **Persyaratan Khusus**             | Jawaban wajib bersumber dari dokumen resmi terindeks — dilarang mengarang jawaban (anti-halusinasi)                                                                                                                                                                                                                                                                                                                                       |
+| **Pertanyaan Terbuka**             | Waktu respons target < 5 detik p95 perlu divalidasi terhadap kapasitas RAGA TLab (spec.md §Non-Functional Requirements)                                                                                                                                                                                                                                                                                                                   |
 
 #### 3.3.3 Diagram Aktivitas
 
@@ -352,13 +370,13 @@ Lihat [06_Activity_Diagram.md §2](06_Activity_Diagram.md#2-ad-uc3--konsultasi-a
 
 #### 3.3.4 Persyaratan Fungsional
 
-| ID Spesifikasi | Deskripsi Spesifikasi | Aturan Bisnis/Ketergantungan Data |
-|---------|---------------------------|--------------------------------|
-| FR-3.1 | Sistem harus meneruskan user_message dan session_id ke Workspace RAGA via API/Iframe menggunakan HTTPS | tbl_session, komunikasi wajib HTTPS (NFR Security) |
-| FR-3.2 | Sistem harus menampilkan jawaban disertai referensi sumber dokumen (nama dokumen/bagian) | tbl_citation_reference (junction M:N) |
-| FR-3.3 | Sistem harus mempertahankan konteks percakapan selama sesi masih aktif | tbl_session.status_sesi = 'AKTIF' |
-| FR-3.4 | Sistem harus mencatat setiap percakapan ke log untuk audit dan peningkatan kualitas | tbl_conversation_log |
-| FR-3.5 | Sistem harus menampilkan waktu respons chatbot < 5 detik p95 untuk pertanyaan standar | *(target performa, perlu validasi kapasitas RAGA)* |
+| ID Spesifikasi | Deskripsi Spesifikasi                                                                                  | Aturan Bisnis/Ketergantungan Data                      |
+| -------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------ |
+| FR-3.1         | Sistem harus meneruskan user_message dan session_id ke Workspace RAGA melalui Widget SDK RAGA menggunakan HTTPS | tbl_session, komunikasi wajib HTTPS (NFR Security)     |
+| FR-3.2         | Sistem harus menampilkan jawaban disertai referensi sumber dokumen (nama dokumen/bagian)               | tbl_citation_reference (junction M:N)                  |
+| FR-3.3         | Sistem harus mempertahankan konteks percakapan selama sesi masih aktif                                 | tbl_session.status_sesi = 'AKTIF'                      |
+| FR-3.4         | Sistem harus mencatat setiap percakapan ke log untuk audit dan peningkatan kualitas                    | tbl_conversation_log                                   |
+| FR-3.5         | Sistem harus menampilkan waktu respons chatbot < 5 detik p95 untuk pertanyaan standar              | *(target performa, perlu validasi kapasitas RAGA)* |
 
 #### 3.3.5 Spesifikasi Tingkat Bidang
 
@@ -372,10 +390,10 @@ Lihat [06_Activity_Diagram.md §2](06_Activity_Diagram.md#2-ad-uc3--konsultasi-a
 
 **Aturan dan Ketergantungan Bisnis Formulir:**
 
-| Label Bidang | Validasi/Aturan Bisnis | Pesan Kesalahan | Ketergantungan Data | Info/Catatan Tambahan |
-|-------------|---------------------------|---------------|-------------------|----------------------|
-| Kotak Input Pertanyaan | Tidak boleh kosong | "Silakan ketik pertanyaan Anda" | tbl_conversation_log.user_message | — |
-| Badge Sitasi Sumber | Hanya tampil jika kategori_jawaban = 'AKREDITASI' dan is_out_of_scope = FALSE | — | tbl_citation_reference | Tidak tampil untuk jawaban layanan umum (UC4) atau di luar cakupan |
+| Label Bidang           | Validasi/Aturan Bisnis                | Pesan Kesalahan                 | Ketergantungan Data               | Info/Catatan Tambahan                                 |
+| ---------------------- | ------------------------------------- | ------------------------------- | --------------------------------- | ----------------------------------------------------- |
+| Kotak Input Pertanyaan | Tidak boleh kosong                    | "Silakan ketik pertanyaan Anda" | tbl_conversation_log.user_message | —                                                     |
+| Badge Sitasi Sumber    | Hanya tampil jika informasi ditemukan | —                               | tbl_citation_reference            | Tidak tampil untuk konteks pertanyaan di luar cakupan |
 
 **Tombol, Tautan, dan Ikon:**
 
@@ -386,72 +404,22 @@ Lihat [06_Activity_Diagram.md §2](06_Activity_Diagram.md#2-ad-uc3--konsultasi-a
 
 ---
 
-### 3.4 Konsultasi Layanan Umum
-
-#### 3.4.1 Tujuan/Deskripsi
-
-**Tujuan:** Memungkinkan Pemustaka (dan Pengelola Perpustakaan) mendapat informasi cepat seputar layanan perpustakaan umum tanpa datang langsung.
-
-**Deskripsi:** Struktural identik dengan UC3, namun bersumber dari knowledge base layanan umum (bukan akreditasi) dan tidak mewajibkan sitasi eksplisit.
-
-#### 3.4.2 Use Case
-
-| | |
-|-|-|
-| **UC-4** | **Konsultasi Layanan Umum** |
-| **Aktor Utama** | Pemustaka, Pengelola Perpustakaan |
-| **Pemangku Kepentingan dan Minat** | DPAD (mengurangi beban layanan tatap muka) |
-| **Pemicu** | Pengguna mengetik pertanyaan seputar layanan perpustakaan umum (jam buka, prosedur peminjaman, katalog) |
-| **Pre-kondisi** | UC2 sudah berjalan; knowledge base layanan umum tersedia |
-| **Post-kondisi** | Jawaban ditampilkan; percakapan tercatat dalam sesi & log |
-| **Skenario Sukses Utama** | 1. Pengguna mengetik pertanyaan layanan umum 2. Halaman chat meneruskan pertanyaan ke Workspace RAGA 3. RAGA melakukan retrieval dari knowledge base layanan umum 4. RAGA menghasilkan jawaban teks 5. Jawaban ditampilkan ke pengguna 6. Sistem mencatat percakapan ke log (include UC5) N. TUJUAN TERCAPAI |
-| **Ekstensi** | Jika pertanyaan ambigu antara topik akreditasi vs layanan umum, maka UC6 dijalankan untuk klarifikasi. Jika Workspace RAGA timeout, maka UC7 dijalankan |
-| **Prioritas** | Tinggi |
-| **Persyaratan Khusus** | Tidak ada kewajiban sitasi eksplisit (berbeda dari UC3) |
-| **Pertanyaan Terbuka** | Tidak ada |
-
-#### 3.4.3 Diagram Aktivitas
-
-Struktural identik dengan [AD-UC3](06_Activity_Diagram.md#2-ad-uc3--konsultasi-akreditasi) (06_Activity_Diagram.md §2) — perbedaan hanya pada data store yang dibaca (DS2, bukan DS1) dan tidak adanya langkah "sertakan sitasi sumber". Tidak dibuat diagram terpisah untuk menghindari duplikasi (lihat 06_Activity_Diagram.md §6.3 catatan #1).
-
-#### 3.4.4 Persyaratan Fungsional
-
-| ID Spesifikasi | Deskripsi Spesifikasi | Aturan Bisnis/Ketergantungan Data |
-|---------|---------------------------|--------------------------------|
-| FR-4.1 | Sistem harus meneruskan pertanyaan layanan umum ke Workspace RAGA dan mengembalikan jawaban teks | tbl_knowledge_document (kategori='layanan_umum') |
-| FR-4.2 | Sistem harus mengklarifikasi maksud pengguna jika pertanyaan ambigu antara topik akreditasi vs layanan umum | — |
-| FR-4.3 | Sistem harus mencatat percakapan ke log dengan kategori_jawaban = 'LAYANAN_UMUM' | tbl_conversation_log.kategori_jawaban |
-
-#### 3.4.5 Spesifikasi Tingkat Bidang
-
-**Elemen Formulir:** Sama seperti UC3 (§3.3.5) — kotak input pertanyaan dan area tampilan jawaban dibagikan (shared UI component) antara UC3 dan UC4, dibedakan hanya oleh `kategori_jawaban` yang dihasilkan sistem, bukan oleh elemen form terpisah.
-
-**Aturan dan Ketergantungan Bisnis Formulir:**
-
-| Label Bidang | Validasi/Aturan Bisnis | Pesan Kesalahan | Ketergantungan Data | Info/Catatan Tambahan |
-|-------------|---------------------------|---------------|-------------------|----------------------|
-| Area Tampilan Jawaban | Badge sitasi sumber TIDAK ditampilkan untuk kategori_jawaban = 'LAYANAN_UMUM' | — | tbl_conversation_log.kategori_jawaban | Beda perilaku dari UC3 |
-
-**Tombol, Tautan, dan Ikon:** Sama seperti UC3 (§3.3.5).
-
----
-
 ### 3.5 Kelola Sesi Percakapan
 
 #### 3.5.1 Tujuan/Deskripsi
 
 **Tujuan:** Menjaga konteks percakapan dalam satu sesi aktif dan mencatat setiap interaksi untuk keperluan audit.
 
-**Deskripsi:** Use case pendukung (included behavior) yang selalu dijalankan bersamaan dengan UC3 atau UC4 — tidak diinisiasi aktor secara langsung.
+**Deskripsi:** Use case pendukung (included behavior) yang dijalankan bersamaan dengan UC3 — tidak diinisiasi aktor secara langsung.
 
 #### 3.5.2 Use Case
 
 | | |
 |-|-|
 | **UC-5** | **Kelola Sesi Percakapan** |
-| **Aktor Utama** | *(Tidak ada aktor langsung — dipicu otomatis oleh UC3/UC4)* |
+| **Aktor Utama** | *(Tidak ada aktor langsung — dipicu otomatis oleh UC3)* |
 | **Pemangku Kepentingan dan Minat** | DPAD (kebutuhan audit), Tim Internal (peningkatan kualitas jawaban) |
-| **Pemicu** | Setiap kali UC3 atau UC4 dijalankan |
+| **Pemicu** | Setiap kali UC3 dijalankan |
 | **Pre-kondisi** | Sesi (session_id) sudah dibuat saat halaman chat dibuka (UC2) |
 | **Post-kondisi** | Konteks sesi ter-update; entri baru tercatat di log percakapan |
 | **Skenario Sukses Utama** | 1. Sistem membaca konteks sesi aktif (jika ada pertanyaan lanjutan) 2. Sistem menyimpan pasangan pertanyaan-jawaban baru ke log percakapan 3. Sistem memperbarui timestamp terakhir pada sesi N. TUJUAN TERCAPAI — konteks & log tersimpan konsisten |
@@ -462,7 +430,7 @@ Struktural identik dengan [AD-UC3](06_Activity_Diagram.md#2-ad-uc3--konsultasi-a
 
 #### 3.5.3 Diagram Aktivitas
 
-*(Tidak ada diagram aktivitas terpisah — perilaku ini adalah bagian internal dari AD-UC3/AD-UC4, dimodelkan sebagai langkah "Catat pasangan tanya-jawab ke log percakapan" di kedua diagram tersebut, lihat 06_Activity_Diagram.md §2.1)*
+*(Tidak ada diagram aktivitas terpisah — perilaku ini adalah bagian internal dari AD-UC3, dimodelkan sebagai langkah "Catat pasangan tanya-jawab ke log percakapan" di diagram tersebut, lihat 06_Activity_Diagram.md §2.1)*
 
 #### 3.5.4 Persyaratan Fungsional
 
@@ -474,7 +442,7 @@ Struktural identik dengan [AD-UC3](06_Activity_Diagram.md#2-ad-uc3--konsultasi-a
 
 #### 3.5.5 Spesifikasi Tingkat Bidang
 
-*(Use case ini tidak memiliki elemen UI form tersendiri — beroperasi sepenuhnya di latar belakang sebagai bagian dari UC3/UC4)*
+*(Use case ini tidak memiliki elemen UI form tersendiri — beroperasi sepenuhnya di latar belakang sebagai bagian dari UC3)*
 
 ---
 
@@ -484,23 +452,23 @@ Struktural identik dengan [AD-UC3](06_Activity_Diagram.md#2-ad-uc3--konsultasi-a
 
 **Tujuan:** Mencegah chatbot memberikan jawaban yang mengarang/tidak berdasar (halusinasi) saat pertanyaan berada di luar topik layanan perpustakaan/akreditasi.
 
-**Deskripsi:** Use case ekstensi kondisional dari UC3/UC4 — prinsip anti-halusinasi yang menjadi salah satu kriteria sukses proyek (spec.md).
+**Deskripsi:** Use case ekstensi kondisional dari UC3 — prinsip anti-halusinasi yang menjadi salah satu kriteria sukses proyek (spec.md).
 
 #### 3.6.2 Use Case
 
-| | |
-|-|-|
-| **UC-6** | **Tangani Pertanyaan Di Luar Cakupan** |
-| **Aktor Utama** | *(Tidak ada aktor langsung — dipicu kondisional dari UC3/UC4)* |
-| **Pemangku Kepentingan dan Minat** | DPAD (kredibilitas jawaban chatbot), Pengguna (menghindari informasi menyesatkan) |
-| **Pemicu** | Pertanyaan pengguna terdeteksi di luar topik layanan perpustakaan/akreditasi |
-| **Pre-kondisi** | UC3 atau UC4 sedang berjalan |
-| **Post-kondisi** | Pesan "di luar cakupan" ditampilkan; is_out_of_scope = TRUE tercatat di log |
-| **Skenario Sukses Utama** | 1. Sistem mendeteksi pertanyaan tidak relevan dengan knowledge base yang tersedia 2. Sistem menyampaikan bahwa topik di luar cakupan chatbot, tanpa mengarang jawaban 3. Sistem mencatat entri log dengan flag is_out_of_scope = TRUE, tanpa sitasi dokumen N. TUJUAN TERCAPAI — pengguna tidak menerima jawaban menyesatkan |
-| **Ekstensi** | Tidak ada |
-| **Prioritas** | Sedang |
-| **Persyaratan Khusus** | Baris tbl_citation_reference tidak boleh dibuat untuk log dengan is_out_of_scope = TRUE |
-| **Pertanyaan Terbuda** | Ambang batas deteksi "di luar cakupan" (threshold relevansi) bergantung pada konfigurasi RAGA — perlu klarifikasi teknis tim RAGA |
+|                                    |                                                                                                                                                                                                                                                                                                                                                                                        |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **UC-6**                           | **Tangani Pertanyaan Di Luar Cakupan**                                                                                                                                                                                                                                                                                                                                                 |
+| **Aktor Utama**                    | *(Tidak ada aktor langsung — dipicu kondisional dari UC3)*                                                                                                                                                                                                                                                                                                                         |
+| **Pemangku Kepentingan dan Minat** | DPAD (kredibilitas jawaban chatbot), Pengguna (menghindari informasi menyesatkan)                                                                                                                                                                                                                                                                                                      |
+| **Pemicu**                         | Pertanyaan pengguna terdeteksi di luar topik layanan perpustakaan/akreditasi                                                                                                                                                                                                                                                                                                           |
+| **Pre-kondisi**                    | UC3 sedang berjalan                                                                                                                                                                                                                                                                                                                                                           |
+| **Post-kondisi**                   | Pesan "di luar cakupan" ditampilkan; is_out_of_scope = TRUE tercatat di log                                                                                                                                                                                                                                                                                                            |
+| **Skenario Sukses Utama**          | 1. Sistem mendeteksi pertanyaan tidak relevan dengan knowledge base yang tersedia 2. Sistem menyampaikan bahwa topik di luar cakupan chatbot, tanpa mengarang jawaban 3. Sistem mencatat entri log dengan flag is_out_of_scope = TRUE, tanpa sitasi dokumen N. TUJUAN TERCAPAI — pengguna tidak menerima jawaban menyesatkan                                                           |
+| **Ekstensi**                       | Tidak ada                                                                                                                                                                                                                                                                                                                                                                              |
+| **Prioritas**                      | Tinggi                                                                                                                                                                                                                                                                                                                                                                                 |
+| **Persyaratan Khusus**             | Baris tbl_citation_reference tidak boleh dibuat untuk log dengan is_out_of_scope = TRUE                                                                                                                                                                                                                                                                                                |
+| **Pertanyaan Terbuda**             | Ambang batas deteksi "di luar cakupan" (threshold relevansi) bergantung pada konfigurasi RAGA — perlu klarifikasi teknis tim RAGA. 1) Apakah informasi tidak ditemukan akan sama dengan 2) Chatbotnya digunakan untuk tanya jawab di luar konteks / buat coding. Saat ini RAGA tidak membedakan keduanya, selama informasi tersebut tidak ada di platform maka akan diperlakukan sama. |
 
 #### 3.6.3 Diagram Aktivitas
 
@@ -508,19 +476,18 @@ Struktural identik dengan [AD-UC3](06_Activity_Diagram.md#2-ad-uc3--konsultasi-a
 
 #### 3.6.4 Persyaratan Fungsional
 
-| ID Spesifikasi | Deskripsi Spesifikasi | Aturan Bisnis/Ketergantungan Data |
-|---------|---------------------------|--------------------------------|
-| FR-6.1 | Sistem harus menampilkan pesan bahwa topik di luar cakupan, tanpa mengarang jawaban | tbl_conversation_log.is_out_of_scope = TRUE |
-| FR-6.2 | Sistem tidak boleh membuat baris tbl_citation_reference untuk jawaban di luar cakupan | tbl_citation_reference (constraint logis, 04_DataDictionary.md §2.6) |
-| FR-6.3 | Sistem harus mengklarifikasi maksud pengguna untuk pertanyaan ambigu (akreditasi vs layanan umum) sebelum menandainya sebagai di luar cakupan | — |
+| ID Spesifikasi | Deskripsi Spesifikasi                                                                                                                         | Aturan Bisnis/Ketergantungan Data                                    |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| FR-6.1         | Sistem harus menampilkan pesan bahwa topik di luar cakupan, tanpa mengarang jawaban                                                           | tbl_conversation_log.is_out_of_scope = TRUE                          |
+| FR-6.2         | Sistem tidak boleh membuat baris tbl_citation_reference untuk jawaban di luar cakupan                                                         | tbl_citation_reference (constraint logis, 04_DataDictionary.md §2.6) |
 
 #### 3.6.5 Spesifikasi Tingkat Bidang
 
 **Elemen Formulir:**
 
-| Call-out | Label Bidang | Kontrol UI | Wajib? | Dapat Diedit | Tipe Data | Set Nilai | Nilai Default | Contoh Data | Sumber Data |
-|----------|-------------|------------|-------|----------|-----------|-----------|---------------|---------------|-------------|
-| 1 | Pesan Di Luar Cakupan | Read-only text block (styled berbeda dari jawaban normal) | — | Tidak | Text | — | Pesan standar | "Maaf, pertanyaan ini di luar cakupan layanan chatbot kami." | Sistem (template pesan) |
+| Call-out | Label Bidang          | Kontrol UI                                                | Wajib? | Dapat Diedit | Tipe Data | Set Nilai | Nilai Default | Contoh Data                                                      | Sumber Data             |
+| -------- | --------------------- | --------------------------------------------------------- | ------ | ------------ | --------- | --------- | ------------- | ---------------------------------------------------------------- | ----------------------- |
+| 1        | Pesan Di Luar Cakupan | Read-only text block (styled berbeda dari jawaban normal) | —      | Tidak        | Text      | —         | Pesan standar | "Maaf, pertanyaan ini di luar cakupan layanan chatbot kami. Anda dapat menghubungi Pustakawan Pembina melalui WhatsApp +62 881-0821-52119." | Sistem (template pesan) |
 
 **Aturan dan Ketergantungan Bisnis Formulir:**
 
@@ -528,7 +495,7 @@ Struktural identik dengan [AD-UC3](06_Activity_Diagram.md#2-ad-uc3--konsultasi-a
 |-------------|---------------------------|---------------|-------------------|----------------------|
 | Pesan Di Luar Cakupan | Tidak menampilkan badge sitasi sumber | — | — | Visual berbeda dari jawaban normal agar pengguna paham keterbatasan |
 
-**Tombol, Tautan, dan Ikon:** Tidak ada tombol khusus — pengguna dapat langsung mengetik pertanyaan baru di kotak input yang sama (UC2/UC3/UC4).
+**Tombol, Tautan, dan Ikon:** Tidak ada tombol khusus — pengguna dapat langsung mengetik pertanyaan baru di kotak input yang sama (UC2/UC3).
 
 ---
 
@@ -538,23 +505,23 @@ Struktural identik dengan [AD-UC3](06_Activity_Diagram.md#2-ad-uc3--konsultasi-a
 
 **Tujuan:** Memberikan pengalaman graceful degradation saat Workspace RAGA tidak dapat diakses, alih-alih tampilan kosong/hang yang membingungkan pengguna.
 
-**Deskripsi:** Use case ekstensi kondisional dari UC3/UC4 yang menangani skenario kegagalan teknis di sisi RAGA.
+**Deskripsi:** Use case ekstensi kondisional dari UC3 yang menangani skenario kegagalan teknis di sisi RAGA.
 
 #### 3.7.2 Use Case
 
-| | |
-|-|-|
-| **UC-7** | **Tangani Error/Timeout RAGA** |
-| **Aktor Utama** | *(Tidak ada aktor langsung — dipicu kondisional dari UC3/UC4)* |
-| **Pemangku Kepentingan dan Minat** | DPAD (reliabilitas layanan), Pengguna (pengalaman tidak membingungkan saat error) |
-| **Pemicu** | Workspace Chatbot DPAD (RAGA) tidak merespons dalam batas waktu, atau sedang downtime |
-| **Pre-kondisi** | UC3 atau UC4 sedang berjalan |
-| **Post-kondisi** | Pesan error/timeout ditampilkan; pengguna disarankan mencoba lagi |
-| **Skenario Sukses Utama** | 1. Sistem menunggu respons dari Workspace RAGA melewati batas waktu 2. Sistem menampilkan pesan error yang informatif, bukan tampilan kosong/hang 3. Sistem menyarankan pengguna mencoba kembali N. TUJUAN TERCAPAI — pengguna paham situasi dan tahu langkah selanjutnya |
-| **Ekstensi** | Tidak ada — use case ini sendiri adalah jalur pengecualian dari UC3/UC4 |
-| **Prioritas** | Sedang |
-| **Persyaratan Khusus** | Landing page harus menampilkan status jelas saat Workspace RAGA tidak dapat diakses (graceful degradation) |
-| **Pertanyaan Terbuka** | Nilai batas waktu (timeout threshold) belum ditentukan secara eksplisit — perlu ditetapkan bersama target performa < 5 detik p95 |
+|                                    |                                                                                                                                                                                                                                                                           |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **UC-7**                           | **Tangani Error/Timeout RAGA**                                                                                                                                                                                                                                            |
+| **Aktor Utama**                    | *(Tidak ada aktor langsung — dipicu kondisional dari UC3)*                                                                                                                                                                                                            |
+| **Pemangku Kepentingan dan Minat** | DPAD (reliabilitas layanan), Pengguna (pengalaman tidak membingungkan saat error)                                                                                                                                                                                         |
+| **Pemicu**                         | Workspace Chatbot DPAD (RAGA) tidak merespons dalam batas waktu, atau sedang downtime                                                                                                                                                                                     |
+| **Pre-kondisi**                    | UC3 sedang berjalan                                                                                                                                                                                                                                              |
+| **Post-kondisi**                   | Pesan error/timeout ditampilkan; pengguna disarankan mencoba lagi                                                                                                                                                                                                         |
+| **Skenario Sukses Utama**          | 1. Sistem menunggu respons dari Workspace RAGA melewati batas waktu 2. Sistem menampilkan pesan error yang informatif, bukan tampilan kosong/hang 3. Sistem menyarankan pengguna mencoba kembali N. TUJUAN TERCAPAI — pengguna paham situasi dan tahu langkah selanjutnya |
+| **Ekstensi**                       | Tidak ada — use case ini sendiri adalah jalur pengecualian dari UC3                                                                                                                                                                                                   |
+| **Prioritas**                      | Sedang                                                                                                                                                                                                                                                                    |
+| **Persyaratan Khusus**             | Halaman chat harus menampilkan status jelas saat Workspace RAGA tidak dapat diakses (graceful degradation)                                                                                                                                                                |
+| **Pertanyaan Terbuka**             | Nilai batas waktu (timeout threshold) belum ditentukan secara eksplisit — perlu ditetapkan bersama target performa < 5 detik p95                                                                                                                                          |
 
 #### 3.7.3 Diagram Aktivitas
 
@@ -562,19 +529,19 @@ Struktural identik dengan [AD-UC3](06_Activity_Diagram.md#2-ad-uc3--konsultasi-a
 
 #### 3.7.4 Persyaratan Fungsional
 
-| ID Spesifikasi | Deskripsi Spesifikasi | Aturan Bisnis/Ketergantungan Data |
-|---------|---------------------------|--------------------------------|
-| FR-7.1 | Sistem harus menampilkan pesan error informatif saat Workspace RAGA timeout/down, bukan tampilan kosong | — |
-| FR-7.2 | Sistem harus menyarankan pengguna mencoba kembali setelah error | — |
-| FR-7.3 | Sistem dapat mencatat kejadian error ke log dengan flag is_error = TRUE (opsional) | tbl_conversation_log.is_error |
+| ID Spesifikasi | Deskripsi Spesifikasi                                                                                   | Aturan Bisnis/Ketergantungan Data |
+| -------------- | ------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| FR-7.1         | Sistem harus menampilkan pesan error informatif saat Workspace RAGA timeout/down, bukan tampilan kosong | —                                 |
+| FR-7.2         | Sistem harus menyarankan pengguna mencoba kembali setelah error                                         | —                                 |
+| FR-7.3         | Sistem dapat mencatat kejadian error ke log                                                             | tbl_conversation_log.is_error     |
 
 #### 3.7.5 Spesifikasi Tingkat Bidang
 
 **Elemen Formulir:**
 
-| Call-out | Label Bidang | Kontrol UI | Wajib? | Dapat Diedit | Tipe Data | Set Nilai | Nilai Default | Contoh Data | Sumber Data |
-|----------|-------------|------------|-------|----------|-----------|-----------|---------------|---------------|-------------|
-| 1 | Pesan Error/Timeout | Alert/banner component | — | Tidak | Text | — | Pesan standar | "Maaf, sistem sedang mengalami gangguan. Silakan coba lagi." | Sistem (template pesan) |
+| Call-out | Label Bidang        | Kontrol UI             | Wajib? | Dapat Diedit | Tipe Data | Set Nilai | Nilai Default | Contoh Data                                                                | Sumber Data             |
+| -------- | ------------------- | ---------------------- | ------ | ------------ | --------- | --------- | ------------- | -------------------------------------------------------------------------- | ----------------------- |
+| 1        | Pesan Error/Timeout | Alert/banner component | —      | Tidak        | Text      | —         | Pesan standar | "Maaf, sistem sedang mengalami gangguan. Silakan coba beberapa saat lagi." | Sistem (template pesan) |
 
 **Aturan dan Ketergantungan Bisnis Formulir:**
 
@@ -620,13 +587,13 @@ Lihat [06_Activity_Diagram.md §3](06_Activity_Diagram.md#3-ad-uc8--kelola-konte
 
 #### 3.8.4 Persyaratan Fungsional
 
-| ID Spesifikasi | Deskripsi Spesifikasi | Aturan Bisnis/Ketergantungan Data |
-|---------|---------------------------|--------------------------------|
-| FR-8.1 | Sistem harus memvalidasi tanggal_akhir_akses admin sebelum mengizinkan login ke CMS | tbl_admin.tanggal_akhir_akses, CHECK chk_admin_masa_akses (04_DataDictionary.md §7.1) |
-| FR-8.2 | Sistem harus menyimpan setiap unggahan konten dengan status_proses awal 'MENUNGGU' | tbl_cms_content.status_proses |
-| FR-8.3 | Sistem harus memicu proses re-index (UC1) setelah validasi format berhasil | tbl_cms_content → tbl_knowledge_document (relasi 1:N) |
-| FR-8.4 | Sistem harus menampilkan konfirmasi ke admin setelah konten berhasil diperbarui | tbl_cms_content.status_proses = 'SELESAI' |
-| FR-8.5 | Sistem harus mendukung tipe konten DOKUMEN dan TEKS | tbl_cms_content.tipe_konten IN ('DOKUMEN', 'TEKS') |
+| ID Spesifikasi | Deskripsi Spesifikasi                                                                   | Aturan Bisnis/Ketergantungan Data                                                     |
+| -------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| FR-8.1         | Sistem harus memvalidasi tanggal_akhir_akses admin sebelum mengizinkan login ke CMS | tbl_admin.tanggal_akhir_akses, CHECK chk_admin_masa_akses (04_DataDictionary.md §7.1) |
+| FR-8.2         | Sistem harus menyimpan setiap unggahan konten dengan status_proses awal 'MENUNGGU'      | tbl_cms_content.status_proses                                                         |
+| FR-8.3         | Sistem harus memicu proses re-index (UC1) setelah validasi format berhasil              | tbl_cms_content → tbl_knowledge_document (relasi 1:N)                                 |
+| FR-8.4         | Sistem harus menampilkan konfirmasi ke admin setelah konten berhasil diperbarui         | tbl_cms_content.status_proses = 'SELESAI'                                             |
+| FR-8.5         | Sistem harus mendukung tipe konten DOKUMEN (doc, docx, pdf, xls, xlsx) dan TEKS (txt)              | tbl_cms_content.tipe_konten IN ('DOKUMEN', 'TEKS')                                    |
 
 #### 3.8.5 Spesifikasi Tingkat Bidang
 
@@ -641,10 +608,10 @@ Lihat [06_Activity_Diagram.md §3](06_Activity_Diagram.md#3-ad-uc8--kelola-konte
 
 **Aturan dan Ketergantungan Bisnis Formulir:**
 
-| Label Bidang | Validasi/Aturan Bisnis | Pesan Kesalahan | Ketergantungan Data | Info/Catatan Tambahan |
-|-------------|---------------------------|---------------|-------------------|----------------------|
-| Email Login | Harus cocok dengan tbl_admin.email terdaftar; akses ditolak jika tanggal_akhir_akses terlampaui | "Email tidak ditemukan" / "Akses CMS Anda telah berakhir" | tbl_admin.email, tbl_admin.status_akses | Pesan kedaluwarsa perlu redaksi final dari tim UX |
-| File/Teks Konten | Format file harus PDF/DOCX/DOC/XLSX/XLS jika tipe_konten = Dokumen | "Format file tidak didukung" | tbl_knowledge_document.format_file | — |
+| Label Bidang     | Validasi/Aturan Bisnis                                                                          | Pesan Kesalahan                                           | Ketergantungan Data                     | Info/Catatan Tambahan                             |
+| ---------------- | ----------------------------------------------------------------------------------------------- | --------------------------------------------------------- | --------------------------------------- | ------------------------------------------------- |
+| Email Login      | Harus cocok dengan tbl_admin.email terdaftar; akses ditolak jika tanggal_akhir_akses terlampaui | "Email tidak ditemukan" / "Akses CMS Anda telah berakhir" | tbl_admin.email, tbl_admin.status_akses | Pesan kedaluwarsa perlu redaksi final dari tim UX |
+| File/Teks Konten | Format file harus PDF/DOCX/DOC/XLSX/XLS/TXT jika tipe_konten = Dokumen                                   | "Format file tidak didukung"                              | tbl_knowledge_document.format_file      | —                                                 |
 
 **Tombol, Tautan, dan Ikon:**
 
@@ -798,14 +765,111 @@ endif
 
 ---
 
+### 3.10 Eskalasi ke Pustakawan Pembina
+
+#### 3.10.1 Tujuan/Deskripsi
+
+**Tujuan:** Menyediakan mekanisme eskalasi yang memindahkan pertanyaan yang tidak dapat dijawab chatbot kepada Pustakawan Pembina DPAD, sesuai prinsip utama KAK SAPA PUSTAKA.
+
+**Deskripsi:** Use case extending behavior yang dipicu saat pertanyaan (a) tidak ditemukan jawabannya, (b) membutuhkan interpretasi, (c) membutuhkan analisis kasus, atau (d) membutuhkan pendampingan khusus. Sistem menampilkan kontak Pustakawan Pembina (WhatsApp +62 881-0821-52119) dan mencatat kejadian eskalasi ke log (karena "jumlah eskalasi" adalah metrik monitoring KAK).
+
+#### 3.10.2 Use Case
+
+| | |
+|-|-|
+| **UC-10** | **Eskalasi ke Pustakawan Pembina** |
+| **Aktor Utama** | *(Tidak ada aktor langsung — dipicu kondisional dari UC3/UC6)* |
+| **Pemangku Kepentingan dan Minat** | DPAD (menjaga kelengkapan layanan konsultasi), Pustakawan Pembina (menerima eskalasi), Pengguna (mendapat jalur tindak lanjut) |
+| **Pemicu** | Pertanyaan tidak ditemukan jawabannya, membutuhkan interpretasi, analisis kasus, atau pendampingan khusus |
+| **Pre-kondisi** | UC3 atau UC6 sedang berjalan dan sistem menyimpulkan pertanyaan perlu eskalasi |
+| **Post-kondisi** | Kontak Pustakawan Pembina ditampilkan; kejadian eskalasi tercatat di log |
+| **Skenario Sukses Utama** | 1. Sistem mendeteksi pertanyaan tidak dapat dijawab/butuh analisis 2. Sistem menampilkan pesan bahwa pertanyaan membutuhkan bantuan Pustakawan Pembina 3. Sistem menampilkan kontak WhatsApp Pustakawan Pembina (+62 881-0821-52119) 4. Sistem mencatat kejadian eskalasi ke log percakapan N. TUJUAN TERCAPAI — pengguna mendapat jalur tindak lanjut resmi |
+| **Ekstensi** | Jika eskalasi terjadi setelah UC6 (di luar cakupan), maka pesan UC6 dan UC10 digabung (satu pesan berisi keterbatasan cakupan + kontak Pustakawan Pembina) |
+| **Prioritas** | Tinggi |
+| **Persyaratan Khusus** | Nomor WhatsApp Pustakawan Pembina wajib dapat dikonfigurasi (tidak hard-coded di source code) |
+| **Pertanyaan Terbuka** | Apakah dokumentasi solusi pustakawan ke KMS (kurasi & validasi ulang) masuk cakupan fase ini atau fase berikutnya — KAK alur bisnis menuntut loop ini, namun kebutuhan teknisnya perlu konfirmasi tim Produk |
+
+#### 3.10.3 Diagram Aktivitas
+
+Tercakup dalam perluasan AD-UC3 (lihat 06_Activity_Diagram.md §2 — cabang "eskalasi ke Pustakawan Pembina").
+
+#### 3.10.4 Persyaratan Fungsional
+
+| ID Spesifikasi | Deskripsi Spesifikasi | Aturan Bisnis/Ketergantungan Data |
+| -------------- | ---------------------- | --------------------------------- |
+| FR-10.1 | Sistem harus menampilkan mekanisme eskalasi ke Pustakawan Pembina saat pertanyaan tidak dapat dijawab, butuh interpretasi, analisis kasus, atau pendampingan khusus | KAK Prinsip Utama #6 |
+| FR-10.2 | Sistem harus menampilkan kontak WhatsApp Pustakawan Pembina (+62 881-0821-52119) sebagai jalur eskalasi | — |
+| FR-10.3 | Sistem harus mencatat kejadian eskalasi ke log percakapan untuk mendukung metrik "jumlah eskalasi" | tbl_conversation_log (flag eskalasi) |
+
+#### 3.10.5 Spesifikasi Tingkat Bidang
+
+**Elemen Formulir:**
+
+| Call-out | Label Bidang | Kontrol UI | Wajib? | Dapat Diedit | Tipe Data | Set Nilai | Nilai Default | Contoh Data | Sumber Data |
+|----------|-------------|------------|-------|----------|-----------|-----------|---------------|---------------|-------------|
+| 1 | Pesan Eskalasi | Read-only text block | — | Tidak | Text (rich) | — | Pesan standar | "Pertanyaan Anda membutuhkan bantuan Pustakawan Pembina." | Sistem (template pesan) |
+| 2 | Kontak Pustakawan Pembina | Link/button WhatsApp | — | Tidak | Text/URL | — | — | "Hubungi via WhatsApp +62 881-0821-52119" | Konfigurasi sistem |
+
+**Aturan dan Ketergantungan Bisnis Formulir:**
+
+| Label Bidang | Validasi/Aturan Bisnis | Pesan Kesalahan | Ketergantungan Data | Info/Catatan Tambahan |
+|-------------|---------------------------|---------------|-------------------|----------------------|
+| Kontak Pustakawan Pembina | Nomor wajib dapat dikonfigurasi (bukan hard-coded) | — | Konfigurasi deployment | Nomor aktual dikelola di konfigurasi deployment |
+
+---
+
+### 3.11 Monitoring Pemanfaatan Layanan
+
+#### 3.11.1 Tujuan/Deskripsi
+
+**Tujuan:** Menyediakan dashboard monitoring pemanfaatan layanan yang memenuhi section "Statistik dan Monitoring" KAK SAPA PUSTAKA.
+
+**Deskripsi:** Use case yang menyediakan 5 metrik wajib KAK: (1) jumlah pengguna, (2) jumlah percakapan, (3) pertanyaan yang berhasil dijawab, (4) pertanyaan yang tidak terjawab, (5) jumlah eskalasi.
+
+#### 3.11.2 Use Case
+
+| | |
+|-|-|
+| **UC-11** | **Monitoring Pemanfaatan Layanan** |
+| **Aktor Utama** | Admin Online DPAD, Tim Internal / Tim Proyek |
+| **Pemangku Kepentingan dan Minat** | DPAD (memantau pemanfaatan layanan), Tim Proyek (evaluasi kualitas) |
+| **Pemicu** | Kebutuhan memantau pemanfaatan layanan chatbot secara berkala |
+| **Pre-kondisi** | Log percakapan (tbl_conversation_log) tersedia |
+| **Post-kondisi** | Dashboard menampilkan 5 metrik KAK |
+| **Skenario Sukses Utama** | 1. Aktor mengakses dashboard monitoring 2. Sistem menghitung jumlah pengguna 3. Sistem menghitung jumlah percakapan 4. Sistem menghitung pertanyaan berhasil dijawab 5. Sistem menghitung pertanyaan tidak terjawab 6. Sistem menghitung jumlah eskalasi 7. Sistem menampilkan 5 metrik N. TUJUAN TERCAPAI — DPAD dapat memantau pemanfaatan layanan |
+| **Ekstensi** | Jika data log belum tersedia, maka dashboard menampilkan nilai nol dengan pesan informasi |
+| **Prioritas** | Sedang |
+| **Persyaratan Khusus** | Kelima metrik wajib tersedia (deliverable mandatory KAK) |
+| **Pertanyaan Terbuka** | Detail visualisasi/filter dashboard perlu konfirmasi tim Produk |
+
+#### 3.11.3 Diagram Aktivitas
+
+*(Tidak dibuat diagram terpisah — perilaku dashboard monitoring dimodelkan sebagai use case administratif/analitik yang membaca log percakapan)*
+
+#### 3.11.4 Persyaratan Fungsional
+
+| ID Spesifikasi | Deskripsi Spesifikasi | Aturan Bisnis/Ketergantungan Data |
+| -------------- | ---------------------- | --------------------------------- |
+| FR-11.1 | Sistem harus menyediakan dashboard monitoring yang menampilkan jumlah pengguna | tbl_session (jumlah unik) |
+| FR-11.2 | Sistem harus menyediakan dashboard monitoring yang menampilkan jumlah percakapan | tbl_conversation_log |
+| FR-11.3 | Sistem harus menyediakan dashboard monitoring yang menampilkan pertanyaan yang berhasil dijawab | tbl_conversation_log (is_error=FALSE, is_out_of_scope=FALSE) |
+| FR-11.4 | Sistem harus menyediakan dashboard monitoring yang menampilkan pertanyaan yang tidak terjawab | tbl_conversation_log (is_error=TRUE atau tidak ditemukan jawaban) |
+| FR-11.5 | Sistem harus menyediakan dashboard monitoring yang menampilkan jumlah eskalasi | tbl_conversation_log (flag eskalasi) |
+
+#### 3.11.5 Spesifikasi Tingkat Bidang
+
+*(Use case ini adalah dashboard analitik — detail field/visualisasi menyusul bersama keputusan tim Produk terkait Custom Analytics)*
+
+---
+
 ## 4. Konfigurasi Sistem
 
 Konfigurasi berikut diperlukan sebelum sistem dapat beroperasi:
 
-1. **Konfigurasi Workspace RAGA** — Tim Internal mengonfigurasi Workspace Chatbot DPAD di Dashboard RAGA, termasuk endpoint API/Iframe (tbl_workspace.endpoint_api). Tujuan: memastikan Workspace terisolasi khusus DPAD, tidak tercampur dengan proyek RAGA klien lain.
-2. **Embed Halaman Chat** — Kode embed (Iframe/widget script) dipasang di website DPAD existing oleh tim developer/IT DPAD. Tujuan: menyediakan titik akses tanpa mengubah arsitektur website secara signifikan (constraint spec.md).
+1. **Konfigurasi Workspace RAGA** — Tim Internal mengonfigurasi Workspace Chatbot DPAD di Dashboard RAGA, termasuk endpoint API (tbl_workspace.endpoint_api). Tujuan: memastikan Workspace terisolasi khusus DPAD, tidak tercampur dengan proyek RAGA klien lain.
+2. **Embed Halaman Chat via Widget SDK** — Skrip widget SDK RAGA (`<raga-chat>`) dipasang di website DPAD existing oleh tim developer/IT DPAD. Atribut widget: `id="chat"`, `api-url`, `workspace-id`, `app-key` *(nilai aktual dikelola di konfigurasi deployment — TIDAK didokumentasikan di FSD)*, `logo-src="/logo.svg"`, `background-top-right-src="/top-right.svg"`, `background-bottom-left-src="/buttom-left.svg"`, `launcher-logo-src="/logo-only.svg"`, `position="bottom-left"`, `stream="true"`. Tujuan: menyediakan titik akses tanpa mengubah arsitektur website secara signifikan (constraint spec.md).
 3. **Setup Akun Admin Online** — Admin online didaftarkan ke tbl_admin dengan tanggal_mulai_akses (= tanggal go-live) dan tanggal_akhir_akses (otomatis dihitung +6 bulan). Tujuan: menegakkan constraint masa akses CMS secara sistematis, bukan manual.
-4. **Konfigurasi Kategori Knowledge Base** — Domain kategori ('akreditasi', 'layanan_umum') dikonfigurasi di awal sebagai basis pemisahan konten. Alternatif yang dipertimbangkan: kategori tambahan di masa depan (mis. jika Sibinakawan diaktifkan) — belum diimplementasikan pada fase ini.
+4. **Konfigurasi Knowledge Base** — Melakukan konfigurasi di awal sebagai basis pemisahan konten. Alternatif yang dipertimbangkan: kategori tambahan di masa depan (mis. jika Sibinakawan diaktifkan) — belum diimplementasikan pada fase ini.
 
 ---
 
@@ -815,9 +879,11 @@ Konfigurasi berikut diperlukan sebelum sistem dapat beroperasi:
 
 | ID Laporan | Nama Laporan | Frekuensi | Tenggat Waktu | Sumber Data | Audiens |
 |-----------|-------------|-----------|----------|-------------|----------|
-| — | *(Tidak ada laporan berkala dalam cakupan proyek ini)* | — | — | — | — |
+| LAP-01 | Dashboard Monitoring Pemanfaatan Layanan | On-demand | — | tbl_session, tbl_conversation_log | DPAD, Tim Internal |
 
-> Sesuai 01_Requirement_Extraction.md §3.3 dan spec.md §Out of Scope: **analitik/dashboard pelaporan penggunaan chatbot secara eksplisit dinyatakan di luar cakupan** pada fase ini. Data log percakapan (tbl_conversation_log) tersimpan untuk audit, namun belum ada mekanisme ekstraksi laporan terjadwal ke DPAD. Ini adalah kandidat kuat untuk fase pengembangan berikutnya (rujukan: PRD & Feature Spec §5 Fitur "Analitik/dashboard pelaporan penggunaan chatbot untuk DPAD (fase berikutnya)").
+> Sesuai KAK SAPA PUSTAKA section "Statistik dan Monitoring" (deliverable mandatory), dashboard monitoring wajib menampilkan 5 metrik: (1) jumlah pengguna, (2) jumlah percakapan, (3) pertanyaan yang berhasil dijawab, (4) pertanyaan yang tidak terjawab, (5) jumlah eskalasi. Rincian fungsional lihat UC11 (FSD §3.11).
+>
+> Catatan feedback pengguna (alur bisnis KAK): langkah "Feedback pengguna" pada diagram alur bisnis KAK **tidak masuk MVP** — di luar sistem (perlu konfirmasi tim Produk). Dicatat sebagai open item.
 
 ### 5.2 Format Laporan
 
@@ -829,12 +895,13 @@ Tidak berlaku pada fase ini.
 
 ### 6.1 Sistem Eksternal
 
-| Sistem Eksternal | Jenis Interface | Data yang Ditukar | Protokol |
-|-----------------|----------------|----------------|----------|
-| Workspace Chatbot DPAD (RAGA TLab) | API/Iframe | user_message, session_id, jawaban + sitasi | HTTPS/API |
-| Website DPAD (existing) | Embed (Iframe/widget) | UI halaman chat | HTTPS/Iframe |
-| Website TLab (Knowledge AI RAAGA) | Native (CMS built-in di platform TLab) | cms_content, konfirmasi update | HTTPS |
-| Sibinakawan *(potensial, out of scope)* | Belum ditentukan | Belum ditentukan | Belum ditentukan |
+| Sistem Eksternal                        | Jenis Interface                        | Data yang Ditukar                          | Protokol         |
+| --------------------------------------- | -------------------------------------- | ------------------------------------------ | ---------------- |
+| Workspace Chatbot DPAD (RAGA TLab)      | Widget SDK (embed client-side)         | user_message, session_id, jawaban + sitasi | HTTPS/API        |
+| Website DPAD (existing)                 | Embed (widget)                         | UI halaman chat                            | HTTPS (script + widget)     |
+| Website TLab (Knowledge AI RAGA)        | Native (CMS built-in di platform TLab) | cms_content, konfirmasi update             | HTTPS            |
+| WhatsApp Pustakawan Pembina             | Kontak/tautan (wa.me)                  | Pengalihan pertanyaan (manual)             | HTTPS/WA        |
+| Sibinakawan *(potensial, out of scope)* | Belum ditentukan                       | Belum ditentukan                           | Belum ditentukan |
 
 ### 6.2 Penanganan Pengecualian/Pelaporan Kesalahan
 
@@ -845,6 +912,7 @@ Tidak berlaku pada fase ini.
 | ERR-03 | Halaman chat gagal dimuat | Masalah jaringan/konfigurasi embed | Pesan fallback (UC2), bukan halaman kosong |
 | ERR-04 | Akses CMS ditolak | Masa akses admin (6 bulan) telah berakhir | Pesan status akses tidak berlaku (UC8), perlu keputusan bisnis lanjutan (perpanjangan/tidak) |
 | ERR-05 | Pertanyaan di luar cakupan knowledge base | Topik tidak relevan dengan layanan perpustakaan/akreditasi | Pesan keterbatasan cakupan (UC6), tanpa mengarang jawaban |
+| ERR-06 | Pertanyaan tidak dapat dijawab / butuh analisis | Jawaban tidak ditemukan di knowledge base, butuh interpretasi/kasus | Eskalasi ke Pustakawan Pembina (UC10), tampilkan kontak WA |
 
 ---
 
@@ -886,12 +954,13 @@ Tidak berlaku sebagai "konversi" dalam pengertian migrasi sistem lama — melain
 | UC1 Kelola Knowledge Base | FT-P1 | US-001 |
 | UC2 Tampilkan Halaman Chat | FT-P4 | US-004 |
 | UC3 Konsultasi Akreditasi | FT-P5 | US-005 |
-| UC4 Konsultasi Layanan Umum | FT-P6 | US-006 |
 | UC5 Kelola Sesi Percakapan | FT-P7, FT-P8 | US-007, US-008 |
 | UC6 Tangani Pertanyaan Di Luar Cakupan | FT-P11 | US-011 |
 | UC7 Tangani Error/Timeout RAGA | FT-P12 | US-012 |
 | UC8 Kelola Konten via CMS | FT-P9 | US-009 |
 | UC9 Ikuti Pelatihan Sistem | FT-P10 | US-010 |
+| UC10 Eskalasi ke Pustakawan Pembina | KAK Prinsip #6 | US-017 *(baru)* |
+| UC11 Monitoring Pemanfaatan Layanan | KAK "Statistik dan Monitoring" | US-016 *(perluasan)* |
 
 ### B. Open Items yang Berdampak ke FSD Ini
 
@@ -906,6 +975,9 @@ Item berikut masih menunggu konfirmasi klien dan berdampak langsung pada impleme
 7. Mekanisme pasti penolakan akses CMS setelah 6 bulan (hard block vs read-only) — relevan untuk FR-8.1, UC8.
 8. Ambang batas waktu (timeout threshold) Workspace RAGA — relevan untuk UC7.
 9. Ukuran maksimum file upload dokumen — relevan untuk UC1, UC8.
+10. Feedback pengguna (alur bisnis KAK) — **tidak masuk MVP, di luar sistem; perlu konfirmasi tim Produk** (K7).
+11. Dokumentasi solusi pustakawan → KMS → kurasi & validasi ulang (loop eskalasi KAK) — apakah masuk cakupan fase ini atau fase berikutnya.
+12. Detail visualisasi/filter dashboard monitoring (5 metrik KAK) — perlu konfirmasi tim Produk terkait Custom Analytics.
 
 ---
 
