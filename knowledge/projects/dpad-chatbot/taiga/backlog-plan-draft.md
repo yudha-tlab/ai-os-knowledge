@@ -2,11 +2,13 @@
 title: "Taiga Backlog Plan — DPAD Chatbot (v0.7 — Final PM)"
 type: taiga-backlog-plan
 project: dpad-chatbot
-version: "0.8"
+version: "0.9"
 date: 2026-08-12
-modified: 2026-08-24
+modified: 2026-08-26
 status: final-PM-approve
 changelog:
+  - date: 2026-08-26
+    purpose: "Tambah IS-226 (desain halaman kebijakan privasi — Ardy/Design, AC-015.5, NFR-004) di US-015; dibuat di Taiga ref 94"
   - date: 2026-08-24
     purpose: "Hapus total US-004 (Konsultasi Layanan Umum) + IS-209/IS-210 dari backlog — keputusan PM; konsisten PRD v2.1/FSD v1.2/05/06/09/02/04/08/10; DS2 & kategori layanan umum dipertahankan sebagai data store; 16 US aktif"
   - date: 2026-08-21
@@ -127,6 +129,7 @@ source:
 | IS-216 | Simpan data pengguna & kaitkan dengan session_id | Musa (BE) |
 | IS-217 | Tambahkan persetujuan/kebijakan privasi data pribadi pada form pre-chat (NFR-004, standar ISO) | Raihan (FE) |
 | **IS-221** *(BARU)* | Buat halaman kebijakan privasi + link pada checkbox persetujuan pre-chat (AC-015.3, AC-015.5, NFR-004 — keputusan PM 2026-08-19) | Raihan (FE) |
+| **IS-226** *(BARU)* | Desain halaman kebijakan privasi (AC-015.5, NFR-004, identitas visual DPAD) | Ardy (Design) |
 
 **US-003 — Konsultasi Akreditasi** *(trace: source-docs US-003, UC3, FR-3.x)*
 > Sebagai Pengelola Perpustakaan, saya ingin bertanya seputar instrumen akreditasi, sehingga dapat jawaban cepat dengan sitasi sumber.
