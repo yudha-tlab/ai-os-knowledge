@@ -24,15 +24,15 @@ version: "1.0"
 
 ## 1. Peserta
 
-| No | Nama | Instansi | Peran |
-|----|------|----------|-------|
-| 1 | Nover Dian | TLab | Pimpinan Rapat |
-| 2 | Yudha Pratama | TLab | Project Manager |
-| 3 | Aria | TLab | Tim Teknis |
-| 4 | Risel | TLab | Tim Teknis |
-| 5 | Alvin | TLab | Tim Teknis |
-| 6 | Gike | TLab | Tim Teknis |
-| 7 | Adi (Yudis) | Bank BSU | Engineer / Pelaksana |
+| No  | Nama          | Instansi | Peran                |
+| --- | ------------- | -------- | -------------------- |
+| 1   | Nover Dian    | TLab     | Pimpinan Rapat       |
+| 2   | Yudha Pratama | TLab     | Project Manager      |
+| 3   | Aria          | Bank BSU | Tim Teknis           |
+| 4   | Rizal         | TLab     | Tim Teknis           |
+| 5   | Alvin         | TLab     | Tim Teknis           |
+| 6   | Cahya Bagus   | TLab     | Tim Teknis           |
+| 7   | Adi (Yudis)   | Bank BSU | Engineer / Pelaksana |
 
 ---
 
@@ -88,9 +88,9 @@ version: "1.0"
 | No | Tindak Lanjut | Penanggung Jawab | Batas Waktu |
 |----|---------------|------------------|-------------|
 | 1 | Menyelesaikan instalasi Kali Linux, OpenVAS, dan Nuclei pada laptop Bank | Adi (Bank BSU) | Malam ini |
-| 2 | Mengirimkan dokumentasi instalasi dan konfigurasi kepada engineer Bank | Aria (TLab) | Segera |
+| 2 | Mengirimkan dokumentasi instalasi dan konfigurasi kepada engineer Bank | Aria (Bank BSU) | Segera |
 | 3 | Mengonfirmasi jadwal pemindaian (menghindari jam backup 21.00–04.00) | Yudha Pratama | Sebelum pemindaian |
-| 4 | Menyiapkan daftar alamat IP target (3 hypervisor dan controller storage) | Aria (TLab) | Sebelum pemindaian |
+| 4 | Menyiapkan daftar alamat IP target (3 hypervisor dan controller storage) | Aria (Bank BSU) | Sebelum pemindaian |
 | 5 | Melanjutkan pemindaian setelah persiapan selesai | Adi (Bank BSU) | Hari berikutnya |
 
 ---
