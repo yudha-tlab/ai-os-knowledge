@@ -18,14 +18,14 @@ source: "transcript-20260907-initial-meeting.md"
 
 ## Peserta (dari transkrip)
 
-| Nama | Peran | Keterangan |
-|------|-------|------------|
-| Nover Dian | TLab | Memimpin meeting, perkenalan |
-| Yudha Pratama | TLab PM | Tidak berbicara di meeting (hanya telepon) |
-| Bang Aria | TLab | Teknis/engineer, join belakangan |
-| Mas Risel | TLab | Teknis |
-| Mas Alvin | TLab | Teknis |
-| Mas Gike | TLab | Teknis, mengurus VM |
+| Nama             | Peran    | Keterangan                              |
+| ---------------- | -------- | --------------------------------------- |
+| Noverdian        | TLab     | Memimpin meeting, perkenalan            |
+| Yudha Pratama    | TLab     | PM                                      |
+| Bang Aria        | Bank BSU | Teknis/engineer, join belakangan        |
+| Mas Rizal        | TLab     | Teknis                                  |
+| Mas Alvin        | TLab     | Teknis                                  |
+| Mas GG           | TLab     | Teknis, mengurus VM                     |
 | Bang Adi / Yudis | Bank BSU | Engineer Bank, eksekusi setup di laptop |
 
 ## Agenda
