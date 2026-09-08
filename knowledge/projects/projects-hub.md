@@ -22,6 +22,7 @@ _(Belum ada project terdaftar — tambahkan saat project pertama dimulai)_
 | **BSB — KPI & KYE** | Bank Sumsel Babel | Produksi (Garansi) | [[bsb-kpi-kye/project-profile]] |
 | Integrasi BP Tapera | Bank Sumsel Babel | ~90.18% | [[integrasi-bp-tapera/project-profile]] |
 | **AI Knowledge Center DPAD** | DPAD DIY | Belum Mulai | [[dpad-chatbot/project-profile]] |
+| **Pentest VMWare BPD Sumut** | BPD Sumut | Aktif | [[bpd-sumut/project-profile]] |
 
 ## Cara Menambah Project Baru
 
