@@ -1,0 +1,21 @@
+Service,Kode Error,Message
+Follow Up,FUP0000311,Laporan penghasilan melebihi batas (1000000) untuk individu belum menikah di kode kabupaten / kota 31.74
+Follow Up,FUP0000310,Laporan penghasilan melebihi batas (2000000) untuk pasangan menikah di kode kabupaten / kota 31.74
+SP3K,SPK0000017,harga rumah 200000000 melebihi batas max 185000000
+SP3K,SPK0000031,luas bangunan 1000 melebihi batas max 40
+SP3K,SPK0000032,luas tanah 1000 melebihi batas max 50
+,,
+,,
+,,
+,,
+Service List Produk,,
+Base URL> /api/mitra-penyalur/v2/parameter/produk,,
+,,
+Penginputan Kode Produk dilakukan di service ,,
+Pengajuan Pembiayaan,,
+Perubahan Pengajuan Pembiayaan,,
+Tapera Mobile,,
+,,
+Kode Produk Rusun 6% Development,,
+SYARIAH,KPRSYS6,
+KONVEN,KPRKNS6,

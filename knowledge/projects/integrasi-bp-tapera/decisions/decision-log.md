@@ -1,6 +1,6 @@
 # Decision Log — Integrasi BP Tapera (BSB Sumsel Babel)
 
-**Terakhir diupdate**: 2026-07-14
+**Terakhir diupdate**: 2026-09-09
 
 ## DEC-2024-001: Asumsi Validitas User Guide v1-5 dan Progres 90.18%
 - **Tanggal**: 15 Juli 2026
@@ -138,3 +138,15 @@
 - **Tanggal**: 20 April 2026 - 18 Juni 2026
 - **Dokumen**: Laporan Progress 2024
 - **Keputusan**: Pendampingan sosialisasi dan penggunaan aplikasi kepada user (divisi bisnis) dan tim ops IT dilakukan.
+
+## DEC-2026-011: CR-20260908-002 — Penyesuaian Tenor Maksimal & Suku Bunga KPR Sejahtera FLPP
+- **Tanggal**: 9 September 2026
+- **Dokumen**: CR-20260908-002-penyesuaian-tenor-dan-suku-bunga-flpp.md (status: Draft)
+- **Sumber**: Dokumen klien "Rapat Koordinasi Kesiapan Sistem IT Bank Penyalur FLPP" (04 September 2026), berdasarkan Kepmen PKP No. 1721 & 1722 Tahun 2026
+- **Keputusan**: Dibuka CR untuk penyesuaian sistem terhadap kebijakan baru KPR Sejahtera FLPP:
+    - Tenor maksimal diperpanjang s.d. 40 tahun (480 bulan)
+    - Suku bunga tetap 6,00% (Rumah Tapak) / 5,00% (Rumah Susun)
+- **Estimasi Effort (draft)**: 16,0 MD (12 hari kerja) — menunggu validasi tim development
+- **Ekspektasi Client**: selesai 25 September 2026
+- **Dampak**: Dokumen ini menjadi rujukan tim bisnis (proposal penawaran) dan PM (PRD/FSD). 5 klarifikasi data terbuka (utama: dukungan core banking atas tenor 480 bulan, gate H3 = 14 Sep 2026).
+- **Status**: Draft — belum di-approve; akan diupdate saat persetujuan klien diterima.

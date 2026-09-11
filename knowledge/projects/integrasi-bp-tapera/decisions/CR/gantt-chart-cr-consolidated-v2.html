@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gantt Chart — CR Consolidated v2.1 (Integrasi BP Tapera)</title>
+<style>
+  :root {
+    --fg: var(--foreground, #1a1a2e);
+    --muted: var(--muted-foreground, #6b7280);
+    --accent: var(--accent, #2563eb);
+    --border: var(--border, #e5e7eb);
+    --card: var(--card, #ffffff);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--fg); background: transparent; padding: 16px; }
+  h1 { font-size: 18px; margin-bottom: 4px; }
+  .sub { color: var(--muted); font-size: 12px; margin-bottom: 16px; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; font-size: 12px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-swatch { width: 14px; height: 14px; border-radius: 3px; }
+  .gantt { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; min-width: 900px; }
+  th, td { border: 1px solid var(--border); padding: 6px 8px; font-size: 12px; }
+  th { background: rgba(0,0,0,0.04); text-align: center; font-weight: 600; }
+  .row-label { font-weight: 600; white-space: nowrap; }
+  .row-sub { color: var(--muted); font-size: 11px; }
+  .bar { height: 18px; border-radius: 3px; min-width: 4px; }
+  .bar-p1 { background: #2563eb; }
+  .bar-p2 { background: #059669; }
+  .bar-p3 { background: #d97706; }
+  .bar-milestone { background: #dc2626; width: 6px; }
+  .cell { text-align: center; }
+  .note { margin-top: 16px; font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .note strong { color: var(--fg); }
+  .day-header { font-size: 10px; }
+</style>
+</head>
+<body>
+  <h1>Gantt Chart — CR Consolidated v2.1</h1>
+  <div class="sub">Integrasi BP Tapera (BSB) · Timeline Delivery (dalam hari kerja H1–H22) · tanggal mulai menyesuaikan</div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="legend-swatch" style="background:#2563eb"></span> P1 · FLPP (CR-20260908-002)</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:#059669"></span> P2 · Validasi Form (CR-20260908-001)</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:#d97706"></span> P3 · Delta TSD (CR-20260729-001)</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:#dc2626"></span> Milestone</div>
+  </div>
+
+  <div class="gantt">
+    <table>
+      <thead>
+        <tr>
+          <th style="min-width:200px;text-align:left">Task</th>
+          <th class="day-header">H1</th><th class="day-header">H2</th><th class="day-header">H3</th><th class="day-header">H4</th>
+          <th class="day-header">H5</th><th class="day-header">H6</th><th class="day-header">H7</th><th class="day-header">H8</th>
+          <th class="day-header">H9</th><th class="day-header">H10</th><th class="day-header">H11</th><th class="day-header">H12</th>
+          <th class="day-header">H13</th><th class="day-header">H14</th><th class="day-header">H15</th><th class="day-header">H16</th>
+          <th class="day-header">H17</th><th class="day-header">H18</th><th class="day-header">H19</th><th class="day-header">H20</th>
+          <th class="day-header">H21</th><th class="day-header">H22</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- P1 FLPP -->
+        <tr><td class="row-label" colspan="23">P1 · FLPP Tenor &amp; Suku Bunga (CR-20260908-002) — 16 MD · H1–H12</td></tr>
+        <tr>
+          <td>Kickoff &amp; klarifikasi BSB</td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+        </tr>
+        <tr>
+          <td>Backend (A.1–A.5) — validasi tenor/bunga</td>
+          <td class="cell"></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+        </tr>
+        <tr>
+          <td>Frontend (B.1–B.4) — field tenor/bunga</td>
+          <td class="cell"></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+        </tr>
+        <tr>
+          <td>Integrasi SI (C.1–C.2)</td>
+          <td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+        </tr>
+        <tr>
+          <td>QA — test case &amp; regression (D.1–D.3)</td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+        </tr>
+        <tr>
+          <td>Deploy staging (E.1)</td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+        </tr>
+        <tr>
+          <td>UAT BSB + deploy production (E.2)</td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+        </tr>
+        <tr>
+          <td>Pendampingan pasca-deploy (E.3)</td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td>
+          <td class="cell"><div class="bar bar-p1"></div></td>
+          <td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+        </tr>
+        <tr>
+          <td><strong>Milestone: Deadline client</strong></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"><div class="bar bar-milestone"></div></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+        </tr>
+
+        <!-- P2 Validasi Form -->
+        <tr><td class="row-label" colspan="23">P2 · Validasi Gender &amp; Pendapatan (CR-20260908-001) — 2,5 MD · H11–H12</td></tr>
+        <tr>
+          <td>Frontend validasi form (V-1)</td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"><div class="bar bar-p2"></div></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+        </tr>
+        <tr>
+          <td>Backend validasi (V-2) + QA (V-3)</td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"><div class="bar bar-p2"></div></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+        </tr>
+
+        <!-- P3 Delta TSD -->
+        <tr><td class="row-label" colspan="23">P3 · Delta TSD v0.8.6–v0.8.8 (CR-20260729-001) — 42 MD · H13–H22</td></tr>
+        <tr>
+          <td>Backend — route alignment, DTO, Stok Rumah (BE-1..8)</td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+        </tr>
+        <tr>
+          <td>Frontend — model House &amp; dropdown (FE-1..3)</td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+        </tr>
+        <tr>
+          <td>Integrasi SI — proxy (SI-1..2)</td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+        </tr>
+        <tr>
+          <td>QA — regression &amp; UAT/VIT</td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+        </tr>
+        <tr>
+          <td>Deploy staging + production (DevOps)</td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+          <td class="cell"></td><td class="cell"></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"><div class="bar bar-p3"></div></td>
+          <td class="cell"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <strong>Catatan:</strong>
+    <ul style="margin-left:18px;margin-top:4px">
+      <li>Timeline dinyatakan dalam <strong>hari kerja (H1–H22)</strong>, bukan tanggal kalender — tanggal mulai menyesuaikan saat eksekusi dimulai.</li>
+      <li><strong>P1 (FLPP)</strong> — H1–H12, target deadline client di <strong>H12</strong>. Gate klarifikasi BSB di <strong>H3</strong>.</li>
+      <li><strong>P2 (Validasi Form)</strong> — 2,5 MD, dikerjakan H11–H12 setelah P1 production (paralel dengan pendampingan).</li>
+      <li><strong>P3 (Delta TSD)</strong> — 42 MD, 10 hari kerja (H13–H22), dimulai setelah P1 selesai &amp; approval BSB. Menghindari konflik resource dengan P1.</li>
+      <li>Mandays (60,5 MD) untuk harga; timeline di atas untuk delivery — keduanya tidak dicampur.</li>
+      <li>Posisi P3 (H13–H22) bersifat indikatif — bergantung approval BSB (K7) &amp; ketersediaan resource.</li>
+    </ul>
+  </div>
+</body>
+</html>
