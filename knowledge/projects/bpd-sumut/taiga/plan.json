@@ -1,0 +1,129 @@
+{
+  "project_slug": "bsu-pentest",
+  "team": {
+    "Yudha Pratama": "yudha"
+  },
+  "milestone": {
+    "name": "Pentest VMware BPD Sumut",
+    "start": "2026-09-01",
+    "finish": "2026-09-08",
+    "total_points": 7
+  },
+  "epics": [
+    {
+      "subject": "Penetration Testing VMware BPD Sumut",
+      "description": "Assesment kerentanan infrastruktur virtualisasi VMware Bank Pembangunan Daerah Sumatera Utara. Subkontraktor Lintasarta (kontrak 01522/CONTRACT-LA/2026, SPK 05/BD-TLab/SPK/VIII/2026). Metode blackbox (tanpa akses kredensial), bukan full pentest. Durasi 7 hari kerja (s.d. 8 Sep 2026 backdate), 7 mandays. Tools: Nuclei + OpenVAS (VM appliance). Pelaporan kemajuan maks 7 Sep 2026. Referensi: knowledge/projects/bpd-sumut/requirements/requirement-backlog.md",
+      "stories": [
+        {
+          "subject": "US-01 D-01 VM Assessment (Nuclei + OpenVAS appliance)",
+          "description": "Deliverable 1 SPK Lampiran A. Virtual appliance berisi Nuclei, OpenVAS, dan alat pendukung, siap dijalankan. Scope: 3 hypervisor ESXi + storage controller (Exclarity/Lenovo). Scan via IP controller, bukan jalur FC. Eksekusi oleh engineer Bank, TLab pandu. Batasan RoE: surface scan tanpa credential, scan di luar jam backup produksi (21:00-03:00), slow scan hindari auto-block firewall/NDR. Status aktual: scan 4 target selesai.",
+          "assignee": "Yudha Pratama",
+          "kategori": "F- Non Fungsional Testing",
+          "story_points": 2,
+          "role": "",
+          "tasks": [
+            {
+              "subject": "T-01.1 Persiapan & pengecekan VM appliance (Nuclei + OpenVAS)",
+              "assignee": "Yudha Pratama",
+              "mandays": 1,
+              "description": "Pastikan VM berisi Nuclei dan OpenVAS siap jalan. Setup Kali Linux (VM Oracle VirtualBox) + OpenVAS (GVM) + Nuclei di laptop Bank. Pendampingan eksekusi oleh TLab. (Kategori: NF - Support)"
+            },
+            {
+              "subject": "T-01.2 Eksekusi scan OpenVAS + Nuclei pada target",
+              "assignee": "Yudha Pratama",
+              "mandays": 1,
+              "description": "Scan 4 target (3 ESXi + storage controller). Konfigurasi surface scan tanpa credential, port list manual, batasan NVT 20. Di luar jam backup produksi. Slow scan untuk hindari auto-block firewall/NDR."
+            }
+          ]
+        },
+        {
+          "subject": "US-02 D-02 Panduan Langkah demi Langkah",
+          "description": "Deliverable 2 SPK Lampiran A. Dokumen panduan teknis untuk engineer Bank Sumatera Utara: instalasi, konfigurasi, eksekusi pemindaian, pengumpulan hasil. Sumber: source-docs/step-nuclei.md, step-openvas.md, vmware.md.",
+          "assignee": "Yudha Pratama",
+          "kategori": "NF - Dokumentasi",
+          "story_points": 1,
+          "role": "",
+          "tasks": [
+            {
+              "subject": "T-02.1 Susun panduan instalasi & konfigurasi tools",
+              "assignee": "Yudha Pratama",
+              "mandays": 0.5,
+              "description": "Dokumentasikan instalasi Oracle VirtualBox, Kali Linux, OpenVAS (GVM), Nuclei, dan konfigurasi target."
+            },
+            {
+              "subject": "T-02.2 Susun langkah eksekusi scan & pengumpulan hasil",
+              "assignee": "Yudha Pratama",
+              "mandays": 0.5,
+              "description": "Dokumentasikan alur eksekusi scan, interpretasi hasil, dan pengumpulan data mentah (JSON/CSV)."
+            }
+          ]
+        },
+        {
+          "subject": "US-03 D-03 Laporan Ringkasan Eksekutif",
+          "description": "Deliverable 3 SPK Lampiran A. Ringkasan temuan untuk manajemen Bank: tingkat risiko keseluruhan, temuan kritis, rekomendasi strategis. Hasil scan 4 target: tidak ada CVE relevan ditemukan, host clear (MOM 9 Sep).",
+          "assignee": "Yudha Pratama",
+          "kategori": "NF - Dokumentasi",
+          "story_points": 1,
+          "role": "",
+          "tasks": [
+            {
+              "subject": "T-03.1 Susun ringkasan eksekutif dari hasil scan",
+              "assignee": "Yudha Pratama",
+              "mandays": 1,
+              "description": "Ringkas hasil scan 4 target, tingkat risiko, temuan kritis, rekomendasi strategis."
+            }
+          ]
+        },
+        {
+          "subject": "US-04 D-04 Laporan Teknis Lengkap",
+          "description": "Deliverable 4 SPK Lampiran A. Daftar lengkap kerentanan (CVE, CVSS score, lokasi, bukti), analisis risiko, rekomendasi mitigasi. Hasil: temuan lama banyak port/CVE, host CentOS 7 (termasuk Grafana), kehadiran BeyondTrust. Konfirmasi format laporan final ke klien.",
+          "assignee": "Yudha Pratama",
+          "kategori": "NF - Dokumentasi",
+          "story_points": 1,
+          "role": "",
+          "tasks": [
+            {
+              "subject": "T-04.1 Susun laporan teknis hasil pemindaian",
+              "assignee": "Yudha Pratama",
+              "mandays": 1,
+              "description": "Compile detail CVE/CVSS, lokasi, bukti, analisis risiko, mitigasi dari output OpenVAS + Nuclei."
+            }
+          ]
+        },
+        {
+          "subject": "US-05 D-05 Daftar Prioritas Remediasi",
+          "description": "Deliverable 5 SPK Lampiran A. Urutan tindakan perbaikan berdasarkan keparahan dan dampak bisnis. Catatan: hasil scan mayoritas ke-filter firewall/NDR - interpretasi hasil pertimbangkan batasan ini.",
+          "assignee": "Yudha Pratama",
+          "kategori": "NF - Dokumentasi",
+          "story_points": 1,
+          "role": "",
+          "tasks": [
+            {
+              "subject": "T-05.1 Susun daftar prioritas remediasi",
+              "assignee": "Yudha Pratama",
+              "mandays": 1,
+              "description": "Urutkan perbaikan berdasarkan keparahan & dampak bisnis dari temuan laporan teknis."
+            }
+          ]
+        },
+        {
+          "subject": "US-06 D-06 Data Mentah Pemindaian (JSON/CSV)",
+          "description": "Deliverable 6 SPK Lampiran A. Hasil pemindaian format JSON/CSV dari Nuclei dan OpenVAS untuk referensi lanjutan.",
+          "assignee": "Yudha Pratama",
+          "kategori": "NF - Support",
+          "story_points": 1,
+          "role": "",
+          "tasks": [
+            {
+              "subject": "T-06.1 Kumpulkan & format data mentah scan",
+              "assignee": "Yudha Pratama",
+              "mandays": 1,
+              "description": "Export hasil scan OpenVAS + Nuclei ke JSON/CSV. Verifikasi file >0 byte sebelum serah terima."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "issues": []
+}
