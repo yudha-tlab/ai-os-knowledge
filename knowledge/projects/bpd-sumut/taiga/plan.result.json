@@ -1,0 +1,79 @@
+{
+  "epics": [
+    {
+      "id": 700,
+      "subject": "Penetration Testing VMware BPD Sumut",
+      "stories": [
+        {
+          "id": 4353,
+          "subject": "US-01 D-01 VM Assessment (Nuclei + OpenVAS appliance)",
+          "tasks": [
+            {
+              "id": 11974,
+              "subject": "T-01.1 Persiapan & pengecekan VM appliance (Nuclei + OpenVAS)"
+            },
+            {
+              "id": 11975,
+              "subject": "T-01.2 Eksekusi scan OpenVAS + Nuclei pada target"
+            }
+          ]
+        },
+        {
+          "id": 4354,
+          "subject": "US-02 D-02 Panduan Langkah demi Langkah",
+          "tasks": [
+            {
+              "id": 11976,
+              "subject": "T-02.1 Susun panduan instalasi & konfigurasi tools"
+            },
+            {
+              "id": 11977,
+              "subject": "T-02.2 Susun langkah eksekusi scan & pengumpulan hasil"
+            }
+          ]
+        },
+        {
+          "id": 4355,
+          "subject": "US-03 D-03 Laporan Ringkasan Eksekutif",
+          "tasks": [
+            {
+              "id": 11978,
+              "subject": "T-03.1 Susun ringkasan eksekutif dari hasil scan"
+            }
+          ]
+        },
+        {
+          "id": 4356,
+          "subject": "US-04 D-04 Laporan Teknis Lengkap",
+          "tasks": [
+            {
+              "id": 11979,
+              "subject": "T-04.1 Susun laporan teknis hasil pemindaian"
+            }
+          ]
+        },
+        {
+          "id": 4357,
+          "subject": "US-05 D-05 Daftar Prioritas Remediasi",
+          "tasks": [
+            {
+              "id": 11980,
+              "subject": "T-05.1 Susun daftar prioritas remediasi"
+            }
+          ]
+        },
+        {
+          "id": 4358,
+          "subject": "US-06 D-06 Data Mentah Pemindaian (JSON/CSV)",
+          "tasks": [
+            {
+              "id": 11981,
+              "subject": "T-06.1 Kumpulkan & format data mentah scan"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "issues": []
+}

@@ -3,9 +3,10 @@ title: "Taiga Project Map — Pentest VMWare BPD Sumut (DRAFT)"
 type: taiga-project-map
 project: bpd-sumut
 client: bpd-sumut
-status: draft
-version: "0.1"
+status: active
+version: "1.0"
 created: 2026-09-11
+imported: 2026-09-11
 ---
 
 # Taiga Project Map — Pentest VMWare BPD Sumut
@@ -17,21 +18,21 @@ Dokumen pemetaan yang menghubungkan project di AI OS Main Works dengan project d
 | Field | Value |
 |-------|-------|
 | API Base | `https://taiga.tlab.co.id/api/v1` (self-hosted TLab) |
-| Project Name | `BSU Pentest` (usulan) |
-| Project Slug | `bsu-pentest` (usulan — [Perlu validasi] cek ketersediaan slug) |
-| Project ID | (belum dibuat / belum di-resolve) |
+| Project Name | `BSU Pentest` ✅ (dibuat) |
+| Project Slug | `bsu-pentest` ✅ |
+| Project ID | **125** |
 | URL Web | `https://taiga.tlab.co.id/project/bsu-pentest/` |
 
 > Catatan dari skill taiga-integration (self-hosted TLab): endpoint `/projects/by_slug?slug=` **tidak berfungsi** di instance TLab. Gunakan project ID langsung; jika belum dibuat, buat via `POST /projects`.
 
 ## 2. Tim (Pemetaan User)
 
-| Nama Internal                              | Username Taiga   | Role            |
-| ------------------------------------------ | ---------------- | --------------- |
-| Yudha Pratama                              | `yudha`          | Project Manager |
-| (nama lain: Nover, Rizal, Alvin/Cahya, GG) | [Perlu validasi] | Teknis          |
+| Nama Internal        | Username Taiga | Role  | Taiga user_id | Role ID (TPC) |
+|----------------------|----------------|-------|---------------|---------------|
+| Yudha Pratama        | `yudha`        | PM    | 96            | 1103 |
+| (Nover, Rizal, Alvin/Cahya, GG) | [Perlu validasi] | Teknis | — | — |
 
-> Username harus terdaftar sebagai member di project Taiga tersebut. Pemetaan username untuk Nover/Rizal/Alvin/GG belum tersedia di knowledge — perlu validasi PM sebelum eksekusi.
+> Assignee semua item = `Yudha Pratama` (user_id 96) per instruksi PM 2026-09-11. Role Taiga yudha = **TPC** (id 1103). Pemetaan username Nover/Rizal/Alvin/GG belum tersedia di knowledge — [Perlu validasi].
 
 ## 3. Dokumen Sumber Requirement
 
@@ -54,30 +55,47 @@ Metodologi: **Scrum** (project delivery berbasis deliverable).
 
 ### Pemetaan US → Deliverable SPK
 
-| US ID | Deliverable (SPK A) | Story Points | Status Awal |
-|-------|---------------------|--------------|-------------|
-| US-01 | VM Assessment | 5 | [Perlu validasi] |
-| US-02 | Panduan Langkah demi Langkah | 3 | [Perlu validasi] |
-| US-03 | Laporan Ringkasan Eksekutif | 2 | [Perlu validasi] |
-| US-04 | Laporan Teknis Lengkap | 2 | [Perlu validasi] |
-| US-05 | Daftar Prioritas Remediasi | 1 | [Perlu validasi] |
-| US-06 | Data Mentah Pemindaian (JSON/CSV) | 1 | [Perlu validasi] |
+| US ID | Deliverable (SPK A) | Story Points | Taiga ref / id |
+|-------|---------------------|--------------|----------------|
+| US-01 | VM Assessment | 2 | #2 / 4353 |
+| US-02 | Panduan Langkah demi Langkah | 1 | #5 / 4354 |
+| US-03 | Laporan Ringkasan Eksekutif | 1 | #8 / 4355 |
+| US-04 | Laporan Teknis Lengkap | 1 | #10 / 4356 |
+| US-05 | Daftar Prioritas Remediasi | 1 | #12 / 4357 |
+| US-06 | Data Mentah Pemindaian (JSON/CSV) | 1 | #14 / 4358 |
 
-> **Status deliverable TIDAK diisi secara pasti di draft ini** karena `project-status.md` (08 Sep) mencatat semua "Belum Mulai", sedangkan MOM 09 Sep mencatat scan 4 target sudah selesai. Konfirmasi PM: status per deliverable saat input ke Taiga perlu di-update dari progres nyata.
+> **Sprint:** `Pentest VMware BPD Sumut` (milestone id **735**, backdate 1–8 Sep 2026, sesuai keputusan PM #3 & #5). **Total story points sprint = 7.0** (7 mandays, keputusan PM #4), seluruhnya di role TPC (yudha).
+> **Epic:** `Penetration Testing VMware BPD Sumut` (id **700**, ref 1) — 6 stories ter-relate (count 6/6).
 
-## 5. Rencana Impor
+## 5. Rencana Impor — ✅ DIEKSEKUSI LIVE (2026-09-11)
 
-File `plan.json` (di folder `taiga/` ini) dihasilkan untuk di-dry-run dan dikonfirmasi PM sebelum dieksekusi ke Taiga.
+Diimpor dengan `taiga_api.py import plan.json` → semua objek dibuat & diverifikasi. Hasil ID tersimpan di `taiga/plan.result.json`.
 
-```bash
-python skills/taiga-integration/scripts/taiga_api.py import \
-  knowledge/projects/bpd-sumut/taiga/plan.json --dry-run
-```
+| Ref | Objek | ID | Assignee | Kategori |
+|-----|-------|-----|----------|----------|
+| #1 | Epic: Penetration Testing VMware BPD Sumut | 700 | — | — |
+| #2 | US-01 VM Assessment | 4353 | yudha (96) | F- Non Fungsional Testing |
+| #4 | T-01.1 Persiapan VM appliance | 11974 | yudha | (Mandays 1) |
+| #5 | T-01.2 Eksekusi scan | 11975 | yudha | (Mandays 1) |
+| #5 | US-02 Panduan Langkah | 4354 | yudha (96) | NF - Dokumentasi |
+| #7 | T-02.1 Panduan instalasi & konfigurasi | 11976 | yudha | (Mandays 0.5) |
+| #8 | T-02.2 Langkah eksekusi scan & hasil | 11977 | yudha | (Mandays 0.5) |
+| #8 | US-03 Laporan Ringkasan Eksekutif | 4355 | yudha (96) | NF - Dokumentasi |
+| #10 | T-03.1 Ringkasan eksekutif | 11978 | yudha | (Mandays 1) |
+| #10 | US-04 Laporan Teknis Lengkap | 4356 | yudha (96) | NF - Dokumentasi |
+| #12 | T-04.1 Laporan teknis | 11979 | yudha | (Mandays 1) |
+| #12 | US-05 Daftar Prioritas Remediasi | 4357 | yudha (96) | NF - Dokumentasi |
+| #14 | T-05.1 Prioritas remediasi | 11980 | yudha | (Mandays 1) |
+| #14 | US-06 Data Mentah Pemindaian | 4358 | yudha (96) | NF - Support |
+| #16 | T-06.1 Format data mentah | 11981 | yudha | (Mandays 1) |
 
-## 6. Open Items (Perlu Validasi PM sebelum eksekusi)
+Perintah impor: `taiga_api.py import knowledge/projects/bpd-sumut/taiga/plan.json`
 
-1. Nama & slug project Taiga (`BSU Pentest` / `bsu-pentest`).
-2. Username Taiga untuk member tim selain Yudha.
-3. Status aktual tiap deliverable (update progres pasca 09 Sep).
-4. Estimasi story point per deliverable (acuan 14 mandays).
-5. Milestone/sprint: dibuat sprint tunggal (25 Agu – 11 Sep) atau dipecah per fase.
+## 6. Hasil & Catatan
+
+1. ✅ Project `BSU Pentest` ada (id **125**) — dibuat via duplicate dari `template-project-scrum` (modules Epic+Kanban+Backlog+Wiki aktif).
+2. ✅ Custom field `Kategori User Story` (id 103) di-sync 13 opsi resmi via `sync-customfields --slug bsu-pentest`.
+3. ✅ Custom field `Mandays` (task) ada (id 119).
+4. ✅ **Story point dikoreksi pasca-import**: plan awalnya mengisi `role` kosong → script men-set poin ke SEMUA 6 role aktif (total 42). Dikoreksi agar poin hanya di role **TPC (1103)** → total sprint **7.0** = 7 mandays.
+5. ✅ Sprint/milestone dibuat manual via API (id **735**, backdate 1–8 Sep) + 6 story di-assign. `import` script TIDAK membuat milestone sendiri.
+6. ⚠️ [Perlu validasi] Username Taiga untuk Nover/Rizal/Alvin/GG belum dimapping (assignee semua saat ini = Yudha).
