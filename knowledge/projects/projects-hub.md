@@ -21,6 +21,7 @@ project tersebut.
 | Integrasi BP Tapera | Bank Sumsel Babel | ~90.18% | [[integrasi-bp-tapera/project-profile]] |
 | **AI Knowledge Center DPAD** | DPAD DIY | Belum Mulai | [[dpad-chatbot/project-profile]] |
 | **Pentest VMWare BPD Sumut** | BPD Sumut | Aktif | [[bpd-sumut/project-profile]] |
+| **OCELLI Mobile — Sistem Insect Trap** | PT Ocelli Indonesia | Aktif (Presales) | [[ocelli-mobile/project-profile]] |
 
 ## Internal TLab (bukan project klien)
 

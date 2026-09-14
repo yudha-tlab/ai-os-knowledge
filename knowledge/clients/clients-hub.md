@@ -18,6 +18,7 @@ Daftar klien dan konteks bisnis masing-masing yang ditangani melalui Main Works.
 | **Bank Sumsel Babel (BSB)** | Perbankan | Integrasi BP Tapera, KPI & KYE | [[bsb-sumsel-babel/client-profile]] |
 | **DPAD DIY** | Pemerintahan | AI Knowledge Center — Chatbot | [[dpad-diy/client-profile]] |
 | **BPD Sumut** | Perbankan | Pentest VMWare | [[bpd-sumut/client-profile]] |
+| **PT Ocelli Indonesia** | Agritech / Pertanian | OCELLI Mobile | [[ocelli/client-profile]] |
 
 ## Cara Menambah Klien Baru
 
