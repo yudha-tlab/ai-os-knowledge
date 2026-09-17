@@ -1,0 +1,506 @@
+{
+  "project_slug": "cr-integrasi-tapera-2026",
+  "_note": "Rencana impor Taiga — project CR Integrasi Tapera (2026), Taiga id 126. Sumber: CR-CONSOLIDATED-v2-TSD-v086-v088.md v2.1 + surat penawaran 31/BD-TLab/SPH/IX/2026. Due date & milestone SENGAJA tidak diisi — belum kick off.",
+  "team": {
+    "Yudha Pratama": "yudha",
+    "Tirza Sarwono": "tirzasrwn",
+    "Daffa Aldzakian Fauzi": "daffa",
+    "Dinda": "dinda",
+    "Muhammad Akmal Fadhlurrahman": "akmal"
+  },
+  "epics": [
+    {
+      "subject": "CR-20260729-001 · Delta TSD BP Tapera v0.8.6–v0.8.8",
+      "description": "**Sumber:** CR-20260729-001 — Penawaran Pengerjaan CR Delta TSD v0.8.6–v0.8.8 (Status: Pending · 42 MD). Rujukan teknis: TSD Mitra Penyalur BP TAPERA v0.8.8.\n\n**Lingkup:** route alignment 12 endpoint Jadwal Angsuran (`/angsuran/` → `/jadwal-angsur/`); perubahan panjang 19 field DB (100x, `nama_pengembang` 200x); penghapusan 5 field; enum `pekerjaan_pemohon` (5 nilai tervalidasi); penyesuaian URL environment; Stok Rumah & Detail Rumah (`blok`, `nomor_rumah`, `tipe_bangunan`, `nomor_slf`, `tanggal_slf`); dropdown Pekerjaan Pemohon.\n\n**Blocker terbuka:** K7 approval BSB · K8 perbedaan panjang field core banking (40–50x vs 100x) · K9 environment dev Tapera tidak dapat diakses · K10–K11 data `pekerjaan_pemohon`.\n\n**Estimasi Epic:** 42 MD item-level + 1,5 MD buffer penawaran (task BUF-1..3) = **43,5 MD**.\n\n**Referensi:** `knowledge/projects/integrasi-bp-tapera/decisions/CR/CR-20260729-001-penawaran-delta-tsd-v086-v088.md`",
+      "stories": [
+        {
+          "subject": "US-1.1 Backend — Kolom, Penghapusan Field & Enum TSD v0.8.6",
+          "description": "**Sumber:** CR-20260729-001 §B.1–B.4 (TSD v0.8.6).\n19 field → 100x (kecuali `nama_pengembang` → 200x), penghapusan 5 field tidak terpakai, enum `pekerjaan_pemohon`, penyesuaian base URL environment.\n**Mandays:** 3,5 MD item-level + 0,5 MD buffer = 4,0 MD.",
+          "role": "Backend",
+          "story_points": 4.0,
+          "assignee": "Tirza Sarwono",
+          "kategori": "F - Fungsional Tambahan",
+          "tasks": [
+            {
+              "subject": "BE-1 Update constraint panjang field",
+              "description": "Ubah panjang field pada DTO & validasi sesuai TSD v0.8.6: 19 field → 100x, `nama_pengembang` → 200x. (Kode CR: A.1.1)",
+              "mandays": 1.5,
+              "assignee": "Tirza Sarwono"
+            },
+            {
+              "subject": "BE-2 Hapus field yang tidak dipakai",
+              "description": "Hapus 5 field: `limit_pembiayaan`, `kode_bank_pengembang`, `nomor_rekening_pengembang`, `kode_bank_pemohon`, `rekening_tabungan_pemohon` dari DTO & database. (Kode CR: A.2.1)",
+              "mandays": 1.0,
+              "assignee": "Tirza Sarwono"
+            },
+            {
+              "subject": "BE-3 Update enum pekerjaan_pemohon",
+              "description": "Terapkan validasi enum: ASN, TNI/POLRI, SWASTA, WIRASWASTA, LAINNYA. (Kode CR: A.3.1)",
+              "mandays": 0.5,
+              "assignee": "Tirza Sarwono"
+            },
+            {
+              "subject": "BE-4 Update URL environment",
+              "description": "Sesuaikan base URL: dev `https://api.dev.tapera.go.id:8443/`, staging `https://api.qa.tapera.go.id/`, production `https://h2h.tapera.go.id/`.",
+              "mandays": 0.5,
+              "assignee": "Tirza Sarwono"
+            },
+            {
+              "subject": "BUF-1 Buffer Software Engineer",
+              "description": "**[Perlu validasi]** Buffer rekonsiliasi penawaran 62 MD vs item-level 60,5 MD. Konfirmasi ke tim bisnis/tim dev.",
+              "mandays": 0.5,
+              "assignee": "Tirza Sarwono"
+            }
+          ]
+        },
+        {
+          "subject": "US-1.2 Backend — Route Alignment 12 Endpoint Jadwal Angsuran",
+          "description": "**Sumber:** CR-20260729-001 §A (TSD v0.8.6).\nPerubahan prefix 12 endpoint `/angsuran/` → `/jadwal-angsur/` mencakup controller path, format path, dan internal proxy path.\n**Risiko:** satu endpoint tidak sesuai → seluruh layanan Jadwal Angsuran berpotensi tidak berfungsi.\n**Mandays:** 3,0 MD.",
+          "role": "Backend",
+          "story_points": 3.0,
+          "assignee": "Tirza Sarwono",
+          "kategori": "F - Fungsional Tambahan",
+          "tasks": [
+            {
+              "subject": "BE-5 Route alignment Jadwal Angsuran",
+              "description": "Ubah controller path & format path 12 endpoint sesuai TSD. (Kode CR: A.4.1–A.4.2)",
+              "mandays": 2.5,
+              "assignee": "Tirza Sarwono"
+            },
+            {
+              "subject": "SI-1 Update proxy routing",
+              "description": "Sesuaikan internal proxy path 12 endpoint Jadwal Angsuran di service Integrasi SI (NestJS). (Kode CR: A.4.3)",
+              "mandays": 0.5,
+              "assignee": "Tirza Sarwono"
+            }
+          ]
+        },
+        {
+          "subject": "US-1.3 Backend — Stok Rumah & Detail Rumah (v0.8.7–v0.8.8)",
+          "description": "**Sumber:** CR-20260729-001 §C.\nList Perumahan (request params `namaPerumahan`/`limit`/`page`), List Rumah (`blok`, `nomor_rumah`, `tipe_bangunan` + koreksi typo `luas_bangunan`), Detail Rumah (`tipe_bangunan`, `nomor_slf`, `tanggal_slf`).\n**Catatan implementasi:** mock response `StokRumahService.listRumah()`/`detailRumah()` belum menyertakan field baru.\n**Mandays:** 3,5 MD.",
+          "role": "Backend",
+          "story_points": 3.5,
+          "assignee": "Tirza Sarwono",
+          "kategori": "F - Fungsional Tambahan",
+          "tasks": [
+            {
+              "subject": "BE-6 Update Stok Rumah List Perumahan",
+              "description": "Tambah request params `namaPerumahan`, `limit` (default 10), `page` (default 1).",
+              "mandays": 1.0,
+              "assignee": "Tirza Sarwono"
+            },
+            {
+              "subject": "BE-7 Update Stok Rumah List Rumah",
+              "description": "Tambah field `blok`, `nomor_rumah`, `tipe_bangunan` + koreksi typo `luas_bangunan`. (Kode CR: B.2.1)",
+              "mandays": 1.0,
+              "assignee": "Tirza Sarwono"
+            },
+            {
+              "subject": "BE-8 Update Stok Rumah Detail Rumah",
+              "description": "Tambah field `tipe_bangunan`, `nomor_slf`, `tanggal_slf` (format YYYY-MM-DD). (Kode CR: B.3.1, C.1.1)",
+              "mandays": 1.0,
+              "assignee": "Tirza Sarwono"
+            },
+            {
+              "subject": "SI-2 Update proxy Stok Rumah",
+              "description": "Sesuaikan proxy untuk field baru Stok Rumah + routing endpoint sesuai path TSD. (Kode CR: B.2.2)",
+              "mandays": 0.5,
+              "assignee": "Tirza Sarwono"
+            }
+          ]
+        },
+        {
+          "subject": "US-1.4 Frontend — Model House & Dropdown Pekerjaan Pemohon",
+          "description": "**Sumber:** CR-20260729-001 §D.1 & D.3.\nModel `House` (field baru Stok Rumah) + dropdown Pekerjaan Pemohon pada form Pengajuan Pembiayaan.\n**Catatan:** nilai yang dikirim saat submit harus `SWASTA` (bukan `KARYAWAN SWASTA`).\n**Mandays:** 2,0 MD.",
+          "role": "Frontend",
+          "story_points": 2.0,
+          "assignee": "Daffa Aldzakian Fauzi",
+          "kategori": "F - Fungsional Tambahan",
+          "tasks": [
+            {
+              "subject": "FE-1 Update model House",
+              "description": "Tambah field `tipe_bangunan`, `nomor_slf?`, `tanggal_slf?` di model House frontend. (Kode CR: F.1–F.3)",
+              "mandays": 0.5,
+              "assignee": "Daffa Aldzakian Fauzi"
+            },
+            {
+              "subject": "FE-2 Update tampilan Stok Rumah",
+              "description": "Sesuaikan tampilan halaman yang menggunakan data House (termasuk halaman SP3K & parameter house). (Kode CR: F.4)",
+              "mandays": 0.5,
+              "assignee": "Daffa Aldzakian Fauzi"
+            },
+            {
+              "subject": "FE-3 Update dropdown Pekerjaan Pemohon",
+              "description": "Sesuaikan dropdown ke 5 nilai tervalidasi: ASN, TNI/POLRI, SWASTA, WIRASWASTA, LAINNYA. (Kode CR: F.6)",
+              "mandays": 1.0,
+              "assignee": "Daffa Aldzakian Fauzi"
+            }
+          ]
+        },
+        {
+          "subject": "US-1.5 QA — Regression Testing",
+          "description": "**Sumber:** CR-20260729-001 §Testing (T.1–T.6).\nRegression modul Jadwal Angsuran, Stok Rumah, dan pengajuan. Wajib: pengujian seluruh 12 endpoint Jadwal Angsuran dengan path baru sebelum migrasi production.\n**Mandays:** 5,0 MD.",
+          "role": "QA",
+          "story_points": 5.0,
+          "assignee": "Dinda",
+          "kategori": "F- Fungsional Testing",
+          "tasks": [
+            {
+              "subject": "QA-1 Regression testing",
+              "description": "Update spec test terdampak perubahan Tabel Database, jalankan seluruh test (passing), uji manual 12 endpoint Jadwal Angsuran dengan path baru, uji endpoint Stok Rumah (validasi field baru), test compile TypeScript, test halaman terkait (SP3K, parameter house). (Kode CR: T.1–T.6)",
+              "mandays": 5.0,
+              "assignee": "Dinda"
+            }
+          ]
+        },
+        {
+          "subject": "US-1.6 QA — UAT BSB & VIT BP Tapera",
+          "description": "**Sumber:** CR-20260729-001 — kategori Tester (UAT/VIT & pendampingan testing dengan BP Tapera).\n**Blocker:** K9 — environment development Tapera belum dapat diakses (`You cannot consume this service`), pengujian endpoint baru belum dapat dilakukan sampai akses tersedia.\n**Mandays:** 7,0 MD.",
+          "role": "QA",
+          "story_points": 7.0,
+          "assignee": "Dinda",
+          "kategori": "NF- Proses UAT",
+          "tasks": [
+            {
+              "subject": "QA-2a UAT bersama BSB",
+              "description": "Pendampingan User Acceptance Test bersama BSB untuk endpoint & field baru TSD v0.8.8.",
+              "mandays": 4.0,
+              "assignee": "Dinda"
+            },
+            {
+              "subject": "QA-2b Vendor Integration Testing dengan BP Tapera",
+              "description": "Vendor Integration Testing bersama BP Tapera untuk endpoint & field baru TSD v0.8.8.",
+              "mandays": 3.0,
+              "assignee": "Dinda"
+            }
+          ]
+        },
+        {
+          "subject": "US-1.7 DevOps — Deployment Staging & Production",
+          "description": "**Sumber:** CR-20260729-001 Fase 5–6 (deployment implementasi ke production & pendampingan pasca-deployment).\n**Catatan:** peran sumber \"Sys. Admin\" dipetakan ke DevOps sesuai konvensi TLab.\n**Assignee belum ditetapkan** — perlu mengundang member DevOps ke project.\n**Mandays:** 6,0 MD + 0,5 MD buffer = 6,5 MD.",
+          "role": "DEVOPS",
+          "story_points": 6.5,
+          "assignee": "Muhammad Akmal Fadhlurrahman",
+          "kategori": "NF - Deployment",
+          "tasks": [
+            {
+              "subject": "DEV-1 Deployment staging & verifikasi",
+              "description": "Deploy build ke staging, smoke test, dan verifikasi hasil.",
+              "mandays": 2.0,
+              "assignee": "Muhammad Akmal Fadhlurrahman"
+            },
+            {
+              "subject": "DEV-2 Deployment production",
+              "description": "Deploy ke production secara terjadwal, dengan rollback plan.",
+              "mandays": 2.0,
+              "assignee": "Muhammad Akmal Fadhlurrahman"
+            },
+            {
+              "subject": "DEV-3 Verifikasi pasca-deployment & pendampingan",
+              "description": "Verifikasi pasca-deployment dan pendampingan pasca-deployment.",
+              "mandays": 2.0,
+              "assignee": "Muhammad Akmal Fadhlurrahman"
+            },
+            {
+              "subject": "BUF-2 Buffer DevOps",
+              "description": "**[Perlu validasi]** Buffer rekonsiliasi penawaran 62 MD vs item-level 60,5 MD. Konfirmasi ke tim bisnis/tim dev.",
+              "mandays": 0.5,
+              "assignee": "Muhammad Akmal Fadhlurrahman"
+            }
+          ]
+        },
+        {
+          "subject": "US-1.8 PM — Manajemen Proyek, Transfer Knowledge & Penutupan Blocker",
+          "description": "**Sumber:** CR-20260729-001 — Project Manager (manajemen proyek, pelatihan/pendampingan transfer knowledge).\nTermasuk penutupan klarifikasi blocker K7–K11 bersama BSB dan BP Tapera.\n**Mandays:** 12,0 MD + 0,5 MD buffer = 12,5 MD.",
+          "role": "TPC",
+          "story_points": 12.5,
+          "assignee": "Yudha Pratama",
+          "kategori": "NF - Support",
+          "tasks": [
+            {
+              "subject": "PM-1 Manajemen proyek & monitoring",
+              "description": "Manajemen proyek, monitoring harian, dan pelaporan progres.",
+              "mandays": 5.0,
+              "assignee": "Yudha Pratama"
+            },
+            {
+              "subject": "PM-2 Transfer knowledge & dokumentasi serah terima",
+              "description": "Pelatihan/pendampingan transfer knowledge dan penyusunan dokumen serah terima (FSD/TSD, laporan, user guide).",
+              "mandays": 4.0,
+              "assignee": "Yudha Pratama"
+            },
+            {
+              "subject": "PM-3 Penutupan klarifikasi & blocker BSB/BP Tapera",
+              "description": "Koordinasi penutupan K7 (approval BSB), K8 (panjang field core banking), K9 (akses environment dev), K10–K11 (data `pekerjaan_pemohon`).",
+              "mandays": 3.0,
+              "assignee": "Yudha Pratama"
+            },
+            {
+              "subject": "BUF-3 Buffer Project Manager",
+              "description": "**[Perlu validasi]** Buffer rekonsiliasi penawaran 62 MD vs item-level 60,5 MD. Konfirmasi ke tim bisnis/tim dev.",
+              "mandays": 0.5,
+              "assignee": "Yudha Pratama"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "subject": "CR-20260908-001 · Validasi Gender & Pendapatan Applicant",
+      "description": "**Sumber:** CR-20260908-001 — Penyesuaian Validasi Gender & Pendapatan Applicant (Status: Draft · 2,5 MD draft). Permintaan Divisi Bisnis BSB (WhatsApp, 08 Sep 2026).\n\n**Isu:** pengajuan melalui Inbox Pengajuan memungkinkan field pendapatan & gender dilewati — user dapat menekan \"Isi Formulir\" tanpa validasi ulang field Gender, Pekerjaan Pemohon, dan mandatory field lainnya.\n**Resolusi:** perbaikan UI + proses validasi saat tombol \"Isi Formulir\" ditekan, divalidasi juga di sisi backend.\n\n**Dependensi D1:** modul sama dengan CR-20260729-001 (validasi form pengajuan & dropdown pekerjaan) — pengerjaan disarankan digabung.\n**Status estimasi:** draft, menunggu validasi tim dev.\n\n**Referensi:** `knowledge/projects/integrasi-bp-tapera/decisions/CR/CR-20260908-001-penyesuaian-validasi-gender-dan-pendapatan-applicant.md`",
+      "stories": [
+        {
+          "subject": "US-2.1 Frontend — Validasi Mandatory Field pada Form Pengajuan",
+          "description": "**Sumber:** CR-20260908-001 — item V-1. Validasi mandatory field (Gender, Pekerjaan Pemohon, pendapatan) saat tombol \"Isi Formulir\" diklik, dengan pesan error yang jelas.\n**Mandays:** 1,0 MD.",
+          "role": "Frontend",
+          "story_points": 1.0,
+          "assignee": "Daffa Aldzakian Fauzi",
+          "kategori": "F - Fungsional Tambahan",
+          "tasks": [
+            {
+              "subject": "V-1 Frontend — validasi form",
+              "description": "Tambah validasi mandatory field (Gender, Pilih Pekerjaan Pemohon, pendapatan) saat tombol \"Isi Formulir\" diklik; tampilkan pesan error yang jelas.",
+              "mandays": 1.0,
+              "assignee": "Daffa Aldzakian Fauzi"
+            }
+          ]
+        },
+        {
+          "subject": "US-2.2 Backend — Validasi Mandatory Sisi Server",
+          "description": "**Sumber:** CR-20260908-001 — item V-2. Validasi mandatory field di sisi backend agar tidak dapat dilewati.\n**Mandays:** 0,5 MD.",
+          "role": "Backend",
+          "story_points": 0.5,
+          "assignee": "Tirza Sarwono",
+          "kategori": "F - Fungsional Tambahan",
+          "tasks": [
+            {
+              "subject": "V-2 Backend — validasi mandatory",
+              "description": "Tambah/verifikasi validasi mandatory field di sisi backend agar tidak bisa dilewati.",
+              "mandays": 0.5,
+              "assignee": "Tirza Sarwono"
+            }
+          ]
+        },
+        {
+          "subject": "US-2.3 QA — Test Case & Regression Form Pengajuan/Inbox",
+          "description": "**Sumber:** CR-20260908-001 — item V-3. Test case validasi form + regression form pengajuan & inbox.\n**Mandays:** 0,5 MD.",
+          "role": "QA",
+          "story_points": 0.5,
+          "assignee": "Dinda",
+          "kategori": "F- Fungsional Testing",
+          "tasks": [
+            {
+              "subject": "V-3 QA — test case & regression",
+              "description": "Test case validasi form + regression form pengajuan & inbox.",
+              "mandays": 0.5,
+              "assignee": "Dinda"
+            }
+          ]
+        },
+        {
+          "subject": "US-2.4 PM — Koordinasi & Dokumentasi",
+          "description": "**Sumber:** CR-20260908-001 — item V-4. Koordinasi BSB, update PRD/FSD, finalisasi CR.\n**Mandays:** 0,5 MD.",
+          "role": "TPC",
+          "story_points": 0.5,
+          "assignee": "Yudha Pratama",
+          "kategori": "NF - Support",
+          "tasks": [
+            {
+              "subject": "V-4 PM — koordinasi & dokumentasi",
+              "description": "Koordinasi BSB, update PRD/FSD, finalisasi CR.",
+              "mandays": 0.5,
+              "assignee": "Yudha Pratama"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "subject": "CR-20260908-002 · FLPP Tenor Maksimal & Suku Bunga",
+      "description": "**Sumber:** CR-20260908-002 — Penyesuaian Tenor Maksimal & Suku Bunga KPR Sejahtera FLPP (Status: Draft · 16,0 MD draft). Dasar: Kepmen PKP No. 1721 & 1722 Tahun 2026; Rapat Koordinasi Kesiapan Sistem IT Bank Penyalur FLPP (04 Sep 2026).\n\n**Lingkup:** tenor maksimal 240 → **480 bulan (40 tahun)**; suku bunga tetap **6,00% Rumah Tapak / 5,00% Rumah Susun** + logika pemetaan jenis rumah → suku bunga; tampilan simulasi & jadwal angsuran tenor panjang (s.d. 480 baris); verifikasi proxy Get Jadwal Angsur (core banking BSB) & rilis TSD terbaru.\n\n**Ekspektasi klien:** selesai 25 September 2026 (±12 hari kerja). **Prioritas P1** — deadline regulasi.\n\n**Blocker terbuka (gate klarifikasi):** K1 dukungan core banking tenor 480 bulan (gate H3) · K2 kemungkinan rilis TSD baru · K3 cakupan suku bunga baru · K4 perlakuan pengajuan existing · K5 kebutuhan fitur DP/premi/pelunasan dipercepat.\n\n**Estimasi Epic:** **16,0 MD**.\n\n**Referensi:** `knowledge/projects/integrasi-bp-tapera/decisions/CR/CR-20260908-002-penyesuaian-tenor-dan-suku-bunga-flpp.md`",
+      "stories": [
+        {
+          "subject": "US-3.1 Backend — Validasi Tenor 480 Bulan & Suku Bunga Baru",
+          "description": "**Sumber:** CR-20260908-002 §4A — item A.1–A.5. Validasi tenor 480 bulan, parameter & validasi suku bunga 6%/5%, logika pemetaan jenis rumah, constraint DB, unit test.\n**Mandays:** 4,5 MD.",
+          "role": "Backend",
+          "story_points": 4.5,
+          "assignee": "Tirza Sarwono",
+          "kategori": "F - Fungsional Tambahan",
+          "tasks": [
+            {
+              "subject": "A.1 Update validasi rentang tenor",
+              "description": "Ubah batas maksimum validasi tenor dari 240 bulan menjadi 480 bulan (40 tahun) pada modul amortisasi & pengajuan.",
+              "mandays": 0.5,
+              "assignee": "Tirza Sarwono"
+            },
+            {
+              "subject": "A.2 Update parameter & validasi suku bunga",
+              "description": "Perbarui nilai dan validasi suku bunga tetap: 6,00% (Rumah Tapak) dan 5,00% (Rumah Susun).",
+              "mandays": 1.0,
+              "assignee": "Tirza Sarwono"
+            },
+            {
+              "subject": "A.3 Logika pemetaan jenis rumah → suku bunga",
+              "description": "Tambahkan logika pemilihan suku bunga berdasarkan jenis rumah (tapak vs susun) yang konsisten di seluruh alur.",
+              "mandays": 1.0,
+              "assignee": "Tirza Sarwono"
+            },
+            {
+              "subject": "A.4 Update constraint database",
+              "description": "Verifikasi & update constraint kolom terkait tenor/bunga dan data parameter produk.",
+              "mandays": 0.5,
+              "assignee": "Tirza Sarwono"
+            },
+            {
+              "subject": "A.5 Testing backend",
+              "description": "Unit test untuk validasi baru (tenor 480, bunga 6%/5%, pemetaan jenis rumah) termasuk edge case batas tenor.",
+              "mandays": 1.5,
+              "assignee": "Tirza Sarwono"
+            }
+          ]
+        },
+        {
+          "subject": "US-3.2 Frontend — Field Tenor/Bunga & Tampilan Simulasi",
+          "description": "**Sumber:** CR-20260908-002 §4B — item B.1–B.4. Validasi tenor sisi klien, nilai default & tampilan bunga, tampilan jadwal angsuran s.d. 480 baris, pengujian kedua portal (konvensional + syariah).\n**Mandays:** 2,5 MD.",
+          "role": "Frontend",
+          "story_points": 2.5,
+          "assignee": "Daffa Aldzakian Fauzi",
+          "kategori": "F - Fungsional Tambahan",
+          "tasks": [
+            {
+              "subject": "B.1 Update field input Tenor",
+              "description": "Ubah validasi sisi klien tenor (maksimal 480 bulan), pesan error, hint pada form pengajuan & simulasi — portal konvensional dan syariah.",
+              "mandays": 0.75,
+              "assignee": "Daffa Aldzakian Fauzi"
+            },
+            {
+              "subject": "B.2 Update field Bunga",
+              "description": "Penyesuaian nilai default dan tampilan suku bunga sesuai jenis program/rumah.",
+              "mandays": 0.5,
+              "assignee": "Daffa Aldzakian Fauzi"
+            },
+            {
+              "subject": "B.3 Penyesuaian tampilan simulasi & jadwal angsuran",
+              "description": "Pastikan tampilan jadwal angsuran tenor panjang (s.d. 480 baris) tidak merusak layout (paginasi/scroll jika perlu).",
+              "mandays": 0.75,
+              "assignee": "Daffa Aldzakian Fauzi"
+            },
+            {
+              "subject": "B.4 Testing frontend",
+              "description": "Uji form pengajuan & tampilan simulasi di kedua portal (konvensional + syariah).",
+              "mandays": 0.5,
+              "assignee": "Daffa Aldzakian Fauzi"
+            }
+          ]
+        },
+        {
+          "subject": "US-3.3 Integrasi SI — Verifikasi Proxy & TSD Terbaru",
+          "description": "**Sumber:** CR-20260908-002 §4C — item C.1–C.2. Verifikasi parameter proxy ke endpoint Get Jadwal Angsur core banking BSB dan pengecekan rilis TSD terbaru terkait kebijakan tenor/bunga.\n**Catatan pemetaan:** peran Integrasi SI dipetakan ke role Backend di Taiga.\n**Mandays:** 1,0 MD.",
+          "role": "Backend",
+          "story_points": 1.0,
+          "assignee": "Tirza Sarwono",
+          "kategori": "F - Fungsional Tambahan",
+          "tasks": [
+            {
+              "subject": "C.1 Verifikasi & penyesuaian proxy endpoint",
+              "description": "Verifikasi parameter yang diteruskan proxy ke endpoint Get Jadwal Angsur core banking (tenor s.d. 480, bunga baru).",
+              "mandays": 0.5,
+              "assignee": "Tirza Sarwono"
+            },
+            {
+              "subject": "C.2 Verifikasi API BP Tapera / TSD terbaru",
+              "description": "Cek apakah rilis TSD terbaru mengubah parameter kebijakan baru (tenor/bunga); jika ada → CR terpisah.",
+              "mandays": 0.5,
+              "assignee": "Tirza Sarwono"
+            }
+          ]
+        },
+        {
+          "subject": "US-3.4 QA — Test Case, Regression & Uji Silang Simulasi",
+          "description": "**Sumber:** CR-20260908-002 §4D — item D.1–D.3. Test case baru, regression modul pengajuan/amortisasi/stok rumah, uji silang simulasi vs tabel resmi klien (5 zona × 4 tenor).\n**Mandays:** 3,5 MD.",
+          "role": "QA",
+          "story_points": 3.5,
+          "assignee": "Dinda",
+          "kategori": "F- Fungsional Testing",
+          "tasks": [
+            {
+              "subject": "D.1 Penyusunan test case baru",
+              "description": "Test case: pengajuan tenor 10/15/20/40 tahun, bunga 6% (tapak) & 5% (susun), boundary value tenor.",
+              "mandays": 1.0,
+              "assignee": "Dinda"
+            },
+            {
+              "subject": "D.2 Regression testing",
+              "description": "Regression modul pengajuan, amortisasi, stok rumah — memastikan pengajuan existing (parameter lama) tetap berjalan.",
+              "mandays": 2.0,
+              "assignee": "Dinda"
+            },
+            {
+              "subject": "D.3 Uji silang simulasi vs tabel resmi",
+              "description": "Bandingkan hasil simulasi sistem vs tabel simulasi resmi klien (5 zona × 4 tenor).",
+              "mandays": 0.5,
+              "assignee": "Dinda"
+            }
+          ]
+        },
+        {
+          "subject": "US-3.5 DevOps — Deployment Staging & Production",
+          "description": "**Sumber:** CR-20260908-002 §4E — item E.1–E.3.\n**Assignee belum ditetapkan** — perlu mengundang member DevOps ke project.\n**Mandays:** 1,5 MD.",
+          "role": "DEVOPS",
+          "story_points": 1.5,
+          "assignee": "Muhammad Akmal Fadhlurrahman",
+          "kategori": "NF - Deployment",
+          "tasks": [
+            {
+              "subject": "E.1 Deployment staging + verifikasi",
+              "description": "Deploy build ke staging dan verifikasi smoke test.",
+              "mandays": 0.5,
+              "assignee": "Muhammad Akmal Fadhlurrahman"
+            },
+            {
+              "subject": "E.2 Deployment production",
+              "description": "Deploy ke production (terjadwal, dengan rollback plan).",
+              "mandays": 0.5,
+              "assignee": "Muhammad Akmal Fadhlurrahman"
+            },
+            {
+              "subject": "E.3 Verifikasi pasca-deployment",
+              "description": "Verifikasi health check & parameter baru di production.",
+              "mandays": 0.5,
+              "assignee": "Muhammad Akmal Fadhlurrahman"
+            }
+          ]
+        },
+        {
+          "subject": "US-3.6 PM — Koordinasi, Dokumentasi & Pendampingan UAT",
+          "description": "**Sumber:** CR-20260908-002 §4F — item F.1–F.3. Koordinasi & klarifikasi (core banking, parameter produk, pemantauan rilis TSD), update PRD/FSD, manajemen & pendampingan UAT.\n**Mandays:** 3,0 MD.",
+          "role": "TPC",
+          "story_points": 3.0,
+          "assignee": "Yudha Pratama",
+          "kategori": "NF - Support",
+          "tasks": [
+            {
+              "subject": "F.1 Koordinasi & klarifikasi",
+              "description": "Koordinasi dengan BSB (core banking, parameter produk) dan pemantauan rilis TSD BP Tapera.",
+              "mandays": 1.0,
+              "assignee": "Yudha Pratama"
+            },
+            {
+              "subject": "F.2 Update PRD/FSD & dokumentasi CR",
+              "description": "Update PRD, FSD Amortisasi, FSD Pengajuan; finalisasi dokumen CR & penawaran.",
+              "mandays": 1.0,
+              "assignee": "Yudha Pratama"
+            },
+            {
+              "subject": "F.3 Manajemen & pendampingan",
+              "description": "Manajemen proyek, monitoring harian, pendampingan UAT bersama BSB.",
+              "mandays": 1.0,
+              "assignee": "Yudha Pratama"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "issues": []
+}

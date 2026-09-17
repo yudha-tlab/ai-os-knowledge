@@ -1,0 +1,327 @@
+{
+  "epics": [
+    {
+      "id": 701,
+      "subject": "CR-20260729-001 · Delta TSD BP Tapera v0.8.6–v0.8.8",
+      "stories": [
+        {
+          "id": 4359,
+          "subject": "US-1.1 Backend — Kolom, Penghapusan Field & Enum TSD v0.8.6",
+          "tasks": [
+            {
+              "id": 11982,
+              "subject": "BE-1 Update constraint panjang field"
+            },
+            {
+              "id": 11983,
+              "subject": "BE-2 Hapus field yang tidak dipakai"
+            },
+            {
+              "id": 11984,
+              "subject": "BE-3 Update enum pekerjaan_pemohon"
+            },
+            {
+              "id": 11985,
+              "subject": "BE-4 Update URL environment"
+            },
+            {
+              "id": 11986,
+              "subject": "BUF-1 Buffer Software Engineer"
+            }
+          ]
+        },
+        {
+          "id": 4360,
+          "subject": "US-1.2 Backend — Route Alignment 12 Endpoint Jadwal Angsuran",
+          "tasks": [
+            {
+              "id": 11987,
+              "subject": "BE-5 Route alignment Jadwal Angsuran"
+            },
+            {
+              "id": 11988,
+              "subject": "SI-1 Update proxy routing"
+            }
+          ]
+        },
+        {
+          "id": 4361,
+          "subject": "US-1.3 Backend — Stok Rumah & Detail Rumah (v0.8.7–v0.8.8)",
+          "tasks": [
+            {
+              "id": 11989,
+              "subject": "BE-6 Update Stok Rumah List Perumahan"
+            },
+            {
+              "id": 11990,
+              "subject": "BE-7 Update Stok Rumah List Rumah"
+            },
+            {
+              "id": 11991,
+              "subject": "BE-8 Update Stok Rumah Detail Rumah"
+            },
+            {
+              "id": 11992,
+              "subject": "SI-2 Update proxy Stok Rumah"
+            }
+          ]
+        },
+        {
+          "id": 4362,
+          "subject": "US-1.4 Frontend — Model House & Dropdown Pekerjaan Pemohon",
+          "tasks": [
+            {
+              "id": 11993,
+              "subject": "FE-1 Update model House"
+            },
+            {
+              "id": 11994,
+              "subject": "FE-2 Update tampilan Stok Rumah"
+            },
+            {
+              "id": 11995,
+              "subject": "FE-3 Update dropdown Pekerjaan Pemohon"
+            }
+          ]
+        },
+        {
+          "id": 4363,
+          "subject": "US-1.5 QA — Regression Testing",
+          "tasks": [
+            {
+              "id": 11996,
+              "subject": "QA-1 Regression testing"
+            }
+          ]
+        },
+        {
+          "id": 4364,
+          "subject": "US-1.6 QA — UAT BSB & VIT BP Tapera",
+          "tasks": [
+            {
+              "id": 11997,
+              "subject": "QA-2a UAT bersama BSB"
+            },
+            {
+              "id": 11998,
+              "subject": "QA-2b Vendor Integration Testing dengan BP Tapera"
+            }
+          ]
+        },
+        {
+          "id": 4365,
+          "subject": "US-1.7 DevOps — Deployment Staging & Production",
+          "tasks": [
+            {
+              "id": 11999,
+              "subject": "DEV-1 Deployment staging & verifikasi"
+            },
+            {
+              "id": 12000,
+              "subject": "DEV-2 Deployment production"
+            },
+            {
+              "id": 12001,
+              "subject": "DEV-3 Verifikasi pasca-deployment & pendampingan"
+            },
+            {
+              "id": 12002,
+              "subject": "BUF-2 Buffer DevOps"
+            }
+          ]
+        },
+        {
+          "id": 4366,
+          "subject": "US-1.8 PM — Manajemen Proyek, Transfer Knowledge & Penutupan Blocker",
+          "tasks": [
+            {
+              "id": 12003,
+              "subject": "PM-1 Manajemen proyek & monitoring"
+            },
+            {
+              "id": 12004,
+              "subject": "PM-2 Transfer knowledge & dokumentasi serah terima"
+            },
+            {
+              "id": 12005,
+              "subject": "PM-3 Penutupan klarifikasi & blocker BSB/BP Tapera"
+            },
+            {
+              "id": 12006,
+              "subject": "BUF-3 Buffer Project Manager"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 702,
+      "subject": "CR-20260908-001 · Validasi Gender & Pendapatan Applicant",
+      "stories": [
+        {
+          "id": 4367,
+          "subject": "US-2.1 Frontend — Validasi Mandatory Field pada Form Pengajuan",
+          "tasks": [
+            {
+              "id": 12007,
+              "subject": "V-1 Frontend — validasi form"
+            }
+          ]
+        },
+        {
+          "id": 4368,
+          "subject": "US-2.2 Backend — Validasi Mandatory Sisi Server",
+          "tasks": [
+            {
+              "id": 12008,
+              "subject": "V-2 Backend — validasi mandatory"
+            }
+          ]
+        },
+        {
+          "id": 4369,
+          "subject": "US-2.3 QA — Test Case & Regression Form Pengajuan/Inbox",
+          "tasks": [
+            {
+              "id": 12009,
+              "subject": "V-3 QA — test case & regression"
+            }
+          ]
+        },
+        {
+          "id": 4370,
+          "subject": "US-2.4 PM — Koordinasi & Dokumentasi",
+          "tasks": [
+            {
+              "id": 12010,
+              "subject": "V-4 PM — koordinasi & dokumentasi"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 703,
+      "subject": "CR-20260908-002 · FLPP Tenor Maksimal & Suku Bunga",
+      "stories": [
+        {
+          "id": 4371,
+          "subject": "US-3.1 Backend — Validasi Tenor 480 Bulan & Suku Bunga Baru",
+          "tasks": [
+            {
+              "id": 12011,
+              "subject": "A.1 Update validasi rentang tenor"
+            },
+            {
+              "id": 12012,
+              "subject": "A.2 Update parameter & validasi suku bunga"
+            },
+            {
+              "id": 12013,
+              "subject": "A.3 Logika pemetaan jenis rumah → suku bunga"
+            },
+            {
+              "id": 12014,
+              "subject": "A.4 Update constraint database"
+            },
+            {
+              "id": 12015,
+              "subject": "A.5 Testing backend"
+            }
+          ]
+        },
+        {
+          "id": 4372,
+          "subject": "US-3.2 Frontend — Field Tenor/Bunga & Tampilan Simulasi",
+          "tasks": [
+            {
+              "id": 12016,
+              "subject": "B.1 Update field input Tenor"
+            },
+            {
+              "id": 12017,
+              "subject": "B.2 Update field Bunga"
+            },
+            {
+              "id": 12018,
+              "subject": "B.3 Penyesuaian tampilan simulasi & jadwal angsuran"
+            },
+            {
+              "id": 12019,
+              "subject": "B.4 Testing frontend"
+            }
+          ]
+        },
+        {
+          "id": 4373,
+          "subject": "US-3.3 Integrasi SI — Verifikasi Proxy & TSD Terbaru",
+          "tasks": [
+            {
+              "id": 12020,
+              "subject": "C.1 Verifikasi & penyesuaian proxy endpoint"
+            },
+            {
+              "id": 12021,
+              "subject": "C.2 Verifikasi API BP Tapera / TSD terbaru"
+            }
+          ]
+        },
+        {
+          "id": 4374,
+          "subject": "US-3.4 QA — Test Case, Regression & Uji Silang Simulasi",
+          "tasks": [
+            {
+              "id": 12022,
+              "subject": "D.1 Penyusunan test case baru"
+            },
+            {
+              "id": 12023,
+              "subject": "D.2 Regression testing"
+            },
+            {
+              "id": 12024,
+              "subject": "D.3 Uji silang simulasi vs tabel resmi"
+            }
+          ]
+        },
+        {
+          "id": 4375,
+          "subject": "US-3.5 DevOps — Deployment Staging & Production",
+          "tasks": [
+            {
+              "id": 12025,
+              "subject": "E.1 Deployment staging + verifikasi"
+            },
+            {
+              "id": 12026,
+              "subject": "E.2 Deployment production"
+            },
+            {
+              "id": 12027,
+              "subject": "E.3 Verifikasi pasca-deployment"
+            }
+          ]
+        },
+        {
+          "id": 4376,
+          "subject": "US-3.6 PM — Koordinasi, Dokumentasi & Pendampingan UAT",
+          "tasks": [
+            {
+              "id": 12028,
+              "subject": "F.1 Koordinasi & klarifikasi"
+            },
+            {
+              "id": 12029,
+              "subject": "F.2 Update PRD/FSD & dokumentasi CR"
+            },
+            {
+              "id": 12030,
+              "subject": "F.3 Manajemen & pendampingan"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "issues": []
+}
