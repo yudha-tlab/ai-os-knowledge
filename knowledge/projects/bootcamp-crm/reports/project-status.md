@@ -2,105 +2,112 @@
 title: "Project Status — Bootcamp Internal CRM"
 type: project-status
 project: bootcamp-crm
-version: "1.0"
+status: active
+version: "2.0"
+created: 2026-10-02
+modified: 2026-10-02
 date: 2026-10-02
+changelog:
+  - version: "2.0"
+    date: 2026-10-02
+    purpose: "Perbarui status setelah sesi brainstorm PO — requirement produk CRM tersusun, lingkup MVP & 9 keputusan produk tercatat"
+  - version: "1.0"
+    date: 2026-10-02
+    purpose: "Bootstrap project internal TLab — status awal Perencanaan/At Risk"
 ---
 
 # Project Status — Bootcamp Internal CRM
 
 **Tanggal:** 2026-10-02
-**Status Keseluruhan:** Perencanaan (bootstrap selesai) — **At Risk** untuk
-kesiapan pelaksanaan
+**Status Keseluruhan:** Perencanaan — **At Risk** untuk kesiapan pelaksanaan
 
 ## Ringkasan
 
-Project internal TLab ini membangun aplikasi CRM multi-tenant dengan bootcamp
-internal 3 hari sebagai mekanisme pelaksanaannya. Bootstrap project selesai
-hari ini: struktur knowledge dan 9 dokumen starter sudah dibuat, requirement
-awal tercatat dari arahan PM/PO.
+Sesi brainstorm Product Owner hari ini menghasilkan terobosan pada salah satu
+dari lima keputusan blocking: **lingkup MVP CRM kini sudah ditetapkan** (DEC-015),
+beserta 8 keputusan produk lain (DEC-012 s/d DEC-020). Requirement produk CRM
+tersusun sebagai bahan baku BRD: 12 Epic, 31 User Story, 20 Objek, dan 10
+stakeholder teridentifikasi.
 
-Status keseluruhan dinilai **At Risk untuk kesiapan pelaksanaan**, bukan karena
-ada masalah teknis, tetapi karena lima field penentu belum ada datanya:
-tanggal bootcamp, daftar peserta, lingkup MVP CRM, definisi multi-tenant, dan
-metrik pengukuran AI. Selama kelima hal ini belum ditetapkan, project tidak
-memiliki baseline jadwal maupun definisi "selesai" — sementara jendela
-pelaksanaannya hanya 3 hari.
+Status keseluruhan **tetap At Risk**: keputusan blocking dari sisi delivery
+(tanggal bootcamp, daftar peserta, definisi teknis multi-tenant, metrik AI) belum
+bergeming dan berada di luar kewenangan PM. Yang berubah adalah **kesiapan
+requirement** — sisi yang paling banyak dikeluhkan pada status sebelumnya
+(I-001, R-005) kini sebagian besar teratasi.
 
 ## Progres Periode Ini
 
-- Bootstrap project `bootcamp-crm` dijalankan; slug diverifikasi unik.
-- Struktur folder dibuat: `stakeholders/`, `requirements/`, `architecture/`,
-  `meetings/`, `reports/`, `decisions/`, `risks/`, `presentations/`.
-- 9 dokumen starter dibuat: project-profile, project-charter,
-  stakeholder-register, communication-plan, requirement-backlog, decision-log,
-  risk-register, raid-log, project-status.
-- 13 requirement awal tercatat (REQ-001 s/d REQ-013) bersumber dari arahan
-  PM/PO 2026-10-02.
-- 11 keputusan tercatat (DEC-001 s/d DEC-011) di decision log.
-- 10 risiko, 5 asumsi, 3 isu, dan 6 dependency teridentifikasi.
-- 13 pertanyaan terbuka (Q-001 s/d Q-013) tercatat di requirement backlog.
-- `projects-hub.md` diperbarui dengan entri project ini.
+- Requirement analysis produk CRM disusun:
+  `requirements/requirement-analysis.md` (langkah nol menuju BRD).
+- 12 Epic dan 31 User Story diturunkan dari 30 baris proses bisnis dan 32 baris SPOK.
+- Lingkup MVP ditetapkan: **M1 Tenancy, M2 Contact & Account, M3 Lead,
+  M4 Pipeline/Opportunity, M6 Ticketing, M7 Reporting** = mandatory;
+  **M5 Activity, M8 Webhook** = nice to have (DEC-015).
+- Prinsip produk dikunci: core stabil, kustomisasi klien via webhook + service
+  eksternal terpisah (DEC-012).
+- 9 keputusan produk baru tercatat di decision log (DEC-012 s/d DEC-020).
+- Requirement backlog ditambah 18 requirement produk (REQ-014 s/d REQ-031).
+- Rekomendasi praktik standar pengukuran performa sales disusun berbasis riset
+  industri (quota attainment, scorecard leading/lagging indicator).
 
 ## Rencana Periode Berikutnya
 
-- Menyusun requirement produk CRM dari sisi Product Owner — dokumen kebutuhan
-  CRM yang dapat dieksekusi peserta (saat ini backlog baru memuat requirement
-  *pelaksanaan bootcamp*, belum requirement *produk CRM*).
-- Menetapkan definisi & metrik pengukuran kecepatan dan efektivitas AI, serta
-  baseline pembandingnya.
-- Mengunci definisi teknis multi-tenant sebagai keputusan tertulis.
-- Menetapkan lingkup MVP CRM dan kriteria approval hasil.
-- Menyelesaikan 5 keputusan blocking yang tercatat di decision log.
+- Menyusun **BRD** dari `requirement-analysis.md` (DEC-017 menetapkan BRD
+  sebagai bentuk dokumen kebutuhan CRM).
+- Mengunci definisi teknis multi-tenant (shared DB / schema-per-tenant /
+  DB-per-tenant) — masih menjadi blocker arsitektur.
+- Menetapkan ambang batas dan periode kuota sales agar EP-003 & EP-007 dapat
+  diimplementasikan.
+- Memutuskan ulang status M8 Webhook (keberatan teknis PM pada DEC-015).
+- Menetapkan definisi & metrik pengukuran AI beserta baseline-nya.
+- Memperbarui requirement backlog & RAID setelah BRD disusun.
 
 ## Risiko & Isu Utama
 
 | Deskripsi | Severity | Owner | Status |
 |---|---|---|---|
-| R-001 Durasi 3 hari berisiko tidak cukup untuk lingkup CRM multi-tenant | Tinggi | PM/PO + Head of Product | Open |
+| R-001 Durasi 3 hari berisiko tidak cukup untuk lingkup CRM multi-tenant | Tinggi | PM/PO + Head of Product | Open — **turun**: lingkup MVP sudah dibatasi (DEC-015) |
 | R-002 Metrik AI belum didefinisikan → tanpa baseline | Tinggi | PM/PO + Head of Engineer | Open |
 | R-003 Peserta belum ditetapkan Tech Lead | Tinggi | Tech Lead | Open |
 | R-004 Definisi multi-tenant belum dikunci → risiko rework | Tinggi | Head of Engineer | Open |
-| R-005 Requirement CRM belum siap dalam bentuk yang dapat dieksekusi | Tinggi | PM/PO | Open |
+| R-005 Requirement CRM belum siap dalam bentuk yang dapat dieksekusi | Tinggi | PM/PO | **Turun signifikan** — requirement analysis sudah disusun, menunggu BRD |
+| R-006 Peran ganda PM (PM + PO) menciptakan konflik prioritas | Sedang | Yudha Pratama | Open — terlihat pada keberatan PM atas DEC-015 |
 
 Detail lengkap di [[risk-register]] dan [[raid-log]].
 
 ## Keputusan Terbaru
 
-11 keputusan tercatat pada 2026-10-02: project ini membangun aplikasi CRM
-(bukan program pelatihan murni); slug `bootcamp-crm`; bootcamp 3 hari; produk
-multi-tenant; PM sebagai PO yang berperan sebagai klien; mentor & approver Head
-of Product & Project + Head of Engineer; peserta ditetapkan Tech Lead; sponsor
-internal TLab; metodologi Agile. Detail di [[decision-log]].
+20 keputusan tercatat. Periode ini menambahkan: prinsip core-stabil + webhook
+(DEC-012), prioritas outbound webhook (DEC-013), batas async (DEC-014), lingkup
+MVP (DEC-015), revenue = closed-won (DEC-016), bentuk dokumen = BRD (DEC-017),
+pengukuran performa via quota attainment (DEC-018), satu model tiket dengan
+jalur eskalasi (DEC-019), dukungan B2B & B2C (DEC-020). Detail di [[decision-log]].
 
 ## Milestone Terdekat
 
 | Milestone | Target Tanggal | Status |
 |---|---|---|
-| Requirement bootcamp selesai disusun | Belum ditentukan | Belum Mulai |
+| Requirement produk CRM tersusun (bahan baku BRD) | 2026-10-02 | **Selesai** |
+| BRD CRM disusun | Belum ditentukan | Belum Mulai |
 | Bootcamp internal dilaksanakan (3 hari) | Belum ditentukan | Belum Mulai |
 | Prototype CRM multi-tenant berjalan | Belum ditentukan | Belum Mulai |
 | Laporan pengukuran efektivitas AI | Belum ditentukan | Belum Mulai |
 
-Seluruh milestone belum memiliki target tanggal karena tanggal pelaksanaan
-bootcamp belum ditetapkan.
-
 ## Catatan untuk Stakeholder
 
-Project ini **memblokir dirinya sendiri** sampai lima keputusan diambil:
-tanggal bootcamp, daftar peserta, lingkup MVP, definisi teknis multi-tenant,
-dan metrik pengukuran AI. Empat dari lima keputusan tersebut berada di luar
-kewenangan PM (Tech Lead dan Head of Engineer), sehingga diperlukan
-sinkronisasi lintas fungsi untuk membukanya.
+Sisi requirement kini bergerak; sisi delivery masih mandek. Empat keputusan
+blocking yang tersisa — tanggal bootcamp, daftar peserta, definisi teknis
+multi-tenant, dan metrik AI — berada di luar kewenangan PM dan memerlukan
+sinkronisasi lintas fungsi (Tech Lead, Head of Engineer).
 
-Perhatian khusus pada **R-002**: jika metrik pengukuran efektivitas AI belum
-ditetapkan sebelum hari pertama bootcamp, baseline tidak dapat diambil dan
-tujuan kedua project ini — mengukur seberapa cepat dan efektif AI membantu
-development — tidak akan dapat disimpulkan. Ini tidak dapat dipulihkan setelah
-bootcamp berjalan.
+**Perhatian pada R-002:** metrik pengukuran AI harus ditetapkan sebelum hari
+pertama bootcamp; baseline tidak dapat diambil ulang setelah bootcamp berjalan.
+Ini satu-satunya risiko dalam daftar yang tidak dapat dipulihkan.
 
 ## Related
 
 - **Project Profile:** [[project-profile]]
+- **Requirement Analysis:** [[requirement-analysis]]
 - **Risk Register:** [[risk-register]]
 - **RAID Log:** [[raid-log]]
 - **Decision Log:** [[decision-log]]

@@ -3,7 +3,7 @@
 Catatan pribadi untuk merangkum hal-hal yang perlu dilakukan.
 Lokasi: root knowledge repo (`knowledge/notes/personal-notes.md`).
 
-> Update terakhir: 2026-08-18
+> Update terakhir: 2026-10-02
 
 ---
 
@@ -27,15 +27,29 @@ Lokasi: root knowledge repo (`knowledge/notes/personal-notes.md`).
 
 ## Catatan Harian
 
-### YYYY-MM-DD
+### 2026-10-02
 
-- 
+- Sesi brainstorm requirement produk CRM (`bootcamp-crm`) bersama PM/PO.
+- Hasil: prinsip produk dikunci (core stabil, kustomisasi klien via webhook +
+  service eksternal terpisah), lingkup MVP ditetapkan (M1, M2, M3, M4, M6, M7
+  mandatory; M5 & M8 nice to have), dan `requirements/requirement-analysis.md`
+  disusun sebagai bahan baku BRD (12 Epic, 31 User Story).
+- 9 keputusan produk tercatat di decision log (DEC-012 s/d DEC-020).
+- Bentuk dokumen kebutuhan CRM: **BRD** (akan disusun pada langkah berikutnya).
+- Catatan: repo `ai-os-knowledge` rebase dari remote 2026-10-02 (11 commit
+  tertinggal dari profile lain); `pull.rebase=true` diset repo-local.
 
 ---
 
 ## Ide / Brainstorming
 
-- 
+- **Keberatan PM atas DEC-015:** M8 (Webhook) ditetapkan *nice to have*, padahal
+  webhook adalah mekanisme yang menjadikan prinsip produk (DEC-012) berjalan.
+  Usulan: M8 tetap masuk MVP secara minimal. Menunggu keputusan PO.
+- **Gap praktik:** template requirement analysis belum mencakup penilaian
+  kelayakan "apakah kemampuan yang diminta PO memang bagian pakem produk?" —
+  kasus assessment tim sales (HR) menunjukkan perlunya langkah uji kepatuhan
+  pakem sebelum suatu kemampuan masuk backlog.
 
 ---
 

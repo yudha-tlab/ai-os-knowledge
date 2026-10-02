@@ -4,8 +4,16 @@ type: project-profile
 project: bootcamp-crm
 client: tlab-internal
 status: active
-version: "1.0"
+version: "1.1"
 created: 2026-10-02
+modified: 2026-10-02
+changelog:
+  - version: "1.1"
+    date: 2026-10-02
+    purpose: "Perbarui lingkup MVP dan kebutuhan keputusan setelah sesi brainstorm PO — lingkup MVP sudah ditetapkan (DEC-015)"
+  - version: "1.0"
+    date: 2026-10-02
+    purpose: "Bootstrap project internal TLab — profil project awal"
 ---
 
 # Project Profile — Bootcamp Internal CRM
@@ -34,6 +42,26 @@ Posisi peran disengaja dibalik untuk mensimulasikan kondisi nyata: Yudha Pratama
 berperan sebagai **Product Owner yang bertindak layaknya klien** yang membutuhkan
 sistem CRM, sehingga tim engineering menghadapi alur permintaan requirement nyata.
 
+## Prinsip Produk (Mengikat — DEC-012)
+
+Core CRM bersifat **stabil dan tidak dimodifikasi per klien**. Variasi proses
+bisnis klien diserap melalui **webhook + service eksternal terpisah**. Karena
+itu, lingkup MVP wajib memuat model tenancy yang benar sejak awal dan mekanisme
+event sebagai permukaan ekstensi.
+
+## Lingkup MVP (DEC-015)
+
+| Modul | Nama | Status MVP |
+|---|---|---|
+| M1 | Tenancy & Kendali Akses | Mandatory |
+| M2 | Contact & Account Management (B2B & B2C) | Mandatory |
+| M3 | Lead Management | Mandatory |
+| M4 | Sales Pipeline / Opportunity | Mandatory |
+| M5 | Activity Management | Nice to have |
+| M6 | Ticketing (satu entitas, jalur internal & eksternal) | Mandatory |
+| M7 | Reporting & Analytics (revenue, pipeline, performa sales, tiket) | Mandatory |
+| M8 | Webhook / Event Layer | Nice to have — **keberatan teknis PM tercatat** |
+
 ## Tim Delivery
 
 | Nama | Peran | Kontak |
@@ -49,6 +77,7 @@ sistem CRM, sehingga tim engineering menghadapi alur permintaan requirement nyat
 - **Project Charter:** [[project-charter]]
 - **Stakeholder Register:** [[stakeholder-register]]
 - **Communication Plan:** [[communication-plan]]
+- **Requirement Analysis (bahan baku BRD):** [[requirement-analysis]]
 - **Requirement Backlog:** [[requirement-backlog]]
 - **Risk Register:** [[risk-register]]
 - **RAID Log:** [[raid-log]]
@@ -59,7 +88,8 @@ sistem CRM, sehingga tim engineering menghadapi alur permintaan requirement nyat
 
 | Milestone | Target Tanggal | Status |
 |-----------|---------------|--------|
-| Requirement bootcamp selesai disusun | Belum ditentukan | Belum Mulai |
+| Requirement produk CRM tersusun (bahan baku BRD) | 2026-10-02 | **Selesai** |
+| BRD CRM disusun | Belum ditentukan | Belum Mulai |
 | Bootcamp internal dilaksanakan (3 hari) | Belum ditentukan | Belum Mulai |
 | Prototype CRM multi-tenant berjalan | Belum ditentukan | Belum Mulai |
 | Laporan pengukuran kecepatan & efektivitas AI | Belum ditentukan | Belum Mulai |
@@ -73,9 +103,15 @@ Field berikut belum tersedia dan **tidak boleh diasumsikan** — menunggu input:
 | Tanggal mulai project | Belum ditentukan | PM / Sponsor internal |
 | Tanggal pelaksanaan bootcamp (3 hari) | Belum ditentukan | Tech Lead + PM |
 | Daftar & jumlah peserta | Menunggu pembagian | Tech Lead |
-| Ruang lingkup fitur CRM multi-tenant (MVP) | Belum ditentukan | PM/PO + Head of Product |
+| Definisi teknis multi-tenant (shared DB / schema-per-tenant / DB-per-tenant) | Belum ditentukan | Head of Engineer |
 | Definisi & metrik pengukuran efektivitas AI | Belum ditentukan | PM/PO + Head of Engineer |
+| Ambang batas & periode kuota sales | Belum ditentukan | PM/PO + Head of Sales |
+| Status akhir M8 Webhook (nice to have vs MVP minimal) | Belum ditentukan | PM/PO + Head of Engineer |
+| Cakupan & ownership assessment tim sales (HR) | Belum ditentukan | Sponsor internal + Head of HR |
 | Target tanggal selesai prototype | Belum ditentukan | PM/PO + Head of Engineer |
+
+Catatan: **ruang lingkup fitur MVP tidak lagi menjadi field terbuka** — sudah
+ditetapkan pada 2026-10-02 (DEC-015).
 
 ## Asumsi
 
@@ -86,8 +122,13 @@ wajib divalidasi sebelum dipakai sebagai dasar perencanaan:
   didemonstrasikan — belum divalidasi terhadap ruang lingkup fitur.
 - Peserta bootcamp sudah memiliki kompetensi dasar development sehingga bootcamp
   tidak perlu mengajarkan fundamental — belum divalidasi ke Tech Lead.
-- Kebutuhan CRM disediakan oleh PM/PO yang berperan sebagai klien — bentuk
-  formalnya (BRD / backlog / dokumen lain) belum ditentukan.
+- Kustomisasi klien cukup dilayani secara asynchronous (webhook) — belum
+  divalidasi bahwa tidak ada klien sasaran dengan kebutuhan validasi blocking.
+
+Asumsi lama "bentuk formal kebutuhan CRM dari PO belum ditentukan" **sudah
+terjawab** pada 2026-10-02: bentuknya adalah **BRD** (DEC-017).
+
+Daftar lengkap ada di [[raid-log]].
 
 ## Related
 

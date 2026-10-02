@@ -27,7 +27,7 @@ project tersebut.
 
 | Project | Divisi | Status | Project Profile |
 |---|---|---|---|
-| **Bootcamp Internal CRM** | TLab Internal | Perencanaan | [[bootcamp-crm/project-profile]] |
+| **Bootcamp Internal CRM** | TLab Internal | Perencanaan (requirement produk tersusun; BRD belum) | [[bootcamp-crm/project-profile]] |
 
 Project pada tabel ini **tidak memiliki klien eksternal** — tidak ada entri di
 `knowledge/clients/`. Dikelola melalui Hermes profile `pm-internal`; profile

@@ -2,8 +2,17 @@
 title: "Requirement Backlog — Bootcamp Internal CRM"
 type: requirement-backlog
 project: bootcamp-crm
-version: "1.0"
+status: active
+version: "2.0"
 created: 2026-10-02
+modified: 2026-10-02
+changelog:
+  - version: "2.0"
+    date: 2026-10-02
+    purpose: "Tambah requirement produk CRM (REQ-014 s/d REQ-031) dari sesi brainstorm PO 2026-10-02 dan tandai pertanyaan yang sudah terjawab"
+  - version: "1.0"
+    date: 2026-10-02
+    purpose: "Backlog awal — 13 requirement pelaksanaan bootcamp dari arahan PM/PO"
 ---
 
 # Requirement Backlog — Bootcamp Internal CRM
@@ -14,12 +23,16 @@ Backlog kerja untuk requirement yang sedang dikumpulkan/divalidasi. Setelah
 requirement matang dan disepakati, promosikan ke BRD/FRD/SRS resmi mengikuti
 `playbooks/knowledge-promotion-playbook.md`.
 
-**Status backlog saat ini: PENGUMPULAN.** PM diminta menyusun requirement
-bootcamp. Entri di bawah ini adalah requirement yang bersumber dari arahan
-langsung PM/PO pada 2026-10-02 — bukan hasil analisis terhadap dokumen yang
-sudah ada, karena tidak ada dokumen CRM/bootcamp di knowledge base.
+Analisis lengkap requirement produk CRM (Proses Bisnis, Stakeholder, Objek,
+SPOK, Epic, User Story) ada di [[requirement-analysis]] — dokumen ini adalah
+daftar ringkas yang dapat ditindaklanjuti.
 
-## Daftar Requirement
+---
+
+## Bagian A — Requirement Pelaksanaan Bootcamp
+
+Sumber: arahan langsung PM/PO pada 2026-10-02. Bukan hasil analisis terhadap
+dokumen yang sudah ada, karena tidak ada dokumen CRM/bootcamp di knowledge base.
 
 | ID | Deskripsi | Sumber | Tipe | Prioritas | Status |
 |---|---|---|---|---|---|
@@ -41,26 +54,80 @@ Catatan: REQ-004 sengaja diklasifikasikan sebagai non-functional karena
 multi-tenancy adalah keputusan arsitektur yang mengikat seluruh rancangan data
 dan autentikasi — bukan fitur yang dapat ditambahkan kemudian tanpa rework.
 
+---
+
+## Bagian B — Requirement Produk CRM
+
+Sumber: sesi brainstorm Product Owner 2026-10-02. Setiap requirement diturunkan
+ke Epic di [[requirement-analysis]]. Status **Draft** — menunggu BRD (DEC-017).
+
+| ID | Deskripsi | Sumber | Tipe | Prioritas | Epic | Status |
+|---|---|---|---|---|---|---|
+| REQ-014 | Core CRM bersifat stabil dan tidak dimodifikasi per klien; kustomisasi klien diserap melalui webhook + service eksternal terpisah | Arahan PO 2026-10-02 (DEC-012) | Business (Prinsip Produk) | Must | — | Draft |
+| REQ-015 | CRM mempublikasikan event ke sistem klien (outbound) saat terjadi perubahan status/entitas | Arahan PO 2026-10-02 (DEC-013) | Functional | Must | EP-011 | Draft |
+| REQ-016 | CRM dapat menerima data dari sistem klien (inbound) | Arahan PO 2026-10-02 (DEC-013) | Functional | Should | EP-011 | Draft |
+| REQ-017 | Pengelolaan tenant dengan isolasi data antar tenant | Arahan PO 2026-10-02 (DEC-015) | Non-Functional (Arsitektur) | Must | EP-010 | Draft |
+| REQ-018 | Pengelolaan user, role, dan permission di dalam tenant | Arahan PO 2026-10-02 (DEC-015) | Functional | Must | EP-010 | Draft |
+| REQ-019 | Pengelolaan kontak (individu) dan akun (organisasi), mendukung pelanggan B2B dan B2C | Arahan PO 2026-10-02 (DEC-020) | Functional | Must | EP-002 | Draft |
+| REQ-020 | Pengelolaan lead: penangkapan, penugasan ke sales, perubahan status, dan konversi menjadi kontak + akun + peluang | Arahan PO 2026-10-02 (DEC-015) | Functional | Must | EP-001 | Draft |
+| REQ-021 | Pengelolaan peluang: nilai deal, stage pipeline, tanggal tutup, dan penandaan closed-won / closed-lost | Arahan PO 2026-10-02 (DEC-015) | Functional | Must | EP-004 | Draft |
+| REQ-022 | Penetapan target/kuota sales per periode sebagai dasar pengukuran performa | Arahan PO 2026-10-02 (DEC-018) | Functional | Must | EP-003 | Draft |
+| REQ-023 | Perhitungan quota attainment per sales (nilai closed-won dibanding kuota) | Arahan PO 2026-10-02 (DEC-018) | Functional | Must | EP-007 | Draft |
+| REQ-024 | Penandaan status performa sales (mencapai / tidak mencapai target) berdasarkan quota attainment | Arahan PO 2026-10-02 (DEC-018) | Functional | Must | EP-007 | Draft |
+| REQ-025 | Pengelolaan tiket sebagai satu model tiket dengan jalur asal permintaan (internal/eksternal) dan jalur eskalasi ke tim internal | Arahan PO 2026-10-02 (DEC-019) | Functional | Must | EP-006 | Draft |
+| REQ-026 | Pelaporan revenue yang bersumber dari peluang closed-won per periode | Arahan PO 2026-10-02 (DEC-016) | Functional | Must | EP-008 | Draft |
+| REQ-027 | Pelaporan pipeline dan forecast | Arahan PO 2026-10-02 (DEC-015) | Functional | Should | EP-008 | Draft |
+| REQ-028 | Pelaporan performa sales (quota attainment per sales) | Arahan PO 2026-10-02 (DEC-018) | Functional | Must | EP-008 | Draft |
+| REQ-029 | Pelaporan tiket (volume dan status penanganan) | Arahan PO 2026-10-02 (DEC-019) | Functional | Should | EP-009 | Draft |
+| REQ-030 | Pengelolaan aktivitas (call/meeting/task/note) — **nice to have**, di luar lingkup MVP | Arahan PO 2026-10-02 (DEC-015) | Functional | Could | EP-005 | Draft |
+| REQ-031 | Assessment tim sales (HR) — **belum terdefinisi**; cakupan, ownership, dan klasifikasi menunggu keputusan | Arahan PO 2026-10-02 (poin 3) | Belum diklasifikasi | Belum ditentukan | EP-012 | **Terbuka** |
+
+Catatan REQ-031: kemampuan ini diminta PO, tetapi bukan bagian pakem CRM (CRM
+mengelola pelanggan, bukan penilaian karyawan). Belum ada penetapan siapa pemilik
+kebutuhannya. Tidak diklasifikasikan dan tidak diberi prioritas agar tidak
+menciptakan keputusan fiktif — menunggu jawaban Pertanyaan Terbuka no. 17.
+
+**Perbedaan status MVP vs prioritas:** REQ-015 (webhook outbound) diberi
+prioritas Must tetapi modul M8 berstatus *nice to have* dalam DEC-015. Ini adalah
+inkonsistensi yang disengaja dicatat, bukan diabaikan — lihat keberatan PM pada
+DEC-015 dan Pertanyaan Terbuka no. 20. Tidak diubah tanpa keputusan PO.
+
+---
+
 ## Requirement yang Masih Perlu Klarifikasi
+
+Pertanyaan 1–13 diwarisi dari backlog v1.0 (beberapa telah terjawab pada
+2026-10-02). Pertanyaan 14–20 muncul dari sesi brainstorm 2026-10-02. Daftar
+lengkap beserta konteks dan penomoran lengkapnya ada di
+[[requirement-analysis]] section 7.
 
 | ID | Pertanyaan | Ditujukan ke | Status |
 |---|---|---|---|
 | Q-001 | Tanggal pelaksanaan bootcamp 3 hari? | Tech Lead + PM | Open |
 | Q-002 | Berapa peserta dan siapa saja? | Tech Lead | Open |
-| Q-003 | Lingkup fitur MVP CRM multi-tenant apa saja? | PM/PO + Head of Product | Open |
-| Q-004 | Modul CRM apa yang wajib ada (mis. lead, pipeline, kontak, aktivitas)? | PM/PO | Open |
+| Q-003 | Lingkup fitur MVP CRM multi-tenant apa saja? | PM/PO + Head of Product | **Terjawab 2026-10-02** — DEC-015 |
+| Q-004 | Modul CRM apa yang wajib ada (mis. lead, pipeline, kontak, aktivitas)? | PM/PO | **Terjawab 2026-10-02** — DEC-015 |
 | Q-005 | Definisi "multi-tenant" yang dimaksud: shared database + tenant_id, schema-per-tenant, atau database-per-tenant? | PM/PO + Head of Engineer | Open |
 | Q-006 | Metrik apa yang dipakai untuk mengukur kecepatan AI? Baseline-nya apa? | PM/PO + Head of Engineer | Open |
 | Q-007 | Metrik apa yang dipakai untuk mengukur efektivitas AI? | PM/PO + Head of Engineer | Open |
 | Q-008 | Apakah pengukuran AI membandingkan dengan baseline non-AI (mis. estimasi manual)? | Head of Engineer | Open |
-| Q-009 | Bentuk dokumen kebutuhan CRM dari PO: BRD, user story, atau backlog langsung? | PM/PO | Open |
+| Q-009 | Bentuk dokumen kebutuhan CRM dari PO: BRD, user story, atau backlog langsung? | PM/PO | **Terjawab 2026-10-02** — BRD (DEC-017) |
 | Q-010 | Apakah prototype harus bisa didemokan end-to-end (login → kelola data → laporan) atau cukup sebagian modul? | PM/PO + Head of Product | Open |
 | Q-011 | Stack teknologi CRM — apakah ditentukan TLab atau bebas untuk peserta? | Head of Engineer | Open |
 | Q-012 | Apakah ada anggaran terpisah untuk inisiatif ini? | Sponsor internal | Open |
 | Q-013 | Setelah bootcamp, apa kelanjutan produk CRM ini (lanjut dikembangkan, dihentikan, atau dievaluasi)? | Sponsor internal + Head of Product | Open |
+| Q-014 | Definisi "revenue stream": dari closed-won atau dari invoice/pembayaran? | PM/PO | **Terjawab 2026-10-02** — closed-won (DEC-016) |
+| Q-015 | Beda ticketing internal vs eksternal: satu entitas atau dua sub-sistem? | PM/PO | **Terjawab 2026-10-02** — satu entitas (DEC-019) |
+| Q-016 | Tipe pelanggan yang didukung: B2B, B2C, atau keduanya? | PM/PO | **Terjawab 2026-10-02** — keduanya (DEC-020) |
+| Q-017 | Assessment tim sales (HR): apa definisinya dan siapa pemilik kebutuhannya? | Sponsor internal + Head of HR | Open |
+| Q-018 | Ambang batas "performa" pada quota attainment berapa persen? | PM/PO + Head of Sales | Open |
+| Q-019 | Periode kuota sales: bulanan, kuartalan, atau tahunan? | PM/PO + Head of Sales | Open |
+| Q-020 | Apakah M8 (Webhook) benar-benar nice to have, mengingat ia adalah mekanisme prinsip produk DEC-012? | PM/PO + Head of Engineer | Open |
 
 ## Related
 
+- **Requirement Analysis (bahan baku BRD):** [[requirement-analysis]]
 - **Project Profile:** [[project-profile]]
+- **Decision Log:** [[decision-log]]
 - **Requirement Traceability Matrix:** [[requirement-traceability-matrix-template]]
 - **BRD Template:** [[brd-template]]
