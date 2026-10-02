@@ -15,8 +15,6 @@ project tersebut.
 
 ## Project Aktif
 
-_(Belum ada project terdaftar — tambahkan saat project pertama dimulai)_
-
 | Project | Client | Status | Project Profile |
 |---|---|---|---|
 | **BSB — KPI & KYE** | Bank Sumsel Babel | Produksi (Garansi) | [[bsb-kpi-kye/project-profile]] |
