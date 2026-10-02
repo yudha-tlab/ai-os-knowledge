@@ -24,6 +24,16 @@ _(Belum ada project terdaftar — tambahkan saat project pertama dimulai)_
 | **AI Knowledge Center DPAD** | DPAD DIY | Belum Mulai | [[dpad-chatbot/project-profile]] |
 | **Pentest VMWare BPD Sumut** | BPD Sumut | Aktif | [[bpd-sumut/project-profile]] |
 
+## Internal TLab (bukan project klien)
+
+| Project | Divisi | Status | Project Profile |
+|---|---|---|---|
+| **Bootcamp Internal CRM** | TLab Internal | Perencanaan | [[bootcamp-crm/project-profile]] |
+
+Project pada tabel ini **tidak memiliki klien eksternal** — tidak ada entri di
+`knowledge/clients/`. Dikelola melalui Hermes profile `pm-internal`; profile
+`default` menangani project klien.
+
 ## Cara Menambah Project Baru
 
 Setiap project baru dibuat mengikuti `playbooks/project-bootstrap-playbook.md`
