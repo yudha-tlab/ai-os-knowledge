@@ -104,7 +104,7 @@ memaksa retrofit yang mahal. Usulan PM: **M8 tetap masuk MVP secara minimal**
 
 Proses 12 sengaja dibiarkan belum terdefinisi: kemampuan ini diminta PO, tetapi
 **bukan pakem CRM** (CRM mengelola pelanggan, bukan penilaian karyawan) dan
-belum ada penetapan siapa pemilik kebutuhannya. Lihat Pertanyaan Terbuka no. 14.
+belum ada penetapan siapa pemilik kebutuhannya. Lihat Q-017/Q-018.
 
 ---
 
@@ -121,7 +121,7 @@ belum ada penetapan siapa pemilik kebutuhannya. Lihat Pertanyaan Terbuka no. 14.
 | SH007 | Karyawan Tenant | Internal Requester | Internal | Dapat mengajukan permintaan/tiket ke tim lain | Permintaan antar tim tidak terlacak | Modul Tiket (jalur internal) | 06 | Volume tiket internal | Bulanan |
 | SH008 | Sistem Eksternal | Sistem Klien (di luar CRM) | System/Eksternal | Menerima event CRM tepat waktu; dapat mengirim data ke CRM | Kustomisasi klien tidak dapat berjalan; integrasi manual | Integrasi Webhook | 11 | Log pengiriman & retry | Per event |
 | SH009 | Manajemen | Head of Sales / Manajemen | Internal | Laporan revenue dan pipeline yang dapat dipercaya | Keputusan berbasis data tidak dapat diambil | Laporan Revenue & Pipeline | 08 | Laporan revenue | Bulanan |
-| SH010 | HR | Tim HR | Internal | — **belum terdefinisi** (lihat Pertanyaan Terbuka no. 14) | Kemampuan assessment tim sales tidak terbangun | Belum ditentukan | 12 | Belum ditentukan | Belum ditentukan |
+| SH010 | HR | Tim HR | Internal | — **belum terdefinisi** (lihat Q-017) | Kemampuan assessment tim sales tidak terbangun | Belum ditentukan | 12 | Belum ditentukan | Belum ditentukan |
 
 ---
 
@@ -194,7 +194,7 @@ belum ada penetapan siapa pemilik kebutuhannya. Lihat Pertanyaan Terbuka no. 14.
 ## 5. Rekomendasi Pengukuran Performa Sales
 
 PO meminta rekomendasi praktik standar pengukuran performa sales (arahan
-2026-10-02, poin 4.2). Berikut hasil riset terhadap sumber industri. **[Rekomendasi
+2026-10-02). Berikut hasil riset terhadap sumber industri. **[Rekomendasi
 — belum diputuskan; perlu validasi PO/Head of Sales]**
 
 ### 5.1 Prinsip: pisahkan leading indicator dari lagging indicator
@@ -321,38 +321,39 @@ Task didekomposisi saat sprint planning (Taiga), bukan di tahap requirement ini.
 
 ## 7. Pertanyaan Terbuka
 
-Pertanyaan 1–13 diwarisi dari `requirement-backlog.md`. Pertanyaan 14–23 muncul
-dari sesi brainstorm ini.
+Penomoran memakai **ID Q-xxx yang sama dengan `requirement-backlog.md`** supaya
+traceable antar dokumen. Q-003, Q-004, Q-009, Q-014, Q-015, dan Q-016 sudah
+terjawab pada 2026-10-02; pertanyaan turunan/sisanya tetap terbuka.
 
-| No | Pertanyaan | Konteks | Ditujukan ke | Status |
+| ID | Pertanyaan | Konteks | Ditujukan ke | Status |
 |----|------------|---------|--------------|--------|
-| 1 | Tanggal pelaksanaan bootcamp 3 hari? | Perencanaan | Tech Lead + PM | Belum dijawab |
-| 2 | Berapa peserta dan siapa saja? | Perencanaan | Tech Lead | Belum dijawab |
-| 3 | Modul CRM apa yang wajib ada? | Lingkup MVP | PM/PO | **Terjawab 2026-10-02** — lihat section 0.1 |
-| 4 | Definisi "multi-tenant": shared DB + tenant_id, schema-per-tenant, atau DB-per-tenant? | Arsitektur | PM/PO + Head of Engineer | Belum dijawab |
-| 5 | Metrik apa yang dipakai untuk mengukur kecepatan AI? Baseline-nya apa? | Pengukuran AI | PM/PO + Head of Engineer | Belum dijawab |
-| 6 | Metrik apa yang dipakai untuk mengukur efektivitas AI? | Pengukuran AI | PM/PO + Head of Engineer | Belum dijawab |
-| 7 | Apakah pengukuran AI membandingkan dengan baseline non-AI? | Pengukuran AI | Head of Engineer | Belum dijawab |
-| 8 | Apakah prototype harus dapat didemokan end-to-end? | Kriteria selesai | PM/PO + Head of Product | Belum dijawab |
-| 9 | Stack teknologi CRM — ditentukan TLab atau bebas? | Arsitektur | Head of Engineer | Belum dijawab |
-| 10 | Apakah ada anggaran terpisah untuk inisiatif ini? | Anggaran | Sponsor internal | Belum dijawab |
-| 11 | Apa kelanjutan produk CRM setelah bootcamp? | Strategis | Sponsor internal + Head of Product | Belum dijawab |
-| 12 | Bentuk dokumen kebutuhan CRM dari PO? | Requirement | PM/PO | **Terjawab 2026-10-02** — BRD (DEC-017) |
-| 13 | Apakah prototype cukup sebagian modul atau harus end-to-end? | Kriteria selesai | PM/PO + Head of Product | Belum dijawab |
-| 14 | **Assessment tim sales (HR): siapa pemilik kebutuhannya, dan apa definisinya — penilaian kinerja karyawan atau uji kompetensi?** | Proses 12; di luar pakem CRM | Sponsor internal + Head of HR | Belum dijawab |
-| 15 | Apakah assessment HR menjadi bagian produk CRM yang dijual, atau kebutuhan internal TLab saja? | Proses 12 | Sponsor internal | Belum dijawab |
-| 16 | Ambang batas "performa" pada quota attainment: berapa persen dianggap mencapai target? | EP-007 | PM/PO + Head of Sales | Belum dijawab |
-| 17 | Periode kuota sales: bulanan, kuartalan, atau tahunan? | EP-003 | PM/PO + Head of Sales | Belum dijawab |
-| 18 | Apakah lapis pengukuran aktivitas & pipeline (leading indicator) termasuk lingkup MVP? Memerlukan modul M5 yang berstatus nice to have. | EP-007 | PM/PO | Belum dijawab |
-| 19 | Apakah tiket memerlukan SLA (target waktu penyelesaian) dan peringatan pelanggaran SLA? | EP-006 | PM/PO + Support Lead | Belum dijawab |
-| 20 | Apakah jalur internal dan eksternal tiket memerlukan aturan status atau SLA yang berbeda? | EP-006 | PM/PO + Support Lead | Belum dijawab |
-| 21 | Untuk pelanggan B2C, apakah setiap individu menjadi satu Akun, atau cukup sebagai Kontak tanpa Akun? | EP-002 | PM/PO | Belum dijawab |
-| 22 | Kebijakan retry, dead-letter, dan signing (HMAC) webhook — spesifikasi minimum yang disepakati? | EP-011 | Head of Engineer | Belum dijawab |
-| 23 | Apakah M8 (Webhook) benar-benar "nice to have", mengingat webhook adalah mekanisme utama prinsip produk di section 0? | Lingkup MVP | PM/PO + Head of Engineer | Belum dijawab |
-
-Catatan: nomor 3 dan 12 pada `requirement-backlog.md` semula Q-003/Q-004 dan
-Q-009. Penomoran di sini mengikuti urutan pertanyaan backlog agar traceable; ID
-lama tetap dirujuk di backlog.
+| Q-001 | Tanggal pelaksanaan bootcamp 3 hari? | Perencanaan | Tech Lead + PM | Belum dijawab |
+| Q-002 | Berapa peserta dan siapa saja? | Perencanaan | Tech Lead | Belum dijawab |
+| Q-003 | Lingkup fitur MVP CRM multi-tenant apa saja? | Lingkup MVP | PM/PO + Head of Product | **Terjawab 2026-10-02** — DEC-015 |
+| Q-004 | Modul CRM apa yang wajib ada? | Lingkup MVP | PM/PO | **Terjawab 2026-10-02** — DEC-015 |
+| Q-005 | Definisi "multi-tenant": shared DB + tenant_id, schema-per-tenant, atau DB-per-tenant? | Arsitektur | PM/PO + Head of Engineer | Belum dijawab |
+| Q-006 | Metrik apa yang dipakai untuk mengukur kecepatan AI? Baseline-nya apa? | Pengukuran AI | PM/PO + Head of Engineer | Belum dijawab |
+| Q-007 | Metrik apa yang dipakai untuk mengukur efektivitas AI? | Pengukuran AI | PM/PO + Head of Engineer | Belum dijawab |
+| Q-008 | Apakah pengukuran AI membandingkan dengan baseline non-AI? | Pengukuran AI | Head of Engineer | Belum dijawab |
+| Q-009 | Bentuk dokumen kebutuhan CRM dari PO? | Requirement | PM/PO | **Terjawab 2026-10-02** — BRD (DEC-017) |
+| Q-010 | Apakah prototype harus dapat didemokan end-to-end? | Kriteria selesai | PM/PO + Head of Product | Belum dijawab |
+| Q-011 | Stack teknologi CRM — ditentukan TLab atau bebas? | Arsitektur | Head of Engineer | Belum dijawab |
+| Q-012 | Apakah ada anggaran terpisah untuk inisiatif ini? | Anggaran | Sponsor internal | Belum dijawab |
+| Q-013 | Apa kelanjutan produk CRM setelah bootcamp? | Strategis | Sponsor internal + Head of Product | Belum dijawab |
+| Q-014 | Definisi "revenue stream": dari closed-won atau dari invoice/pembayaran? | Proses 08 | PM/PO | **Terjawab 2026-10-02** — closed-won (DEC-016) |
+| Q-015 | Beda ticketing internal vs eksternal: satu entitas atau dua sub-sistem? | Proses 06 | PM/PO | **Terjawab 2026-10-02** — satu entitas (DEC-019) |
+| Q-016 | Tipe pelanggan yang didukung: B2B, B2C, atau keduanya? | Proses 02 | PM/PO | **Terjawab 2026-10-02** — keduanya (DEC-020) |
+| Q-017 | **Assessment tim sales (HR): siapa pemilik kebutuhannya, dan apa definisinya — penilaian kinerja karyawan atau uji kompetensi?** | Proses 12; di luar pakem CRM | Sponsor internal + Head of HR | Belum dijawab |
+| Q-018 | Apakah assessment HR menjadi bagian produk CRM yang dijual, atau kebutuhan internal TLab saja? | Proses 12 | Sponsor internal | Belum dijawab |
+| Q-019 | Ambang batas "performa" pada quota attainment: berapa persen dianggap mencapai target? | EP-007 | PM/PO + Head of Sales | Belum dijawab |
+| Q-020 | Periode kuota sales: bulanan, kuartalan, atau tahunan? | EP-003 | PM/PO + Head of Sales | Belum dijawab |
+| Q-021 | **Pemetaan istilah tiket "internal" vs "external": berdasarkan asal pemohon atau tujuan penanganan?** | Proses 06; DEC-019 | PM/PO | Belum dijawab |
+| Q-022 | Apakah tiket memerlukan SLA dan peringatan pelanggaran SLA? | EP-006 | PM/PO + Support Lead | Belum dijawab |
+| Q-023 | Apakah jalur internal dan eksternal tiket memerlukan aturan status atau SLA yang berbeda? | EP-006 | PM/PO + Support Lead | Belum dijawab |
+| Q-024 | Apakah lapis pengukuran aktivitas & pipeline (leading indicator) termasuk MVP? Memerlukan M5 yang nice to have. | EP-007 | PM/PO | Belum dijawab |
+| Q-025 | Untuk pelanggan B2C, apakah setiap individu menjadi satu Akun, atau cukup sebagai Kontak tanpa Akun? | EP-002 | PM/PO | Belum dijawab |
+| Q-026 | Kebijakan retry, dead-letter, dan signing (HMAC) webhook — spesifikasi minimum? | EP-011 | Head of Engineer | Belum dijawab |
+| Q-027 | Apakah M8 (Webhook) benar-benar "nice to have", mengingat webhook adalah mekanisme utama prinsip produk di section 0? | Lingkup MVP | PM/PO + Head of Engineer | Belum dijawab |
 
 ---
 

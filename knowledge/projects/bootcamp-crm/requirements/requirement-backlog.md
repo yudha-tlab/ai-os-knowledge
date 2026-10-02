@@ -85,44 +85,50 @@ ke Epic di [[requirement-analysis]]. Status **Draft** — menunggu BRD (DEC-017)
 Catatan REQ-031: kemampuan ini diminta PO, tetapi bukan bagian pakem CRM (CRM
 mengelola pelanggan, bukan penilaian karyawan). Belum ada penetapan siapa pemilik
 kebutuhannya. Tidak diklasifikasikan dan tidak diberi prioritas agar tidak
-menciptakan keputusan fiktif — menunggu jawaban Pertanyaan Terbuka no. 17.
+menciptakan keputusan fiktif — menunggu jawaban Q-017.
 
 **Perbedaan status MVP vs prioritas:** REQ-015 (webhook outbound) diberi
 prioritas Must tetapi modul M8 berstatus *nice to have* dalam DEC-015. Ini adalah
 inkonsistensi yang disengaja dicatat, bukan diabaikan — lihat keberatan PM pada
-DEC-015 dan Pertanyaan Terbuka no. 20. Tidak diubah tanpa keputusan PO.
+DEC-015 dan Q-027. Tidak diubah tanpa keputusan PO.
 
 ---
 
 ## Requirement yang Masih Perlu Klarifikasi
 
-Pertanyaan 1–13 diwarisi dari backlog v1.0 (beberapa telah terjawab pada
-2026-10-02). Pertanyaan 14–20 muncul dari sesi brainstorm 2026-10-02. Daftar
-lengkap beserta konteks dan penomoran lengkapnya ada di
-[[requirement-analysis]] section 7.
+Penomoran Q-xxx identik dengan `requirement-analysis.md` section 7 agar
+`traceable` antar dokumen. Q-003, Q-004, Q-009, Q-014, Q-015, dan Q-016 sudah
+terjawab pada 2026-10-02.
 
 | ID | Pertanyaan | Ditujukan ke | Status |
 |---|---|---|---|
 | Q-001 | Tanggal pelaksanaan bootcamp 3 hari? | Tech Lead + PM | Open |
 | Q-002 | Berapa peserta dan siapa saja? | Tech Lead | Open |
 | Q-003 | Lingkup fitur MVP CRM multi-tenant apa saja? | PM/PO + Head of Product | **Terjawab 2026-10-02** — DEC-015 |
-| Q-004 | Modul CRM apa yang wajib ada (mis. lead, pipeline, kontak, aktivitas)? | PM/PO | **Terjawab 2026-10-02** — DEC-015 |
-| Q-005 | Definisi "multi-tenant" yang dimaksud: shared database + tenant_id, schema-per-tenant, atau database-per-tenant? | PM/PO + Head of Engineer | Open |
+| Q-004 | Modul CRM apa yang wajib ada? | PM/PO | **Terjawab 2026-10-02** — DEC-015 |
+| Q-005 | Definisi "multi-tenant": shared DB + tenant_id, schema-per-tenant, atau DB-per-tenant? | PM/PO + Head of Engineer | Open |
 | Q-006 | Metrik apa yang dipakai untuk mengukur kecepatan AI? Baseline-nya apa? | PM/PO + Head of Engineer | Open |
 | Q-007 | Metrik apa yang dipakai untuk mengukur efektivitas AI? | PM/PO + Head of Engineer | Open |
-| Q-008 | Apakah pengukuran AI membandingkan dengan baseline non-AI (mis. estimasi manual)? | Head of Engineer | Open |
-| Q-009 | Bentuk dokumen kebutuhan CRM dari PO: BRD, user story, atau backlog langsung? | PM/PO | **Terjawab 2026-10-02** — BRD (DEC-017) |
-| Q-010 | Apakah prototype harus bisa didemokan end-to-end (login → kelola data → laporan) atau cukup sebagian modul? | PM/PO + Head of Product | Open |
-| Q-011 | Stack teknologi CRM — apakah ditentukan TLab atau bebas untuk peserta? | Head of Engineer | Open |
+| Q-008 | Apakah pengukuran AI membandingkan dengan baseline non-AI? | Head of Engineer | Open |
+| Q-009 | Bentuk dokumen kebutuhan CRM dari PO? | PM/PO | **Terjawab 2026-10-02** — BRD (DEC-017) |
+| Q-010 | Apakah prototype harus bisa didemokan end-to-end atau cukup sebagian modul? | PM/PO + Head of Product | Open |
+| Q-011 | Stack teknologi CRM — ditentukan TLab atau bebas untuk peserta? | Head of Engineer | Open |
 | Q-012 | Apakah ada anggaran terpisah untuk inisiatif ini? | Sponsor internal | Open |
-| Q-013 | Setelah bootcamp, apa kelanjutan produk CRM ini (lanjut dikembangkan, dihentikan, atau dievaluasi)? | Sponsor internal + Head of Product | Open |
+| Q-013 | Setelah bootcamp, apa kelanjutan produk CRM ini? | Sponsor internal + Head of Product | Open |
 | Q-014 | Definisi "revenue stream": dari closed-won atau dari invoice/pembayaran? | PM/PO | **Terjawab 2026-10-02** — closed-won (DEC-016) |
 | Q-015 | Beda ticketing internal vs eksternal: satu entitas atau dua sub-sistem? | PM/PO | **Terjawab 2026-10-02** — satu entitas (DEC-019) |
 | Q-016 | Tipe pelanggan yang didukung: B2B, B2C, atau keduanya? | PM/PO | **Terjawab 2026-10-02** — keduanya (DEC-020) |
 | Q-017 | Assessment tim sales (HR): apa definisinya dan siapa pemilik kebutuhannya? | Sponsor internal + Head of HR | Open |
-| Q-018 | Ambang batas "performa" pada quota attainment berapa persen? | PM/PO + Head of Sales | Open |
-| Q-019 | Periode kuota sales: bulanan, kuartalan, atau tahunan? | PM/PO + Head of Sales | Open |
-| Q-020 | Apakah M8 (Webhook) benar-benar nice to have, mengingat ia adalah mekanisme prinsip produk DEC-012? | PM/PO + Head of Engineer | Open |
+| Q-018 | Apakah assessment HR masuk produk CRM yang dijual, atau kebutuhan internal TLab saja? | Sponsor internal | Open |
+| Q-019 | Ambang batas "performa" pada quota attainment berapa persen? | PM/PO + Head of Sales | Open |
+| Q-020 | Periode kuota sales: bulanan, kuartalan, atau tahunan? | PM/PO + Head of Sales | Open |
+| Q-021 | Pemetaan istilah tiket "internal" vs "external": asal pemohon atau tujuan penanganan? | PM/PO | Open |
+| Q-022 | Apakah tiket memerlukan SLA dan peringatan pelanggaran SLA? | PM/PO + Support Lead | Open |
+| Q-023 | Apakah jalur internal dan eksternal tiket memerlukan aturan status/SLA berbeda? | PM/PO + Support Lead | Open |
+| Q-024 | Apakah pengukuran aktivitas & pipeline (leading indicator) termasuk MVP? Perlu M5 (nice to have). | PM/PO | Open |
+| Q-025 | Untuk pelanggan B2C, apakah tiap individu menjadi satu Akun, atau cukup Kontak tanpa Akun? | PM/PO | Open |
+| Q-026 | Kebijakan retry, dead-letter, dan signing (HMAC) webhook — spesifikasi minimum? | Head of Engineer | Open |
+| Q-027 | Apakah M8 (Webhook) benar-benar nice to have, mengingat ia adalah mekanisme prinsip produk DEC-012? | PM/PO + Head of Engineer | Open |
 
 ## Related
 

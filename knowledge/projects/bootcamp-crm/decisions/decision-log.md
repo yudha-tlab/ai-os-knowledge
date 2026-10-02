@@ -41,7 +41,7 @@ changelog:
 | DEC-016 | 2026-10-02 | **Revenue stream** didefinisikan dari **deal closed-won** (nilai peluang yang dimenangkan), bukan dari invoice/pembayaran aktual | Konfirmasi PO (poin 4.1) — menegaskan CRM berhenti di nilai deal; modul billing di luar lingkup | Yudha Pratama | Active |
 | DEC-017 | 2026-10-02 | Bentuk dokumen kebutuhan CRM dari PO adalah **BRD** | Konfirmasi PO (poin 4) — requirement analysis ini menjadi bahan bakunya | Yudha Pratama | Active |
 | DEC-018 | 2026-10-02 | **Tracking performance sales** diukur dengan pendekatan **kuota vs pencapaian aktual** (quota attainment) per sales; praktik standar industri dikaji dan diusulkan PM | Arahan PO (poin 4.2) — contoh: target won 5, tercapai 4 → muncul informasi performa/tidak; PO meminta cek praktik standar | Yudha Pratama | Active |
-| DEC-019 | 2026-10-02 | **Ticketing memakai satu model tiket** (satu entitas tiket), dengan **jalur eskalasi ke tim internal**. Bukan dua jenis tiket yang berbeda | Klarifikasi PO (poin 4.4) — tiket tetap satu, yang berbeda adalah jalurnya; istilah "internal/external" merujuk pada asal permintaan dan jalur eskalasi | Yudha Pratama | Active |
+| DEC-019 | 2026-10-02 | **Ticketing memakai satu model tiket** (satu entitas tiket), dengan **jalur eskalasi ke tim internal**. Bukan dua sub-sistem tiket yang terpisah | Klarifikasi PO (poin 4.4) — "harusnya tetap satu tiket, hanya bisa dieskalasi ke tim internal". Pemetaan istilah "internal/external" ke makna spesifiknya **belum dikonfirmasi PO** — lihat catatan di bawah | Yudha Pratama | Active (istilah: perlu validasi) |
 | DEC-020 | 2026-10-02 | Tipe pelanggan yang didukung: **B2B dan B2C** | Konfirmasi PO (poin 4.5) — model Contact/Account harus mengakomodir keduanya | Yudha Pratama | Active |
 
 ### Catatan atas DEC-015 (keberatan teknis PM — belum diselesaikan)
@@ -54,16 +54,27 @@ risiko berikut untuk diputuskan ulang:
 - Retrofitting webhook setelah core selesai lebih mahal daripada membangunnya
   bersamaan dengan core, karena memerlukan kaitan event di seluruh modul.
 - Usulan PM: M8 tetap **minimal di MVP** (event outbound inti + 1 endpoint inbound),
-  bukan dikecualikan penuh. Status: **menunggu keputusan PO** (lihat Pertanyaan
-  Terbuka no. 23 di `requirement-analysis.md`).
+  bukan dikecualikan penuh. Status: **menunggu keputusan PO** (lihat Q-027 di `requirement-analysis.md`).
 
 ### Klarifikasi istilah ticketing (mengikat)
 
 DEC-019 mengubah istilah yang dipakai pada arahan awal PO (poin 4.4: "ada 2
-ticketing internal dan external"). Yang dimaksud adalah **satu entitas tiket**
-dengan **dua jalur asal permintaan** dan **jalur eskalasi ke tim internal** —
-bukan dua sub-sistem tiket yang terpisah. Dokumen requirement dan desain
-berikutnya wajib mengikuti tafsir ini.
+ticketing internal dan external") menjadi **satu entitas tiket** dengan **jalur
+eskalasi ke tim internal**.
+
+**Yang terkonfirmasi:** hanya ada satu model tiket; eskalasi ke tim internal
+tersedia.
+
+**Yang belum dikonfirmasi:** pemetaan istilah "internal" dan "external" ke makna
+teknisnya. Dua tafsir yang mungkin — keduanya masih asumsi, belum ada pilihan PO:
+
+| Tafsir | Sumber permintaan tiket | "External" | "Internal" |
+|---|---|---|---|
+| A | Berdasarkan asal pemohon | Dari pelanggan | Dari karyawan tenant |
+| B | Berdasarkan tujuan penanganan | Tim support tenant | Tim internal TLab |
+
+Dokumen turunan (Proses 06, EP-006, REQ-025) memakai **Tafsir A** dan wajib
+dikoreksi bila PO memilih Tafsir B. Lihat Q-021/Q-023 di `requirement-analysis.md`.
 
 ## Keputusan yang Masih Tertunda (Blocking)
 
