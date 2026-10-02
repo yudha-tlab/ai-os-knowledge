@@ -103,15 +103,15 @@ Due date & sprint **sengaja dikosongkan** — pekerjaan belum kick off.
 
 ### 3.3 Epic 3 — CR-20260908-002 · FLPP Tenor Maksimal & Suku Bunga
 
-| User Story | Role | SP (=MD) | Assignee | Tasks |
-|---|---|---|---|---|
-| US-3.1 Backend — Validasi Tenor 480 Bulan & Suku Bunga Baru | Backend | 4,5 | Tirza Sarwono | 5 |
-| US-3.2 Frontend — Field Tenor/Bunga & Tampilan Simulasi | Frontend | 2,5 | Daffa Aldzakian Fauzi | 4 |
-| US-3.3 Integrasi SI — Verifikasi Proxy & TSD Terbaru | Backend | 1 | Tirza Sarwono | 2 |
-| US-3.4 QA — Test Case, Regression & Uji Silang Simulasi | QA | 3,5 | Dinda | 3 |
-| US-3.5 DevOps — Deployment Staging & Production | DEVOPS | 1,5 | Muhammad Akmal F. (`akmal`) | 3 |
-| US-3.6 PM — Koordinasi, Dokumentasi & Pendampingan UAT | TPC | 3 | Yudha Pratama | 3 |
-| **Subtotal** | | **16** | | **20** |
+| User Story                                                  | Role     | SP (=MD) | Assignee                    | Tasks  |
+| ----------------------------------------------------------- | -------- | -------- | --------------------------- | ------ |
+| US-3.1 Backend — Validasi Tenor 480 Bulan & Suku Bunga Baru | Backend  | 4,5      | Tirza Sarwono               | 5      |
+| US-3.2 Frontend — Field Tenor/Bunga & Tampilan Simulasi     | Frontend | 2,5      | Daffa Aldzakian Fauzi       | 4      |
+| US-3.3 Integrasi SI — Verifikasi Proxy & TSD Terbaru        | Backend  | 1        | Tirza Sarwono               | 2      |
+| US-3.4 QA — Test Case, Regression & Uji Silang Simulasi     | QA       | 3,5      | Dinda                       | 3      |
+| US-3.5 DevOps — Deployment Staging & Production             | DEVOPS   | 1,5      | Muhammad Akmal F. (`akmal`) | 3      |
+| US-3.6 PM — Koordinasi, Dokumentasi & Pendampingan UAT      | TPC      | 3        | Yudha Pratama               | 3      |
+| **Subtotal**                                                |          | **16**   |                             | **20** |
 
 ## 4. Tim & Assignee
 
