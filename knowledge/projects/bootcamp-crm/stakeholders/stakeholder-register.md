@@ -2,8 +2,16 @@
 title: "Stakeholder Register — Bootcamp Internal CRM"
 type: stakeholder-register
 project: bootcamp-crm
-version: "1.0"
+version: "1.1"
 created: 2026-10-02
+modified: 2026-10-02
+changelog:
+  - version: "1.1"
+    date: 2026-10-02
+    purpose: "Perbarui register setelah sesi penetapan PO 2026-10-02 — peserta 2 tim x 4 orang, stakeholder HR dikeluarkan dari lingkup, tambah stakeholder teknis"
+  - version: "1.0"
+    date: 2026-10-02
+    purpose: "Bootstrap project internal TLab — register awal"
 ---
 
 # Stakeholder Register — Bootcamp Internal CRM
@@ -22,11 +30,16 @@ berada di dalam organisasi TLab.
 | Tech Lead | Penentu & pembagi peserta bootcamp | TLab | High | High | Belum dinilai | — |
 | Head of Product & Project | Mentor + Approver hasil | TLab | High | High | Belum dinilai | — |
 | Head of Engineer | Mentor + Approver hasil | TLab | High | High | Belum dinilai | — |
-| Peserta bootcamp | Developer peserta (jumlah & nama belum ditentukan) | TLab | Med | High | Belum dinilai | — |
+| Peserta bootcamp | Developer peserta — **2 tim, masing-masing 4 orang (DEC-034)**; nama belum ada | TLab | Med | High | Belum dinilai | — |
+| Tim HR | Pemilik kebutuhan assessment tim sales | TLab | Low | Low | **Di luar lingkup (DEC-031)** | — |
 
 Catatan: nama perorangan untuk Tech Lead, Head of Product & Project, dan Head of
 Engineer **belum ada datanya** — hanya peran yang tercatat. Sikap stakeholder
 selain sponsor dan PO belum dinilai karena belum ada interaksi.
+
+Tim HR tercatat sebagai stakeholder yang kebutuhannya **dikeluarkan dari lingkup
+produk CRM** (DEC-031) — bukan stakeholder produk, melainkan pihak yang perlu
+diinformasikan bahwa assessment tim sales tidak dibangun di CRM.
 
 ## Strategi Engagement per Kelompok
 
@@ -37,7 +50,8 @@ selain sponsor dan PO belum dinilai karena belum ada interaksi.
 | Tech Lead | Kebutuhan peserta, jadwal, ekspektasi output | Sinkronisasi sebelum penetapan peserta |
 | Head of Product & Project | Lingkup, kelayakan produk, hasil akhir | Review lingkup sebelum bootcamp + approval hasil |
 | Head of Engineer | Kebutuhan teknis, metrik pengukuran, hasil akhir | Review metrik sebelum bootcamp + approval hasil |
-| Peserta bootcamp | Briefing, lingkup kerja, ekspektasi output | Briefing pra-bootcamp + pembagian kerja saat sesi |
+| Peserta bootcamp | Briefing, lingkup kerja, ekspektasi output | Briefing pra-bootcamp + pembagian kerja saat sesi (target 13-14 Okt) |
+| Tim HR | Status keputusan lingkup assessment tim sales | Informasikan bahwa kebutuhan dikeluarkan dari lingkup CRM (DEC-031) |
 
 ## Catatan
 

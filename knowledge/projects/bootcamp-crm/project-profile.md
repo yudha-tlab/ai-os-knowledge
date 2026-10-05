@@ -4,10 +4,13 @@ type: project-profile
 project: bootcamp-crm
 client: tlab-internal
 status: active
-version: "1.1"
+version: "1.2"
 created: 2026-10-02
 modified: 2026-10-02
 changelog:
+  - version: "1.2"
+    date: 2026-10-02
+    purpose: "Terapkan sesi penetapan PO 2026-10-02 (DEC-021 s/d DEC-034) — M8 masuk MVP, tanggal & peserta bootcamp, keputusan terbuka yang tersisa"
   - version: "1.1"
     date: 2026-10-02
     purpose: "Perbarui lingkup MVP dan kebutuhan keputusan setelah sesi brainstorm PO — lingkup MVP sudah ditetapkan (DEC-015)"
@@ -60,7 +63,7 @@ event sebagai permukaan ekstensi.
 | M5 | Activity Management | Nice to have |
 | M6 | Ticketing (satu entitas, jalur internal & eksternal) | Mandatory |
 | M7 | Reporting & Analytics (revenue, pipeline, performa sales, tiket) | Mandatory |
-| M8 | Webhook / Event Layer | Nice to have — **keberatan teknis PM tercatat** |
+| M8 | Webhook / Event Layer | **MVP minimal (DEC-021)** — event outbound inti + 1 endpoint inbound. Merevisi DEC-015 |
 
 ## Tim Delivery
 
@@ -70,7 +73,7 @@ event sebagai permukaan ekstensi.
 | Tech Lead | Menentukan dan membagi peserta bootcamp | — |
 | Head of Product & Project | Mentor + approver hasil | — |
 | Head of Engineer | Mentor + approver hasil | — |
-| Peserta bootcamp | Developer peserta (jumlah & nama belum ditentukan) | — |
+| Peserta bootcamp | Developer peserta — **2 tim, masing-masing 4 orang (8 peserta, DEC-034)**; nama belum ada | — |
 
 ## Dokumen Kunci
 
@@ -82,6 +85,7 @@ event sebagai permukaan ekstensi.
 - **Risk Register:** [[risk-register]]
 - **RAID Log:** [[raid-log]]
 - **Decision Log:** [[decision-log]]
+- **Technical Decisions:** [[open-tech-decisions]]
 - **Status Terbaru:** [[project-status]]
 
 ## Milestone Utama
@@ -89,8 +93,8 @@ event sebagai permukaan ekstensi.
 | Milestone | Target Tanggal | Status |
 |-----------|---------------|--------|
 | Requirement produk CRM tersusun (bahan baku BRD) | 2026-10-02 | **Selesai** |
-| BRD CRM disusun | Belum ditentukan | Belum Mulai |
-| Bootcamp internal dilaksanakan (3 hari) | Belum ditentukan | Belum Mulai |
+| BRD CRM disusun | Belum ditentukan — siap dimulai | Belum Mulai |
+| Bootcamp internal dilaksanakan | **2026-10-13 s/d 2026-10-14** (DEC-033) | Belum Mulai — **[perlu konfirmasi]** rentang 2 hari vs ketetapan 3 hari |
 | Prototype CRM multi-tenant berjalan | Belum ditentukan | Belum Mulai |
 | Laporan pengukuran kecepatan & efektivitas AI | Belum ditentukan | Belum Mulai |
 
@@ -100,18 +104,23 @@ Field berikut belum tersedia dan **tidak boleh diasumsikan** — menunggu input:
 
 | Field | Status | Perlu Keputusan Dari |
 |-------|--------|----------------------|
-| Tanggal mulai project | Belum ditentukan | PM / Sponsor internal |
-| Tanggal pelaksanaan bootcamp (3 hari) | Belum ditentukan | Tech Lead + PM |
-| Daftar & jumlah peserta | Menunggu pembagian | Tech Lead |
-| Definisi teknis multi-tenant (shared DB / schema-per-tenant / DB-per-tenant) | Belum ditentukan | Head of Engineer |
-| Definisi & metrik pengukuran efektivitas AI | Belum ditentukan | PM/PO + Head of Engineer |
-| Ambang batas & periode kuota sales | Belum ditentukan | PM/PO + Head of Sales |
-| Status akhir M8 Webhook (nice to have vs MVP minimal) | Belum ditentukan | PM/PO + Head of Engineer |
-| Cakupan & ownership assessment tim sales (HR) | Belum ditentukan | Sponsor internal + Head of HR |
+| Konfirmasi durasi bootcamp: 13-14 Okt (2 hari) vs ketetapan 3 hari | **Terbuka (Q-029)** | PM/PO |
+| Nama peserta (jumlah sudah: 2 tim x 4 orang) | Belum ada (DEC-034) | Tech Lead |
+| Periode kuota sales (bulanan/kuartalan/tahunan) | **Terbuka (Q-020)** | PM/PO |
+| Nilai default ambang batas performa | **Terbuka (Q-028)** | PM/PO |
+| Strategi isolasi teknis multi-tenant | Belum ditentukan (TD-01) | Head of Engineer |
+| Metrik efektivitas AI + baseline pembanding | Belum ditentukan (TD-03/TD-04) | Head of Engineer |
+| Stack teknologi CRM | Belum ditentukan (TD-05) | Head of Engineer |
+| Rancangan teknis webhook | Belum ditentukan (TD-02) | Head of Engineer |
 | Target tanggal selesai prototype | Belum ditentukan | PM/PO + Head of Engineer |
 
-Catatan: **ruang lingkup fitur MVP tidak lagi menjadi field terbuka** — sudah
-ditetapkan pada 2026-10-02 (DEC-015).
+Catatan: **ruang lingkup fitur MVP** (DEC-015, direvisi DEC-021), **tanggal
+pelaksanaan** (DEC-033), **peserta** (DEC-034), **definisi fungsional
+multi-tenant** (DEC-029), **status M8** (DEC-021), **ambang batas performa
+configurable** (DEC-023), **SLA tiket** (DEC-025), dan **assessment HR**
+(dikeluarkan, DEC-031) **tidak lagi menjadi field terbuka**.
+
+Catatan teknis yang diteruskan ke Head of Engineer: `architecture/open-tech-decisions.md`.
 
 ## Asumsi
 

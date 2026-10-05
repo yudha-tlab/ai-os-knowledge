@@ -3,11 +3,14 @@ title: "Requirement Analysis — CRM Multi-Tenant TLab"
 type: requirement-analysis
 project: bootcamp-crm
 status: draft
-version: "1.0"
+version: "2.0"
 created: 2026-10-02
 modified: 2026-10-02
 sumber: "Arahan Product Owner (Yudha Pratama) via sesi brainstorm 2026-10-02"
 changelog:
+  - version: "2.0"
+    date: 2026-10-02
+    purpose: "Terapkan 14 keputusan sesi penetapan PO (DEC-021 s/d DEC-034) — M8 masuk MVP, SLA tiket, multi-target webhook, komentar & riwayat tiket, assessment HR keluar lingkup"
   - version: "1.0"
     date: 2026-10-02
     purpose: "Susun bahan baku requirement produk CRM (4 sheet + pertanyaan terbuka) sebagai langkah nol menuju BRD"
@@ -43,6 +46,11 @@ Konsekuensi yang harus dipahami bersama:
    **di luar lingkup MVP**.
 4. Contoh yang disepakati: klien butuh mekanisme antrian → dibangun *service*
    terpisah yang berlangganan event CRM, core tidak berubah.
+5. **Definisi multi-tenant (DEC-029):** platform dapat digunakan oleh banyak
+   user dari banyak organisasi (B2B) maupun customer tanpa organisasi (B2C).
+   **Strategi isolasi teknisnya** (shared DB / schema-per-tenant /
+   DB-per-tenant) ditetapkan oleh Head of Engineer — lihat
+   `architecture/open-tech-decisions.md`.
 
 ---
 
@@ -57,13 +65,12 @@ Konsekuensi yang harus dipahami bersama:
 | M5 | Activity Management | Nice to have | Tidak masuk lingkup MVP |
 | M6 | Ticketing (internal + eksternal) | **Mandatory** | Satu model tiket, dua jalur |
 | M7 | Reporting & Analytics | **Mandatory** | Revenue, pipeline, performa sales, tiket |
-| M8 | Webhook / Event Layer | Nice to have | Lihat catatan di bawah |
+| M8 | Webhook / Event Layer | **MVP minimal** (DEC-021) | Merevisi DEC-015 — event outbound inti + 1 endpoint inbound |
 
-**Catatan analitis [Perlu Keputusan]:** M8 ditetapkan *nice to have*, padahal
-webhook adalah mekanisme yang menjadikan prinsip produk di section 0 dapat
-berjalan. Menunda webhook sepenuhnya berisiko menghapus pembeda arsitektur dan
-memaksa retrofit yang mahal. Usulan PM: **M8 tetap masuk MVP secara minimal**
-(hanya event outbound inti + 1 endpoint inbound), bukan "nice to have" penuh.
+**DIPUTUSKAN 2026-10-02 (DEC-021):** keberatan PM diterima PO — M8 masuk MVP
+secara **minimal** (event outbound inti + 1 endpoint inbound), merevisi penetapan
+awal *nice to have*. Implementasi teknisnya (retry, rate limit, fan-out,
+signing) diserahkan ke Head of Engineer (DEC-030).
 
 ---
 
@@ -89,6 +96,9 @@ memaksa retrofit yang mahal. Usulan PM: **M8 tetap masuk MVP secara minimal**
 | Pelaksanaan | 06. Pengelolaan Tiket | 06.02 Penanganan tiket | 06.02.01 Penugasan dan perubahan status tiket |
 | Pelaksanaan | 06. Pengelolaan Tiket | 06.03 Eskalasi tiket | 06.03.01 Eskalasi tiket ke tim internal |
 | Pelaksanaan | 06. Pengelolaan Tiket | 06.04 Penyelesaian tiket | 06.04.01 Penutupan tiket beserta catatan penyelesaian |
+| Pelaksanaan | 06. Pengelolaan Tiket | 06.05 Komunikasi & jejak tiket | 06.05.01 Komentar pada tiket |
+| Pelaksanaan | 06. Pengelolaan Tiket | 06.05 Komunikasi & jejak tiket | 06.05.02 Pencatatan riwayat pergerakan tiket |
+| Pelaksanaan | 06. Pengelolaan Tiket | 06.06 Pemantauan SLA | 06.06.01 Perhitungan SLA dan penandaan pelanggaran |
 | Evaluasi | 07. Pengukuran Performa Sales | 07.01 Perhitungan pencapaian | 07.01.01 Perhitungan quota attainment per sales |
 | Evaluasi | 07. Pengukuran Performa Sales | 07.02 Penilaian performa | 07.02.01 Penandaan status performa (mencapai / tidak mencapai target) |
 | Output | 08. Pelaporan Revenue & Pipeline | 08.01 Laporan revenue | 08.01.01 Rekap revenue dari peluang closed-won per periode |
@@ -100,11 +110,14 @@ memaksa retrofit yang mahal. Usulan PM: **M8 tetap masuk MVP secara minimal**
 | Pendukung | 11. Integrasi Webhook | 11.01 Publikasi event | 11.01.01 Pengiriman event dari CRM ke sistem klien (outbound) |
 | Pendukung | 11. Integrasi Webhook | 11.02 Penerimaan event | 11.02.01 Penerimaan event dari sistem klien ke CRM (inbound) |
 | Pendukung | 11. Integrasi Webhook | 11.03 Pengelolaan subscription | 11.03.01 Konfigurasi endpoint dan secret per tenant |
-| Pendukung | 12. Assessment Tim Sales (HR) — **cakupan & ownership belum ditentukan** | 12.01 Belum terdefinisi | — |
+| Pendukung | 11. Integrasi Webhook | 11.03 Pengelolaan subscription | 11.03.02 Konfigurasi multiple target (fan-out satu event ke beberapa endpoint) |
+| Pendukung | 11. Integrasi Webhook | 11.04 Keandalan pengiriman | 11.04.01 Retry, rate limiting, dan pencatatan log |
+| — | 12. Assessment Tim Sales (HR) — **DIKELUARKAN DARI LINGKUP (DEC-031)** | — | — |
 
-Proses 12 sengaja dibiarkan belum terdefinisi: kemampuan ini diminta PO, tetapi
-**bukan pakem CRM** (CRM mengelola pelanggan, bukan penilaian karyawan) dan
-belum ada penetapan siapa pemilik kebutuhannya. Lihat Q-017/Q-018.
+Proses 12 **dikeluarkan dari lingkup produk CRM** pada 2026-10-02 (DEC-031):
+kebutuhan ini bukan pakem CRM — CRM mengelola pelanggan, bukan penilaian
+karyawan. Tidak diturunkan ke Epic. Bila masih diperlukan, harus menjadi
+inisiatif internal terpisah.
 
 ---
 
@@ -121,7 +134,7 @@ belum ada penetapan siapa pemilik kebutuhannya. Lihat Q-017/Q-018.
 | SH007 | Karyawan Tenant | Internal Requester | Internal | Dapat mengajukan permintaan/tiket ke tim lain | Permintaan antar tim tidak terlacak | Modul Tiket (jalur internal) | 06 | Volume tiket internal | Bulanan |
 | SH008 | Sistem Eksternal | Sistem Klien (di luar CRM) | System/Eksternal | Menerima event CRM tepat waktu; dapat mengirim data ke CRM | Kustomisasi klien tidak dapat berjalan; integrasi manual | Integrasi Webhook | 11 | Log pengiriman & retry | Per event |
 | SH009 | Manajemen | Head of Sales / Manajemen | Internal | Laporan revenue dan pipeline yang dapat dipercaya | Keputusan berbasis data tidak dapat diambil | Laporan Revenue & Pipeline | 08 | Laporan revenue | Bulanan |
-| SH010 | HR | Tim HR | Internal | — **belum terdefinisi** (lihat Q-017) | Kemampuan assessment tim sales tidak terbangun | Belum ditentukan | 12 | Belum ditentukan | Belum ditentukan |
+| SH010 | HR | Tim HR | Internal | **Di luar lingkup produk CRM (DEC-031)** — kebutuhan penilaian karyawan, bukan pengelolaan pelanggan | Kemampuan assessment tim sales tidak terbangun di CRM | Inisiatif terpisah bila masih diperlukan | — | — | — |
 
 ---
 
@@ -149,6 +162,9 @@ belum ada penetapan siapa pemilik kebutuhannya. Lihat Q-017/Q-018.
 | OB-018 | Webhook Subscription | Konfigurasi langganan event per tenant (endpoint, secret, event yang di-subscribe) |
 | OB-019 | Event Payload | Muatan event yang dikirim/diterima (outbound dan inbound) |
 | OB-020 | Delivery Log | Log pengiriman event, retry, dan kegagalan |
+| OB-021 | Komentar Tiket | Komentar/percakapan pada tiket (DEC-028) |
+| OB-022 | Riwayat Pergerakan Tiket | Jejak perubahan status, assignee, dan eskalasi tiket (DEC-028) |
+| OB-023 | SLA Tiket | Target waktu penyelesaian tiket per prioritas beserta status pelanggaran (DEC-025) |
 
 ---
 
@@ -188,6 +204,10 @@ belum ada penetapan siapa pemilik kebutuhannya. Lihat Q-017/Q-018.
 | 11.02 Penerimaan event | SH008 - Sistem Klien | Mengirim | OB-019-Event Payload | Event inbound ke CRM |
 | 11.03 Pengelolaan subscription | SH005 - Tenant Admin | Mengkonfigurasi | OB-018-Webhook Subscription | Endpoint dan secret per tenant |
 | 11.01 / 11.02 | SH005 - Tenant Admin | Memantau | OB-020-Delivery Log | Log pengiriman, retry, dan kegagalan |
+| 06.02 Penanganan tiket | SH003 - Agent Support | Mengomentari | OB-021-Komentar Tiket | Percakapan pada tiket (DEC-028) |
+| 06.02 Penanganan tiket | Sistem CRM | Mencatat | OB-022-Riwayat Pergerakan Tiket | Jejak status, assignee, eskalasi (DEC-028) |
+| 06.02 Penanganan tiket | Sistem CRM | Menghitung | OB-023-SLA Tiket | Perbandingan waktu terhadap target per prioritas (DEC-025) |
+| 03.01 Penetapan kuota | SH002 - Sales Manager | Mengonfigurasi | OB-010-Kuota/Target Sales | Kuota per sales; ambang batas performa configurable per tenant (DEC-023) |
 
 ---
 
@@ -250,7 +270,7 @@ pipeline memerlukan modul Aktivitas (M5, nice to have):
 | Laporan/Widget | Rumus | Dasar |
 |---|---|---|
 | Quota attainment per sales | Nilai closed-won ÷ kuota × 100% | Kebutuhan PO |
-| Status performa | Mencapai / tidak mencapai target (ambang batas perlu keputusan PO) | Kebutuhan PO |
+| Status performa | Mencapai / tidak mencapai target berdasarkan **ambang batas configurable per tenant** (DEC-023) | Kebutuhan PO |
 | Leaderboard sales | Peringkat sales menurut attainment | Praktik standar |
 | Win rate per sales | Won ÷ (won + lost) | Praktik standar |
 | Average deal size | Total nilai won ÷ jumlah won | Praktik standar |
@@ -271,13 +291,13 @@ akurasi forecast — semuanya butuh riwayat data yang belum ada di prototype 3 h
 | EP-003 | Penetapan Target & Kuota Sales | M7 | Mandatory |
 | EP-004 | Pengelolaan Pipeline & Peluang | M4 | Mandatory |
 | EP-005 | Pengelolaan Aktivitas | M5 | Nice to have |
-| EP-006 | Pengelolaan Tiket | M6 | Mandatory |
+| EP-006 | Pengelolaan Tiket (termasuk komentar, riwayat, SLA) | M6 | Mandatory |
 | EP-007 | Pengukuran Performa Sales | M7 | Mandatory |
 | EP-008 | Pelaporan Revenue & Pipeline | M7 | Mandatory |
 | EP-009 | Pelaporan Tiket | M7 | Mandatory |
 | EP-010 | Tenancy & Kendali Akses | M1 | Mandatory |
-| EP-011 | Integrasi Webhook | M8 | Nice to have |
-| EP-012 | Assessment Tim Sales (HR) | — | Terbuka — belum terdefinisi |
+| EP-011 | Integrasi Webhook | M8 | MVP minimal (DEC-021) |
+| EP-012 | ~~Assessment Tim Sales (HR)~~ | — | **Dibatalkan (DEC-031)** — di luar lingkup produk CRM |
 
 ### User Story (dari SPOK)
 
@@ -314,6 +334,12 @@ akurasi forecast — semuanya butuh riwayat data yang belum ada di prototype 3 h
 | US-029 | Sebagai Sistem CRM, saya ingin mengirim event ke sistem klien, sehingga klien dapat membangun kustomisasinya sendiri tanpa mengubah core. | EP-011 |
 | US-030 | Sebagai Tenant Admin, saya ingin mengkonfigurasi endpoint dan secret webhook per tenant, sehingga langganan event terisolasi antar tenant. | EP-011 |
 | US-031 | Sebagai Tenant Admin, saya ingin memantau log pengiriman dan retry webhook, sehingga kegagalan integrasi dapat ditelusuri. | EP-011 |
+| US-032 | Sebagai Agent Support, saya ingin menambahkan komentar pada tiket, sehingga percakapan penanganan tersimpan pada tiket yang sama. | EP-006 |
+| US-033 | Sebagai Support Lead, saya ingin melihat riwayat pergerakan tiket (status, assignee, eskalasi), sehingga jejak penanganan dapat diaudit. | EP-006 |
+| US-034 | Sebagai Sistem CRM, saya ingin menghitung SLA tiket dan menandai pelanggaran, sehingga tiket yang melewati target waktu dapat ditindaklanjuti. | EP-006 |
+| US-035 | Sebagai Tenant Admin, saya ingin mengonfigurasi satu webhook agar diteruskan ke beberapa target, sehingga beberapa sistem klien dapat menerima event yang sama. | EP-011 |
+| US-036 | Sebagai Tenant Admin, saya ingin mengatur retry dan rate limit pengiriman webhook, sehingga kegagalan sementara tidak menghilangkan event. | EP-011 |
+| US-037 | Sebagai Sales Manager, saya ingin mengonfigurasi ambang batas performa sales per tenant, sehingga kriteria "perform" dapat disesuaikan dengan kebijakan masing-masing tenant. | EP-007 |
 
 Task didekomposisi saat sprint planning (Taiga), bukan di tahap requirement ini.
 
@@ -322,38 +348,42 @@ Task didekomposisi saat sprint planning (Taiga), bukan di tahap requirement ini.
 ## 7. Pertanyaan Terbuka
 
 Penomoran memakai **ID Q-xxx yang sama dengan `requirement-backlog.md`** supaya
-traceable antar dokumen. Q-003, Q-004, Q-009, Q-014, Q-015, dan Q-016 sudah
-terjawab pada 2026-10-02; pertanyaan turunan/sisanya tetap terbuka.
+traceable antar dokumen. Per 2026-10-02, enam pertanyaan **masih terbuka**: Q-020
+(periode kuota), Q-028 (nilai default ambang performa), Q-029 (konfirmasi durasi
+bootcamp), Q-007 & Q-008 (metrik efektivitas + baseline — milik Head of Engineer),
+dan Q-011 (stack teknologi — milik Head of Engineer).
 
 | ID | Pertanyaan | Konteks | Ditujukan ke | Status |
 |----|------------|---------|--------------|--------|
-| Q-001 | Tanggal pelaksanaan bootcamp 3 hari? | Perencanaan | Tech Lead + PM | Belum dijawab |
-| Q-002 | Berapa peserta dan siapa saja? | Perencanaan | Tech Lead | Belum dijawab |
+| Q-001 | Tanggal pelaksanaan bootcamp? | Perencanaan | Tech Lead + PM | **Terjawab 2026-10-02** — 13-14 Oktober (DEC-033). **[Perlu konfirmasi]** hanya 2 hari, sedangkan DEC-003 menetapkan 3 hari |
+| Q-002 | Berapa peserta dan siapa saja? | Perencanaan | Tech Lead | **Terjawab 2026-10-02** — 2 tim x 4 orang = 8 peserta (DEC-034). Nama peserta belum ada |
 | Q-003 | Lingkup fitur MVP CRM multi-tenant apa saja? | Lingkup MVP | PM/PO + Head of Product | **Terjawab 2026-10-02** — DEC-015 |
 | Q-004 | Modul CRM apa yang wajib ada? | Lingkup MVP | PM/PO | **Terjawab 2026-10-02** — DEC-015 |
-| Q-005 | Definisi "multi-tenant": shared DB + tenant_id, schema-per-tenant, atau DB-per-tenant? | Arsitektur | PM/PO + Head of Engineer | Belum dijawab |
-| Q-006 | Metrik apa yang dipakai untuk mengukur kecepatan AI? Baseline-nya apa? | Pengukuran AI | PM/PO + Head of Engineer | Belum dijawab |
-| Q-007 | Metrik apa yang dipakai untuk mengukur efektivitas AI? | Pengukuran AI | PM/PO + Head of Engineer | Belum dijawab |
-| Q-008 | Apakah pengukuran AI membandingkan dengan baseline non-AI? | Pengukuran AI | Head of Engineer | Belum dijawab |
+| Q-005 | Definisi "multi-tenant" | Arsitektur | PM/PO + Head of Engineer | **Sebagian terjawab** — definisi fungsional DEC-029; **strategi isolasi teknis** diteruskan ke Head of Engineer |
+| Q-006 | Metrik kecepatan AI | Pengukuran AI | PM/PO + Head of Engineer | **Terjawab 2026-10-02** — jumlah requirement yang ter-cover dalam jangka waktu tertentu (DEC-032) |
+| Q-007 | Metrik efektivitas AI | Pengukuran AI | Head of Engineer | **Diteruskan ke Head of Engineer** (catatan, DEC-032) |
+| Q-008 | Baseline pembanding (non-AI) untuk pengukuran AI | Pengukuran AI | Head of Engineer | **Diteruskan ke Head of Engineer** (catatan) |
 | Q-009 | Bentuk dokumen kebutuhan CRM dari PO? | Requirement | PM/PO | **Terjawab 2026-10-02** — BRD (DEC-017) |
-| Q-010 | Apakah prototype harus dapat didemokan end-to-end? | Kriteria selesai | PM/PO + Head of Product | Belum dijawab |
-| Q-011 | Stack teknologi CRM — ditentukan TLab atau bebas? | Arsitektur | Head of Engineer | Belum dijawab |
-| Q-012 | Apakah ada anggaran terpisah untuk inisiatif ini? | Anggaran | Sponsor internal | Belum dijawab |
-| Q-013 | Apa kelanjutan produk CRM setelah bootcamp? | Strategis | Sponsor internal + Head of Product | Belum dijawab |
+| Q-010 | Kriteria "prototype selesai" | Kriteria selesai | PM/PO + Head of Product | **Terjawab 2026-10-02** — end-to-end modul mandatory, termasuk komentar & riwayat tiket (DEC-028) |
+| Q-011 | Stack teknologi CRM — ditentukan TLab atau bebas? | Arsitektur | Head of Engineer | **Diteruskan ke Head of Engineer** (catatan) |
+| Q-012 | Apakah ada anggaran terpisah untuk inisiatif ini? | Anggaran | Sponsor internal | **Catatan internal** (bukan keputusan project) |
+| Q-013 | Apa kelanjutan produk CRM setelah bootcamp? | Strategis | Sponsor internal + Head of Product | **Catatan internal** (bukan keputusan project) |
 | Q-014 | Definisi "revenue stream": dari closed-won atau dari invoice/pembayaran? | Proses 08 | PM/PO | **Terjawab 2026-10-02** — closed-won (DEC-016) |
 | Q-015 | Beda ticketing internal vs eksternal: satu entitas atau dua sub-sistem? | Proses 06 | PM/PO | **Terjawab 2026-10-02** — satu entitas (DEC-019) |
 | Q-016 | Tipe pelanggan yang didukung: B2B, B2C, atau keduanya? | Proses 02 | PM/PO | **Terjawab 2026-10-02** — keduanya (DEC-020) |
-| Q-017 | **Assessment tim sales (HR): siapa pemilik kebutuhannya, dan apa definisinya — penilaian kinerja karyawan atau uji kompetensi?** | Proses 12; di luar pakem CRM | Sponsor internal + Head of HR | Belum dijawab |
-| Q-018 | Apakah assessment HR menjadi bagian produk CRM yang dijual, atau kebutuhan internal TLab saja? | Proses 12 | Sponsor internal | Belum dijawab |
-| Q-019 | Ambang batas "performa" pada quota attainment: berapa persen dianggap mencapai target? | EP-007 | PM/PO + Head of Sales | Belum dijawab |
-| Q-020 | Periode kuota sales: bulanan, kuartalan, atau tahunan? | EP-003 | PM/PO + Head of Sales | Belum dijawab |
-| Q-021 | **Pemetaan istilah tiket "internal" vs "external": berdasarkan asal pemohon atau tujuan penanganan?** | Proses 06; DEC-019 | PM/PO | Belum dijawab |
-| Q-022 | Apakah tiket memerlukan SLA dan peringatan pelanggaran SLA? | EP-006 | PM/PO + Support Lead | Belum dijawab |
-| Q-023 | Apakah jalur internal dan eksternal tiket memerlukan aturan status atau SLA yang berbeda? | EP-006 | PM/PO + Support Lead | Belum dijawab |
-| Q-024 | Apakah lapis pengukuran aktivitas & pipeline (leading indicator) termasuk MVP? Memerlukan M5 yang nice to have. | EP-007 | PM/PO | Belum dijawab |
-| Q-025 | Untuk pelanggan B2C, apakah setiap individu menjadi satu Akun, atau cukup sebagai Kontak tanpa Akun? | EP-002 | PM/PO | Belum dijawab |
-| Q-026 | Kebijakan retry, dead-letter, dan signing (HMAC) webhook — spesifikasi minimum? | EP-011 | Head of Engineer | Belum dijawab |
-| Q-027 | Apakah M8 (Webhook) benar-benar "nice to have", mengingat webhook adalah mekanisme utama prinsip produk di section 0? | Lingkup MVP | PM/PO + Head of Engineer | Belum dijawab |
+| Q-017 | Assessment tim sales (HR) | Proses 12; di luar pakem CRM | Sponsor internal + Head of HR | **Terjawab 2026-10-02** — dikeluarkan dari lingkup CRM (DEC-031) |
+| Q-018 | Assessment HR: bagian produk yang dijual atau kebutuhan internal? | Proses 12 | Sponsor internal | **Terjawab 2026-10-02** — di luar lingkup (DEC-031) |
+| Q-019 | Ambang batas "performa" pada quota attainment | EP-007 | PM/PO | **Terjawab 2026-10-02** — configurable per tenant (DEC-023). **Nilai default masih open** |
+| Q-020 | Periode kuota sales: bulanan, kuartalan, atau tahunan? | EP-003 | PM/PO | **MASIH TERBUKA** — belum ada jawaban; menghambat EP-003 & EP-007 |
+| Q-021 | Pemetaan istilah tiket "internal" vs "external" | Proses 06; DEC-019 | PM/PO | **Sebagian terjawab** — "eksternal" = dari luar (DEC-022); istilah "internal" perlu konfirmasi ulang |
+| Q-022 | Apakah tiket memerlukan SLA? | EP-006 | PM/PO | **Terjawab 2026-10-02** — ya, SLA harus ada (DEC-025) |
+| Q-023 | Aturan status/SLA per jalur tiket | EP-006 | PM/PO | **Terjawab 2026-10-02** — satu state machine, tidak dibedakan per jalur (DEC-026) |
+| Q-024 | Pengukuran aktivitas & pipeline (leading indicator) di MVP | EP-007 | PM/PO | **Terjawab 2026-10-02** — tidak termasuk MVP (DEC-027) |
+| Q-025 | Model data pelanggan B2C | EP-002 | PM/PO | **Terjawab 2026-10-02** — Kontak tanpa Akun diperbolehkan (DEC-024) |
+| Q-026 | Spesifikasi webhook | EP-011 | Head of Engineer | **Sebagian terjawab** — retry, rate limit, logging, multiple target (DEC-030); implementasi teknis diteruskan ke Head of Engineer |
+| Q-027 | Status M8 Webhook di MVP | Lingkup MVP | PM/PO + Head of Engineer | **Terjawab 2026-10-02** — masuk MVP minimal (DEC-021, merevisi DEC-015) |
+| Q-028 | **Nilai default ambang batas performa** bila tenant tidak mengonfigurasi | EP-007; DEC-023 | PM/PO | Belum dijawab — menghambat status performa untuk tenant baru |
+| Q-029 | **Konfirmasi durasi bootcamp**: 13-14 Oktober (2 hari) vs ketetapan 3 hari (DEC-003) | DEC-033 | PM/PO | Belum dijawab — memengaruhi jadwal & pembagian kerja |
 
 ---
 
@@ -362,5 +392,6 @@ terjawab pada 2026-10-02; pertanyaan turunan/sisanya tetap terbuka.
 - **Requirement Backlog:** [[requirement-backlog]]
 - **Project Charter:** [[project-charter]]
 - **Decision Log:** [[decision-log]]
+- **Technical Decisions (Head of Engineer):** [[open-tech-decisions]]
 - **Risk Register:** [[risk-register]]
 - **BRD Template:** [[brd-template]]
