@@ -3,7 +3,7 @@ title: "Project Context Pack — Bootcamp Internal CRM"
 type: project-context-pack
 project: bootcamp-crm
 status: draft-v4
-version: "4.0"
+version: "5.0"
 created: 2026-10-02
 modified: 2026-10-02
 depends_on:
@@ -13,7 +13,10 @@ depends_on:
   - requirement-analysis
 scope: Aggregated key fields untuk project internal TLab — Bootcamp CRM
 changelog:
-  - version: "4.0"
+  - version: "5.0"
+    date: 2026-10-02
+    purpose: "DEC-042 — kriteria kelulusan disatukan (end-to-end diukur pada kapabilitas backend); Q-031 ditutup. Tidak ada item terbuka milik PM/PO"
+  - version: "5.0"
     date: 2026-10-02
     purpose: "Terapkan keputusan lanjutan PO — struktur 3 hari dengan hari 1 workshop (DEC-037), kuota bulanan (DEC-035), istilah tiket (DEC-036)"
   - version: "3.0"
@@ -111,11 +114,11 @@ Nice to have: M5 Activity saja.
 - Requirement analysis produk CRM tersusun: 12 Epic, 37 User Story, 23 Objek,
   10 stakeholder, 35 baris proses bisnis, 36 baris SPOK.
 - Requirement backlog: REQ-001 s/d REQ-037.
-- Decision log: 41 keputusan (DEC-001 s/d DEC-041).
-- Risk register: 16 risiko (R-001 s/d R-016), 4 ditutup; R-001 naik ke High/High.
+- Decision log: 42 keputusan (DEC-001 s/d DEC-042).
+- Risk register: 16 risiko (R-001 s/d R-016), 5 ditutup; R-001 naik ke High/High.
 - RAID log: 9 asumsi, 4 isu (3 resolved), 14 dependency.
 - Catatan teknis Head of Engineer: `architecture/open-tech-decisions.md` (TD-01 s/d TD-05).
-- Pertanyaan terbuka: 4 (Q-031 — PM/PO; Q-007, Q-008, Q-011 — Head of Engineer).
+- Pertanyaan terbuka: 3 (Q-007, Q-008, Q-011 — semuanya Head of Engineer).
 
 ## Dependencies
 
@@ -125,7 +128,7 @@ Nice to have: M5 Activity saja.
 - [ ] Rancangan teknis webhook — Head of Engineer (TD-02)
 - [ ] Metrik efektivitas AI + baseline — Head of Engineer (TD-03/TD-04)
 - [ ] Stack teknologi — Head of Engineer (TD-05)
-- [ ] Rekonsiliasi kriteria kelulusan: "end-to-end" (DEC-028) vs core backend (DEC-041) — PM/PO (Q-031)
+- [x] Rekonsiliasi kriteria kelulusan — "end-to-end" diukur pada kapabilitas backend (DEC-042)
 - [ ] Persetujuan lingkup MVP & BRD — Head of Product & Project
 - [ ] Kesediaan mentor (Head of Product & Project, Head of Engineer)
 - [x] Keputusan ulang status M8 Webhook — M8 masuk MVP minimal (DEC-021)

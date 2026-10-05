@@ -20,7 +20,7 @@ Lokasi: root knowledge repo (`knowledge/notes/personal-notes.md`).
 | ⬜     | High      | Siapkan agenda tertutup workshop hari 1 (13 Okt): sisa pertanyaan teknis, kriteria "requirement final", pembagian 2 tim | Sebelum 13 Okt 2026 | R-015                                                                                              |
 | ⬜     | High      | Tetapkan definisi teknis "core backend selesai" (kontrak API/endpoint per modul mandatory) | Sebelum hari 3 | DEC-041                                                                                                |
 | ⬜     | High      | Teruskan catatan teknis ke Head of Engineer (isolasi multi-tenant, webhook, metrik efektivitas AI + baseline, stack teknologi) | Sebelum 13 Okt 2026 | `bootcamp-crm/architecture/open-tech-decisions.md` (TD-01 s/d TD-05)                                                    |
-| ⬜     | Med       | Tutup Q-031: rekonsiliasi kriteria kelulusan (end-to-end vs core backend) | Sebelum hari 3 | DEC-028 vs DEC-041                                                                                                        |
+| ✅     | -         | ~~Tutup Q-031: rekonsiliasi kriteria kelulusan~~                            | —           | **DEC-042** — end-to-end diukur pada kapabilitas backend                                                                       |
 | ✅     | -         | ~~Minta nama peserta bootcamp ke Tech Lead~~                                | —           | Tidak diperlukan saat ini (DEC-038)                                                                                            |
 | ✅     | -         | ~~Konfirmasi tanggal akhir bootcamp~~                                       | —           | Ditutup tanpa tanggal — durasi yang mengikat (DEC-040)                                                                        |
 | ✅     | -         | ~~Tetapkan nilai default ambang performa sales~~                             | —           | Default **80%** ditetapkan (DEC-039)                                                                                          |
@@ -82,9 +82,15 @@ Lokasi: root knowledge repo (`knowledge/notes/personal-notes.md`).
     tanggal — keputusan sadar, bukan field kosong.
   - **DEC-041:** **sasaran output = core platform CRM (backend).** Desain core
     backend harus mampu menyelesaikan seluruh fitur mandatory; **kesiapan frontend
-    bukan penghambat kelulusan.** Menurunkan beban R-001 secara nyata, tetapi
-    membuka **R-016** — belum konsisten dengan DEC-028 ("end-to-end"), direkonsiliasi
-    sebagai **Q-031** (usulan PM: "end-to-end" diukur pada kapabilitas backend).
+    bukan penghambat kelulusan.** Menurunkan beban R-001 secara nyata.
+  - **DEC-042:** **kriteria kelulusan disatukan.** DEC-028 ("end-to-end") tetap
+    berlaku, tetapi "end-to-end" **diukur pada kapabilitas backend** (API/kontrak
+    data), bukan kelengkapan UI. Menutup Q-031, R-016, dan D-015.
+
+**Status per 2026-10-02: SELURUH keputusan kewenangan PM/PO tertutup** (DEC-001
+s/d DEC-042). Tidak ada item terbuka milik PM/PO. Sisa empat item milik **Head of
+Engineer** (TD-01..TD-05 di `architecture/open-tech-decisions.md`) dan tiga
+pertanyaan Q-007/Q-008/Q-011.
 
 ---
 

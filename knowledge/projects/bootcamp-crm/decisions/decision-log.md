@@ -3,13 +3,16 @@ title: "Decision Log — Bootcamp Internal CRM"
 type: decision-log
 project: bootcamp-crm
 status: active
-version: "5.0"
+version: "6.0"
 created: 2026-10-02
 modified: 2026-10-02
 changelog:
+  - version: "6.0"
+    date: 2026-10-02
+    purpose: "DEC-042 — rekonsiliasi kriteria kelulusan: DEC-028 tetap berlaku, 'end-to-end' diukur pada kapabilitas backend (bukan kelengkapan UI). Menutup Q-031, R-016, dan D-015. Seluruh keputusan PM/PO kini tertutup tanpa sisa"
   - version: "5.0"
     date: 2026-10-02
-    purpose: "Catat keputusan penutup PO (DEC-039 s/d DEC-041) — default ambang performa 80%, penutupan Q-030 sebagai tidak material, dan penegasan sasaran output (core platform/backend). Semua keputusan PM/PO kini tertutup; perbaiki urutan baris DEC-033 s/d DEC-038 yang tidak runut"
+    purpose: "Catat keputusan penutup PO (DEC-039 s/d DEC-041) — default ambang performa 80%, penutupan Q-030 sebagai tidak material, dan penegasan sasaran output (core platform/backend); perbaiki urutan baris DEC-033 s/d DEC-038 yang tidak runut"
   - version: "4.0"
     date: 2026-10-02
     purpose: "Catat keputusan lanjutan PO (DEC-035 s/d DEC-037) — periode kuota bulanan, istilah tiket internal, dan struktur 3 hari bootcamp (hari 1 = workshop finalisasi requirement)"
@@ -59,7 +62,7 @@ changelog:
 | DEC-025 | 2026-10-02 | Tiket **memiliki SLA** — target waktu penyelesaian per prioritas beserta penanda pelanggaran SLA | Arahan PO atas Q-022 ("harus ada") | Yudha Pratama | Active |
 | DEC-026 | 2026-10-02 | Aturan status tiket **tidak dibedakan per jalur** — satu state machine; SLA dibedakan hanya oleh prioritas | Konfirmasi PO atas Q-023 | Yudha Pratama | Active |
 | DEC-027 | 2026-10-02 | Lapis pengukuran **aktivitas & pipeline (leading indicator) tidak termasuk MVP** — pengukuran performa memakai lapis outcome | Konfirmasi PO atas Q-024 | Yudha Pratama | Active |
-| DEC-028 | 2026-10-02 | Kriteria "prototype selesai" = **end-to-end untuk modul mandatory**, termasuk **komentar tiket** dan **riwayat pergerakan tiket** | Konfirmasi PO atas Q-010 | Yudha Pratama | Active |
+| DEC-028 | 2026-10-02 | Kriteria "prototype selesai" = **end-to-end untuk modul mandatory**, termasuk **komentar tiket** dan **riwayat pergerakan tiket** | Konfirmasi PO atas Q-010 | Yudha Pratama | Active — **diperjelas DEC-042**: "end-to-end" diukur pada kapabilitas backend |
 | DEC-029 | 2026-10-02 | **Definisi fungsional multi-tenant:** platform dapat digunakan oleh banyak user dari banyak organisasi (B2B) maupun customer tanpa organisasi (B2C). **Strategi isolasi teknis** (shared DB / schema-per-tenant / DB-per-tenant) diteruskan ke Head of Engineer | Jawaban PO atas Q-005 | Yudha Pratama | Active (bagian teknis: open) |
 | DEC-030 | 2026-10-02 | **Spesifikasi webhook:** retry, rate limit, logging, dan dukungan **multiple target** (satu webhook dapat diteruskan ke beberapa target) | Arahan PO atas Q-026 | Yudha Pratama | Active |
 | DEC-031 | 2026-10-02 | **Assessment tim sales (HR) dikeluarkan dari lingkup** produk CRM | Keputusan PO atas Q-017/Q-018 — bukan pakem CRM (CRM mengelola pelanggan, bukan penilaian karyawan) | Yudha Pratama | Active — menutup REQ-031 |
@@ -73,6 +76,7 @@ changelog:
 | DEC-039 | 2026-10-02 | **Nilai default ambang batas performa sales = 80%.** Berlaku bila tenant belum mengonfigurasi ambangnya sendiri; tenant tetap dapat mengubahnya | Jawaban PO atas Q-028 ("setuju") — menerima rekomendasi PM berbasis riset praktik industri (section 5.5 `requirement-analysis.md`). Ambang 100% akan melabeli mayoritas sales "tidak perform" karena hanya ~44% rep yang biasanya mencapai kuota penuh | Yudha Pratama | Active — menutup Q-028, melengkapi DEC-023 |
 | DEC-040 | 2026-10-02 | **Tanggal akhir bootcamp sengaja TIDAK ditetapkan.** Yang mengikat adalah **durasi** (3 hari, DEC-003/DEC-037), bukan rentang start-end | Jawaban PO atas Q-030 ("mungkin bisa diabaikan ya, yang perlu kita garis bawahi itu adalah durasinya, bukan start-end date nya"). Menutup Q-030 **tanpa tanggal** — dicatat sebagai keputusan sadar, bukan field kosong | Yudha Pratama | Active — menutup Q-030 sebagai tidak material |
 | DEC-041 | 2026-10-02 | **Sasaran output bootcamp = core platform CRM (backend).** Ukuran keberhasilan adalah **desain core backend mampu menyelesaikan seluruh fitur mandatory** (DEC-015/DEC-021). **Kesiapan frontend bukan penghambat kelulusan** — UI boleh belum selesai | Arahan PO (POV project & product). Menegaskan ulang tujuan project: mendapatkan core platform, bukan aplikasi jadi. **Perlu rekonsiliasi dengan DEC-028** — lihat catatan di bawah | Yudha Pratama | Active — perlu rekonsiliasi dengan DEC-028 |
+| DEC-042 | 2026-10-02 | **Rekonsiliasi kriteria kelulusan:** DEC-028 tetap berlaku, tetapi **"end-to-end" diukur pada kapabilitas backend** — seluruh fitur mandatory terlayani dan terverifikasi melalui **API/kontrak data**, bukan kelengkapan UI | Jawaban PO atas Q-031 ("setuju dengan rekomendasimu"). Menyatukan DEC-028 (end-to-end) dengan DEC-041 (core backend, frontend bukan penghambat) dalam satu definisi yang dapat dinilai | Yudha Pratama | Active — menutup Q-031, R-016, D-015 |
 
 ### Catatan atas DEC-015 (keberatan teknis PM — SELESAI)
 
@@ -121,7 +125,7 @@ terverifikasi melalui API/kontrak data), bukan pada kelengkapan UI. Dengan begit
 kedua keputusan konsisten: modul mandatory tetap harus terbukti berjalan penuh,
 tetapi buktinya boleh berupa pengujian backend, bukan layar yang selesai.
 
-Status: **menunggu konfirmasi PO.** Tercatat sebagai Q-031.
+Status: **DIPUTUSKAN PO 2026-10-02 (DEC-042)** — usulan PM diterima. Q-031 tertutup.
 
 ### Catatan atas DEC-037 (implikasi durasi)
 
@@ -133,8 +137,8 @@ pengembangan berkurang lagi). Lihat [[raid-log]].
 
 ## Keputusan yang Masih Tertunda (Blocking)
 
-**Tidak ada lagi keputusan PM/PO yang terbuka.** Seluruh keputusan kewenangan
-PM/PO tertutup pada 2026-10-02 (terakhir: DEC-039 s/d DEC-041). Tersisa keputusan
+**Tidak ada satu pun keputusan PM/PO yang terbuka.** Seluruh keputusan kewenangan
+PM/PO tertutup pada 2026-10-02 (terakhir: DEC-039 s/d DEC-042). Tersisa keputusan
 milik **Head of Engineer**:
 
 | # | Keputusan | Pemilik | Menghambat |
@@ -162,7 +166,7 @@ Detail: `architecture/open-tech-decisions.md`.
 | Periode kuota sales | Terjawab — **bulanan** (DEC-035) |
 | Istilah tiket internal/external | Terjawab — berdasarkan asal pemohon (DEC-022, DEC-036) |
 | Struktur & durasi bootcamp | Terjawab — 3 hari, hari 1 workshop (DEC-037); tanggal akhir diabaikan (DEC-040) |
-| Sasaran output bootcamp | Terjawab — core platform CRM / backend (DEC-041); rekonsiliasi dengan DEC-028 masih open (Q-031) |
+| Sasaran output bootcamp | Terjawab — core platform CRM / backend (DEC-041); **rekonsiliasi kriteria selesai ditutup DEC-042** |
 | Cakupan assessment tim sales (HR) | Terjawab — dikeluarkan dari lingkup (DEC-031) |
 
 ## Catatan yang Diteruskan ke Head of Engineer

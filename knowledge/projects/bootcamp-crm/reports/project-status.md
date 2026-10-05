@@ -3,12 +3,15 @@ title: "Project Status — Bootcamp Internal CRM"
 type: project-status
 project: bootcamp-crm
 status: active
-version: "5.0"
+version: "6.0"
 created: 2026-10-02
 modified: 2026-10-02
 date: 2026-10-02
 changelog:
-  - version: "5.0"
+  - version: "6.0"
+    date: 2026-10-02
+    purpose: "DEC-042 — rekonsiliasi kriteria kelulusan selesai (end-to-end diukur pada kapabilitas backend); Q-031, R-016, D-015 ditutup. Tidak ada sisa keputusan PM/PO"
+  - version: "6.0"
     date: 2026-10-02
     purpose: "Tutup tuntas keputusan PM/PO (DEC-039 s/d DEC-041) — default ambang 80%, tanggal akhir diabaikan, sasaran output core backend; sisa hanya item Head of Engineer + rekonsiliasi kriteria selesai (Q-031)"
   - version: "4.0"
@@ -43,8 +46,7 @@ DEC-015 — sehingga prinsip produk core-stabil (DEC-012) dapat didemonstrasikan
 Status keseluruhan **tetap At Risk**, tetapi tekanannya berpindah sepenuhnya ke
 **eksekusi teknis**: tidak ada lagi keputusan PM/PO yang terbuka. Yang tersisa:
 **(a) empat item teknis milik Head of Engineer** (`architecture/open-tech-decisions.md`)
-dan **(b) satu rekonsiliasi kriteria kelulusan** (Q-031) yang usulannya sudah
-disiapkan PM dan tidak memblokir pelaksanaan.
+dan **tidak ada lagi rekonsiliasi tertunda** — Q-031 ditutup DEC-042.
 
 **Temuan kritis periode ini:** konfirmasi bahwa bootcamp berdurasi 3 hari
 (DEC-037) sekaligus mengungkap bahwa **hanya hari 2-3 yang dipakai untuk
@@ -75,7 +77,7 @@ High/High** dan risiko baru R-015 tercatat.
 - **Nilai default ambang performa ditetapkan 80%** (DEC-039) — menutup Q-028. Dasar: 80% adalah bar "good attainment" (QuotaPath) dan persis contoh PO (target 5, tercapai 4); ambang 100% akan melabeli mayoritas sales tidak perform karena hanya ~44% rep biasanya mencapai kuota penuh.
 - **Tanggal akhir bootcamp sengaja tidak ditetapkan** (DEC-040) — PO menegaskan yang mengikat adalah **durasi & komposisi hari**, bukan rentang start-end. Q-030 ditutup tanpa tanggal.
 - **Sasaran output ditegaskan: core platform CRM (backend)** (DEC-041) — desain core backend harus mampu menyelesaikan seluruh fitur mandatory; **kesiapan frontend bukan penghambat kelulusan**.
-- Risiko baru **R-016** (kriteria selesai DEC-028 vs DEC-041 belum konsisten) — rekonsiliasi diusulkan PM sebagai Q-031.
+- **Kriteria kelulusan direkonsiliasi (DEC-042)** — "end-to-end" diukur pada **kapabilitas backend** (API/kontrak data), bukan kelengkapan UI; menyatukan DEC-028 dengan DEC-041. Risiko **R-016 ditutup**.
 - R-014, R-003, I-003 ditutup; R-001 naik ke High/High; R-013 turun ke Rendah (kedua parameter kuota kini tertutup).
 - Rekomendasi praktik standar pengukuran performa sales disusun berbasis riset
   industri (quota attainment, scorecard leading/lagging indicator).
@@ -84,8 +86,6 @@ High/High** dan risiko baru R-015 tercatat.
 
 - Menyusun **BRD** dari `requirement-analysis.md` — **sebelum 13 Oktober**, karena
   BRD adalah bahan dasar workshop hari 1 (DEC-037).
-- **Menutup Q-031** — rekonsiliasi kriteria kelulusan (usulan PM: "end-to-end"
-  diukur pada kapabilitas backend, bukan kelengkapan UI).
 - **Menyiapkan agenda workshop hari 1** (13 Okt): sisa pertanyaan teknis,
   kriteria "requirement dianggap final", pembagian 2 tim.
 - **Menetapkan definisi teknis "core backend selesai"** — turunan DEC-041:
@@ -108,13 +108,13 @@ High/High** dan risiko baru R-015 tercatat.
 | R-013 Ambang batas & periode kuota belum ditetapkan | Rendah | PM/PO | **Turun (Low/Low)** — kuota bulanan (DEC-035) + ambang default 80% (DEC-039); **kedua parameter tertutup** |
 | R-014 Rentang 13-14 Okt tidak konsisten dengan ketetapan 3 hari | — | PM/PO | **Closed** — DEC-037 |
 | R-015 Hari 1 workshop tidak cukup memfinalkan requirement | Tinggi | PM/PO | Open — **baru** |
-| R-016 Kriteria selesai tidak konsisten (DEC-028 vs DEC-041) | Sedang | PM/PO | Open — **baru**; usulan rekonsiliasi disiapkan (Q-031) |
+| R-016 Kriteria selesai tidak konsisten (DEC-028 vs DEC-041) | — | PM/PO | **Closed** — DEC-042 menyatukan kedua definisi |
 
 Detail lengkap di [[risk-register]] dan [[raid-log]].
 
 ## Keputusan Terbaru
 
-**41 keputusan tercatat** — dan **semua keputusan PM/PO kini tertutup**. Periode
+**42 keputusan tercatat** — dan **semua keputusan PM/PO kini tertutup**. Periode
 ini (DEC-021 s/d DEC-041): M8 Webhook masuk MVP minimal, "eksternal" = dari luar,
 ambang performa configurable per tenant **dengan default 80%**, Kontak B2C tanpa
 Akun, SLA tiket wajib, satu state machine tiket, leading indicator di luar MVP,
@@ -147,11 +147,10 @@ isolasi multi-tenant, rancangan webhook, metrik efektivitas AI + baseline, dan
 stack teknologi. Sudah diteruskan sebagai catatan resmi
 (`architecture/open-tech-decisions.md`).
 
-**Satu rekonsiliasi kecil (Q-031):** DEC-028 menyebut "selesai" = modul mandatory
-berjalan **end-to-end**, sedangkan DEC-041 menegaskan ukuran output adalah
-**desain core backend** dengan frontend bukan penghambat. Usulan PM: "end-to-end"
-diukur pada kapabilitas backend (terverifikasi via API/kontrak data). Tidak
-memblokir pelaksanaan, tetapi **harus ditutup sebelum penilaian hasil di hari 3**.
+**Kriteria kelulusan kini satu definisi (DEC-042):** DEC-028 ("selesai" = modul
+mandatory end-to-end) dan DEC-041 (sasaran = core backend) telah disatukan —
+"end-to-end" diukur pada **kapabilitas backend** (terverifikasi via API/kontrak
+data), bukan kelengkapan UI. Penilaian hasil di hari 3 sudah tidak ambigu.
 
 **Perhatian pada R-002 (tidak dapat dipulihkan):** metrik efektivitas AI dan
 baseline pembanding harus ditetapkan sebelum hari pertama bootcamp — 13 Oktober.

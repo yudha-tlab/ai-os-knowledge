@@ -3,11 +3,14 @@ title: "Requirement Backlog — Bootcamp Internal CRM"
 type: requirement-backlog
 project: bootcamp-crm
 status: active
-version: "3.2"
+version: "3.3"
 created: 2026-10-02
 modified: 2026-10-02
 changelog:
-  - version: "3.2"
+  - version: "3.3"
+    date: 2026-10-02
+    purpose: "Tutup Q-031 (DEC-042) — kriteria kelulusan disatukan: end-to-end diukur pada kapabilitas backend; REQ-037/REQ-039 tidak lagi perlu rekonsiliasi"
+  - version: "3.3"
     date: 2026-10-02
     purpose: "Sinkron dengan DEC-039 s/d DEC-041 — default ambang performa 80%, tanggal akhir bootcamp tidak material, sasaran output core backend; Q-028/Q-030 ditutup, Q-031 dibuka"
   - version: "3.1"
@@ -26,7 +29,7 @@ changelog:
 
 # Requirement Backlog — Bootcamp Internal CRM
 
-**Terakhir Diperbarui:** 2026-10-02 — sinkron dengan [[decision-log]] v5.0 (DEC-021 s/d DEC-041)
+**Terakhir Diperbarui:** 2026-10-02 — sinkron dengan [[decision-log]] v6.0 (DEC-021 s/d DEC-042)
 
 Backlog kerja untuk requirement yang sedang dikumpulkan/divalidasi. Setelah
 requirement matang dan disepakati, promosikan ke BRD/FRD/SRS resmi mengikuti
@@ -97,7 +100,7 @@ ke Epic di [[requirement-analysis]]. Status **Draft** — menunggu BRD (DEC-017)
 | REQ-029 | Pelaporan tiket (volume, status penanganan, dan kepatuhan SLA) | Arahan PO 2026-10-02 (DEC-019, DEC-025) | Functional | Should | EP-009 | Draft |
 | REQ-030 | Pengelolaan aktivitas (call/meeting/task/note) — **nice to have**, di luar lingkup MVP | Arahan PO 2026-10-02 (DEC-015) | Functional | Could | EP-005 | Draft |
 | REQ-031 | Assessment tim sales (HR) — **dikeluarkan dari lingkup produk CRM** (DEC-031) | Arahan PO 2026-10-02 | — | — | ~~EP-012~~ | **Ditutup 2026-10-02** |
-| REQ-037 | Kriteria "prototype selesai": **modul mandatory berjalan end-to-end**, dibangun dalam **2 hari pengembangan** (DEC-037). **[Perlu rekonsiliasi — Q-031]** dengan REQ-039: titik pengukuran "end-to-end" diusulkan pada kapabilitas backend, bukan kelengkapan UI | Arahan PO 2026-10-02 (DEC-028, DEC-037) | Functional | Must | EP-001..EP-011 | Draft |
+| REQ-037 | Kriteria "prototype selesai": **modul mandatory berjalan end-to-end**, dibangun dalam **2 hari pengembangan** (DEC-037). **Direkonsiliasi (DEC-042):** titik pengukuran "end-to-end" = kapabilitas backend, bukan kelengkapan UI | Arahan PO 2026-10-02 (DEC-028, DEC-037) | Functional | Must | EP-001..EP-011 | Draft |
 | REQ-039 | **Sasaran output: core platform CRM (backend)** — desain core backend harus mampu menyelesaikan seluruh fitur mandatory; **kesiapan frontend bukan penghambat kelulusan** | Arahan PO 2026-10-02 (DEC-041) | Business | Must | EP-001..EP-011 | Draft |
 
 Catatan REQ-031: kemampuan ini **dikeluarkan dari lingkup** pada 2026-10-02
@@ -121,9 +124,9 @@ dalam lingkup MVP. Modul yang tetap *nice to have*: **M5 Activity** (REQ-030).
 ## Requirement yang Masih Perlu Klarifikasi
 
 Penomoran Q-xxx identik dengan `requirement-analysis.md` section 7 agar
-`traceable` antar dokumen. Status mutakhir per 2026-10-02: **satu pertanyaan masih
-terbuka milik PM/PO** — Q-031 (rekonsiliasi kriteria selesai) — serta tiga
-pertanyaan milik **Head of Engineer**: Q-007, Q-008, Q-011.
+`traceable` antar dokumen. Status mutakhir per 2026-10-02: **tidak ada pertanyaan
+terbuka milik PM/PO**; tersisa tiga pertanyaan milik **Head of Engineer**: Q-007,
+Q-008, Q-011.
 
 | ID | Pertanyaan | Ditujukan ke | Status |
 |---|---|---|---|
@@ -157,7 +160,7 @@ pertanyaan milik **Head of Engineer**: Q-007, Q-008, Q-011.
 | Q-028 | **Nilai default ambang batas performa** bila tenant tidak mengonfigurasi | PM/PO | **Terjawab 2026-10-02** — **default 80%** (DEC-039) |
 | Q-029 | Konfirmasi durasi bootcamp | PM/PO | **Terjawab 2026-10-02** — tetap 3 hari, hari 1 workshop (DEC-037) |
 | Q-030 | **Tanggal akhir bootcamp**: 13-15 Okt (3 hari) atau 13-14 Okt? | PM/PO | **Ditutup tanpa tanggal (DEC-040)** — yang mengikat adalah durasi, bukan rentang start-end |
-| Q-031 | Rekonsiliasi kriteria selesai: DEC-028 (end-to-end) vs DEC-041 (core backend) | PM/PO | **Menunggu keputusan** — usulan PM: "end-to-end" diukur pada kapabilitas backend |
+| Q-031 | Rekonsiliasi kriteria selesai: DEC-028 (end-to-end) vs DEC-041 (core backend) | PM/PO | **Terjawab 2026-10-02 (DEC-042)** — "end-to-end" diukur pada kapabilitas backend |
 ## Related
 
 - **Requirement Analysis (bahan baku BRD):** [[requirement-analysis]]

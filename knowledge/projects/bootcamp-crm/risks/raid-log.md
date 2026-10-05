@@ -3,11 +3,14 @@ title: "RAID Log — Bootcamp Internal CRM"
 type: raid-log
 project: bootcamp-crm
 status: active
-version: "5.0"
+version: "6.0"
 created: 2026-10-02
 modified: 2026-10-02
 changelog:
-  - version: "5.0"
+  - version: "6.0"
+    date: 2026-10-02
+    purpose: "Tutup R-016 & D-015 — DEC-042 menyatukan kriteria kelulusan (end-to-end diukur pada kapabilitas backend)
+  - version: "6.0"
     date: 2026-10-02
     purpose: "Tutup Q-028 (default ambang 80%, DEC-039) & Q-030 (tanggal akhir diabaikan — fokus durasi, DEC-040); D-008 & D-013 ditutup; tambah D-014 (sasaran core backend, DEC-041)"
   - version: "4.0"
@@ -48,7 +51,7 @@ Ringkasan risiko teratas. Detail lengkap, termasuk skala penilaian, ada di
 | R-013 | Penandaan status performa sales (EP-007) memerlukan ambang batas & periode kuota yang belum ditetapkan | Low | Low | Rendah | PM/PO | **Keduanya tertutup** — periode kuota **bulanan** (DEC-035) + ambang configurable (DEC-023) dengan **default 80%** (DEC-039) | Open — **turun ke Rendah** |
 | R-014 | Rentang bootcamp 13-14 Okt (2 hari) tidak konsisten dengan ketetapan durasi 3 hari (DEC-003) | Med | Med | Sedang | PM/PO | **DITUTUP 2026-10-02** — PO mengonfirmasi durasi tetap 3 hari dengan hari 1 sebagai workshop (DEC-037). Sisa: tanggal akhir (Q-030) | **Closed** |
 | R-015 | Hari 1 workshop tidak cukup untuk memfinalkan seluruh requirement → requirement masuk hari 2 dalam kondisi belum final, jendela pengembangan menyusut di bawah 2 hari | High | High | Tinggi | PM/PO | Kunci daftar keputusan terbuka & agendakan workshop hari 1 secara ketat; siapkan BRD sebagai bahan dasar sebelum hari 1; tetapkan kriteria "requirement dianggap final" | Open — **baru 2026-10-02** |
-| R-016 | Kriteria selesai tidak konsisten (DEC-028 end-to-end vs DEC-041 core backend) | Med | Med | Sedang | PM/PO | Usulan rekonsiliasi PM disiapkan (Q-031); **tutup sebelum hari 3** | Open — **baru 2026-10-02** |
+| R-016 | Kriteria selesai tidak konsisten (DEC-028 end-to-end vs DEC-041 core backend) | — | — | — | PM/PO | **DITUTUP 2026-10-02** — DEC-042 menyatukan kedua definisi: "end-to-end" diukur pada kapabilitas backend | **Closed** |
 
 ## Assumptions (Asumsi)
 
@@ -95,7 +98,7 @@ diperlukan untuk perencanaan saat ini).
 | D-012 | Konfirmasi durasi bootcamp | PM/PO | Yudha Pratama | 2026-10-02 | **Terpenuhi** — 3 hari, hari 1 workshop (DEC-037) |
 | D-013 | Konfirmasi tanggal akhir bootcamp | PM/PO | Yudha Pratama | **Ditutup 2026-10-02** | **Ditutup tanpa tanggal** (DEC-040) — PO menegaskan yang mengikat adalah **durasi**, bukan rentang start-end. Tidak lagi menjadi dependency |
 | D-014 | BRD selesai & disetujui sebagai bahan workshop hari 1 | PM/PO + Head of Product | Yudha Pratama | Sebelum 2026-10-13 | Open — **baru**, menjadi input kritis DEC-037 |
-| D-015 | Ukuran kelulusan yang disepakati (core backend vs end-to-end) | PM/PO | Yudha Pratama | Sebelum hari 3 bootcamp | **Open** — DEC-041 menetapkan sasaran core backend; rekonsiliasi dengan DEC-028 menunggu keputusan PO (Q-031) |
+| D-015 | Ukuran kelulusan yang disepakati (core backend vs end-to-end) | PM/PO | Yudha Pratama | **Terpenuhi 2026-10-02** | **Terpenuhi** — DEC-042: "end-to-end" diukur pada kapabilitas backend (API/kontrak data) |
 
 ## Aturan Eskalasi
 

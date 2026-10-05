@@ -3,11 +3,14 @@ title: "Requirement Analysis — CRM Multi-Tenant TLab"
 type: requirement-analysis
 project: bootcamp-crm
 status: draft
-version: "2.3"
+version: "2.4"
 created: 2026-10-02
 modified: 2026-10-02
 sumber: "Arahan Product Owner (Yudha Pratama) via sesi brainstorm 2026-10-02"
 changelog:
+  - version: "2.4"
+    date: 2026-10-02
+    purpose: "Tutup Q-031 (DEC-042) — 'end-to-end' diukur pada kapabilitas backend, bukan kelengkapan UI; menyatukan DEC-028 dengan DEC-041"
   - version: "2.3"
     date: 2026-10-02
     purpose: "Tutup Q-028 (default ambang performa 80%, DEC-039) dan Q-030 (tanggal akhir sengaja diabaikan, DEC-040); catat sasaran output core platform/backend (DEC-041) dan pertanyaan rekonsiliasi kriteria selesai (Q-031)"
@@ -414,8 +417,7 @@ Task didekomposisi saat sprint planning (Taiga), bukan di tahap requirement ini.
 
 Penomoran memakai **ID Q-xxx yang sama dengan `requirement-backlog.md`** supaya
 traceable antar dokumen. Per 2026-10-02, **seluruh pertanyaan kewenangan PM/PO
-tertutup kecuali satu**: **Q-031** (rekonsiliasi kriteria selesai — usulan PM sudah
-disiapkan, menunggu keputusan PO). Tersisa tiga pertanyaan milik **Head of
+tertutup** (Q-031 ditutup oleh DEC-042). Tersisa tiga pertanyaan milik **Head of
 Engineer**: Q-007, Q-008 (metrik efektivitas + baseline) dan Q-011 (stack
 teknologi).
 
@@ -451,7 +453,7 @@ teknologi).
 | Q-028 | **Nilai default ambang batas performa** bila tenant tidak mengonfigurasi | EP-007; DEC-023 | PM/PO | **Terjawab 2026-10-02** — **default 80%** (DEC-039), melengkapi DEC-023. Dasar riset: section 5.5 | menetapkan |
 | Q-029 | Konfirmasi durasi bootcamp | DEC-033 | PM/PO | **Terjawab 2026-10-02** — tetap **3 hari**, hari 1 workshop (DEC-037) |
 | Q-030 | **Tanggal akhir bootcamp**: 13-15 Okt (3 hari dari 13 Okt) atau 13-14 Okt? | DEC-037 | PM/PO | **Ditutup tanpa tanggal (DEC-040)** — PO menegaskan yang mengikat adalah **durasi**, bukan rentang start-end. Bukan field kosong, melainkan keputusan sadar |
-| Q-031 | **Rekonsiliasi kriteria selesai:** DEC-028 (end-to-end modul mandatory) vs DEC-041 (core backend, frontend bukan penghambat) | DEC-028, DEC-041 | PM/PO | **Menunggu keputusan** — usulan PM: "end-to-end" diukur pada kapabilitas backend (terverifikasi via API/kontrak data), bukan kelengkapan UI |
+| Q-031 | **Rekonsiliasi kriteria selesai:** DEC-028 (end-to-end modul mandatory) vs DEC-041 (core backend, frontend bukan penghambat) | DEC-028, DEC-041 | PM/PO | **Terjawab 2026-10-02 (DEC-042)** — DEC-028 tetap berlaku; **"end-to-end" diukur pada kapabilitas backend** (terverifikasi via API/kontrak data), bukan kelengkapan UI |
 
 ---
 

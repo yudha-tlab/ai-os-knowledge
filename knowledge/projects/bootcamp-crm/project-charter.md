@@ -3,11 +3,14 @@ title: "Project Charter — Bootcamp Internal CRM"
 type: project-charter
 project: bootcamp-crm
 status: Draft
-version: "5.0"
+version: "6.0"
 created: 2026-10-02
 modified: 2026-10-02
 changelog:
-  - version: "5.0"
+  - version: "6.0"
+    date: 2026-10-02
+    purpose: "DEC-042 — rekonsiliasi kriteria kelulusan: DEC-028 tetap berlaku, 'end-to-end' diukur pada kapabilitas backend (API/kontrak data), bukan kelengkapan UI; menutup Q-031 & R-016"
+  - version: "6.0"
     date: 2026-10-02
     purpose: "Terapkan keputusan penutup PO (DEC-039 s/d DEC-041) — default ambang performa 80%, tanggal akhir bootcamp tidak material (fokus durasi), sasaran output = core platform/backend dengan frontend bukan penghambat; rekonsiliasi kriteria selesai (Q-031)"
   - version: "4.0"
@@ -29,7 +32,7 @@ changelog:
 **Tanggal Dibuat:** 2026-10-02
 **Project Manager:** Yudha Pratama
 **Client/Divisi:** TLab Internal
-**Status:** Draft v5.0 — menunggu persetujuan sponsor internal. Seluruh keputusan PM/PO sudah diterapkan (DEC-021 s/d DEC-041); tidak ada keputusan PM/PO yang tersisa.
+**Status:** Draft v6.0 — menunggu persetujuan sponsor internal. Seluruh keputusan PM/PO sudah diterapkan (DEC-021 s/d DEC-042); tidak ada keputusan PM/PO yang tersisa.
 
 ## 1. Latar Belakang & Tujuan
 
@@ -100,7 +103,7 @@ terpisah. Prinsip ini mengikat seluruh rancangan produk.
 | Tujuan | Indikator Keberhasilan (KPI) |
 |---|---|
 | **Core platform CRM (backend) terbangun (DEC-041)** | **Desain core backend mampu menyelesaikan seluruh fitur mandatory** (DEC-015/DEC-021) dan terverifikasi melalui API/kontrak data. **Kelengkapan frontend TIDAK menjadi ukuran kelulusan** |
-| Modul mandatory berjalan (DEC-028) | Login multi-tenant → kelola lead/kontak/peluang → kelola tiket (termasuk komentar, riwayat pergerakan, dan SLA) → tampilkan laporan. **Titik pengukuran "end-to-end" sedang direkonsiliasi dengan DEC-041 — Q-031** |
+| Modul mandatory berjalan end-to-end (DEC-028) | Login multi-tenant → kelola lead/kontak/peluang → kelola tiket (termasuk komentar, riwayat pergerakan, dan SLA) → tampilkan laporan. **"End-to-end" diukur pada kapabilitas backend — terverifikasi melalui API/kontrak data, bukan kelengkapan UI (DEC-042)** |
 | Requirement difinalkan bersama peserta di hari 1 | Seluruh pertanyaan terbuka pada requirement terjawab/ditutup pada akhir hari 1; BRD (atau versi final requirement) disetujui sebagai baseline kerja hari 2-3 |
 | Kecepatan AI dalam development terukur | **Jumlah requirement yang ter-cover dalam jangka waktu tertentu** (DEC-032) |
 | Efektivitas AI dalam development terukur | **Belum terdefinisi** — diteruskan ke Head of Engineer (Q-007/Q-008, TD-03/TD-04) |
@@ -189,8 +192,7 @@ terpisah atau dihitung sebagai alokasi waktu internal tim.
   DEC-037) sementara modul mandatory mencakup 7 modul — risiko R-001 naik.
 - **Ketergantungan pada hasil hari 1**: bila requirement belum tuntas di hari 1,
   jendela pengembangan berkurang lagi (R-015).
-- **Kriteria selesai belum konsisten** — DEC-028 (end-to-end) vs DEC-041 (core
-  backend, frontend bukan penghambat); rekonsiliasi menunggu keputusan PO (Q-031).
+- ~~Kriteria selesai belum konsisten~~ — **diselesaikan**: DEC-042 menyatukan DEC-028 (end-to-end) dengan DEC-041 (core backend) — "end-to-end" diukur pada kapabilitas backend/R-016 ditutup.
 - **Metrik efektivitas AI dan baseline pembanding belum ada** — hanya metrik
   kecepatan yang ditetapkan (DEC-032); efektivitas & baseline diteruskan ke
   Head of Engineer (TD-03/TD-04). Ini risiko yang tidak dapat dipulihkan.
@@ -218,8 +220,8 @@ sudah diterapkan). Tersisa keputusan milik **Head of Engineer**:
 | 3 | **Stack teknologi** (TD-05) | Head of Engineer | Materi sesi & scaffolding tidak dapat disiapkan |
 | 4 | **Rancangan teknis webhook** (TD-02) | Head of Engineer | EP-011 tidak dapat diimplementasikan |
 
-Satu item masih menunggu PO dan **tidak memblokir** pelaksanaan: **Q-031**
-(rekonsiliasi DEC-028 vs DEC-041) — usulan PM sudah disiapkan.
+**Q-031 sudah ditutup (DEC-042)** — kriteria kelulusan kini satu definisi:
+"end-to-end" diukur pada kapabilitas backend, bukan kelengkapan UI.
 
 ### Terjawab pada 2026-10-02
 
@@ -228,6 +230,7 @@ Satu item masih menunggu PO dan **tidak memblokir** pelaksanaan: **Q-031**
 | Nilai default ambang batas performa | Terjawab — **80%** (DEC-039) |
 | Tanggal akhir bootcamp | Ditutup tanpa tanggal — **durasi** yang mengikat (DEC-040) |
 | Sasaran output bootcamp | Terjawab — **core platform CRM / backend** (DEC-041); frontend bukan penghambat |
+| Kriteria kelulusan | Terjawab — "end-to-end" diukur pada kapabilitas backend (DEC-042, menutup Q-031) |
 
 ### Terjawab pada 2026-10-02 (sesi sebelumnya)
 
