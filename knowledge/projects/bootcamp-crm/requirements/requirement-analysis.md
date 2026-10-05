@@ -3,12 +3,15 @@ title: "Requirement Analysis — CRM Multi-Tenant TLab"
 type: requirement-analysis
 project: bootcamp-crm
 status: draft
-version: "2.1"
+version: "2.3"
 created: 2026-10-02
 modified: 2026-10-02
 sumber: "Arahan Product Owner (Yudha Pratama) via sesi brainstorm 2026-10-02"
 changelog:
-  - version: "2.1"
+  - version: "2.3"
+    date: 2026-10-02
+    purpose: "Tutup Q-028 (default ambang performa 80%, DEC-039) dan Q-030 (tanggal akhir sengaja diabaikan, DEC-040); catat sasaran output core platform/backend (DEC-041) dan pertanyaan rekonsiliasi kriteria selesai (Q-031)"
+  - version: "2.2"
     date: 2026-10-02
     purpose: "Terapkan keputusan lanjutan PO — periode kuota bulanan (DEC-035), istilah tiket internal (DEC-036), struktur 3 hari bootcamp dengan hari 1 workshop (DEC-037); tambah hasil riset ambang batas (section 5.5)"
   - version: "2.0"
@@ -75,6 +78,11 @@ Konsekuensi yang harus dipahami bersama:
 secara **minimal** (event outbound inti + 1 endpoint inbound), merevisi penetapan
 awal *nice to have*. Implementasi teknisnya (retry, rate limit, fan-out,
 signing) diserahkan ke Head of Engineer (DEC-030).
+
+**Sasaran output (DEC-041):** hasil yang dikejar dari POV project & product adalah
+**core platform CRM (backend)** — desain core backend harus mampu menyelesaikan
+seluruh fitur mandatory. **Kesiapan frontend bukan penghambat kelulusan.** Catatan
+rekonsiliasi dengan DEC-028 ada di Q-031.
 
 ---
 
@@ -277,7 +285,7 @@ pipeline memerlukan modul Aktivitas (M5, nice to have):
 | Laporan/Widget | Rumus | Dasar |
 |---|---|---|
 | Quota attainment per sales | Nilai closed-won ÷ kuota × 100% | Kebutuhan PO |
-| Status performa | Mencapai / tidak mencapai target berdasarkan **ambang batas configurable per tenant** (DEC-023); nilai default diusulkan PM = **80%** (riset section 5.5) | Kebutuhan PO |
+| Status performa | Mencapai / tidak mencapai target berdasarkan **ambang batas configurable per tenant** (DEC-023); **nilai default = 80%** (DEC-039, dasar riset section 5.5) | Kebutuhan PO |
 | Leaderboard sales | Peringkat sales menurut attainment | Praktik standar |
 | Win rate per sales | Won ÷ (won + lost) | Praktik standar |
 | Average deal size | Total nilai won ÷ jumlah won | Praktik standar |
@@ -331,7 +339,9 @@ perform" — dengan hanya ~44% rep yang biasanya mencapai 100%, ambang 100% akan
 membuat mayoritas berstatus tidak perform; (b) contoh PO sendiri — target won 5,
 tercapai 4 = **80%** — persis jatuh di titik ini; (c) tetap *configurable per
 tenant* (DEC-023), sehingga nilai default hanya berlaku bila tenant belum
-mengatur. **[Menunggu keputusan PO — Q-028]**
+mengatur.
+
+**DIPUTUSKAN PO 2026-10-02 (DEC-039): nilai default = 80%.** Q-028 tertutup.
 
 ---
 
@@ -403,10 +413,11 @@ Task didekomposisi saat sprint planning (Taiga), bukan di tahap requirement ini.
 ## 7. Pertanyaan Terbuka
 
 Penomoran memakai **ID Q-xxx yang sama dengan `requirement-backlog.md`** supaya
-traceable antar dokumen. Per 2026-10-02, **lima pertanyaan masih terbuka**: Q-028
-(nilai default ambang performa) dan Q-030 (tanggal akhir bootcamp) — milik PM/PO;
-serta Q-007, Q-008 (metrik efektivitas + baseline) dan Q-011 (stack teknologi) —
-milik Head of Engineer.
+traceable antar dokumen. Per 2026-10-02, **seluruh pertanyaan kewenangan PM/PO
+tertutup kecuali satu**: **Q-031** (rekonsiliasi kriteria selesai — usulan PM sudah
+disiapkan, menunggu keputusan PO). Tersisa tiga pertanyaan milik **Head of
+Engineer**: Q-007, Q-008 (metrik efektivitas + baseline) dan Q-011 (stack
+teknologi).
 
 | ID | Pertanyaan | Konteks | Ditujukan ke | Status |
 |----|------------|---------|--------------|--------|
@@ -437,9 +448,10 @@ milik Head of Engineer.
 | Q-025 | Model data pelanggan B2C | EP-002 | PM/PO | **Terjawab 2026-10-02** — Kontak tanpa Akun diperbolehkan (DEC-024) |
 | Q-026 | Spesifikasi webhook | EP-011 | Head of Engineer | **Sebagian terjawab** — retry, rate limit, logging, multiple target (DEC-030); implementasi teknis diteruskan ke Head of Engineer |
 | Q-027 | Status M8 Webhook di MVP | Lingkup MVP | PM/PO + Head of Engineer | **Terjawab 2026-10-02** — masuk MVP minimal (DEC-021, merevisi DEC-015) |
-| Q-028 | **Nilai default ambang batas performa** bila tenant tidak mengonfigurasi | EP-007; DEC-023 | PM/PO | **Menunggu keputusan** — riset selesai & rekomendasi PM = **80%** (section 5.5); PO belum menetapkan |
+| Q-028 | **Nilai default ambang batas performa** bila tenant tidak mengonfigurasi | EP-007; DEC-023 | PM/PO | **Terjawab 2026-10-02** — **default 80%** (DEC-039), melengkapi DEC-023. Dasar riset: section 5.5 | menetapkan |
 | Q-029 | Konfirmasi durasi bootcamp | DEC-033 | PM/PO | **Terjawab 2026-10-02** — tetap **3 hari**, hari 1 workshop (DEC-037) |
-| Q-030 | **Tanggal akhir bootcamp**: 13-15 Okt (3 hari dari 13 Okt) atau 13-14 Okt? | DEC-037 | PM/PO | Belum dijawab — memengaruhi jadwal sesi |
+| Q-030 | **Tanggal akhir bootcamp**: 13-15 Okt (3 hari dari 13 Okt) atau 13-14 Okt? | DEC-037 | PM/PO | **Ditutup tanpa tanggal (DEC-040)** — PO menegaskan yang mengikat adalah **durasi**, bukan rentang start-end. Bukan field kosong, melainkan keputusan sadar |
+| Q-031 | **Rekonsiliasi kriteria selesai:** DEC-028 (end-to-end modul mandatory) vs DEC-041 (core backend, frontend bukan penghambat) | DEC-028, DEC-041 | PM/PO | **Menunggu keputusan** — usulan PM: "end-to-end" diukur pada kapabilitas backend (terverifikasi via API/kontrak data), bukan kelengkapan UI |
 
 ---
 

@@ -4,10 +4,13 @@ type: project-profile
 project: bootcamp-crm
 client: tlab-internal
 status: active
-version: "1.3"
+version: "1.4"
 created: 2026-10-02
 modified: 2026-10-02
 changelog:
+  - version: "1.4"
+    date: 2026-10-02
+    purpose: "Terapkan keputusan penutup PO (DEC-039 s/d DEC-041) — default ambang 80%, tanggal akhir bootcamp tidak material, sasaran output core backend; semua keputusan PM/PO tertutup"
   - version: "1.3"
     date: 2026-10-02
     purpose: "Terapkan keputusan lanjutan PO (DEC-035 s/d DEC-038) — struktur 3 hari dengan hari 1 workshop finalisasi requirement, kuota bulanan, istilah tiket"
@@ -98,7 +101,7 @@ event sebagai permukaan ekstensi.
 | Requirement produk CRM tersusun (bahan baku BRD) | 2026-10-02 | **Selesai** |
 | BRD CRM disusun | Belum ditentukan — siap dimulai | Belum Mulai |
 | Bootcamp — Hari 1: workshop finalisasi requirement | **2026-10-13** (DEC-037) | Belum Mulai |
-| Bootcamp — Hari 2-3: pengembangan prototype | 2026-10-14 s/d 2026-10-15 | Belum Mulai — tanggal akhir perlu konfirmasi (Q-030) |
+| Bootcamp — Hari 2-3: pengembangan core backend | Mengikuti hari 1 | Belum Mulai — tanggal akhir tidak ditetapkan (DEC-040) |
 | Prototype CRM multi-tenant berjalan | Belum ditentukan | Belum Mulai |
 | Laporan pengukuran kecepatan & efektivitas AI | Belum ditentukan | Belum Mulai |
 
@@ -108,8 +111,7 @@ Field berikut belum tersedia dan **tidak boleh diasumsikan** — menunggu input:
 
 | Field | Status | Perlu Keputusan Dari |
 |-------|--------|----------------------|
-| Tanggal akhir bootcamp | **Terbuka (Q-030)** | PM/PO |
-| Nilai default ambang batas performa | **Terbuka (Q-028)** — rekomendasi PM: 80% | PM/PO |
+| Rekonsiliasi kriteria kelulusan (DEC-028 vs DEC-041) | **Terbuka (Q-031)** — usulan PM: end-to-end diukur di backend | PM/PO |
 | Strategi isolasi teknis multi-tenant | Belum ditentukan (TD-01) | Head of Engineer |
 | Metrik efektivitas AI + baseline pembanding | Belum ditentukan (TD-03/TD-04) | Head of Engineer |
 | Stack teknologi CRM | Belum ditentukan (TD-05) | Head of Engineer |

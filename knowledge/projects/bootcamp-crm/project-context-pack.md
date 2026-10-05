@@ -37,7 +37,7 @@ changelog:
 - **Methodology**: Agile / iteratif per batch atau cohort
 - **Start Date**: Belum ditentukan
 - **Target Date**: Belum ditentukan
-- **Pelaksanaan bootcamp**: mulai **13 Oktober 2026**, durasi **3 hari** — **hari 1 = workshop finalisasi requirement, hari 2-3 = pengembangan** (DEC-037). Tanggal akhir perlu konfirmasi (Q-030)
+- **Pelaksanaan bootcamp**: mulai **13 Oktober 2026**, durasi **3 hari** — **hari 1 = workshop finalisasi requirement, hari 2-3 = pengembangan** (DEC-037). Tanggal akhir **sengaja tidak ditetapkan** — yang mengikat adalah durasi (DEC-040)
 - **Prinsip Produk**: Core stabil, kustomisasi klien via webhook + service
   eksternal terpisah (DEC-012)
 - **Key Stakeholders**:
@@ -111,22 +111,21 @@ Nice to have: M5 Activity saja.
 - Requirement analysis produk CRM tersusun: 12 Epic, 37 User Story, 23 Objek,
   10 stakeholder, 35 baris proses bisnis, 36 baris SPOK.
 - Requirement backlog: REQ-001 s/d REQ-037.
-- Decision log: 38 keputusan (DEC-001 s/d DEC-038).
-- Risk register: 15 risiko (R-001 s/d R-015), 4 ditutup; R-001 naik ke High/High.
+- Decision log: 41 keputusan (DEC-001 s/d DEC-041).
+- Risk register: 16 risiko (R-001 s/d R-016), 4 ditutup; R-001 naik ke High/High.
 - RAID log: 9 asumsi, 4 isu (3 resolved), 14 dependency.
 - Catatan teknis Head of Engineer: `architecture/open-tech-decisions.md` (TD-01 s/d TD-05).
-- Pertanyaan terbuka: 5 (Q-028, Q-030 — PM/PO; Q-007, Q-008, Q-011 — Head of Engineer).
+- Pertanyaan terbuka: 4 (Q-031 — PM/PO; Q-007, Q-008, Q-011 — Head of Engineer).
 
 ## Dependencies
 
 - [x] Penetapan tanggal & struktur pelaksanaan — 3 hari mulai 13 Okt, hari 1 workshop (DEC-037)
-- [ ] **Tanggal akhir bootcamp** — PM/PO (Q-030)
 - [ ] **BRD selesai & disetujui sebelum 13 Okt** — PM/PO + Head of Product
 - [ ] Definisi teknis multi-tenant — Head of Engineer (TD-01)
 - [ ] Rancangan teknis webhook — Head of Engineer (TD-02)
 - [ ] Metrik efektivitas AI + baseline — Head of Engineer (TD-03/TD-04)
 - [ ] Stack teknologi — Head of Engineer (TD-05)
-- [ ] Nilai default ambang batas performa — PM/PO (Q-028, rekomendasi 80%)
+- [ ] Rekonsiliasi kriteria kelulusan: "end-to-end" (DEC-028) vs core backend (DEC-041) — PM/PO (Q-031)
 - [ ] Persetujuan lingkup MVP & BRD — Head of Product & Project
 - [ ] Kesediaan mentor (Head of Product & Project, Head of Engineer)
 - [x] Keputusan ulang status M8 Webhook — M8 masuk MVP minimal (DEC-021)

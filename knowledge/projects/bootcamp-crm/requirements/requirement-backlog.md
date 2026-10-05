@@ -3,10 +3,13 @@ title: "Requirement Backlog — Bootcamp Internal CRM"
 type: requirement-backlog
 project: bootcamp-crm
 status: active
-version: "3.1"
+version: "3.2"
 created: 2026-10-02
 modified: 2026-10-02
 changelog:
+  - version: "3.2"
+    date: 2026-10-02
+    purpose: "Sinkron dengan DEC-039 s/d DEC-041 — default ambang performa 80%, tanggal akhir bootcamp tidak material, sasaran output core backend; Q-028/Q-030 ditutup, Q-031 dibuka"
   - version: "3.1"
     date: 2026-10-02
     purpose: "Terapkan keputusan lanjutan PO (DEC-035 s/d DEC-037) — periode kuota bulanan, istilah tiket internal, struktur 3 hari dengan hari 1 workshop"
@@ -23,7 +26,7 @@ changelog:
 
 # Requirement Backlog — Bootcamp Internal CRM
 
-**Terakhir Diperbarui:** 2026-10-02 — sinkron dengan [[decision-log]] v4.0 (DEC-021 s/d DEC-038)
+**Terakhir Diperbarui:** 2026-10-02 — sinkron dengan [[decision-log]] v5.0 (DEC-021 s/d DEC-041)
 
 Backlog kerja untuk requirement yang sedang dikumpulkan/divalidasi. Setelah
 requirement matang dan disepakati, promosikan ke BRD/FRD/SRS resmi mengikuti
@@ -42,7 +45,7 @@ dokumen yang sudah ada, karena tidak ada dokumen CRM/bootcamp di knowledge base.
 
 | ID | Deskripsi | Sumber | Tipe | Prioritas | Status |
 |---|---|---|---|---|---|
-| REQ-001 | Bootcamp internal dilaksanakan **3 hari**: **hari 1 = full workshop memfinalkan requirement, hari 2-3 = pengembangan prototype** (DEC-003, DEC-037) | Arahan PM/PO 2026-10-02 | Business | Must | Draft — mulai 13 Okt; **tanggal akhir perlu konfirmasi (Q-030)** |
+| REQ-001 | Bootcamp internal dilaksanakan **3 hari**: **hari 1 = full workshop memfinalkan requirement, hari 2-3 = pengembangan prototype** (DEC-003, DEC-037) | Arahan PM/PO 2026-10-02 | Business | Must | Draft — mulai 13 Okt; tanggal akhir tidak material (DEC-040) |
 | REQ-002 | PM menyusun requirement pelaksanaan bootcamp sebelum bootcamp dimulai | Arahan PM/PO 2026-10-02 | Business | Must | Draft |
 | REQ-003 | Peserta bootcamp membangun prototype aplikasi CRM multi-tenant | Arahan PM/PO 2026-10-02 | Business | Must | Draft |
 | REQ-004 | CRM yang dibangun harus multi-tenant sejak awal (bukan single-tenant yang di-retrofit) | Arahan PM/PO 2026-10-02 | Non-Functional (Arsitektur) | Must | Draft |
@@ -81,7 +84,7 @@ ke Epic di [[requirement-analysis]]. Status **Draft** — menunggu BRD (DEC-017)
 | REQ-021 | Pengelolaan peluang: nilai deal, stage pipeline, tanggal tutup, dan penandaan closed-won / closed-lost | Arahan PO 2026-10-02 (DEC-015) | Functional | Must | EP-004 | Draft |
 | REQ-022 | Penetapan target/kuota sales **per bulan** (periode bulanan — DEC-035) sebagai dasar pengukuran performa | Arahan PO 2026-10-02 (DEC-018, DEC-035) | Functional | Must | EP-003 | Draft |
 | REQ-023 | Perhitungan quota attainment per sales **per bulan** (nilai closed-won dibanding kuota bulanan) | Arahan PO 2026-10-02 (DEC-018, DEC-035) | Functional | Must | EP-007 | Draft |
-| REQ-024 | Penandaan status performa sales berdasarkan quota attainment, dengan **ambang batas configurable per tenant** (DEC-023); nilai default belum ditetapkan | Arahan PO 2026-10-02 (DEC-018, DEC-023) | Functional | Must | EP-007 | Draft |
+| REQ-024 | Penandaan status performa sales berdasarkan quota attainment, dengan **ambang batas configurable per tenant** (DEC-023) dan **nilai default 80%** (DEC-039) | Arahan PO 2026-10-02 (DEC-018, DEC-023) | Functional | Must | EP-007 | Draft |
 | REQ-025 | Pengelolaan tiket sebagai **satu model tiket**; istilah berdasarkan **asal pemohon**: eksternal = pelanggan (DEC-022), internal = karyawan tenant (DEC-036); eskalasi ke tim internal = atribut terpisah | Arahan PO 2026-10-02 (DEC-019, DEC-022, DEC-036) | Functional | Must | EP-006 | Draft |
 | REQ-032 | Komentar/percakapan pada tiket | Arahan PO 2026-10-02 (DEC-028) | Functional | Must | EP-006 | Draft |
 | REQ-033 | Riwayat pergerakan tiket (perubahan status, assignee, eskalasi) | Arahan PO 2026-10-02 (DEC-028) | Functional | Must | EP-006 | Draft |
@@ -94,7 +97,8 @@ ke Epic di [[requirement-analysis]]. Status **Draft** — menunggu BRD (DEC-017)
 | REQ-029 | Pelaporan tiket (volume, status penanganan, dan kepatuhan SLA) | Arahan PO 2026-10-02 (DEC-019, DEC-025) | Functional | Should | EP-009 | Draft |
 | REQ-030 | Pengelolaan aktivitas (call/meeting/task/note) — **nice to have**, di luar lingkup MVP | Arahan PO 2026-10-02 (DEC-015) | Functional | Could | EP-005 | Draft |
 | REQ-031 | Assessment tim sales (HR) — **dikeluarkan dari lingkup produk CRM** (DEC-031) | Arahan PO 2026-10-02 | — | — | ~~EP-012~~ | **Ditutup 2026-10-02** |
-| REQ-037 | Kriteria "prototype selesai": **end-to-end untuk modul mandatory**, dibangun dalam **2 hari pengembangan** (DEC-037) | Arahan PO 2026-10-02 (DEC-028, DEC-037) | Business (Kriteria Selesai) | Must | — | Draft |
+| REQ-037 | Kriteria "prototype selesai": **modul mandatory berjalan end-to-end**, dibangun dalam **2 hari pengembangan** (DEC-037). **[Perlu rekonsiliasi — Q-031]** dengan REQ-039: titik pengukuran "end-to-end" diusulkan pada kapabilitas backend, bukan kelengkapan UI | Arahan PO 2026-10-02 (DEC-028, DEC-037) | Functional | Must | EP-001..EP-011 | Draft |
+| REQ-039 | **Sasaran output: core platform CRM (backend)** — desain core backend harus mampu menyelesaikan seluruh fitur mandatory; **kesiapan frontend bukan penghambat kelulusan** | Arahan PO 2026-10-02 (DEC-041) | Business | Must | EP-001..EP-011 | Draft |
 
 Catatan REQ-031: kemampuan ini **dikeluarkan dari lingkup** pada 2026-10-02
 (DEC-031) — bukan bagian pakem CRM (CRM mengelola pelanggan, bukan penilaian
@@ -117,9 +121,9 @@ dalam lingkup MVP. Modul yang tetap *nice to have*: **M5 Activity** (REQ-030).
 ## Requirement yang Masih Perlu Klarifikasi
 
 Penomoran Q-xxx identik dengan `requirement-analysis.md` section 7 agar
-`traceable` antar dokumen. Status mutakhir per 2026-10-02: **lima pertanyaan
-masih terbuka** — Q-028 & Q-030 (PM/PO) serta Q-007, Q-008, Q-011 (Head of
-Engineer).
+`traceable` antar dokumen. Status mutakhir per 2026-10-02: **satu pertanyaan masih
+terbuka milik PM/PO** — Q-031 (rekonsiliasi kriteria selesai) — serta tiga
+pertanyaan milik **Head of Engineer**: Q-007, Q-008, Q-011.
 
 | ID | Pertanyaan | Ditujukan ke | Status |
 |---|---|---|---|
@@ -150,9 +154,10 @@ Engineer).
 | Q-025 | Model data pelanggan B2C | PM/PO | **Terjawab 2026-10-02** — Kontak tanpa Akun diperbolehkan (DEC-024) |
 | Q-026 | Spesifikasi webhook | Head of Engineer | **Sebagian terjawab** — retry, rate limit, logging, multiple target (DEC-030); implementasi ke Head of Engineer |
 | Q-027 | Status M8 Webhook di MVP | PM/PO + Head of Engineer | **Terjawab 2026-10-02** — MVP minimal (DEC-021) |
-| Q-028 | **Nilai default ambang batas performa** bila tenant tidak mengonfigurasi | PM/PO | **Menunggu keputusan** — rekomendasi PM = 80% (riset section 5.5) |
+| Q-028 | **Nilai default ambang batas performa** bila tenant tidak mengonfigurasi | PM/PO | **Terjawab 2026-10-02** — **default 80%** (DEC-039) |
 | Q-029 | Konfirmasi durasi bootcamp | PM/PO | **Terjawab 2026-10-02** — tetap 3 hari, hari 1 workshop (DEC-037) |
-| Q-030 | **Tanggal akhir bootcamp**: 13-15 Okt (3 hari) atau 13-14 Okt? | PM/PO | **Open** |
+| Q-030 | **Tanggal akhir bootcamp**: 13-15 Okt (3 hari) atau 13-14 Okt? | PM/PO | **Ditutup tanpa tanggal (DEC-040)** — yang mengikat adalah durasi, bukan rentang start-end |
+| Q-031 | Rekonsiliasi kriteria selesai: DEC-028 (end-to-end) vs DEC-041 (core backend) | PM/PO | **Menunggu keputusan** — usulan PM: "end-to-end" diukur pada kapabilitas backend |
 ## Related
 
 - **Requirement Analysis (bahan baku BRD):** [[requirement-analysis]]

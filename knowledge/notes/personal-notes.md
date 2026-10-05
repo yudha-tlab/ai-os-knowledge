@@ -17,11 +17,13 @@ Lokasi: root knowledge repo (`knowledge/notes/personal-notes.md`).
 | 🔄     | High      | Cek mas Akmal untuk build artifak Tapera                                   | 18 Aug 2026 |                                                                                                                                |
 | 🔄     | High      | Agendakan deployment KPI dan Tapera dengan Bu Febby                        | 18 Aug 2026 | Agenda KPI & Tapera harus dilakukan terpisah                                                                                   |
 | ⬜     | High      | **Selesaikan BRD CRM sebelum 13 Okt** — bahan dasar workshop hari 1        | Sebelum 13 Okt 2026 | DEC-037; DEC-017                                                                                                        |
-| ⬜     | High      | Siapkan agenda tertutup workshop hari 1 (13 Okt): keputusan terbuka, kriteria "requirement final", pembagian 2 tim | Sebelum 13 Okt 2026 | R-015                                                                                              |
-| ⬜     | High      | Konfirmasi tanggal akhir bootcamp (13-15 atau 13-14 Okt)                   | Segera      | `bootcamp-crm` Q-030                                                                                                           |
+| ⬜     | High      | Siapkan agenda tertutup workshop hari 1 (13 Okt): sisa pertanyaan teknis, kriteria "requirement final", pembagian 2 tim | Sebelum 13 Okt 2026 | R-015                                                                                              |
+| ⬜     | High      | Tetapkan definisi teknis "core backend selesai" (kontrak API/endpoint per modul mandatory) | Sebelum hari 3 | DEC-041                                                                                                |
 | ⬜     | High      | Teruskan catatan teknis ke Head of Engineer (isolasi multi-tenant, webhook, metrik efektivitas AI + baseline, stack teknologi) | Sebelum 13 Okt 2026 | `bootcamp-crm/architecture/open-tech-decisions.md` (TD-01 s/d TD-05)                                                    |
-| ⬜     | High      | Tetapkan nilai default ambang performa sales (rekomendasi PM: 80%)         | Sebelum BRD | `bootcamp-crm` Q-028; riset di `requirement-analysis.md` section 5.5                                                           |
+| ⬜     | Med       | Tutup Q-031: rekonsiliasi kriteria kelulusan (end-to-end vs core backend) | Sebelum hari 3 | DEC-028 vs DEC-041                                                                                                        |
 | ✅     | -         | ~~Minta nama peserta bootcamp ke Tech Lead~~                                | —           | Tidak diperlukan saat ini (DEC-038)                                                                                            |
+| ✅     | -         | ~~Konfirmasi tanggal akhir bootcamp~~                                       | —           | Ditutup tanpa tanggal — durasi yang mengikat (DEC-040)                                                                        |
+| ✅     | -         | ~~Tetapkan nilai default ambang performa sales~~                             | —           | Default **80%** ditetapkan (DEC-039)                                                                                          |
 
 ### Keterangan Status
 - ⬜ Belum dikerjakan
@@ -69,8 +71,20 @@ Lokasi: root knowledge repo (`knowledge/notes/personal-notes.md`).
   - **Nama peserta tidak diperlukan saat ini** (DEC-038) — cukup jumlah & pembagian tim.
 - **Riset ambang batas performa (Q-028):** praktik industri memakai 70% (batas
   bawah yang dapat diterima) dan 80% (bar yang dinilai baik); rata-rata attainment
-  industri ~74%, hanya ~44% rep mencapai 100% kuota. **Rekomendasi PM: default 80%**
-  — lihat `requirement-analysis.md` section 5.5.
+  industri ~74%, hanya ~44% rep mencapai 100% kuota — lihat
+  `requirement-analysis.md` section 5.5.
+- **Keputusan penutup PO (DEC-039 s/d DEC-041, total 41 keputusan) — semua
+  keputusan PM/PO kini tertutup:**
+  - **DEC-039:** **default ambang performa sales = 80%** (PO menerima rekomendasi
+    PM). Menutup Q-028.
+  - **DEC-040:** **tanggal akhir bootcamp sengaja tidak ditetapkan.** PO menegaskan
+    yang mengikat adalah **durasi**, bukan rentang start-end. Q-030 ditutup tanpa
+    tanggal — keputusan sadar, bukan field kosong.
+  - **DEC-041:** **sasaran output = core platform CRM (backend).** Desain core
+    backend harus mampu menyelesaikan seluruh fitur mandatory; **kesiapan frontend
+    bukan penghambat kelulusan.** Menurunkan beban R-001 secara nyata, tetapi
+    membuka **R-016** — belum konsisten dengan DEC-028 ("end-to-end"), direkonsiliasi
+    sebagai **Q-031** (usulan PM: "end-to-end" diukur pada kapabilitas backend).
 
 ---
 
@@ -84,6 +98,15 @@ Lokasi: root knowledge repo (`knowledge/notes/personal-notes.md`).
   menjelaskan bahwa hari 1 adalah workshop — struktur hari memengaruhi
   kelayakan lingkup lebih besar daripada durasi total. Lesson untuk template
   requirement analysis: selalu tanyakan **komposisi hari**, bukan hanya durasi.
+- **Lesson framing scope vs calendar:** PO menolak memusatkan perencanaan pada
+  rentang tanggal ("yang perlu digaris bawahi adalah durasinya, bukan start-end
+  date"). Untuk inisiatif jangka pendek, **durasi + komposisi hari** adalah unit
+  perencanaan yang benar; tanggal kalender adalah konsekuensi, bukan variabel.
+- **Lesson "ukuran selesai" harus satu definisi:** PO ingin core backend menjadi
+  ukuran keberhasilan (frontend tidak menghambat), sementara kriteria lama
+  menuntut alur end-to-end. Dua definisi "selesai" yang berdampingan menghasilkan
+  penilaian ambigu. Setiap kali sasaran output ditegaskan ulang, **rekonsiliasi
+  kriteria kelulusan harus dilakukan pada saat yang sama** — bukan setelahnya.
 - **Gap praktik:** template requirement analysis belum mencakup penilaian
   kelayakan "apakah kemampuan yang diminta PO memang bagian pakem produk?" —
   kasus assessment tim sales (HR) menunjukkan perlunya langkah uji kepatuhan
