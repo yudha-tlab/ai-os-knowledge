@@ -16,11 +16,12 @@ Lokasi: root knowledge repo (`knowledge/notes/personal-notes.md`).
 | 🔄     | High      | Cek mas Daffa untuk penyesuaian Tapera apakah sudah dicommit               | 18 Aug 2026 |                                                                                                                                |
 | 🔄     | High      | Cek mas Akmal untuk build artifak Tapera                                   | 18 Aug 2026 |                                                                                                                                |
 | 🔄     | High      | Agendakan deployment KPI dan Tapera dengan Bu Febby                        | 18 Aug 2026 | Agenda KPI & Tapera harus dilakukan terpisah                                                                                   |
-| ⬜     | High      | Konfirmasi durasi bootcamp CRM: 13-14 Okt (2 hari) vs ketetapan 3 hari     | Segera      | `bootcamp-crm` Q-029 / DEC-033 / DEC-003                                                                                       |
+| ⬜     | High      | **Selesaikan BRD CRM sebelum 13 Okt** — bahan dasar workshop hari 1        | Sebelum 13 Okt 2026 | DEC-037; DEC-017                                                                                                        |
+| ⬜     | High      | Siapkan agenda tertutup workshop hari 1 (13 Okt): keputusan terbuka, kriteria "requirement final", pembagian 2 tim | Sebelum 13 Okt 2026 | R-015                                                                                              |
+| ⬜     | High      | Konfirmasi tanggal akhir bootcamp (13-15 atau 13-14 Okt)                   | Segera      | `bootcamp-crm` Q-030                                                                                                           |
 | ⬜     | High      | Teruskan catatan teknis ke Head of Engineer (isolasi multi-tenant, webhook, metrik efektivitas AI + baseline, stack teknologi) | Sebelum 13 Okt 2026 | `bootcamp-crm/architecture/open-tech-decisions.md` (TD-01 s/d TD-05)                                                    |
-| ⬜     | High      | Tetapkan periode kuota sales (Q-020) & nilai default ambang performa (Q-028) | Sebelum BRD | EP-003 & EP-007                                                                                                                |
-| ⬜     | Med       | Minta nama peserta bootcamp ke Tech Lead                                   | Sebelum 13 Okt 2026 | Jumlah sudah: 2 tim x 4 orang (DEC-034)                                                                                 |
-| ⬜     | Med       | Susun BRD CRM dari requirement-analysis                                    | Belum ditentukan | DEC-017                                                                                                                        |
+| ⬜     | High      | Tetapkan nilai default ambang performa sales (rekomendasi PM: 80%)         | Sebelum BRD | `bootcamp-crm` Q-028; riset di `requirement-analysis.md` section 5.5                                                           |
+| ✅     | -         | ~~Minta nama peserta bootcamp ke Tech Lead~~                                | —           | Tidak diperlukan saat ini (DEC-038)                                                                                            |
 
 ### Keterangan Status
 - ⬜ Belum dikerjakan
@@ -58,6 +59,18 @@ Lokasi: root knowledge repo (`knowledge/notes/personal-notes.md`).
 - **Catatan internal (bukan keputusan project):** Q-012 anggaran terpisah &
   Q-013 kelanjutan produk CRM pasca-bootcamp — diminta dicatat sebagai internal
   notes oleh PO.
+- **Keputusan lanjutan PO (DEC-035 s/d DEC-038, total 38 keputusan):**
+  - **Bootcamp tetap 3 hari**, tetapi **hari 1 = full workshop memfinalkan
+    requirement**, hari 2-3 = pengembangan (DEC-037). **Implikasi jendela
+    pengembangan efektif hanya 2 hari** — R-001 naik ke High/High, R-015 baru.
+  - **Periode kuota sales: bulanan** (DEC-035).
+  - **Tiket internal = karyawan tenant sebagai pemohon** (DEC-036) — istilah
+    tiket kini lengkap: asal pemohon (eksternal = pelanggan, internal = karyawan).
+  - **Nama peserta tidak diperlukan saat ini** (DEC-038) — cukup jumlah & pembagian tim.
+- **Riset ambang batas performa (Q-028):** praktik industri memakai 70% (batas
+  bawah yang dapat diterima) dan 80% (bar yang dinilai baik); rata-rata attainment
+  industri ~74%, hanya ~44% rep mencapai 100% kuota. **Rekomendasi PM: default 80%**
+  — lihat `requirement-analysis.md` section 5.5.
 
 ---
 
@@ -66,6 +79,11 @@ Lokasi: root knowledge repo (`knowledge/notes/personal-notes.md`).
 - ~~**Keberatan PM atas DEC-015:** M8 (Webhook) ditetapkan *nice to have*, padahal
   webhook adalah mekanisme yang menjadikan prinsip produk (DEC-012) berjalan.~~
   **SELESAI 2026-10-02:** PO menerima — M8 masuk MVP minimal (DEC-021).
+- **Perhatian struktural (baru 2026-10-02):** "Bootcamp 3 hari" secara efektif
+  berarti **2 hari pengembangan**. Konsekuensi ini tidak muncul sampai PO
+  menjelaskan bahwa hari 1 adalah workshop — struktur hari memengaruhi
+  kelayakan lingkup lebih besar daripada durasi total. Lesson untuk template
+  requirement analysis: selalu tanyakan **komposisi hari**, bukan hanya durasi.
 - **Gap praktik:** template requirement analysis belum mencakup penilaian
   kelayakan "apakah kemampuan yang diminta PO memang bagian pakem produk?" —
   kasus assessment tim sales (HR) menunjukkan perlunya langkah uji kepatuhan

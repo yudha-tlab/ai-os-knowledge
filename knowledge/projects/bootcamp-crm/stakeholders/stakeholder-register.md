@@ -30,7 +30,7 @@ berada di dalam organisasi TLab.
 | Tech Lead | Penentu & pembagi peserta bootcamp | TLab | High | High | Belum dinilai | — |
 | Head of Product & Project | Mentor + Approver hasil | TLab | High | High | Belum dinilai | — |
 | Head of Engineer | Mentor + Approver hasil | TLab | High | High | Belum dinilai | — |
-| Peserta bootcamp | Developer peserta — **2 tim, masing-masing 4 orang (DEC-034)**; nama belum ada | TLab | Med | High | Belum dinilai | — |
+| Peserta bootcamp | Developer peserta — **2 tim, masing-masing 4 orang (DEC-034)**; nama tidak diperlukan saat ini (DEC-038) | TLab | Med | High | Belum dinilai | — |
 | Tim HR | Pemilik kebutuhan assessment tim sales | TLab | Low | Low | **Di luar lingkup (DEC-031)** | — |
 
 Catatan: nama perorangan untuk Tech Lead, Head of Product & Project, dan Head of
@@ -50,7 +50,7 @@ diinformasikan bahwa assessment tim sales tidak dibangun di CRM.
 | Tech Lead | Kebutuhan peserta, jadwal, ekspektasi output | Sinkronisasi sebelum penetapan peserta |
 | Head of Product & Project | Lingkup, kelayakan produk, hasil akhir | Review lingkup sebelum bootcamp + approval hasil |
 | Head of Engineer | Kebutuhan teknis, metrik pengukuran, hasil akhir | Review metrik sebelum bootcamp + approval hasil |
-| Peserta bootcamp | Briefing, lingkup kerja, ekspektasi output | Briefing pra-bootcamp + pembagian kerja saat sesi (target 13-14 Okt) |
+| Peserta bootcamp | Briefing, lingkup kerja, ekspektasi output | **Workshop hari 1 (13 Okt)** untuk memfinalkan requirement + pembagian kerja hari 2-3 (DEC-037) |
 | Tim HR | Status keputusan lingkup assessment tim sales | Informasikan bahwa kebutuhan dikeluarkan dari lingkup CRM (DEC-031) |
 
 ## Catatan
@@ -63,6 +63,13 @@ diinformasikan bahwa assessment tim sales tidak dibangun di CRM.
   `knowledge/clients/` untuk project ini. Ini konsisten dengan sifat internal
   project, bukan kelalaian administrasi.
 - Eskalasi internal: PM → Lead/Manager terkait → Direksi.
+
+## Catatan Perubahan 2026-10-02
+
+Struktur pelaksanaan bootcamp dikonfirmasi: **hari 1 (13 Okt) adalah workshop
+finalisasi requirement**, sehingga peserta menerima requirement secara langsung
+dari PO pada hari 1 — bukan briefing pasif sebelum sesi. Peserta berperan sebagai
+kolaborator pada hari 1, bukan hanya pelaksana pada hari 2-3.
 
 ## Related
 

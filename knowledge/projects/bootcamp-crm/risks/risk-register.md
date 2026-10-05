@@ -3,10 +3,13 @@ title: "Risk Register — Bootcamp Internal CRM"
 type: risk-register
 project: bootcamp-crm
 status: active
-version: "3.0"
+version: "4.0"
 created: 2026-10-02
 modified: 2026-10-02
 changelog:
+  - version: "4.0"
+    date: 2026-10-02
+    purpose: "Tutup R-014 (durasi terkonfirmasi DEC-037), naikkan R-001 ke High/High, turunkan R-013 (kuota bulanan DEC-035), tambah R-015 (risiko hari 1 workshop)"
   - version: "3.0"
     date: 2026-10-02
     purpose: "Tutup R-011/R-012 setelah sesi penetapan PO; turunkan R-013; tambah R-014 (inkonsistensi durasi bootcamp) dan perbarui status R-001/R-002/R-005"
@@ -34,9 +37,9 @@ dasar akan menyesatkan prioritisasi.
 
 | ID | Deskripsi | Kategori | Kemungkinan | Dampak | Severity | Owner | Rencana Mitigasi | Status |
 |---|---|---|---|---|---|---|---|---|
-| R-001 | Durasi bootcamp tidak cukup untuk menghasilkan prototype CRM multi-tenant yang bermakna | Scope/Schedule | Med | High | Tinggi | PM/PO + Head of Product | Lingkup MVP dibatasi eksplisit (DEC-015). **Tanggal 13-14 Okt (DEC-033) hanya 2 hari** — durasi aktual belum dikonfirmasi (Q-029); bila 2 hari, risiko ini naik | Open — dipantau |
+| R-001 | Durasi bootcamp tidak cukup untuk menghasilkan prototype CRM multi-tenant yang bermakna | Scope/Schedule | High | High | **Tinggi** | PM/PO + Head of Product | **Jendela pengembangan efektif hanya 2 hari** (DEC-037: hari 1 = workshop finalisasi requirement) untuk 7 modul mandatory (DEC-015 + DEC-021). Mitigasi: kunci requirement sebelum hari 1 (BRD); prioritaskan jalur end-to-end; siapkan urutan modul per tim | Open — **NAIK ke High/High** |
 | R-002 | Metrik pengukuran efektivitas AI dan baseline pembanding tidak didefinisikan sebelum bootcamp → hasil pengukuran tidak dapat disimpulkan | Process | High | High | Tinggi | Head of Engineer | Kecepatan AI sudah ditetapkan (DEC-032); **efektivitas + baseline masih open** (TD-03/TD-04) — harus selesai sebelum hari pertama bootcamp; tidak dapat dipulihkan | Open |
-| R-003 | Nama peserta belum ditetapkan Tech Lead → perencanaan sesi dan pembagian peran tidak dapat difinalkan | Resourcing | Med | Med | Sedang | Tech Lead | Jumlah & pembagian tim sudah ada (2 tim x 4 orang, DEC-034); tinggal nama | Open — **turun** |
+| R-003 | Nama peserta belum ditetapkan Tech Lead → perencanaan sesi dan pembagian peran tidak dapat difinalkan | Resourcing | Low | Low | **Rendah** | Tech Lead | **DITUTUP 2026-10-02** — jumlah & pembagian tim cukup (2 tim x 4 orang, DEC-034); nama tidak diperlukan saat ini (DEC-038) | **Closed** |
 | R-004 | Multi-tenancy didefinisikan terlalu kabur (shared DB vs schema-per-tenant vs DB-per-tenant) → rework arsitektur di tengah bootcamp | Teknis | Med | High | Tinggi | Head of Engineer | Kunci definisi teknis multi-tenant sebelum bootcamp dimulai; jadikan keputusan tertulis | Open |
 | R-005 | Requirement CRM belum tersedia dalam bentuk yang dapat dieksekusi → peserta kehilangan arah | Scope | Low | Med | Sedang | PM/PO | **Mitigasi dijalankan 2026-10-02**: requirement analysis tersusun (12 Epic, 37 User Story, 23 Objek); sisa pekerjaan adalah penyusunan BRD | Open — turun dari Tinggi |
 | R-006 | Peran ganda PM (PM + Product Owner yang berperan sebagai klien) menciptakan konflik prioritas — keputusan requirement dan keputusan delivery berada di satu orang | Governance | Med | Med | Sedang | Yudha Pratama | Pisahkan secara eksplisit kapan PM berperan sebagai PO dan kapan sebagai PM; catat di decision log. **Terlihat nyata 2026-10-02**: PM mencatat keberatan teknis atas DEC-015 yang diputuskan PO | Open |
@@ -46,24 +49,34 @@ dasar akan menyesatkan prioritisasi.
 | R-010 | Kelanjutan produk CRM setelah bootcamp tidak ditentukan → prototype berakhir sebagai artefak tanpa arah | Strategis | Med | Med | Sedang | Sponsor internal + Head of Product | Ajukan keputusan kelanjutan pasca-bootcamp bersamaan dengan laporan hasil | Open |
 | R-011 | Modul Webhook (M8) berstatus *nice to have* padahal prinsip produk (DEC-012) mengandalkannya | Teknis/Scope | — | — | — | PM/PO + Head of Engineer | **DITUTUP 2026-10-02** — PO menerima keberatan PM: M8 masuk MVP minimal (DEC-021) | **Closed** |
 | R-012 | Kebutuhan "assessment tim sales (HR)" berada di luar pakem CRM dan belum ada pemilik kebutuhannya → scope creep | Scope | — | — | — | Sponsor internal + Head of HR | **DITUTUP 2026-10-02** — dikeluarkan dari lingkup produk CRM (DEC-031) | **Closed** |
-| R-013 | Penandaan status performa sales (EP-007) memerlukan ambang batas & periode kuota yang belum ditetapkan → fitur mandatory tidak dapat diimplementasikan | Scope | Med | Med | Sedang | PM/PO | Ambang batas **configurable per tenant** (DEC-023); sisa: periode kuota (Q-020) & nilai default (Q-028) | Open — **turun** |
-| R-014 | Rentang bootcamp 13-14 Okt (2 hari) tidak konsisten dengan durasi tetap 3 hari (DEC-003) → cakupan modul mandatory terancam tidak selesai | Scope/Schedule | High | Med | Sedang | PM/PO | Konfirmasi durasi yang berlaku sebelum penyusunan jadwal sesi (Q-029) | Open — **baru 2026-10-02** |
+| R-013 | Penandaan status performa sales (EP-007) memerlukan ambang batas & periode kuota yang belum ditetapkan → fitur mandatory tidak dapat diimplementasikan | Scope | Low | Med | **Rendah** | PM/PO | **Periode kuota sudah ditetapkan: bulanan (DEC-035)**; ambang batas configurable (DEC-023). Sisa hanya nilai default (Q-028) — rekomendasi PM 80% | Open — **turun ke Rendah** |
+| R-014 | Rentang bootcamp 13-14 Okt (2 hari) tidak konsisten dengan durasi tetap 3 hari (DEC-003) | Scope/Schedule | — | — | — | PM/PO | **DITUTUP 2026-10-02** — PO mengonfirmasi 3 hari dengan hari 1 sebagai workshop (DEC-037). Sisa: tanggal akhir (Q-030) | **Closed** |
+| R-015 | Hari 1 workshop tidak cukup memfinalkan seluruh requirement → hari 2 dimulai dengan requirement belum final; jendela pengembangan menyusut di bawah 2 hari | Process/Scope | High | High | **Tinggi** | PM/PO | Kunci daftar keputusan terbuka & agenda ketat hari 1; **selesaikan BRD sebelum hari 1**; tetapkan kriteria eksplisit "requirement dianggap final" | Open — **baru 2026-10-02** |
 
 ## Risiko yang Mengalami Perubahan Severity
 
 | ID | Sebelum | Sesudah | Alasan |
 |---|---|---|---|
-| R-001 | Tinggi (High/High) | Tinggi (Med/High) | Lingkup MVP dibatasi eksplisit (DEC-015). Catatan: tanggal 13-14 Okt (2 hari) memberi tekanan sebaliknya — belum dikonfirmasi (Q-029) |
+| R-001 | Tinggi (Med/High) | Tinggi (**High/High**) | Jendela pengembangan efektif hanya **2 hari** (DEC-037: hari 1 = workshop requirement) untuk 7 modul mandatory |
 | R-005 | Tinggi (High/Med) | Sedang (Low/Med) | Requirement analysis tersusun 2026-10-02; peserta sudah punya spesifikasi yang dapat dibaca |
 | R-003 | Tinggi (High/Med) | Sedang (Med/Med) | Jumlah & pembagian peserta sudah ditetapkan (2 tim x 4 orang, DEC-034); tersisa nama |
 | R-011 | Sedang (High/Med) | **Closed** | PO menerima keberatan PM — M8 masuk MVP minimal (DEC-021) |
 | R-012 | Sedang (Med/Med) | **Closed** | Assessment HR dikeluarkan dari lingkup produk CRM (DEC-031) |
-| R-013 | Sedang (High/Med) | Sedang (Med/Med) | Ambang batas performa kini configurable per tenant (DEC-023) |
+| R-013 | Sedang (High/Med) | Rendah (Low/Med) | Kuota **bulanan** ditetapkan (DEC-035) + ambang configurable (DEC-023) |
+| R-014 | Sedang (High/Med) | **Closed** | Durasi terkonfirmasi 3 hari, hari 1 workshop (DEC-037) |
+| R-001 | Tinggi (Med/High) | Tinggi (**High/High**) | **Naik**: jendela pengembangan efektif hanya 2 hari (DEC-037), bukan 3 |
+| R-003 | Sedang (Med/Med) | **Closed** | Nama peserta tidak diperlukan saat ini (DEC-038) |
 
-Dua risiko **ditutup** pada 2026-10-02 (R-011, R-012). Sisa risiko Tinggi
-(R-001, R-002, R-004) menunggu keputusan pihak di luar PM — terutama R-002 yang
-tidak dapat dipulihkan bila lewat hari pertama bootcamp. Risiko baru R-014
-(inkonsistensi durasi) muncul dari penetapan tanggal 13-14 Oktober.
+**Lima risiko ditutup** pada 2026-10-02: R-011, R-012 (tidak lagi berlaku), R-003,
+R-014 (terjawab keputusan PO), dan R-005 diturunkan signifikan.
+
+**Perubahan paling penting:** R-001 **naik ke High/High**. Konfirmasi struktur 3
+hari (DEC-037) tidak meredakan risiko — ia memindahkannya: yang semula terlihat
+seperti "3 hari" ternyata hanya **2 hari pengembangan efektif** untuk 7 modul
+mandatory. Risiko baru R-015 muncul dari ketergantungan pada hasil hari 1.
+
+Sisa risiko Tinggi: **R-001, R-002, R-004, R-015**. R-002 dan R-015 sama-sama
+tidak dapat dipulihkan bila terlewat — keduanya jatuh pada hari pertama bootcamp.
 
 ## Aturan Eskalasi
 

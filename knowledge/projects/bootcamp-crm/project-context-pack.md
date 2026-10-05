@@ -2,8 +2,8 @@
 title: "Project Context Pack — Bootcamp Internal CRM"
 type: project-context-pack
 project: bootcamp-crm
-status: draft-v3
-version: "3.0"
+status: draft-v4
+version: "4.0"
 created: 2026-10-02
 modified: 2026-10-02
 depends_on:
@@ -13,6 +13,9 @@ depends_on:
   - requirement-analysis
 scope: Aggregated key fields untuk project internal TLab — Bootcamp CRM
 changelog:
+  - version: "4.0"
+    date: 2026-10-02
+    purpose: "Terapkan keputusan lanjutan PO — struktur 3 hari dengan hari 1 workshop (DEC-037), kuota bulanan (DEC-035), istilah tiket (DEC-036)"
   - version: "3.0"
     date: 2026-10-02
     purpose: "Sinkronkan context pack setelah sesi penetapan PO 2026-10-02 (DEC-021 s/d DEC-034) — M8 masuk MVP, tanggal & peserta, catatan teknis Head of Engineer"
@@ -34,7 +37,7 @@ changelog:
 - **Methodology**: Agile / iteratif per batch atau cohort
 - **Start Date**: Belum ditentukan
 - **Target Date**: Belum ditentukan
-- **Pelaksanaan bootcamp**: 13-14 Oktober 2026 (DEC-033) — **[perlu konfirmasi]** 2 hari vs durasi tetap 3 hari
+- **Pelaksanaan bootcamp**: mulai **13 Oktober 2026**, durasi **3 hari** — **hari 1 = workshop finalisasi requirement, hari 2-3 = pengembangan** (DEC-037). Tanggal akhir perlu konfirmasi (Q-030)
 - **Prinsip Produk**: Core stabil, kustomisasi klien via webhook + service
   eksternal terpisah (DEC-012)
 - **Key Stakeholders**:
@@ -58,9 +61,10 @@ Nice to have: M5 Activity saja.
 
 1. **Inisiasi**: TLab membutuhkan produk CRM multi-tenant milik sendiri yang
    dapat dikembangkan dan dijual.
-2. **Mekanisme**: Bootcamp internal (dijadwalkan 13-14 Oktober 2026) di mana
-   peserta membangun prototype CRM multi-tenant secara langsung. Bootcamp adalah
-   workstream, bukan project terpisah.
+2. **Mekanisme**: Bootcamp internal 3 hari mulai 13 Oktober 2026 — **hari 1
+   dipakai penuh untuk workshop memfinalkan requirement**, hari 2-3 pengembangan
+   prototype CRM multi-tenant. Bootcamp adalah workstream, bukan project
+   terpisah.
 3. **Penyusunan requirement**: PM diberi mandat menyusun requirement. Status:
    requirement produk CRM tersusun sebagai bahan baku BRD (12 Epic, 37 User
    Story, 23 Objek); BRD belum disusun.
@@ -68,8 +72,8 @@ Nice to have: M5 Activity saja.
    pemilik kebutuhan CRM, mensimulasikan alur permintaan requirement nyata.
 5. **Penetapan peserta**: Tech Lead membagi peserta. Status: jumlah & pembagian
    tim sudah ada (2 tim x 4 orang, DEC-034); nama menyusul.
-6. **Pelaksanaan**: pengembangan prototype CRM multi-tenant (target 13-14 Okt,
-   durasi perlu konfirmasi).
+6. **Pelaksanaan**: hari 1 (13 Okt) workshop finalisasi requirement; hari 2-3
+   (14-15 Okt) pengembangan prototype CRM multi-tenant.
 7. **Pengukuran**: Kecepatan & efektivitas penggunaan AI dalam development
    diukur selama proses berjalan.
 8. **Approval**: Head of Product & Project dan Head of Engineer menyetujui hasil.
@@ -83,9 +87,10 @@ Nice to have: M5 Activity saja.
 
 ## Pain Points / Gap yang Teridentifikasi
 
-- ~~Belum ada tanggal pelaksanaan~~ → **terjawab 2026-10-02 (DEC-033)**:
-  13-14 Okt; durasi perlu konfirmasi (Q-029).
-- Belum ada **nama** peserta → jumlah & pembagian tim sudah ada (DEC-034).
+- ~~Belum ada tanggal pelaksanaan~~ → **terjawab 2026-10-02**: mulai 13 Okt, 3 hari (DEC-037).
+- ~~Belum ada daftar peserta~~ → **terjawab (DEC-034, DEC-038)**: 2 tim x 4 orang; nama tidak diperlukan saat ini.
+- **Jendela pengembangan efektif hanya 2 hari** untuk 7 modul mandatory (DEC-037) → R-001/R-015.
+- **BRD harus selesai sebelum hari 1** karena menjadi bahan workshop (DEC-037).
 - Definisi **teknis** multi-tenant belum dikunci → risiko rework arsitektur
   (definisi fungsional sudah ditetapkan, DEC-029).
 - Metrik pengukuran AI belum lengkap → kecepatan sudah ditetapkan (DEC-032);
@@ -95,8 +100,8 @@ Nice to have: M5 Activity saja.
   (`requirement-analysis.md`).
 - ~~Status M8 Webhook tidak konsisten dengan prinsip produk~~ → **terselesaikan
   2026-10-02 (DEC-021)**; R-011 ditutup.
-- Ambang batas performa **sudah configurable per tenant** (DEC-023); periode
-  kuota (Q-020) & nilai default (Q-028) masih open → R-013 turun.
+- Ambang batas performa **configurable per tenant** (DEC-023) & periode kuota
+  **bulanan** (DEC-035); sisa nilai default (Q-028) — rekomendasi PM 80% → R-013 Rendah.
 - ~~Assessment tim sales (HR) di luar pakem CRM~~ → **dikeluarkan dari lingkup
   (DEC-031)**; R-012 ditutup.
 
@@ -106,27 +111,29 @@ Nice to have: M5 Activity saja.
 - Requirement analysis produk CRM tersusun: 12 Epic, 37 User Story, 23 Objek,
   10 stakeholder, 35 baris proses bisnis, 36 baris SPOK.
 - Requirement backlog: REQ-001 s/d REQ-037.
-- Decision log: 34 keputusan (DEC-001 s/d DEC-034).
-- Risk register: 14 risiko (R-001 s/d R-014), 2 ditutup.
-- RAID log: 7 asumsi, 4 isu (3 resolved), 12 dependency.
+- Decision log: 38 keputusan (DEC-001 s/d DEC-038).
+- Risk register: 15 risiko (R-001 s/d R-015), 4 ditutup; R-001 naik ke High/High.
+- RAID log: 9 asumsi, 4 isu (3 resolved), 14 dependency.
 - Catatan teknis Head of Engineer: `architecture/open-tech-decisions.md` (TD-01 s/d TD-05).
-- Pertanyaan terbuka: 6 (Q-007, Q-008, Q-011, Q-020, Q-028, Q-029).
+- Pertanyaan terbuka: 5 (Q-028, Q-030 — PM/PO; Q-007, Q-008, Q-011 — Head of Engineer).
 
 ## Dependencies
 
-- [x] Penetapan tanggal pelaksanaan — 13-14 Okt (DEC-033)
-- [ ] **Konfirmasi durasi bootcamp** (2 hari vs 3 hari) — PM/PO (Q-029)
-- [ ] Nama peserta bootcamp — Tech Lead (jumlah sudah: DEC-034)
+- [x] Penetapan tanggal & struktur pelaksanaan — 3 hari mulai 13 Okt, hari 1 workshop (DEC-037)
+- [ ] **Tanggal akhir bootcamp** — PM/PO (Q-030)
+- [ ] **BRD selesai & disetujui sebelum 13 Okt** — PM/PO + Head of Product
 - [ ] Definisi teknis multi-tenant — Head of Engineer (TD-01)
 - [ ] Rancangan teknis webhook — Head of Engineer (TD-02)
 - [ ] Metrik efektivitas AI + baseline — Head of Engineer (TD-03/TD-04)
 - [ ] Stack teknologi — Head of Engineer (TD-05)
-- [ ] Periode kuota sales — PM/PO (Q-020)
-- [ ] Nilai default ambang batas performa — PM/PO (Q-028)
+- [ ] Nilai default ambang batas performa — PM/PO (Q-028, rekomendasi 80%)
 - [ ] Persetujuan lingkup MVP & BRD — Head of Product & Project
 - [ ] Kesediaan mentor (Head of Product & Project, Head of Engineer)
 - [x] Keputusan ulang status M8 Webhook — M8 masuk MVP minimal (DEC-021)
 - [x] Cakupan & ownership assessment tim sales (HR) — dikeluarkan dari lingkup (DEC-031)
+- [x] Durasi bootcamp — 3 hari, hari 1 workshop (DEC-037)
+- [x] Periode kuota sales — bulanan (DEC-035)
+- [x] Nama peserta — tidak diperlukan saat ini (DEC-038)
 
 ## Catatan Akses
 

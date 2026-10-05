@@ -3,11 +3,14 @@ title: "Requirement Analysis — CRM Multi-Tenant TLab"
 type: requirement-analysis
 project: bootcamp-crm
 status: draft
-version: "2.0"
+version: "2.1"
 created: 2026-10-02
 modified: 2026-10-02
 sumber: "Arahan Product Owner (Yudha Pratama) via sesi brainstorm 2026-10-02"
 changelog:
+  - version: "2.1"
+    date: 2026-10-02
+    purpose: "Terapkan keputusan lanjutan PO — periode kuota bulanan (DEC-035), istilah tiket internal (DEC-036), struktur 3 hari bootcamp dengan hari 1 workshop (DEC-037); tambah hasil riset ambang batas (section 5.5)"
   - version: "2.0"
     date: 2026-10-02
     purpose: "Terapkan 14 keputusan sesi penetapan PO (DEC-021 s/d DEC-034) — M8 masuk MVP, SLA tiket, multi-target webhook, komentar & riwayat tiket, assessment HR keluar lingkup"
@@ -25,7 +28,8 @@ dokumen ini menjadi bahan baku **BRD**. Belum BRD, belum FRD/SRS.
 2026-10-02. Bukan hasil analisis dokumen klien — tidak ada dokumen CRM/klien di
 knowledge base untuk project internal ini.
 
-**Batasan yang mengikat:** Bootcamp 3 hari; produk multi-tenant sejak awal;
+**Batasan yang mengikat:** Bootcamp 3 hari — **hari 1 full workshop memfinalkan
+requirement, hari 2-3 pengembangan** (DEC-037); produk multi-tenant sejak awal;
 kustomisasi klien diakomodir **tanpa mengubah core**.
 
 ---
@@ -90,8 +94,8 @@ signing) diserahkan ke Head of Engineer (DEC-030).
 | Pelaksanaan | 04. Pengelolaan Pipeline & Peluang | 04.02 Pergerakan stage | 04.02.01 Perubahan stage peluang |
 | Pelaksanaan | 04. Pengelolaan Pipeline & Peluang | 04.03 Penutupan peluang | 04.03.01 Penandaan closed-won / closed-lost beserta alasan |
 | Pelaksanaan | 05. Pengelolaan Aktivitas | 05.01 Pencatatan aktivitas | 05.01.01 Pencatatan call / meeting / task / note |
-| Pelaksanaan | 06. Pengelolaan Tiket | 06.01 Pembuatan tiket | 06.01.01 Tiket jalur eksternal (dari pelanggan) |
-| Pelaksanaan | 06. Pengelolaan Tiket | 06.01 Pembuatan tiket | 06.01.02 Tiket jalur internal (antar tim) |
+| Pelaksanaan | 06. Pengelolaan Tiket | 06.01 Pembuatan tiket | 06.01.01 Tiket jalur eksternal (pemohon: pelanggan) |
+| Pelaksanaan | 06. Pengelolaan Tiket | 06.01 Pembuatan tiket | 06.01.02 Tiket jalur internal (pemohon: karyawan tenant) — DEC-036 |
 | Pelaksanaan | 06. Pengelolaan Tiket | 06.01 Pembuatan tiket | 06.01.03 Tiket dari sistem klien via webhook inbound |
 | Pelaksanaan | 06. Pengelolaan Tiket | 06.02 Penanganan tiket | 06.02.01 Penugasan dan perubahan status tiket |
 | Pelaksanaan | 06. Pengelolaan Tiket | 06.03 Eskalasi tiket | 06.03.01 Eskalasi tiket ke tim internal |
@@ -207,7 +211,7 @@ inisiatif internal terpisah.
 | 06.02 Penanganan tiket | SH003 - Agent Support | Mengomentari | OB-021-Komentar Tiket | Percakapan pada tiket (DEC-028) |
 | 06.02 Penanganan tiket | Sistem CRM | Mencatat | OB-022-Riwayat Pergerakan Tiket | Jejak status, assignee, eskalasi (DEC-028) |
 | 06.02 Penanganan tiket | Sistem CRM | Menghitung | OB-023-SLA Tiket | Perbandingan waktu terhadap target per prioritas (DEC-025) |
-| 03.01 Penetapan kuota | SH002 - Sales Manager | Mengonfigurasi | OB-010-Kuota/Target Sales | Kuota per sales; ambang batas performa configurable per tenant (DEC-023) |
+| 03.01 Penetapan kuota | SH002 - Sales Manager | Mengonfigurasi | OB-010-Kuota/Target Sales | Kuota per sales **per bulan** (DEC-035); ambang batas performa configurable per tenant (DEC-023) |
 
 ---
 
@@ -262,7 +266,10 @@ Sumber: [ZoomInfo — Sales Rep Scorecard](https://pipeline.zoominfo.com/sales/b
 [Gong — Rep Scorecard Dashboard](https://help.gong.io/docs/rep-scorecard-dashboard-recipe),
 [Coefficient — Sales Rep Scorecard](https://coefficient.io/sales-rep-scorecard).
 
-### 5.4 Usulan konkret untuk MVP (minimal, dapat dibangun dalam 3 hari)
+### 5.4 Usulan konkret untuk MVP (minimal, dapat dibangun dalam 2 hari)
+
+Catatan: dengan DEC-037, jendela pengembangan efektif adalah **hari 2-3** (hari 1
+adalah workshop finalisasi requirement).
 
 Scope MVP yang diusulkan **hanya lapis outcome**, karena lapis aktivitas dan
 pipeline memerlukan modul Aktivitas (M5, nice to have):
@@ -270,13 +277,61 @@ pipeline memerlukan modul Aktivitas (M5, nice to have):
 | Laporan/Widget | Rumus | Dasar |
 |---|---|---|
 | Quota attainment per sales | Nilai closed-won ÷ kuota × 100% | Kebutuhan PO |
-| Status performa | Mencapai / tidak mencapai target berdasarkan **ambang batas configurable per tenant** (DEC-023) | Kebutuhan PO |
+| Status performa | Mencapai / tidak mencapai target berdasarkan **ambang batas configurable per tenant** (DEC-023); nilai default diusulkan PM = **80%** (riset section 5.5) | Kebutuhan PO |
 | Leaderboard sales | Peringkat sales menurut attainment | Praktik standar |
 | Win rate per sales | Won ÷ (won + lost) | Praktik standar |
 | Average deal size | Total nilai won ÷ jumlah won | Praktik standar |
 
 Yang **tidak** diusulkan masuk MVP: pipeline coverage, sales cycle length,
 akurasi forecast — semuanya butuh riwayat data yang belum ada di prototype 3 hari.
+
+### 5.5 Ambang batas performa — hasil riset praktik industri
+
+PO meminta dasar rujukan sebelum menetapkan **nilai default** ambang batas
+(DEC-023 menetapkannya *configurable per tenant*; nilai default masih Q-028).
+Hasil riset praktik standar:
+
+**Temuan 1 — tidak ada angka tunggal yang universal.**
+Alexander Group: *"For those using a threshold, no uniform threshold level
+prevails."* Perusahaan terbagi antara memakai dan tidak memakai ambang, dan
+levelnya bervariasi.
+([Alexander Group](https://www.alexandergroup.com/insights/sales-compensation-careful-about-that-threshold/))
+
+**Temuan 2 — dua angka yang berulang dalam praktik.**
+
+| Angka | Makna dalam praktik | Sumber |
+|---|---|---|
+| **70%** | Ambang minimum agar insentif mulai dibayarkan (*threshold* dalam desain kompensasi). Contoh yang dikutip: *"the seller must achieve 70% of the quota before the incentive formula begins to pay"* | Alexander Group |
+| **70%** | Batas bawah kinerja yang dapat diterima — rep yang konsisten di **60–70% kuota** selama beberapa periode dianggap perlu program perbaikan (PIP) | [SiftHub — PIP](https://www.sifthub.io/blog/performance-improvement-plan-sales) |
+| **80%** | Bar yang direkomendasikan sebagai *"good quota attainment rate"* — QuotaPath menyebut *"a minimum of 80%"* | [QuotaPath](https://www.quotapath.com/blog/quota-attainment-rate/) |
+| **80%** | Titik contoh untuk *soft/two-step threshold* — tarif pembayaran naik setelah 80% tercapai | Alexander Group |
+
+**Temuan 3 — konteks distribusi populasi (angka ini sering tertukar).**
+
+| Metrik | Nilai | Sumber |
+|---|---|---|
+| Persentase rep yang **mencapai** kuota penuh (100%) | ~44% (Q4-2025) | [RepVue Cloud Sales Index](https://www.repvue.com/cloud-index/2025/Q4) |
+| Persentase rep B2B yang mencapai kuota per kuartal | 43–57% | [Uplift](https://upliftgtm.com/blog/quota-attainment-benchmarks) |
+| **Rata-rata level attainment** | ~74% | CaptivateIQ 2025 Sales Compensation Benchmarks |
+| Organisasi sehat: proporsi rep yang seharusnya mencapai kuota | 60–70% | [KPI Tree](https://kpitree.co/glossary/sales-metrics/quota-attainment) |
+
+Catatan metodologis penting: **"persentase rep yang mencapai kuota"** dan
+**"rata-rata level attainment"** adalah dua metrik berbeda yang sering
+dipertukarkan. Angka ~44% di atas berarti *44% rep mencapai 100% kuota*, bukan
+*attainment rata-rata 44%*.
+
+**Sintesis.** Tidak ada standar mutlak. Yang konsisten muncul adalah dua jangkar:
+**70%** sebagai batas bawah kinerja yang dapat diterima, dan **80%** sebagai bar
+kinerja yang dinilai baik.
+
+**Rekomendasi PM untuk nilai default: 80%.**
+Alasan: (a) 80% duduk di antara batas bawah yang dapat diterima (70%) dan target
+penuh (100%), sehingga tidak melabeli terlalu banyak sales sebagai "tidak
+perform" — dengan hanya ~44% rep yang biasanya mencapai 100%, ambang 100% akan
+membuat mayoritas berstatus tidak perform; (b) contoh PO sendiri — target won 5,
+tercapai 4 = **80%** — persis jatuh di titik ini; (c) tetap *configurable per
+tenant* (DEC-023), sehingga nilai default hanya berlaku bila tenant belum
+mengatur. **[Menunggu keputusan PO — Q-028]**
 
 ---
 
@@ -316,7 +371,7 @@ akurasi forecast — semuanya butuh riwayat data yang belum ada di prototype 3 h
 | US-011 | Sebagai Sales Rep, saya ingin menandai peluang sebagai closed-won atau closed-lost beserta alasan, sehingga hasil akhir deal tercatat. | EP-004 |
 | US-012 | Sebagai Sales Rep, saya ingin mencatat aktivitas (call/meeting/task/note), sehingga riwayat interaksi pelanggan tidak hilang. | EP-005 |
 | US-013 | Sebagai Pelanggan, saya ingin membuat tiket melalui jalur eksternal, sehingga keluhan saya tercatat dan ditangani. | EP-006 |
-| US-014 | Sebagai Karyawan Tenant, saya ingin membuat tiket melalui jalur internal, sehingga permintaan antar tim dapat dilacak. | EP-006 |
+| US-014 | Sebagai Karyawan Tenant, saya ingin membuat tiket melalui jalur internal (pemohon = karyawan tenant), sehingga permintaan antar tim dapat dilacak. | EP-006 |
 | US-015 | Sebagai Sistem Klien, saya ingin membuat tiket di CRM melalui webhook inbound, sehingga tiket dari sistem lain terpusat. | EP-006 |
 | US-016 | Sebagai Agent Support, saya ingin mengubah status dan penanggung jawab tiket, sehingga penanganan tiket terkendali. | EP-006 |
 | US-017 | Sebagai Agent Support, saya ingin mencatat riwayat dan komentar pada tiket, sehingga jejak penanganan tersimpan. | EP-006 |
@@ -348,14 +403,14 @@ Task didekomposisi saat sprint planning (Taiga), bukan di tahap requirement ini.
 ## 7. Pertanyaan Terbuka
 
 Penomoran memakai **ID Q-xxx yang sama dengan `requirement-backlog.md`** supaya
-traceable antar dokumen. Per 2026-10-02, enam pertanyaan **masih terbuka**: Q-020
-(periode kuota), Q-028 (nilai default ambang performa), Q-029 (konfirmasi durasi
-bootcamp), Q-007 & Q-008 (metrik efektivitas + baseline — milik Head of Engineer),
-dan Q-011 (stack teknologi — milik Head of Engineer).
+traceable antar dokumen. Per 2026-10-02, **lima pertanyaan masih terbuka**: Q-028
+(nilai default ambang performa) dan Q-030 (tanggal akhir bootcamp) — milik PM/PO;
+serta Q-007, Q-008 (metrik efektivitas + baseline) dan Q-011 (stack teknologi) —
+milik Head of Engineer.
 
 | ID | Pertanyaan | Konteks | Ditujukan ke | Status |
 |----|------------|---------|--------------|--------|
-| Q-001 | Tanggal pelaksanaan bootcamp? | Perencanaan | Tech Lead + PM | **Terjawab 2026-10-02** — 13-14 Oktober (DEC-033). **[Perlu konfirmasi]** hanya 2 hari, sedangkan DEC-003 menetapkan 3 hari |
+| Q-001 | Tanggal pelaksanaan bootcamp? | Perencanaan | Tech Lead + PM | **Terjawab 2026-10-02** — mulai 13 Oktober, 3 hari (DEC-037) |
 | Q-002 | Berapa peserta dan siapa saja? | Perencanaan | Tech Lead | **Terjawab 2026-10-02** — 2 tim x 4 orang = 8 peserta (DEC-034). Nama peserta belum ada |
 | Q-003 | Lingkup fitur MVP CRM multi-tenant apa saja? | Lingkup MVP | PM/PO + Head of Product | **Terjawab 2026-10-02** — DEC-015 |
 | Q-004 | Modul CRM apa yang wajib ada? | Lingkup MVP | PM/PO | **Terjawab 2026-10-02** — DEC-015 |
@@ -374,16 +429,17 @@ dan Q-011 (stack teknologi — milik Head of Engineer).
 | Q-017 | Assessment tim sales (HR) | Proses 12; di luar pakem CRM | Sponsor internal + Head of HR | **Terjawab 2026-10-02** — dikeluarkan dari lingkup CRM (DEC-031) |
 | Q-018 | Assessment HR: bagian produk yang dijual atau kebutuhan internal? | Proses 12 | Sponsor internal | **Terjawab 2026-10-02** — di luar lingkup (DEC-031) |
 | Q-019 | Ambang batas "performa" pada quota attainment | EP-007 | PM/PO | **Terjawab 2026-10-02** — configurable per tenant (DEC-023). **Nilai default masih open** |
-| Q-020 | Periode kuota sales: bulanan, kuartalan, atau tahunan? | EP-003 | PM/PO | **MASIH TERBUKA** — belum ada jawaban; menghambat EP-003 & EP-007 |
-| Q-021 | Pemetaan istilah tiket "internal" vs "external" | Proses 06; DEC-019 | PM/PO | **Sebagian terjawab** — "eksternal" = dari luar (DEC-022); istilah "internal" perlu konfirmasi ulang |
+| Q-020 | Periode kuota sales | EP-003 | PM/PO | **Terjawab 2026-10-02** — **bulanan** (DEC-035) |
+| Q-021 | Pemetaan istilah tiket "internal" vs "external" | Proses 06; DEC-019 | PM/PO | **Terjawab 2026-10-02** — berdasarkan asal pemohon: eksternal = pelanggan, internal = karyawan tenant (DEC-022, DEC-036) |
 | Q-022 | Apakah tiket memerlukan SLA? | EP-006 | PM/PO | **Terjawab 2026-10-02** — ya, SLA harus ada (DEC-025) |
 | Q-023 | Aturan status/SLA per jalur tiket | EP-006 | PM/PO | **Terjawab 2026-10-02** — satu state machine, tidak dibedakan per jalur (DEC-026) |
 | Q-024 | Pengukuran aktivitas & pipeline (leading indicator) di MVP | EP-007 | PM/PO | **Terjawab 2026-10-02** — tidak termasuk MVP (DEC-027) |
 | Q-025 | Model data pelanggan B2C | EP-002 | PM/PO | **Terjawab 2026-10-02** — Kontak tanpa Akun diperbolehkan (DEC-024) |
 | Q-026 | Spesifikasi webhook | EP-011 | Head of Engineer | **Sebagian terjawab** — retry, rate limit, logging, multiple target (DEC-030); implementasi teknis diteruskan ke Head of Engineer |
 | Q-027 | Status M8 Webhook di MVP | Lingkup MVP | PM/PO + Head of Engineer | **Terjawab 2026-10-02** — masuk MVP minimal (DEC-021, merevisi DEC-015) |
-| Q-028 | **Nilai default ambang batas performa** bila tenant tidak mengonfigurasi | EP-007; DEC-023 | PM/PO | Belum dijawab — menghambat status performa untuk tenant baru |
-| Q-029 | **Konfirmasi durasi bootcamp**: 13-14 Oktober (2 hari) vs ketetapan 3 hari (DEC-003) | DEC-033 | PM/PO | Belum dijawab — memengaruhi jadwal & pembagian kerja |
+| Q-028 | **Nilai default ambang batas performa** bila tenant tidak mengonfigurasi | EP-007; DEC-023 | PM/PO | **Menunggu keputusan** — riset selesai & rekomendasi PM = **80%** (section 5.5); PO belum menetapkan |
+| Q-029 | Konfirmasi durasi bootcamp | DEC-033 | PM/PO | **Terjawab 2026-10-02** — tetap **3 hari**, hari 1 workshop (DEC-037) |
+| Q-030 | **Tanggal akhir bootcamp**: 13-15 Okt (3 hari dari 13 Okt) atau 13-14 Okt? | DEC-037 | PM/PO | Belum dijawab — memengaruhi jadwal sesi |
 
 ---
 

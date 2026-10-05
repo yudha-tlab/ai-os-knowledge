@@ -4,10 +4,13 @@ type: project-profile
 project: bootcamp-crm
 client: tlab-internal
 status: active
-version: "1.2"
+version: "1.3"
 created: 2026-10-02
 modified: 2026-10-02
 changelog:
+  - version: "1.3"
+    date: 2026-10-02
+    purpose: "Terapkan keputusan lanjutan PO (DEC-035 s/d DEC-038) — struktur 3 hari dengan hari 1 workshop finalisasi requirement, kuota bulanan, istilah tiket"
   - version: "1.2"
     date: 2026-10-02
     purpose: "Terapkan sesi penetapan PO 2026-10-02 (DEC-021 s/d DEC-034) — M8 masuk MVP, tanggal & peserta bootcamp, keputusan terbuka yang tersisa"
@@ -24,7 +27,7 @@ changelog:
 **Slug:** `bootcamp-crm`
 **Client/Divisi:** TLab Internal — tanpa klien eksternal
 **Project Manager / Product Owner:** Yudha Pratama
-**Tanggal Mulai:** Belum ditentukan
+**Tanggal Mulai:** 2026-10-13 (pelaksanaan bootcamp — DEC-037)
 **Status:** Perencanaan
 
 ## Ringkasan Project
@@ -94,7 +97,8 @@ event sebagai permukaan ekstensi.
 |-----------|---------------|--------|
 | Requirement produk CRM tersusun (bahan baku BRD) | 2026-10-02 | **Selesai** |
 | BRD CRM disusun | Belum ditentukan — siap dimulai | Belum Mulai |
-| Bootcamp internal dilaksanakan | **2026-10-13 s/d 2026-10-14** (DEC-033) | Belum Mulai — **[perlu konfirmasi]** rentang 2 hari vs ketetapan 3 hari |
+| Bootcamp — Hari 1: workshop finalisasi requirement | **2026-10-13** (DEC-037) | Belum Mulai |
+| Bootcamp — Hari 2-3: pengembangan prototype | 2026-10-14 s/d 2026-10-15 | Belum Mulai — tanggal akhir perlu konfirmasi (Q-030) |
 | Prototype CRM multi-tenant berjalan | Belum ditentukan | Belum Mulai |
 | Laporan pengukuran kecepatan & efektivitas AI | Belum ditentukan | Belum Mulai |
 
@@ -104,10 +108,8 @@ Field berikut belum tersedia dan **tidak boleh diasumsikan** — menunggu input:
 
 | Field | Status | Perlu Keputusan Dari |
 |-------|--------|----------------------|
-| Konfirmasi durasi bootcamp: 13-14 Okt (2 hari) vs ketetapan 3 hari | **Terbuka (Q-029)** | PM/PO |
-| Nama peserta (jumlah sudah: 2 tim x 4 orang) | Belum ada (DEC-034) | Tech Lead |
-| Periode kuota sales (bulanan/kuartalan/tahunan) | **Terbuka (Q-020)** | PM/PO |
-| Nilai default ambang batas performa | **Terbuka (Q-028)** | PM/PO |
+| Tanggal akhir bootcamp | **Terbuka (Q-030)** | PM/PO |
+| Nilai default ambang batas performa | **Terbuka (Q-028)** — rekomendasi PM: 80% | PM/PO |
 | Strategi isolasi teknis multi-tenant | Belum ditentukan (TD-01) | Head of Engineer |
 | Metrik efektivitas AI + baseline pembanding | Belum ditentukan (TD-03/TD-04) | Head of Engineer |
 | Stack teknologi CRM | Belum ditentukan (TD-05) | Head of Engineer |
@@ -115,10 +117,12 @@ Field berikut belum tersedia dan **tidak boleh diasumsikan** — menunggu input:
 | Target tanggal selesai prototype | Belum ditentukan | PM/PO + Head of Engineer |
 
 Catatan: **ruang lingkup fitur MVP** (DEC-015, direvisi DEC-021), **tanggal
-pelaksanaan** (DEC-033), **peserta** (DEC-034), **definisi fungsional
+pelaksanaan & struktur bootcamp** (DEC-037: 3 hari, hari 1 workshop), **peserta**
+(DEC-034; nama tidak diperlukan saat ini — DEC-038), **definisi fungsional
 multi-tenant** (DEC-029), **status M8** (DEC-021), **ambang batas performa
-configurable** (DEC-023), **SLA tiket** (DEC-025), dan **assessment HR**
-(dikeluarkan, DEC-031) **tidak lagi menjadi field terbuka**.
+configurable** (DEC-023), **periode kuota bulanan** (DEC-035), **istilah tiket**
+(DEC-036), **SLA tiket** (DEC-025), dan **assessment HR** (dikeluarkan, DEC-031)
+**tidak lagi menjadi field terbuka**.
 
 Catatan teknis yang diteruskan ke Head of Engineer: `architecture/open-tech-decisions.md`.
 
@@ -136,6 +140,11 @@ wajib divalidasi sebelum dipakai sebagai dasar perencanaan:
 
 Asumsi lama "bentuk formal kebutuhan CRM dari PO belum ditentukan" **sudah
 terjawab** pada 2026-10-02: bentuknya adalah **BRD** (DEC-017).
+
+Catatan tambahan (DEC-037): bootcamp 3 hari tetapi **hari 1 habis untuk workshop
+finalisasi requirement** — jendela pengembangan efektif hanya 2 hari. Asumsi
+lama "durasi 3 hari cukup" tidak lagi menggambarkan kondisi sebenarnya; lihat
+R-001 dan R-015 di [[raid-log]].
 
 Daftar lengkap ada di [[raid-log]].
 
