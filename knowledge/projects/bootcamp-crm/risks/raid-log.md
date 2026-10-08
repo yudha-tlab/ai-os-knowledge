@@ -3,16 +3,16 @@ title: "RAID Log — Bootcamp Internal CRM"
 type: raid-log
 project: bootcamp-crm
 status: active
-version: "6.0"
+version: "7.0"
 created: 2026-10-02
 modified: 2026-10-02
 changelog:
+  - version: "7.0"
+    date: 2026-10-02
+    purpose: "BRD v1.0 disusun — mitigasi parsial R-015 & penurunan R-005; R-005 kini tinggal menunggu approval, bukan penyusunan"
   - version: "6.0"
     date: 2026-10-02
-    purpose: "Tutup R-016 & D-015 — DEC-042 menyatukan kriteria kelulusan (end-to-end diukur pada kapabilitas backend)
-  - version: "6.0"
-    date: 2026-10-02
-    purpose: "Tutup Q-028 (default ambang 80%, DEC-039) & Q-030 (tanggal akhir diabaikan — fokus durasi, DEC-040); D-008 & D-013 ditutup; tambah D-014 (sasaran core backend, DEC-041)"
+    purpose: "Tutup R-016 & D-015 — DEC-042 menyatukan kriteria kelulusan (end-to-end diukur pada kapabilitas backend)"
   - version: "4.0"
     date: 2026-10-02
     purpose: "Tutup R-014/I-002/I-003 setelah PO mengonfirmasi struktur 3 hari (DEC-037); tambah R-015 (risiko hari 1 workshop) dan perbarui dependency"
@@ -45,12 +45,12 @@ Ringkasan risiko teratas. Detail lengkap, termasuk skala penilaian, ada di
 | R-002 | Metrik AI tidak didefinisikan sebelum bootcamp → pengukuran tanpa baseline | High | High | Tinggi | PM/PO + Head of Engineer | Tetapkan definisi metrik + baseline sebelum hari pertama | Open |
 | R-003 | Peserta belum ditetapkan Tech Lead | Low | Low | Rendah | Tech Lead | **DITUTUP 2026-10-02** — jumlah & pembagian tim cukup (2 tim x 4 orang, DEC-034); nama tidak diperlukan saat ini (DEC-038) | **Closed** |
 | R-004 | Definisi multi-tenant belum dikunci → rework arsitektur | Med | High | Tinggi | Head of Engineer | Kunci definisi teknis sebagai keputusan tertulis | Open |
-| R-005 | Requirement CRM belum siap dalam bentuk yang dapat dieksekusi | Low | Med | Sedang | PM/PO | **Mitigasi dijalankan**: requirement analysis tersusun (12 Epic, 37 US, 23 Objek); sisa pekerjaan adalah BRD | Open — turun dari Tinggi |
+| R-005 | Requirement CRM belum siap dalam bentuk yang dapat dieksekusi | Low | Med | Sedang | PM/PO | **Mitigasi dijalankan**: requirement analysis tersusun (12 Epic, 37 US, 23 Objek); **BRD v1.0 disusun** (30 BR + 8 diagram) — sisa hanya approval | Open — turun dari Tinggi |
 | R-011 | Modul Webhook (M8) berstatus nice to have padahal prinsip produk (DEC-012) mengandalkannya | High | Med | Sedang | PM/PO + Head of Engineer | **DITUTUP 2026-10-02** — PO menerima keberatan PM; M8 masuk MVP minimal (DEC-021) | **Closed** |
 | R-012 | Kebutuhan "assessment tim sales (HR)" di luar pakem CRM dan belum ada pemiliknya → scope creep | Med | Med | Sedang | Sponsor internal + Head of HR | **DITUTUP 2026-10-02** — dikeluarkan dari lingkup CRM (DEC-031) | **Closed** |
 | R-013 | Penandaan status performa sales (EP-007) memerlukan ambang batas & periode kuota yang belum ditetapkan | Low | Low | Rendah | PM/PO | **Keduanya tertutup** — periode kuota **bulanan** (DEC-035) + ambang configurable (DEC-023) dengan **default 80%** (DEC-039) | Open — **turun ke Rendah** |
 | R-014 | Rentang bootcamp 13-14 Okt (2 hari) tidak konsisten dengan ketetapan durasi 3 hari (DEC-003) | Med | Med | Sedang | PM/PO | **DITUTUP 2026-10-02** — PO mengonfirmasi durasi tetap 3 hari dengan hari 1 sebagai workshop (DEC-037). Sisa: tanggal akhir (Q-030) | **Closed** |
-| R-015 | Hari 1 workshop tidak cukup untuk memfinalkan seluruh requirement → requirement masuk hari 2 dalam kondisi belum final, jendela pengembangan menyusut di bawah 2 hari | High | High | Tinggi | PM/PO | Kunci daftar keputusan terbuka & agendakan workshop hari 1 secara ketat; siapkan BRD sebagai bahan dasar sebelum hari 1; tetapkan kriteria "requirement dianggap final" | Open — **baru 2026-10-02** |
+| R-015 | Hari 1 workshop tidak cukup untuk memfinalkan seluruh requirement → requirement masuk hari 2 dalam kondisi belum final, jendela pengembangan menyusut di bawah 2 hari | High | High | Tinggi | PM/PO | Kunci daftar keputusan terbuka & agendakan workshop hari 1 secara ketat; **BRD v1.0 sebagai bahan dasar telah disusun** (section 9 memuat daftar "yang belum final"); tetapkan kriteria "requirement dianggap final" | Open — **baru 2026-10-02; mitigasi parsial: BRD selesai** |
 | R-016 | Kriteria selesai tidak konsisten (DEC-028 end-to-end vs DEC-041 core backend) | — | — | — | PM/PO | **DITUTUP 2026-10-02** — DEC-042 menyatukan kedua definisi: "end-to-end" diukur pada kapabilitas backend | **Closed** |
 
 ## Assumptions (Asumsi)

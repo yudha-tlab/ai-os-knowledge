@@ -27,8 +27,9 @@ changelog:
 
 # Requirement Analysis — CRM Multi-Tenant TLab
 
-**Posisi pipeline:** Langkah nol (lihat `requirement-analysis-template`) — output
-dokumen ini menjadi bahan baku **BRD**. Belum BRD, belum FRD/SRS.
+**Posisi pipeline:** Langkah nol — output dokumen ini **telah diturunkan menjadi
+** **BRD v1.0** (`requirements/brd/bootcamp-crm-brd-v1.md`, 2026-10-02). FRD/SRS
+belum disusun (menunggu approval BRD).
 
 **Sumber:** Arahan langsung Product Owner (Yudha Pratama) pada sesi brainstorm
 2026-10-02. Bukan hasil analisis dokumen klien — tidak ada dokumen CRM/klien di
@@ -229,8 +230,9 @@ inisiatif internal terpisah.
 ## 5. Rekomendasi Pengukuran Performa Sales
 
 PO meminta rekomendasi praktik standar pengukuran performa sales (arahan
-2026-10-02). Berikut hasil riset terhadap sumber industri. **[Rekomendasi
-— belum diputuskan; perlu validasi PO/Head of Sales]**
+2026-10-02). Berikut hasil riset terhadap sumber industri. **[Sudah diputuskan:**
+periode kuota **bulanan** (DEC-035) dan ambang default **80%** (DEC-039);
+scope MVP memakai lapis outcome saja (DEC-027)]
 
 ### 5.1 Prinsip: pisahkan leading indicator dari lagging indicator
 
@@ -441,7 +443,7 @@ teknologi).
 | Q-016 | Tipe pelanggan yang didukung: B2B, B2C, atau keduanya? | Proses 02 | PM/PO | **Terjawab 2026-10-02** — keduanya (DEC-020) |
 | Q-017 | Assessment tim sales (HR) | Proses 12; di luar pakem CRM | Sponsor internal + Head of HR | **Terjawab 2026-10-02** — dikeluarkan dari lingkup CRM (DEC-031) |
 | Q-018 | Assessment HR: bagian produk yang dijual atau kebutuhan internal? | Proses 12 | Sponsor internal | **Terjawab 2026-10-02** — di luar lingkup (DEC-031) |
-| Q-019 | Ambang batas "performa" pada quota attainment | EP-007 | PM/PO | **Terjawab 2026-10-02** — configurable per tenant (DEC-023). **Nilai default masih open** |
+| Q-019 | Ambang batas "performa" pada quota attainment | EP-007 | PM/PO | **Terjawab 2026-10-02** — configurable per tenant (DEC-023). **Nilai default = 80%** (DEC-039) |
 | Q-020 | Periode kuota sales | EP-003 | PM/PO | **Terjawab 2026-10-02** — **bulanan** (DEC-035) |
 | Q-021 | Pemetaan istilah tiket "internal" vs "external" | Proses 06; DEC-019 | PM/PO | **Terjawab 2026-10-02** — berdasarkan asal pemohon: eksternal = pelanggan, internal = karyawan tenant (DEC-022, DEC-036) |
 | Q-022 | Apakah tiket memerlukan SLA? | EP-006 | PM/PO | **Terjawab 2026-10-02** — ya, SLA harus ada (DEC-025) |
@@ -450,7 +452,7 @@ teknologi).
 | Q-025 | Model data pelanggan B2C | EP-002 | PM/PO | **Terjawab 2026-10-02** — Kontak tanpa Akun diperbolehkan (DEC-024) |
 | Q-026 | Spesifikasi webhook | EP-011 | Head of Engineer | **Sebagian terjawab** — retry, rate limit, logging, multiple target (DEC-030); implementasi teknis diteruskan ke Head of Engineer |
 | Q-027 | Status M8 Webhook di MVP | Lingkup MVP | PM/PO + Head of Engineer | **Terjawab 2026-10-02** — masuk MVP minimal (DEC-021, merevisi DEC-015) |
-| Q-028 | **Nilai default ambang batas performa** bila tenant tidak mengonfigurasi | EP-007; DEC-023 | PM/PO | **Terjawab 2026-10-02** — **default 80%** (DEC-039), melengkapi DEC-023. Dasar riset: section 5.5 | menetapkan |
+| Q-028 | **Nilai default ambang batas performa** bila tenant tidak mengonfigurasi | EP-007; DEC-023 | PM/PO | **Terjawab 2026-10-02** — **default 80%** (DEC-039), melengkapi DEC-023. Dasar riset: section 5.5 |
 | Q-029 | Konfirmasi durasi bootcamp | DEC-033 | PM/PO | **Terjawab 2026-10-02** — tetap **3 hari**, hari 1 workshop (DEC-037) |
 | Q-030 | **Tanggal akhir bootcamp**: 13-15 Okt (3 hari dari 13 Okt) atau 13-14 Okt? | DEC-037 | PM/PO | **Ditutup tanpa tanggal (DEC-040)** — PO menegaskan yang mengikat adalah **durasi**, bukan rentang start-end. Bukan field kosong, melainkan keputusan sadar |
 | Q-031 | **Rekonsiliasi kriteria selesai:** DEC-028 (end-to-end modul mandatory) vs DEC-041 (core backend, frontend bukan penghambat) | DEC-028, DEC-041 | PM/PO | **Terjawab 2026-10-02 (DEC-042)** — DEC-028 tetap berlaku; **"end-to-end" diukur pada kapabilitas backend** (terverifikasi via API/kontrak data), bukan kelengkapan UI |

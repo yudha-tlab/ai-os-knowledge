@@ -27,7 +27,7 @@ project tersebut.
 
 | Project | Divisi | Status | Project Profile |
 |---|---|---|---|
-| **Bootcamp Internal CRM** | TLab Internal | Perencanaan (At Risk) — 42 keputusan, semua kewenangan PM/PO tertutup; bootcamp 3 hari mulai 13 Okt (hari 1 = workshop requirement); sasaran = core backend; BRD belum | [[bootcamp-crm/project-profile]] |
+| **Bootcamp Internal CRM** | TLab Internal | Perencanaan (At Risk) — 42 keputusan, semua kewenangan PM/PO tertutup; bootcamp 3 hari mulai 13 Okt (hari 1 = workshop requirement); sasaran = core backend; **BRD v1.0 disusun** (menunggu approval) | [[bootcamp-crm/project-profile]] |
 
 Project pada tabel ini **tidak memiliki klien eksternal** — tidak ada entri di
 `knowledge/clients/`. Dikelola melalui Hermes profile `pm-internal`; profile

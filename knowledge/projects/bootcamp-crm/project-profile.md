@@ -4,10 +4,13 @@ type: project-profile
 project: bootcamp-crm
 client: tlab-internal
 status: active
-version: "1.5"
+version: "1.6"
 created: 2026-10-02
 modified: 2026-10-02
 changelog:
+  - version: "1.6"
+    date: 2026-10-02
+    purpose: "BRD v1.0 disusun (requirements/brd/) — 30 business requirement + 8 diagram. Dependency kritis R-015 terpenuhi; menunggu review PO & approval Head of Product"
   - version: "1.5"
     date: 2026-10-02
     purpose: "DEC-042 — rekonsiliasi kriteria kelulusan selesai; Q-031 ditutup. Seluruh keputusan PM/PO tertutup, tanpa item terbuka milik PM/PO"
@@ -90,6 +93,7 @@ event sebagai permukaan ekstensi.
 - **Stakeholder Register:** [[stakeholder-register]]
 - **Communication Plan:** [[communication-plan]]
 - **Requirement Analysis (bahan baku BRD):** [[requirement-analysis]]
+- **BRD:** [[bootcamp-crm-brd-v1]] (requirements/brd/)
 - **Requirement Backlog:** [[requirement-backlog]]
 - **Risk Register:** [[risk-register]]
 - **RAID Log:** [[raid-log]]
@@ -102,7 +106,7 @@ event sebagai permukaan ekstensi.
 | Milestone | Target Tanggal | Status |
 |-----------|---------------|--------|
 | Requirement produk CRM tersusun (bahan baku BRD) | 2026-10-02 | **Selesai** |
-| BRD CRM disusun | Belum ditentukan — siap dimulai | Belum Mulai |
+| BRD CRM disusun | 2026-10-02 | **Selesai (v1.0)** — menunggu review PO & approval Head of Product |
 | Bootcamp — Hari 1: workshop finalisasi requirement | **2026-10-13** (DEC-037) | Belum Mulai |
 | Bootcamp — Hari 2-3: pengembangan core backend | Mengikuti hari 1 | Belum Mulai — tanggal akhir tidak ditetapkan (DEC-040) |
 | **Core backend CRM menyelesaikan seluruh fitur mandatory** (DEC-041) | Belum ditentukan | Belum Mulai |

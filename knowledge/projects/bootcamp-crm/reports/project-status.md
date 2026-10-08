@@ -3,11 +3,14 @@ title: "Project Status — Bootcamp Internal CRM"
 type: project-status
 project: bootcamp-crm
 status: active
-version: "6.0"
+version: "7.0"
 created: 2026-10-02
 modified: 2026-10-02
 date: 2026-10-02
 changelog:
+  - version: "7.0"
+    date: 2026-10-02
+    purpose: "BRD v1.0 disusun (requirements/brd/) — 30 business requirement + 8 diagram. Dependency kritis R-015 terpenuhi; sisa: review PO & approval Head of Product, lalu 4 item teknis Head of Engineer"
   - version: "6.0"
     date: 2026-10-02
     purpose: "DEC-042 — rekonsiliasi kriteria kelulusan selesai (end-to-end diukur pada kapabilitas backend); Q-031, R-016, D-015 ditutup. Tidak ada sisa keputusan PM/PO"
@@ -84,16 +87,18 @@ High/High** dan risiko baru R-015 tercatat.
 
 ## Rencana Periode Berikutnya
 
-- Menyusun **BRD** dari `requirement-analysis.md` — **sebelum 13 Oktober**, karena
-  BRD adalah bahan dasar workshop hari 1 (DEC-037).
+- **BRD v1.0 telah disusun** (`requirements/brd/bootcamp-crm-brd-v1.md`, 30 business
+  requirement + 8 diagram). Sisa langkah: **review PO + approval Head of Product
+  & Project** sebelum dijadikan baseline kerja hari 1.
 - **Menyiapkan agenda workshop hari 1** (13 Okt): sisa pertanyaan teknis,
-  kriteria "requirement dianggap final", pembagian 2 tim.
+  kriteria "requirement dianggap final", pembagian 2 tim. BRD section 9 memuat
+  daftar "Yang Belum Final" sebagai agenda awal.
 - **Menetapkan definisi teknis "core backend selesai"** — turunan DEC-041:
   kontrak API/endpoint per modul mandatory sebagai bukti kelulusan.
 - Menyampaikan catatan teknis kepada Head of Engineer
   (`architecture/open-tech-decisions.md`): isolasi multi-tenant, rancangan
   webhook, metrik efektivitas AI + baseline, stack teknologi.
-- Memperbarui requirement backlog & RAID setelah BRD disusun.
+- Memperbarui requirement backlog & RAID setelah BRD disetujui.
 
 ## Risiko & Isu Utama
 
@@ -131,7 +136,7 @@ Detail di [[decision-log]].
 | Milestone | Target Tanggal | Status |
 |---|---|---|
 | Requirement produk CRM tersusun (bahan baku BRD) | 2026-10-02 | **Selesai** |
-| BRD CRM disusun | Belum ditentukan | Belum Mulai |
+| BRD CRM disusun | 2026-10-02 | **Selesai (v1.0)** — menunggu review PO & approval Head of Product |
 | Bootcamp — Hari 1: workshop finalisasi requirement | 2026-10-13 (DEC-037) | Belum Mulai |
 | Bootcamp — Hari 2-3: pengembangan core backend | Mengikuti hari 1 (tanggal akhir tidak ditetapkan — DEC-040) | Belum Mulai |
 | **Core backend CRM menyelesaikan seluruh fitur mandatory** (DEC-041) | Belum ditentukan | Belum Mulai |

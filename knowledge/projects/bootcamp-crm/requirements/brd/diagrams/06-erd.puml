@@ -1,0 +1,158 @@
+@startuml
+title Diagram 6 — Entity Relationship Diagram (konseptual)
+
+skinparam shadowing false
+skinparam linetype ortho
+skinparam defaultFontSize 11
+hide circle
+
+entity "Tenant" as TEN {
+  * id
+  --
+  nama
+  konfigurasi
+}
+
+entity "Pengguna" as USR {
+  * id
+  --
+  tenant_id
+  role / permission
+}
+
+entity "Akun\n(organisasi — B2B)" as AKN {
+  * id
+  --
+  tenant_id
+  nama
+}
+
+entity "Kontak\n(individu)" as KON {
+  * id
+  --
+  tenant_id
+  akun_id (opsional — B2C)
+}
+
+entity "Lead" as LEAD {
+  * id
+  --
+  tenant_id
+  status
+  pemilik (sales)
+}
+
+entity "Peluang" as PEL {
+  * id
+  --
+  tenant_id
+  nilai deal
+  stage
+  tanggal tutup
+}
+
+entity "Kuota Sales" as KUO {
+  * id
+  --
+  tenant_id
+  sales_id
+  periode BULANAN
+  nilai target
+}
+
+entity "Tiket" as TIK {
+  * id
+  --
+  tenant_id
+  asal pemohon
+  prioritas
+  assignee
+}
+
+entity "Komentar Tiket" as KOM {
+  * id
+  --
+  tiket_id
+  penulis
+  waktu
+}
+
+entity "Riwayat Pergerakan" as RIW {
+  * id
+  --
+  tiket_id
+  perubahan status
+  waktu
+}
+
+entity "Eskalasi" as ESK {
+  * id
+  --
+  tiket_id
+  tujuan
+  waktu
+}
+
+entity "SLA" as SLA {
+  * id
+  --
+  tenant_id
+  prioritas
+  target waktu
+}
+
+entity "Webhook Subscription" as SUB {
+  * id
+  --
+  tenant_id
+  event yang di-subscribe
+}
+
+entity "Webhook Target" as WTG {
+  * id
+  --
+  subscription_id
+  endpoint
+}
+
+entity "Delivery Log" as LOG {
+  * id
+  --
+  target_id
+  status kirim
+  percobaan / retry
+}
+
+TEN ||--o{ USR
+TEN ||--o{ AKN
+TEN ||--o{ KON
+TEN ||--o{ LEAD
+TEN ||--o{ PEL
+TEN ||--o{ TIK
+TEN ||--o{ SLA
+TEN ||--o{ SUB
+TEN ||--o{ KUO
+
+AKN |o--o{ KON : "B2B: kontak di bawah akun\nB2C: kontak tanpa akun"
+LEAD ||..o{ KON : konversi
+LEAD ||..o{ AKN : konversi
+LEAD ||..o{ PEL : konversi
+PEL }o--|| AKN
+PEL }o--|| KON
+KUO }o--|| USR : target per sales
+
+TIK ||--o{ KOM
+TIK ||--o{ RIW
+TIK ||--o| ESK
+TIK }o--|| SLA : mengacu prioritas
+TIK }o--o| KON : pemohon eksternal
+TIK }o--o| USR : pemohon internal
+TIK }o--|| USR : assignee
+
+SUB ||--o{ WTG : fan-out (DEC-030)
+WTG ||--o{ LOG
+
+note bottom of KON
+  Kontak B2C boleh berdiri tanpa Akun (DEC-024).
+end note
+@enduml

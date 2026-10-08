@@ -1,0 +1,53 @@
+@startuml
+title Diagram 7 — Alur Webhook (outbound & inbound)
+
+skinparam shadowing false
+skinparam defaultFontSize 11
+skinparam sequenceMessageAlign left
+autonumber
+
+participant "Core CRM" as CRM
+participant "Event Layer\n(M8)" as EVT
+participant "Delivery Log" as LOG
+participant "Sistem Klien" as EXT
+participant "Service Eksternal\n(buatan klien)" as SVC
+
+== Outbound: CRM → sistem klien (prioritas, DEC-013) ==
+
+CRM -> EVT : perubahan status / entitas\n(lead, peluang, tiket)
+activate EVT
+EVT -> EVT : susun payload event
+EVT -> LOG : catat event keluar
+loop untuk setiap target (fan-out, DEC-030)
+  EVT -> EXT : POST event
+  alt terkirim (2xx)
+    EVT -> LOG : catat sukses
+  else gagal
+    EVT -> LOG : catat gagal
+    loop retry dengan backoff
+      EVT -> EXT : kirim ulang
+    end
+    note right of EVT
+      Rate limit diterapkan agar
+      sistem klien tidak dibanjiri.
+    end note
+  end
+end
+deactivate EVT
+EXT -> SVC : teruskan event
+SVC -> SVC : jalankan logika kustom\ndi luar core
+
+== Inbound: sistem klien → CRM (DEC-013) ==
+
+EXT -> CRM : kirim data\n(lead / tiket)
+CRM -> CRM : validasi & simpan
+CRM -> EVT : terbitkan event internal
+CRM -> LOG : catat event masuk
+CRM --> EXT : konfirmasi terima
+
+note over CRM, SVC
+  Semua kustomisasi klien bersifat ASYNCHRONOUS.
+  Validasi blocking di dalam core = di luar lingkup MVP (DEC-014).
+  Spesifikasi teknis (signing, dead-letter, dsb.) milik Head of Engineer (TD-02).
+end note
+@enduml

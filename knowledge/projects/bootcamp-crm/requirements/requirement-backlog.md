@@ -3,14 +3,17 @@ title: "Requirement Backlog — Bootcamp Internal CRM"
 type: requirement-backlog
 project: bootcamp-crm
 status: active
-version: "3.3"
+version: "3.4"
 created: 2026-10-02
 modified: 2026-10-02
 changelog:
-  - version: "3.3"
+  - version: "3.4"
+    date: 2026-10-02
+    purpose: "BRD v1.0 disusun (30 business requirement, 8 diagram) — requirement produk kini masuk tahap dokumen resmi; status requirement modul mandatory menjadi Basis BRD"
+  - version: "3.4"
     date: 2026-10-02
     purpose: "Tutup Q-031 (DEC-042) — kriteria kelulusan disatukan: end-to-end diukur pada kapabilitas backend; REQ-037/REQ-039 tidak lagi perlu rekonsiliasi"
-  - version: "3.3"
+  - version: "3.2"
     date: 2026-10-02
     purpose: "Sinkron dengan DEC-039 s/d DEC-041 — default ambang performa 80%, tanggal akhir bootcamp tidak material, sasaran output core backend; Q-028/Q-030 ditutup, Q-031 dibuka"
   - version: "3.1"

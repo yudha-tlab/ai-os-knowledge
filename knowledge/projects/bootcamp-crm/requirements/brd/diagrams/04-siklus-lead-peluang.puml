@@ -1,0 +1,48 @@
+@startuml
+title Diagram 4 — Siklus Hidup Lead → Peluang
+
+skinparam shadowing false
+skinparam defaultFontSize 12
+
+state "Lead Baru" as LB
+state "Lead — Kualifikasi" as LK
+state "Lead — Hilang" as LH
+state "Kontak + Akun + Peluang\n(hasil konversi)" as CONV
+
+[*] --> LB : lead ditangkap\n(manual / webhook inbound)
+LB --> LK : penugasan ke sales\n+ mulai kualifikasi
+LK --> LH : tidak lolos kualifikasi
+LK --> CONV : konversi
+
+state "Pipeline Peluang" as PIPE {
+  state "Stage 1" as S1
+  state "Stage 2" as S2
+  state "Stage ..." as SN
+  state "Closed-Won" as CW
+  state "Closed-Lost" as CL
+
+  [*] --> S1
+  S1 --> S2
+  S2 --> SN
+  SN --> CW : penutupan
+  SN --> CL : penutupan
+}
+
+CONV --> S1
+CW --> [*]
+CL --> [*]
+
+note right of PIPE
+  Jumlah dan nama stage BELUM ditetapkan
+  di knowledge base — perlu finalisasi hari 1.
+  Diagram ini menunjukkan pola, bukan daftar stage final.
+
+  Nilai deal pada Closed-Won menjadi
+  sumber revenue & quota attainment (DEC-016).
+end note
+
+note bottom of LH
+  Alasan hilang dicatat untuk analisis,
+  bukan untuk penilaian individu.
+end note
+@enduml

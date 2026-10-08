@@ -3,7 +3,7 @@ title: "Project Context Pack — Bootcamp Internal CRM"
 type: project-context-pack
 project: bootcamp-crm
 status: draft-v4
-version: "5.0"
+version: "6.0"
 created: 2026-10-02
 modified: 2026-10-02
 depends_on:
@@ -13,10 +13,13 @@ depends_on:
   - requirement-analysis
 scope: Aggregated key fields untuk project internal TLab — Bootcamp CRM
 changelog:
-  - version: "5.0"
+  - version: "6.0"
+    date: 2026-10-02
+    purpose: "BRD v1.0 disusun — dependency kritis R-015 terpenuhi; requirement analysis kini punya turunan dokumen resmi (30 BR + 8 diagram)"
+  - version: "6.0"
     date: 2026-10-02
     purpose: "DEC-042 — kriteria kelulusan disatukan (end-to-end diukur pada kapabilitas backend); Q-031 ditutup. Tidak ada item terbuka milik PM/PO"
-  - version: "5.0"
+  - version: "4.0"
     date: 2026-10-02
     purpose: "Terapkan keputusan lanjutan PO — struktur 3 hari dengan hari 1 workshop (DEC-037), kuota bulanan (DEC-035), istilah tiket (DEC-036)"
   - version: "3.0"
@@ -70,7 +73,8 @@ Nice to have: M5 Activity saja.
    terpisah.
 3. **Penyusunan requirement**: PM diberi mandat menyusun requirement. Status:
    requirement produk CRM tersusun sebagai bahan baku BRD (12 Epic, 37 User
-   Story, 23 Objek); BRD belum disusun.
+   Story, 23 Objek) dan **BRD v1.0 sudah disusun** — menunggu review PO &
+   approval Head of Product.
 4. **Peran PO**: PM berperan sebagai Product Owner yang bertindak selaku klien
    pemilik kebutuhan CRM, mensimulasikan alur permintaan requirement nyata.
 5. **Penetapan peserta**: Tech Lead membagi peserta. Status: jumlah & pembagian
@@ -113,6 +117,9 @@ Nice to have: M5 Activity saja.
 - Bootstrap project selesai; dokumen starter + context pack dibuat.
 - Requirement analysis produk CRM tersusun: 12 Epic, 37 User Story, 23 Objek,
   10 stakeholder, 35 baris proses bisnis, 36 baris SPOK.
+- **BRD v1.0 disusun** (`requirements/brd/bootcamp-crm-brd-v1.md`): 30 business
+  requirement (BR-001..BR-033), peta proses→modul→peran, kriteria keberhasilan,
+  dan **8 diagram** (PNG + SVG + sumber PlantUML).
 - Requirement backlog: REQ-001 s/d REQ-037.
 - Decision log: 42 keputusan (DEC-001 s/d DEC-042).
 - Risk register: 16 risiko (R-001 s/d R-016), 5 ditutup; R-001 naik ke High/High.
@@ -123,7 +130,8 @@ Nice to have: M5 Activity saja.
 ## Dependencies
 
 - [x] Penetapan tanggal & struktur pelaksanaan — 3 hari mulai 13 Okt, hari 1 workshop (DEC-037)
-- [ ] **BRD selesai & disetujui sebelum 13 Okt** — PM/PO + Head of Product
+- [x] **BRD v1.0 disusun** 2026-10-02 (`requirements/brd/`) — sisa: **review PO + approval Head of Product & Project**
+- [ ] Approval BRD oleh Head of Product & Project (dependency R-015)
 - [ ] Definisi teknis multi-tenant — Head of Engineer (TD-01)
 - [ ] Rancangan teknis webhook — Head of Engineer (TD-02)
 - [ ] Metrik efektivitas AI + baseline — Head of Engineer (TD-03/TD-04)

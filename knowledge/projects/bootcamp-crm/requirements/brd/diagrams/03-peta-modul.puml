@@ -1,0 +1,57 @@
+@startuml
+title Diagram 3 — Peta Modul & Dependensi (M1–M8)
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam defaultFontSize 12
+left to right direction
+
+package "Fondasi" {
+  [M1 · Tenancy & Kendali Akses] as M1
+}
+
+package "Mandatory (MVP)" {
+  [M2 · Contact & Account] as M2
+  [M3 · Lead Management] as M3
+  [M4 · Pipeline / Opportunity] as M4
+  [M6 · Ticketing] as M6
+  [M7 · Reporting & Analytics] as M7
+}
+
+package "MVP minimal" {
+  [M8 · Webhook / Event Layer] as M8
+}
+
+package "Nice to have" {
+  [M5 · Activity Management] as M5
+}
+
+M1 --> M2
+M1 --> M3
+M1 --> M4
+M1 --> M6
+M1 --> M7
+M1 --> M8
+
+M3 --> M2 : konversi lead
+M4 --> M2 : peluang merujuk kontak/akun
+M6 --> M2 : tiket merujuk pelanggan
+M7 ..> M4 : revenue & pipeline
+M7 ..> M6 : data tiket
+M7 ..> M3 : data lead
+M5 ..> M2
+M5 ..> M4
+M8 ..> M3 : event perubahan status lead
+M8 ..> M4 : event pergerakan peluang
+M8 ..> M6 : event tiket
+
+note bottom of M8
+  Event outbound inti + 1 endpoint inbound (DEC-021).
+  Retry, rate limit, logging, fan-out (DEC-030).
+end note
+
+note bottom of M1
+  M1 adalah fondasi — isolasi data antar tenant
+  tidak dapat ditambahkan belakangan tanpa rework.
+end note
+@enduml

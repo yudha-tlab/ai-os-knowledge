@@ -1,0 +1,63 @@
+@startuml
+title Diagram 2 — Proses Bisnis End-to-End (P01–P09)
+
+skinparam shadowing false
+skinparam defaultFontSize 12
+
+start
+partition "P01–P02 · Input: Lead & Pelanggan" {
+  :Penangkapan lead
+  (form CRM atau webhook inbound);
+  :Distribusi lead ke sales;
+  :Kualifikasi lead;
+  if (Lolos kualifikasi?) then (ya)
+    :Konversi menjadi
+    Kontak + Akun + Peluang;
+  else (tidak)
+    :Lead ditandai hilang;
+    stop
+  endif
+}
+partition "P03 · Perencanaan: Kuota" {
+  :Penetapan kuota sales
+  per periode BULANAN;
+}
+partition "P04 · Pelaksanaan: Pipeline" {
+  :Pengelolaan peluang
+  (nilai, stage, tanggal tutup);
+  :Pergerakan stage peluang;
+  :Penutupan peluang
+  (closed-won / closed-lost + alasan);
+}
+partition "P06 · Pelaksanaan: Tiket" {
+  :Pembuatan tiket
+  (eksternal: pelanggan / internal: karyawan tenant / webhook);
+  :Penugasan dan perubahan status;
+  if (Perlu eskalasi?) then (ya)
+    :Eskalasi ke tim internal;
+  endif
+  :Penanganan tiket + komentar;
+  :Pemantauan SLA per prioritas;
+  :Penutupan tiket + catatan penyelesaian;
+}
+partition "P07 · Evaluasi: Performa Sales" {
+  :Perhitungan quota attainment
+  (closed-won dibanding kuota bulanan);
+  :Penandaan status performa
+  (ambang batas configurable, default 80%);
+}
+partition "P08–P09 · Output: Pelaporan" {
+  :Laporan revenue (closed-won);
+  :Laporan pipeline dan forecast;
+  :Laporan performa sales;
+  :Laporan tiket + kepatuhan SLA;
+}
+:Core platform CRM selesai
+(backend menyelesaikan seluruh fitur mandatory);
+note right
+  P05 (Aktivitas) = nice to have, di luar lingkup MVP.
+  P10–P11 (Tenancy, Webhook) = proses pendukung
+  yang berjalan lintas semua fase di atas.
+end note
+stop
+@enduml

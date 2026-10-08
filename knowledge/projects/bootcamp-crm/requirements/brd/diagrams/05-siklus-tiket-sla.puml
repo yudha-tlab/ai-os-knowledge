@@ -1,0 +1,46 @@
+@startuml
+title Diagram 5 — Siklus Tiket & SLA (satu state machine)
+
+skinparam shadowing false
+skinparam defaultFontSize 12
+
+state "Tiket Masuk" as IN
+state "Ditugaskan" as ASG
+state "Dalam Penanganan" as PROG
+state "Dieskalasi\n(ke tim internal)" as ESC
+state "Selesai" as DONE
+state "Ditutup" as CLOSED
+
+[*] --> IN : eksternal (pelanggan)\ninternal (karyawan tenant)\nwebhook inbound
+
+IN --> ASG : penugasan agent
+ASG --> PROG : penanganan dimulai
+PROG --> ESC : melewati kewenangan agent
+ESC --> PROG : ditangani tim internal
+PROG --> DONE : pekerjaan selesai
+DONE --> CLOSED : penutupan + catatan penyelesaian
+DONE --> PROG : dibuka kembali
+CLOSED --> [*]
+
+note right of PROG
+  SLA dihitung terhadap target waktu
+  PER PRIORITAS (DEC-025).
+  Pelanggaran SLA ditandai otomatis.
+
+  Komentar dan riwayat pergerakan
+  terekam pada tiket yang sama (DEC-028).
+end note
+
+note bottom of ESC
+  Eskalasi adalah ATRIBUT pada tiket,
+  bukan jenis tiket terpisah (DEC-019).
+
+  Satu state machine untuk kedua jalur —
+  tidak dibedakan per jalur (DEC-026).
+end note
+
+note top of IN
+  Daftar status final adalah usulan dan
+  perlu difinalkan pada workshop hari 1.
+end note
+@enduml

@@ -1,0 +1,56 @@
+@startuml
+title Diagram 8 — Peran & Hak Akses per Modul
+
+skinparam shadowing false
+skinparam defaultFontSize 11
+left to right direction
+
+actor "Sales Rep" as SR
+actor "Sales Manager" as SM
+actor "Agent Support" as AS
+actor "Support Lead" as SL
+actor "Tenant Admin" as TA
+
+rectangle "CRM Multi-Tenant — per Tenant" {
+  usecase "Kelola lead" as UC1
+  usecase "Kelola kontak & akun" as UC2
+  usecase "Kelola peluang\n& stage" as UC3
+  usecase "Tetapkan kuota bulanan" as UC4
+  usecase "Lihat status performa\n& laporan performa" as UC5
+  usecase "Lihat laporan revenue\n& pipeline" as UC6
+  usecase "Tangani tiket\n(status, assignee, komentar)" as UC7
+  usecase "Eskalasi tiket" as UC8
+  usecase "Lihat riwayat & SLA tiket" as UC9
+  usecase "Lihat laporan tiket" as UC10
+  usecase "Kelola tenant, user,\nrole & permission" as UC11
+  usecase "Konfigurasi webhook\n& pantau delivery log" as UC12
+}
+
+SR --> UC1
+SR --> UC2
+SR --> UC3
+SR --> UC7
+
+SM --> UC3
+SM --> UC4
+SM --> UC5
+SM --> UC6
+SM --> UC7
+
+AS --> UC7
+AS --> UC8
+AS --> UC9
+
+SL --> UC7
+SL --> UC9
+SL --> UC10
+
+TA --> UC11
+TA --> UC12
+
+note bottom of UC11
+  Isolasi data antar tenant bersifat WAJIB —
+  pelanggaran isolasi = kegagalan paling berat
+  pada produk multi-tenant (DEC-029).
+end note
+@enduml
