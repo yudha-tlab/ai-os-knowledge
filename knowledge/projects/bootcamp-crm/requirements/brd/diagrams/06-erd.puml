@@ -121,7 +121,7 @@ entity "Webhook Target" as WTG {
   endpoint
 }
 
-entity "Hasil Asistensi AI\n(OB-032 — M10)" as AIO {
+entity "Hasil Asistensi AI\n(M10)" as AIO {
   * id
   --
   tenant_id
@@ -138,7 +138,7 @@ entity "Delivery Log" as LOG {
   percobaan / retry
 }
 
-package "FASE ROADMAP (M9) — DEC-045" #LightGray {
+package "FASE ROADMAP (M9) — SaaS Platform Administration" #LightGray {
   entity "Paket Pricing (Plan)" as PLAN {
     * id
     --
@@ -226,26 +226,22 @@ LPF }o--o{ SKOR
 AKT }o--o| PEL
 AKT }o--o| LEAD
 
-SUB ||--o{ WTG : fan-out (DEC-030)
+SUB ||--o{ WTG : fan-out
 WTG ||--o{ LOG
 
 note bottom of KON
-  Kontak B2C boleh berdiri tanpa Akun (DEC-024).
+  Kontak B2C boleh berdiri tanpa Akun.
 end note
 
 note bottom of AIO
-  Titik simpan output AI (TD-07) — WAJIB dirancang
+  Titik simpan output AI — WAJIB dirancang
   sejak M1 agar use case AI prediktif (roadmap)
   tidak memerlukan migrasi data.
-  Konteks AI dibatasi tenant (BR-045).
+  Konteks AI dibatasi tenant.
 end note
 
 note bottom of TEN
-  Entitas tiket (OB-007/008/009/021/022/023) dan
-  Laporan Tiket (OB-015) DIHAPUS dari model
-  karena M6 keluar dari lingkup (CR-20261008-001).
-
-  Entitas dalam package abu-abu = FASE ROADMAP (DEC-045),
+  Entitas dalam package abu-abu = FASE ROADMAP,
   di luar MVP bootcamp. Yang WAJIB diperhitungkan
   sekarang: kolom status_langganan pada Tenant,
   agar tidak perlu rework saat M9 dikerjakan.

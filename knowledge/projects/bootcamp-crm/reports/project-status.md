@@ -3,11 +3,14 @@ title: "Project Status — Bootcamp Internal CRM"
 type: project-status
 project: bootcamp-crm
 status: active
-version: "9.3"
+version: "9.4"
 created: 2026-10-02
 modified: 2026-10-08
 date: 2026-10-08
 changelog:
+  - version: "9.4"
+    date: 2026-10-08
+    purpose: "BRD v4.0 final — dokumen presentasi bersih dari sitasi & catatan proses (riwayat dipindah ke brd-changelog.md); diagram dirender ulang tanpa sitasi"
   - version: "9.3"
     date: 2026-10-08
     purpose: "DEC-048 — penyedia model AI M10 = TLab LLM (akses tersedia); Q-040 ditutup; agenda hari 1 menjadi 6 item"

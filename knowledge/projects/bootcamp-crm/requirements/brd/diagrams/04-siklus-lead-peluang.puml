@@ -15,17 +15,23 @@ LK --> LH : tidak lolos kualifikasi
 LK --> CONV : konversi
 
 state "Pipeline Peluang" as PIPE {
-  state "Stage 1" as S1
-  state "Stage 2" as S2
-  state "Stage ..." as SN
+  state "Qualifikasi" as S1
+  state "Analisis Kebutuhan" as S2
+  state "Presentasi / Demo" as S3
+  state "Proposal" as S4
+  state "Negosiasi" as S5
+  state "Menunggu Keputusan" as S6
   state "Closed-Won" as CW
   state "Closed-Lost" as CL
 
   [*] --> S1
   S1 --> S2
-  S2 --> SN
-  SN --> CW : penutupan
-  SN --> CL : penutupan
+  S2 --> S3
+  S3 --> S4
+  S4 --> S5
+  S5 --> S6
+  S6 --> CW : menang
+  S6 --> CL : kalah (+alasan)
 }
 
 CONV --> S1
@@ -33,12 +39,13 @@ CW --> [*]
 CL --> [*]
 
 note right of PIPE
-  Jumlah dan nama stage BELUM ditetapkan
-  di knowledge base — perlu finalisasi hari 1.
-  Diagram ini menunjukkan pola, bukan daftar stage final.
+  Stage default: 6 stage + 2 outcome.
+  Configurable per tenant; alur B2C boleh lebih pendek.
+  Tahap prospecting tidak diulang di sini —
+  sudah dilayani Lead Management.
 
   Nilai deal pada Closed-Won menjadi
-  sumber revenue & quota attainment (DEC-016).
+  sumber revenue & quota attainment.
 end note
 
 note bottom of LH

@@ -28,7 +28,7 @@ package "Nice to have" {
 
 package "Fase Roadmap (di luar MVP)" #LightGray {
   [M9 · Platform Administration] as M9
-  [EP-016 · AI Prediktif] as AIP
+  [AI Prediktif] as AIP
 }
 
 M1 --> M2
@@ -57,24 +57,18 @@ note bottom of M1
   M1 adalah fondasi — isolasi data antar tenant
   tidak dapat ditambahkan belakangan tanpa rework.
   Tenant model WAJIB menyimpan status langganan
-  sejak awal (TD-06, DEC-045).
+  sejak awal agar SaaS (M9) tidak perlu rework.
 end note
 
 note bottom of M8
-  Event outbound inti + 1 endpoint inbound (DEC-021).
-  Retry, rate limit, logging, fan-out (DEC-030).
+  Event outbound inti + 1 endpoint inbound.
+  Retry, rate limit, logging, fan-out.
 end note
 
 note bottom of M10
-  Service TERPISAH — tidak menyentuh kode core
-  (DEC-012). Konsumen event M8 + baca API core.
-  MVP minimal: 1-2 use case generatif
-  (CR-20261008-002). Prediktif -> EP-016 (roadmap).
-end note
-
-note top of M7
-  M6 Ticketing DIKELUARKAN dari MVP
-  (CR-20261008-001 / DEC-043) — domain service,
-  bukan core CRM untuk sales tracking.
+  Service TERPISAH — tidak menyentuh kode core.
+  Mengonsumsi event M8 + membaca API core.
+  MVP minimal: 1-2 use case generatif.
+  Prediktif -> fase roadmap.
 end note
 @enduml

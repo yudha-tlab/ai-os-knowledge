@@ -3,7 +3,7 @@ title: "Project Context Pack — Bootcamp Internal CRM"
 type: project-context-pack
 project: bootcamp-crm
 status: draft-v5
-version: "8.3"
+version: "8.4"
 created: 2026-10-02
 modified: 2026-10-08
 depends_on:
@@ -13,6 +13,9 @@ depends_on:
   - requirement-analysis
 scope: Aggregated key fields untuk project internal TLab — Bootcamp CRM
 changelog:
+  - version: "8.4"
+    date: 2026-10-08
+    purpose: "BRD v4.0 final — dokumen dibersihkan dari sitasi/catatan proses untuk presentasi hari 1; riwayat dokumen dipindah ke brd-changelog.md; diagram dirender ulang tanpa sitasi"
   - version: "8.3"
     date: 2026-10-08
     purpose: "DEC-048 — Q-040 terjawab (TLab LLM, akses tersedia); Q-041 terjawab (AI-01); agenda hari 1 6 item"
@@ -92,8 +95,8 @@ Nice to have: M5 Activity saja.
 3. **Penyusunan requirement**: PM diberi mandat menyusun requirement. Status:
    requirement produk CRM tersusun sebagai bahan baku BRD (MVP: 12 Epic, 29 User
    Story, 17 Objek; termasuk integrasi AI M10; fase roadmap +Epic AI prediktif &
-   M9) dan **BRD v3.1 sudah disusun** — menunggu review PO & approval Head of
-   Product.
+   M9) dan **BRD telah difinalkan sebagai dokumen presentasi (v4.0)** — siap dibawa ke
+   workshop hari 1.
 4. **Peran PO**: PM berperan sebagai Product Owner yang bertindak selaku klien
    pemilik kebutuhan CRM, mensimulasikan alur permintaan requirement nyata.
 5. **Penetapan peserta**: Tech Lead membagi peserta. Status: jumlah & pembagian
@@ -153,7 +156,7 @@ Nice to have: M5 Activity saja.
 ## Dependencies
 
 - [x] Penetapan tanggal & struktur pelaksanaan — 3 hari mulai 13 Okt, hari 1 workshop (DEC-037)
-- [x] **BRD v3.2 disusun** 2026-10-08 (`requirements/brd/`) — DEC-047 memfinalkan 3 item §9 (stage pipeline, kriteria selesai, use case AI); sisa review PO + approval Head of Product & Project
+- [x] **BRD v4.0 final — bahan presentasi hari 1** 2026-10-08 (`requirements/brd/`) — DEC-047 memfinalkan 3 item §9 (stage pipeline, kriteria selesai, use case AI); sisa review PO + approval Head of Product & Project
 - [ ] Approval BRD oleh Head of Product & Project (dependency R-015)
 - [ ] Definisi teknis multi-tenant — Head of Engineer (TD-01)
 - [ ] Rancangan teknis webhook — Head of Engineer (TD-02)

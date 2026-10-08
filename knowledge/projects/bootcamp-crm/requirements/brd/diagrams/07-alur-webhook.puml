@@ -1,5 +1,5 @@
 @startuml
-title Diagram 7 — Alur Webhook (outbound & inbound)
+title Diagram 6 — Alur Webhook (outbound & inbound)
 
 skinparam shadowing false
 skinparam defaultFontSize 11
@@ -12,13 +12,13 @@ participant "Delivery Log" as LOG
 participant "Sistem Klien" as EXT
 participant "Service Eksternal\n(buatan klien)" as SVC
 
-== Outbound: CRM → sistem klien (prioritas, DEC-013) ==
+== Outbound: CRM → sistem klien (prioritas) ==
 
 CRM -> EVT : perubahan status / entitas\n(lead, peluang)
 activate EVT
 EVT -> EVT : susun payload event
 EVT -> LOG : catat event keluar
-loop untuk setiap target (fan-out, DEC-030)
+loop untuk setiap target (fan-out)
   EVT -> EXT : POST event
   alt terkirim (2xx)
     EVT -> LOG : catat sukses
@@ -37,7 +37,7 @@ deactivate EVT
 EXT -> SVC : teruskan event
 SVC -> SVC : jalankan logika kustom\ndi luar core
 
-== Inbound: sistem klien → CRM (DEC-013) ==
+== Inbound: sistem klien → CRM ==
 
 EXT -> CRM : kirim data\n(lead)
 CRM -> CRM : validasi & simpan
@@ -47,10 +47,9 @@ CRM --> EXT : konfirmasi terima
 
 note over CRM, SVC
   Semua kustomisasi klien bersifat ASYNCHRONOUS.
-  Validasi blocking di dalam core = di luar lingkup MVP (DEC-014).
+  Validasi blocking di dalam core = di luar lingkup MVP.
 
-  Event tiket tidak lagi termasuk — M6 keluar dari
-  lingkup (CR-20261008-001). Spesifikasi teknis
-  (signing, dead-letter) milik Head of Engineer (TD-02).
+  Spesifikasi teknis (signing, dead-letter,
+  kebijakan retry detail) ditetapkan Head of Engineer.
 end note
 @enduml

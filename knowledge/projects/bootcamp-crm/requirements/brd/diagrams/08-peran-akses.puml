@@ -1,5 +1,5 @@
 @startuml
-title Diagram 8 — Peran & Hak Akses per Modul (fokus sales)
+title Diagram 7 — Peran & Hak Akses per Modul (fokus sales)
 
 skinparam shadowing false
 skinparam defaultFontSize 11
@@ -39,9 +39,6 @@ TA --> UC12
 note bottom of UC11
   Isolasi data antar tenant bersifat WAJIB —
   pelanggaran isolasi = kegagalan paling berat
-  pada produk multi-tenant (DEC-029).
-
-  Peran Agent Support & Support Lead (M6) keluar
-  dari lingkup — CR-20261008-001.
+  pada produk multi-tenant.
 end note
 @enduml

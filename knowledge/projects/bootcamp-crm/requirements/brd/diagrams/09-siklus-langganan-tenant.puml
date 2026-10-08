@@ -34,15 +34,15 @@ Ditolak --> [*]
 Nonaktif --> [*]
 
 note right of Aktif
-  Fase roadmap (DEC-045) — DI LUAR MVP bootcamp.
+  Fase roadmap — DI LUAR MVP bootcamp.
   Titik yang WAJIB sudah diperhitungkan
   tenant model M1: status langganan
   dan kuota paket (agar tidak rework).
 end note
 
 note bottom of Suspended
-  Soft delete (BR-034) = nonaktif tanpa
-  kehilangan data; kebijakan retensi
-  data = Q-039 (terbuka).
+  Soft delete = nonaktif tanpa kehilangan
+  data; kebijakan retensi data menunggu
+  keputusan fase roadmap.
 end note
 @enduml
