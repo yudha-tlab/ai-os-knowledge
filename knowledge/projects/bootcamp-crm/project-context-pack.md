@@ -2,10 +2,10 @@
 title: "Project Context Pack — Bootcamp Internal CRM"
 type: project-context-pack
 project: bootcamp-crm
-status: draft-v4
-version: "6.0"
+status: draft-v5
+version: "7.0"
 created: 2026-10-02
-modified: 2026-10-02
+modified: 2026-10-08
 depends_on:
   - project-profile
   - project-charter
@@ -13,6 +13,9 @@ depends_on:
   - requirement-analysis
 scope: Aggregated key fields untuk project internal TLab — Bootcamp CRM
 changelog:
+  - version: "7.0"
+    date: 2026-10-08
+    purpose: "CR-20261008-001 / DEC-043 — modul Ticketing (M6) & Pelaporan Tiket (EP-009) dikeluarkan dari MVP; lingkup difokuskan ke business process sales. BRD v2.0 (25 BR, 7 diagram); modul mandatory 7→6"
   - version: "6.0"
     date: 2026-10-02
     purpose: "BRD v1.0 disusun — dependency kritis R-015 terpenuhi; requirement analysis kini punya turunan dokumen resmi (30 BR + 8 diagram)"
@@ -57,9 +60,8 @@ changelog:
 ## Lingkup MVP (DEC-015)
 
 Mandatory: M1 Tenancy, M2 Contact & Account (B2B & B2C), M3 Lead, M4 Pipeline/
-Opportunity, M6 Ticketing (satu entitas — "eksternal" = dari luar, eskalasi ke tim
-internal), M7 Reporting, dan **M8 Webhook/Event Layer (minimal)** — merevisi
-DEC-015 melalui DEC-021.
+Opportunity, M7 Reporting, dan **M8 Webhook/Event Layer (minimal)** — merevisi
+DEC-015 melalui DEC-021 dan CR-20261008-001 (M6 Ticketing dikeluarkan, DEC-043).
 
 Nice to have: M5 Activity saja.
 
@@ -72,8 +74,8 @@ Nice to have: M5 Activity saja.
    prototype CRM multi-tenant. Bootcamp adalah workstream, bukan project
    terpisah.
 3. **Penyusunan requirement**: PM diberi mandat menyusun requirement. Status:
-   requirement produk CRM tersusun sebagai bahan baku BRD (12 Epic, 37 User
-   Story, 23 Objek) dan **BRD v1.0 sudah disusun** — menunggu review PO &
+   requirement produk CRM tersusun sebagai bahan baku BRD (10 Epic, 25 User
+   Story, 16 Objek) dan **BRD v2.0 sudah disusun** — menunggu review PO &
    approval Head of Product.
 4. **Peran PO**: PM berperan sebagai Product Owner yang bertindak selaku klien
    pemilik kebutuhan CRM, mensimulasikan alur permintaan requirement nyata.
@@ -96,7 +98,7 @@ Nice to have: M5 Activity saja.
 
 - ~~Belum ada tanggal pelaksanaan~~ → **terjawab 2026-10-02**: mulai 13 Okt, 3 hari (DEC-037).
 - ~~Belum ada daftar peserta~~ → **terjawab (DEC-034, DEC-038)**: 2 tim x 4 orang; nama tidak diperlukan saat ini.
-- **Jendela pengembangan efektif hanya 2 hari** untuk 7 modul mandatory (DEC-037) → R-001/R-015.
+- **Jendela pengembangan efektif hanya 2 hari** untuk 6 modul mandatory (DEC-037) → R-001/R-015 (beban turun setelah M6 dikeluarkan, CR-20261008-001).
 - **BRD harus selesai sebelum hari 1** karena menjadi bahan workshop (DEC-037).
 - Definisi **teknis** multi-tenant belum dikunci → risiko rework arsitektur
   (definisi fungsional sudah ditetapkan, DEC-029).
@@ -115,13 +117,13 @@ Nice to have: M5 Activity saja.
 ## Outcomes (sejauh ini)
 
 - Bootstrap project selesai; dokumen starter + context pack dibuat.
-- Requirement analysis produk CRM tersusun: 12 Epic, 37 User Story, 23 Objek,
-  10 stakeholder, 35 baris proses bisnis, 36 baris SPOK.
-- **BRD v1.0 disusun** (`requirements/brd/bootcamp-crm-brd-v1.md`): 30 business
-  requirement (BR-001..BR-033), peta proses→modul→peran, kriteria keberhasilan,
-  dan **8 diagram** (PNG + SVG + sumber PlantUML).
-- Requirement backlog: REQ-001 s/d REQ-037.
-- Decision log: 42 keputusan (DEC-001 s/d DEC-042).
+- Requirement analysis produk CRM tersusun: 10 Epic, 25 User Story, 16 Objek,
+  6 stakeholder, 25 baris proses bisnis, 25 baris SPOK.
+- **BRD v2.0 disusun** (`requirements/brd/bootcamp-crm-brd-v1.md`): 25 business
+  requirement (BR-001..BR-033, 8 ticketing dihapus), peta proses→modul→peran,
+  kriteria keberhasilan, dan **7 diagram** (PNG + SVG + sumber PlantUML).
+- Requirement backlog: REQ-001 s/d REQ-037 (5 REQ ticketing ditutup).
+- Decision log: 43 keputusan (DEC-001 s/d DEC-043).
 - Risk register: 16 risiko (R-001 s/d R-016), 5 ditutup; R-001 naik ke High/High.
 - RAID log: 9 asumsi, 4 isu (3 resolved), 14 dependency.
 - Catatan teknis Head of Engineer: `architecture/open-tech-decisions.md` (TD-01 s/d TD-05).
@@ -130,7 +132,7 @@ Nice to have: M5 Activity saja.
 ## Dependencies
 
 - [x] Penetapan tanggal & struktur pelaksanaan — 3 hari mulai 13 Okt, hari 1 workshop (DEC-037)
-- [x] **BRD v1.0 disusun** 2026-10-02 (`requirements/brd/`) — sisa: **review PO + approval Head of Product & Project**
+- [x] **BRD v2.0 disusun** 2026-10-08 (`requirements/brd/`) — sisa: **review PO + approval Head of Product & Project**
 - [ ] Approval BRD oleh Head of Product & Project (dependency R-015)
 - [ ] Definisi teknis multi-tenant — Head of Engineer (TD-01)
 - [ ] Rancangan teknis webhook — Head of Engineer (TD-02)

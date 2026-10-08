@@ -4,10 +4,13 @@ type: project-profile
 project: bootcamp-crm
 client: tlab-internal
 status: active
-version: "1.6"
+version: "1.7"
 created: 2026-10-02
-modified: 2026-10-02
+modified: 2026-10-08
 changelog:
+  - version: "1.7"
+    date: 2026-10-08
+    purpose: "CR-20261008-001 / DEC-043 — modul Ticketing (M6) & Pelaporan Tiket (EP-009) dikeluarkan dari MVP; lingkup difokuskan ke business process sales. BRD v2.0 (25 BR, 7 diagram). Modul mandatory 7→6"
   - version: "1.6"
     date: 2026-10-02
     purpose: "BRD v1.0 disusun (requirements/brd/) — 30 business requirement + 8 diagram. Dependency kritis R-015 terpenuhi; menunggu review PO & approval Head of Product"
@@ -73,8 +76,8 @@ event sebagai permukaan ekstensi.
 | M3 | Lead Management | Mandatory |
 | M4 | Sales Pipeline / Opportunity | Mandatory |
 | M5 | Activity Management | Nice to have |
-| M6 | Ticketing (satu entitas, jalur internal & eksternal) | Mandatory |
-| M7 | Reporting & Analytics (revenue, pipeline, performa sales, tiket) | Mandatory |
+| ~~M6~~ | ~~Ticketing~~ | **DIKELUARKAN dari MVP (CR-20261008-001 / DEC-043)** — domain *service*, bukan core CRM untuk sales tracking |
+| M7 | Reporting & Analytics (revenue, pipeline, performa sales) | Mandatory |
 | M8 | Webhook / Event Layer | **MVP minimal (DEC-021)** — event outbound inti + 1 endpoint inbound. Merevisi DEC-015 |
 
 ## Tim Delivery
@@ -106,7 +109,7 @@ event sebagai permukaan ekstensi.
 | Milestone | Target Tanggal | Status |
 |-----------|---------------|--------|
 | Requirement produk CRM tersusun (bahan baku BRD) | 2026-10-02 | **Selesai** |
-| BRD CRM disusun | 2026-10-02 | **Selesai (v1.0)** — menunggu review PO & approval Head of Product |
+| BRD CRM disusun | 2026-10-02 | **Selesai (v2.0)** — menunggu review PO & approval Head of Product |
 | Bootcamp — Hari 1: workshop finalisasi requirement | **2026-10-13** (DEC-037) | Belum Mulai |
 | Bootcamp — Hari 2-3: pengembangan core backend | Mengikuti hari 1 | Belum Mulai — tanggal akhir tidak ditetapkan (DEC-040) |
 | **Core backend CRM menyelesaikan seluruh fitur mandatory** (DEC-041) | Belum ditentukan | Belum Mulai |
@@ -128,9 +131,11 @@ Catatan: **ruang lingkup fitur MVP** (DEC-015, direvisi DEC-021), **tanggal
 pelaksanaan & struktur bootcamp** (DEC-037: 3 hari, hari 1 workshop), **peserta**
 (DEC-034; nama tidak diperlukan saat ini — DEC-038), **definisi fungsional
 multi-tenant** (DEC-029), **status M8** (DEC-021), **ambang batas performa
-configurable** (DEC-023), **periode kuota bulanan** (DEC-035), **istilah tiket**
-(DEC-036), **SLA tiket** (DEC-025), dan **assessment HR** (dikeluarkan, DEC-031)
-**tidak lagi menjadi field terbuka**.
+configurable** (DEC-023), **periode kuota bulanan** (DEC-035), dan **assessment
+HR** (dikeluarkan, DEC-031) **tidak lagi menjadi field terbuka**.
+
+Dicabut/direvisi 2026-10-08 (CR-20261008-001 / DEC-043): **istilah tiket**
+(DEC-036), **SLA tiket** (DEC-025) — mengikuti keluarnya modul M6 dari MVP.
 
 Catatan teknis yang diteruskan ke Head of Engineer: `architecture/open-tech-decisions.md`.
 

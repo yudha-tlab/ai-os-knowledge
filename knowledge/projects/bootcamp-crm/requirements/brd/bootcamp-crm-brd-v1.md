@@ -3,25 +3,29 @@ title: "Business Requirements Document (BRD) — CRM Multi-Tenant TLab"
 type: brd
 project: bootcamp-crm
 status: Draft — menunggu review Product Owner & approval Head of Product & Project
-version: "1.0"
+version: "2.0"
 created: 2026-10-02
-modified: 2026-10-02
+modified: 2026-10-08
 disusun_oleh: "Yudha Pratama (PM / Product Owner)"
 sumber_utama:
-  - requirement-analysis (v2.4)
-  - requirement-backlog (v3.3)
-  - decision-log (v6.0)
-  - project-charter (v6.0)
+  - requirement-analysis (v2.5)
+  - requirement-backlog (v3.5)
+  - decision-log (v7.0)
+  - project-charter (v7.0)
+  - CR-20261008-001 (penyesuaian lingkup)
 changelog:
+  - version: "2.0"
+    date: 2026-10-08
+    purpose: "Terapkan CR-20261008-001 / DEC-043 — modul Ticketing (M6) & Pelaporan Tiket (EP-009) dikeluarkan dari MVP; lingkup difokuskan ke business process sales. Business requirement 33 → 25 (8 BR ticketing dihapus); diagram 8 → 7. PERBAIKAN: jumlah BR pada v1.0 tertulis 30, aktual 33"
   - version: "1.0"
     date: 2026-10-02
-    purpose: "BRD v1.0 — disusun dari requirement-analysis v2.4 (12 Epic, 37 User Story, 23 Objek). Mencakup 30 business requirement produk CRM multi-tenant, 8 diagram visual, peta proses→modul, kriteria keberhasilan, serta asumsi & batasan. Menjadi bahan dasar workshop finalisasi requirement hari 1 (DEC-037)"
+    purpose: "BRD v1.0 — disusun dari requirement-analysis v2.4 (12 Epic, 37 User Story, 23 Objek). Mencakup business requirement produk CRM multi-tenant, 8 diagram visual, peta proses→modul, kriteria keberhasilan, serta asumsi & batasan. Menjadi bahan dasar workshop finalisasi requirement hari 1 (DEC-037)"
 ---
 
 # Business Requirements Document (BRD) — CRM Multi-Tenant TLab
 
-**Versi:** 1.0 (Draft)
-**Tanggal:** 2026-10-02
+**Versi:** 2.0 (Draft)
+**Tanggal:** 2026-10-02 · direvisi 2026-10-08
 **Disusun Oleh:** Yudha Pratama — PM, berperan sebagai Product Owner
 **Status:** Draft — menunggu review PO dan approval Head of Product & Project
 
@@ -35,6 +39,12 @@ changelog:
 > Requirement *pelaksanaan bootcamp* (REQ-001 s/d REQ-013, REQ-038) berada di
 > [[project-charter]], bukan di sini — bootcamp adalah mekanisme pelaksanaan,
 > bukan bagian dari produk.
+>
+> **Revisi 2026-10-08 (v2.0):** modul **Ticketing (M6)** dan **Pelaporan Tiket
+> (EP-009)** dikeluarkan dari lingkup MVP melalui
+> [[CR-20261008-001-keluarkan-modul-ticketing-dari-mvp]] / DEC-043. Lingkup
+> difokuskan pada **business process sales**. Business requirement turun dari 33
+> menjadi 25; diagram menjadi 7.
 
 ---
 
@@ -44,9 +54,9 @@ changelog:
 
 TLab membutuhkan **produk CRM milik sendiri** yang bersifat multi-tenant, dapat
 dikembangkan lebih lanjut, dan pada akhirnya dapat dijual. Saat ini belum ada
-sistem CRM terpusat: pengelolaan lead, peluang, pelanggan, dan tiket belum
-memiliki tempat tunggal yang dapat diandalkan, sehingga riwayat interaksi
-pelanggan tercecer dan pencapaian target sales sulit dibuktikan dengan data.
+sistem CRM terpusat: pengelolaan lead, peluang, dan pelanggan belum memiliki
+tempat tunggal yang dapat diandalkan, sehingga riwayat interaksi pelanggan
+tercecer dan pencapaian target sales sulit dibuktikan dengan data.
 
 Masalah yang ingin diselesaikan:
 
@@ -55,8 +65,7 @@ Masalah yang ingin diselesaikan:
 | 1 | Tidak ada sistem CRM terpusat milik TLab | Ketergantungan pada tool pihak ketiga; tidak ada aset produk yang dapat dijual |
 | 2 | Data pelanggan dan interaksi tidak terkonsolidasi | Riwayat pelanggan hilang; keputusan berbasis ingatan, bukan data |
 | 3 | Pencapaian target sales tidak terukur | Performa sales tidak dapat dibuktikan; pembinaan tidak berbasis data |
-| 4 | Permintaan/keluhan pelanggan tidak terlacak | Keluhan hilang tanpa jejak; tidak ada kepastian waktu penyelesaian |
-| 5 | Setiap klien menuntut proses berbeda | Tanpa mekanisme kustomisasi, core akan ter-fork dan tidak terkelola |
+| 4 | Setiap klien menuntut proses berbeda | Tanpa mekanisme kustomisasi, core akan ter-fork dan tidak terkelola |
 
 ### 1.2 Tujuan Strategis
 
@@ -75,8 +84,8 @@ Masalah yang ingin diselesaikan:
 
 Konsekuensi yang harus dipahami seluruh pihak:
 
-1. Core memuat pakem CRM yang relatif universal: lead, peluang, kontak & akun,
-   tiket, dan laporan.
+1. Core memuat pakem CRM **untuk sales**: lead, peluang, kontak & akun, dan
+   laporan.
 2. Kebutuhan yang berbeda per klien **tidak** diselesaikan dengan mengubah core,
    melainkan dengan memanfaatkan event yang dipublikasikan core.
 3. Kustomisasi berbasis webhook bersifat **asynchronous**. Kebutuhan yang
@@ -85,7 +94,21 @@ Konsekuensi yang harus dipahami seluruh pihak:
 4. Contoh yang disepakati: klien membutuhkan mekanisme antrian → dibangun
    *service* terpisah yang berlangganan event CRM; core tidak berubah.
 
-### 1.4 Konteks Pelaksanaan
+### 1.4 Fokus Domain: Sales, Bukan Service
+
+Lingkup bootcamp difokuskan pada **business process sales** (DEC-043). Keputusan
+ini mengikuti pemisahan domain yang berlaku di pasar:
+
+| Produk | Domain *sales* | Domain *service* |
+|---|---|---|
+| **Salesforce** | Sales Cloud — lead management, opportunity tracking, forecasting | Service Cloud — case management, SLA, knowledge base |
+| **HubSpot** | Sales Hub | Service Hub (ticketing terdaftar di sini) |
+
+Pada keduanya, *case/ticket management* secara eksplisit **bukan** core feature
+produk sales. Karena itu ticketing dikeluarkan dari lingkup MVP bootcamp dan
+dicatat sebagai kandidat modul lanjutan (lihat §2.2 dan Q-032).
+
+### 1.5 Konteks Pelaksanaan
 
 Produk ini dibangun melalui **bootcamp internal berdurasi 3 hari** dengan
 komposisi:
@@ -96,8 +119,9 @@ komposisi:
 | Hari 2–3 | **Pengembangan core platform CRM (backend)** (DEC-037, DEC-041) |
 
 **Implikasi yang harus disadari:** durasi total 3 hari, tetapi **jendela
-pengembangan efektif hanya 2 hari** untuk 7 modul mandatory. Ini risiko tertinggi
-pada inisiatif ini (R-001, R-015 di [[risk-register]]).
+pengembangan efektif hanya 2 hari** untuk 6 modul mandatory. Ini risiko tertinggi
+pada inisiatif ini (R-001, R-015 di [[risk-register]]) — meskipun beban sudah
+turun setelah M6 dikeluarkan (CR-20261008-001).
 
 ---
 
@@ -114,24 +138,31 @@ pada inisiatif ini (R-001, R-015 di [[risk-register]]).
 | M3 | Lead Management | **Mandatory** |
 | M4 | Sales Pipeline / Opportunity | **Mandatory** |
 | M5 | Activity Management | *Nice to have* — tidak masuk MVP |
-| M6 | Ticketing | **Mandatory** |
+| ~~M6~~ | ~~Ticketing~~ | **DIKELUARKAN dari MVP** (CR-20261008-001 / DEC-043) |
 | M7 | Reporting & Analytics | **Mandatory** |
 | M8 | Webhook / Event Layer | **MVP minimal** (DEC-021) |
+
+**Modul mandatory = 6** (M1, M2, M3, M4, M7, M8-minimal), turun dari 7 setelah
+ticketing dikeluarkan.
 
 **Sasaran output yang diukur (DEC-041):** **desain core backend mampu
 menyelesaikan seluruh fitur mandatory** yang ditargetkan. **Kesiapan frontend
 bukan penghambat kelulusan** — UI boleh belum selesai selama kapabilitas backend
 terbukti melayani semua fitur mandatory.
 
-**Cara mengukur "selesai" (DEC-028 + DEC-042):** modul mandatory berjalan
-**end-to-end**, tetapi **"end-to-end" diukur pada kapabilitas backend** — terverifikasi
-melalui **API/kontrak data**, bukan kelengkapan UI. Termasuk di dalamnya:
-komentar tiket dan riwayat pergerakan tiket.
+**Cara mengukur "selesai" (DEC-028 + DEC-042, direvisi CR-20261008-001):** modul
+mandatory berjalan **end-to-end**, tetapi **"end-to-end" diukur pada kapabilitas
+backend** — terverifikasi melalui **API/kontrak data**, bukan kelengkapan UI.
+Rantai verifikasi kini berhenti di proses sales: login multi-tenant → kelola
+lead → kelola kontak & akun → kelola peluang → tampilkan laporan sales.
+*Catatan: acuan lama "komentar tiket dan riwayat pergerakan tiket" pada DEC-028
+kehilangan objeknya seiring keluarnya M6 — lihat §9.*
 
 ### 2.2 Di Luar Lingkup (Out of Scope)
 
 | Item | Alasan |
 |---|---|
+| **M6 Ticketing** | **Dikeluarkan 2026-10-08** (CR-20261008-001 / DEC-043) — ticketing adalah domain *service*, bukan core feature CRM untuk sales tracking; lingkup bootcamp terlalu besar bila disertakan. Sejalan dengan pemisahan Sales Cloud/Service Cloud dan Sales Hub/Service Hub |
 | **M5 Activity Management** | *Nice to have* — di luar MVP (DEC-015) |
 | **Modul Billing / Invoice** | Revenue didefinisikan dari deal closed-won, bukan tagihan (DEC-016) |
 | **Assessment tim sales (HR)** | Dikeluarkan dari lingkup produk CRM — CRM mengelola pelanggan, bukan penilaian karyawan (DEC-031) |
@@ -144,7 +175,7 @@ komentar tiket dan riwayat pergerakan tiket.
 
 Requirement berikut berada di dalam visi produk tetapi **tidak menahan approval
 prototype** bila tidak selesai: REQ-016 (inbound minimal), REQ-027 (laporan
-pipeline), REQ-029 (laporan tiket), REQ-030 (aktivitas).
+pipeline), REQ-030 (aktivitas).
 
 ---
 
@@ -154,13 +185,14 @@ pipeline), REQ-029 (laporan tiket), REQ-030 (aktivitas).
 |---|---|---|---|---|
 | SH001 | **Sales Rep** | Internal | Lead & peluang terkelola, progres deal terlihat, pencapaian terukur | M3, M4, M7 |
 | SH002 | **Sales Manager** | Internal | Visibilitas pipeline tim, penetapan kuota, identifikasi sales berkinerja rendah | M4, M7 |
-| SH003 | **Agent Support** | Internal | Tiket terdistribusi, status jelas, jalur eskalasi tersedia | M6 |
-| SH004 | **Support Lead / Manager** | Internal | Rekap beban & status tiket, penanganan eskalasi | M6, M7 |
 | SH005 | **Tenant Admin** | Internal | Isolasi data antar tenant, kendali user/role, konfigurasi integrasi | M1, M8 |
-| SH006 | **Pelanggan** (B2B/B2C) | Eksternal | Dapat membuat tiket dan memperoleh penyelesaian | M6 |
-| SH007 | **Karyawan Tenant** | Internal | Dapat mengajukan permintaan/tiket ke tim lain | M6 |
 | SH008 | **Sistem Klien** (di luar CRM) | System/Eksternal | Menerima event tepat waktu; dapat mengirim data ke CRM | M8 |
 | SH009 | **Manajemen / Head of Sales** | Internal | Laporan revenue & pipeline yang dapat dipercaya | M7 |
+
+**Stakeholder yang keluar dari lingkup (CR-20261008-001):** SH003 Agent Support,
+SH004 Support Lead / Manager, SH006 Pelanggan (B2B/B2C), SH007 Karyawan Tenant —
+seluruhnya terikat pada modul M6 Ticketing. ID dipertahankan sebagai jejak agar
+traceability tidak hilang.
 
 Daftar lengkap beserta rencana komunikasi ada di [[stakeholder-register]].
 
@@ -174,6 +206,7 @@ keputusan delivery dicatat sebagai risiko R-006.
 
 Format ID: **BR-nnn**. Setiap requirement mencantumkan **sumber requirement**
 (REQ) dan **keputusan** (DEC) agar dapat ditelusuri. Prioritas memakai MoSCoW.
+**Total: 25 business requirement** (turun dari 33 setelah 8 BR ticketing dihapus).
 
 ### 4.1 Prinsip Produk & Multi-Tenancy
 
@@ -224,22 +257,7 @@ Format ID: **BR-nnn**. Setiap requirement mencantumkan **sumber requirement**
 | BR-015 | **Nilai default ambang batas = 80%**, berlaku hanya bila tenant belum mengonfigurasi ambangnya sendiri | DEC-039 | Must | Draft |
 | BR-016 | Pengukuran lapis **aktivitas & pipeline (leading indicator) tidak termasuk MVP** — MVP memakai lapis outcome | DEC-027 | Won't (MVP) | Draft |
 
-### 4.6 Ticketing (M6)
-
-| ID | Business Requirement | Sumber | Prioritas | Status |
-|---|---|---|---|---|
-| BR-017 | Tiket dikelola sebagai **satu model tiket** (satu entitas), bukan dua sub-sistem terpisah | REQ-025 / DEC-019 | Must | Draft |
-| BR-018 | Jalur tiket dibedakan berdasarkan **asal pemohon**: **eksternal = pelanggan**, **internal = karyawan tenant** | REQ-025 / DEC-022, DEC-036 | Must | Draft |
-| BR-019 | **Eskalasi ke tim internal** merupakan **atribut pada tiket**, bukan jenis tiket yang berbeda | REQ-025 / DEC-019 | Must | Draft |
-| BR-020 | Tiket memiliki **komentar/percakapan** yang tersimpan pada tiket yang sama | REQ-032 / DEC-028 | Must | Draft |
-| BR-021 | Tiket memiliki **riwayat pergerakan** (perubahan status, assignee, eskalasi) yang dapat diaudit | REQ-033 / DEC-028 | Must | Draft |
-| BR-022 | Tiket memiliki **SLA**: target waktu penyelesaian **per prioritas** beserta **penanda pelanggaran** | REQ-034 / DEC-025 | Must | Draft |
-| BR-023 | Aturan status tiket memakai **satu state machine** — tidak dibedakan per jalur; SLA dibedakan hanya oleh prioritas | DEC-026 | Must | Draft |
-
-> **Belum ditetapkan:** daftar status final tiket, daftar prioritas, dan angka
-> target waktu SLA per prioritas. Diusulkan pada Diagram 5, perlu difinalkan hari 1.
-
-### 4.7 Integrasi Webhook (M8)
+### 4.6 Integrasi Webhook (M8)
 
 | ID | Business Requirement | Sumber | Prioritas | Status |
 |---|---|---|---|---|
@@ -252,21 +270,39 @@ Format ID: **BR-nnn**. Setiap requirement mencantumkan **sumber requirement**
 > **Catatan teknis (belum selesai).** Spesifikasi implementasi — signing,
 > dead-letter, kebijakan retry detail — menjadi keputusan **Head of Engineer**
 > (TD-02). BRD menetapkan kebutuhan bisnisnya saja.
+>
+> **Dampak keluarnya M6:** event tiket tidak lagi menjadi bagian dari lingkup
+> webhook MVP. Event yang dipublikasikan mencakup perubahan pada lead, peluang,
+> dan entitas sales lainnya.
 
-### 4.8 Pelaporan (M7)
+### 4.7 Pelaporan (M7)
 
 | ID | Business Requirement | Sumber | Prioritas | Status |
 |---|---|---|---|---|
 | BR-029 | **Laporan revenue** dari peluang closed-won per periode | REQ-026 / DEC-016 | Must | Draft |
 | BR-030 | **Laporan pipeline dan forecast** | REQ-027 | Should | Draft |
 | BR-031 | **Laporan performa sales** (quota attainment per sales) | REQ-028 | Must | Draft |
-| BR-032 | **Laporan tiket**: volume, status penanganan, dan kepatuhan SLA | REQ-029 / DEC-025 | Should | Draft |
 
-### 4.9 Aktivitas (M5) — Nice to Have
+### 4.8 Aktivitas (M5) — Nice to Have
 
 | ID | Business Requirement | Sumber | Prioritas | Status |
 |---|---|---|---|---|
-| BR-033 | Pengelolaan aktivitas (call / meeting / task / note) yang terhubung ke lead, peluang, atau tiket | REQ-030 | Could | Draft |
+| BR-033 | Pengelolaan aktivitas (call / meeting / task / note) yang terhubung ke lead atau peluang | REQ-030 | Could | Draft |
+
+### 4.9 Business Requirement yang Dihapus (CR-20261008-001)
+
+Dipertahankan sebagai jejak agar traceability tidak hilang:
+
+| ID | Business Requirement | Alasan |
+|---|---|---|
+| BR-017 | Tiket sebagai satu model tiket (satu entitas) | Objeknya (M6) keluar dari MVP |
+| BR-018 | Pembedaan jalur tiket berdasarkan asal pemohon | Objeknya keluar dari MVP |
+| BR-019 | Eskalasi sebagai atribut pada tiket | Objeknya keluar dari MVP |
+| BR-020 | Komentar tiket | Objeknya keluar dari MVP |
+| BR-021 | Riwayat pergerakan tiket | Objeknya keluar dari MVP |
+| BR-022 | SLA tiket per prioritas | Objeknya keluar dari MVP |
+| BR-023 | Satu state machine tiket | Objeknya keluar dari MVP |
+| BR-032 | Laporan tiket (volume, status, kepatuhan SLA) | Objeknya keluar dari MVP |
 
 ---
 
@@ -283,22 +319,29 @@ memahami proses mana yang dilayani modul mana dan oleh peran siapa.
 | P03 | Penetapan Target & Kuota Sales | M7 | Sales Manager | BR-012 |
 | P04 | Pengelolaan Pipeline & Peluang | M4 | Sales Rep | BR-010, BR-011 |
 | P05 | Pengelolaan Aktivitas | M5 *(nice to have)* | Sales Rep | BR-033 |
-| P06 | Pengelolaan Tiket | M6 | Agent Support, Support Lead, Pelanggan, Karyawan Tenant | BR-017 … BR-023 |
+| ~~P06~~ | ~~Pengelolaan Tiket~~ | — | — | **Keluar dari lingkup (CR-20261008-001)** |
 | P07 | Pengukuran Performa Sales | M7 | Sales Manager, Sistem | BR-013, BR-014, BR-015 |
 | P08 | Pelaporan Revenue & Pipeline | M7 | Manajemen, Sales Manager | BR-029, BR-030, BR-031 |
-| P09 | Pelaporan Tiket | M7 | Support Lead | BR-032 |
+| ~~P09~~ | ~~Pelaporan Tiket~~ | — | — | **Keluar dari lingkup (CR-20261008-001)** |
 | P10 | Tenancy & Kendali Akses | M1 | Tenant Admin | BR-002, BR-003, BR-004 |
 | P11 | Integrasi Webhook | M8 | Tenant Admin, Sistem Klien | BR-024 … BR-028 |
 | P12 | ~~Assessment Tim Sales (HR)~~ | — | — | **Dikeluarkan dari lingkup (DEC-031)** |
+
+**Catatan:** penomoran proses **P01–P11 dipertahankan** (tanpa P06 dan P09) agar
+traceability ke [[requirement-analysis]] tidak hilang. Nomor yang kosong bukan
+kelalaian, melainkan penanda proses yang dikeluarkan.
 
 ---
 
 ## 6. Diagram
 
-Delapan diagram berikut disusun untuk membantu tim memahami requirement secara
+Tujuh diagram berikut disusun untuk membantu tim memahami requirement secara
 visual saat di-share. Sumber PlantUML tersedia di
 `requirements/brd/diagrams/*.puml`; gambar tersedia dalam **PNG** (untuk
 presentasi/chat) dan **SVG** (untuk dokumen dan perbesaran tanpa pecah).
+
+> **Revisi 2026-10-08:** diagram **"Siklus Tiket & SLA" dihapus**
+> (CR-20261008-001). Enam diagram lainnya direvisi untuk membuang unsur ticketing.
 
 ### 6.1 Diagram 1 — Konteks Sistem
 
@@ -312,12 +355,13 @@ core (DEC-012). Isolasi data antar tenant berlaku menyeluruh (DEC-029).
 
 ### 6.2 Diagram 2 — Proses Bisnis End-to-End
 
-Alur lengkap P01–P09 dari lead masuk sampai pelaporan.
+Alur proses sales dari lead masuk sampai pelaporan.
 
 ![Diagram 2 — Proses Bisnis End-to-End](diagrams/02-proses-bisnis.png)
 
-*Poin kunci:* P05 (Aktivitas) di luar MVP; P10–P11 (Tenancy, Webhook) adalah
-proses pendukung yang berjalan lintas semua fase.
+*Poin kunci:* alur berhenti di **pelaporan sales** — tidak lagi mencakup
+partition tiket. P05 (Aktivitas) tetap di luar MVP; P10–P11 (Tenancy, Webhook)
+adalah proses pendukung yang berjalan lintas semua fase.
 
 ### 6.3 Diagram 3 — Peta Modul & Dependensi
 
@@ -328,7 +372,7 @@ bergantung pada modul lain.
 
 *Poin kunci:* **M1 adalah fondasi** — isolasi data antar tenant tidak dapat
 ditambahkan belakangan tanpa rework. M7 hanya mengonsumsi data modul lain; M8
-mengaitkan event ke seluruh modul.
+mengaitkan event ke seluruh modul sales.
 
 ### 6.4 Diagram 4 — Siklus Hidup Lead → Peluang
 
@@ -338,31 +382,24 @@ mengaitkan event ke seluruh modul.
 Peluang); nilai deal pada Closed-Won menjadi sumber revenue & quota attainment
 (DEC-016).
 
-### 6.5 Diagram 5 — Siklus Tiket & SLA
+### 6.5 Diagram 5 — Entity Relationship Diagram (Konseptual)
 
-![Diagram 5 — Siklus Tiket & SLA](diagrams/05-siklus-tiket-sla.png)
-
-*Poin kunci:* **satu state machine** untuk kedua jalur (DEC-026); eskalasi adalah
-atribut, bukan jenis tiket terpisah (DEC-019); SLA dihitung per prioritas (DEC-025).
-
-### 6.6 Diagram 6 — Entity Relationship Diagram (Konseptual)
-
-![Diagram 6 — Entity Relationship Diagram](diagrams/06-erd.png)
+![Diagram 5 — Entity Relationship Diagram](diagrams/06-erd.png)
 
 *Poin kunci:* hampir semua entitas terikat ke `Tenant` — ini wujud teknis dari
 kebutuhan isolasi (BR-003). Kontak B2C tidak wajib terhubung ke Akun (DEC-024).
 
-### 6.7 Diagram 7 — Alur Webhook (Outbound & Inbound)
+### 6.6 Diagram 6 — Alur Webhook (Outbound & Inbound)
 
-![Diagram 7 — Alur Webhook](diagrams/07-alur-webhook.png)
+![Diagram 6 — Alur Webhook](diagrams/07-alur-webhook.png)
 
 *Poin kunci:* prioritas adalah **outbound** (CRM → sistem klien) dengan dukungan
 fan-out, retry, dan rate limit (DEC-013, DEC-030). Seluruh kustomisasi bersifat
 **asynchronous** (DEC-014).
 
-### 6.8 Diagram 8 — Peran & Hak Akses per Modul
+### 6.7 Diagram 7 — Peran & Hak Akses per Modul
 
-![Diagram 8 — Peran & Hak Akses per Modul](diagrams/08-peran-akses.png)
+![Diagram 7 — Peran & Hak Akses per Modul](diagrams/08-peran-akses.png)
 
 *Poin kunci:* pemisahan peran menentukan batas kewenangan — mis. hanya Sales
 Manager yang menetapkan kuota; hanya Tenant Admin yang menyentuh tenancy dan
@@ -375,7 +412,7 @@ konfigurasi webhook.
 | # | Kriteria | Indikator | Sumber |
 |---|---|---|---|
 | 1 | **Core platform CRM (backend) terbangun** | Desain core backend mampu menyelesaikan **seluruh fitur mandatory**, terverifikasi melalui **API/kontrak data** | DEC-041, DEC-042 |
-| 2 | Modul mandatory berjalan end-to-end | Alur: login multi-tenant → kelola lead/kontak/peluang → kelola tiket (termasuk komentar, riwayat pergerakan, SLA) → tampilkan laporan | DEC-028, DEC-042 |
+| 2 | Modul mandatory berjalan end-to-end | Alur sales: login multi-tenant → kelola lead → kelola kontak & akun → kelola peluang → tampilkan laporan sales (revenue, pipeline, performa) | DEC-028, DEC-042, direvisi CR-20261008-001 |
 | 3 | Requirement difinalkan bersama peserta | Seluruh pertanyaan terbuka terjawab/ditutup pada akhir hari 1; BRD disetujui sebagai baseline kerja hari 2–3 | DEC-037 |
 | 4 | Kecepatan AI dalam development terukur | **Jumlah requirement yang ter-cover dalam jangka waktu tertentu** | DEC-032 |
 | 5 | Efektivitas AI dalam development terukur | **Belum terdefinisi** — diteruskan ke Head of Engineer | Q-007, Q-008, TD-03/TD-04 |
@@ -384,6 +421,10 @@ konfigurasi webhook.
 > **Catatan penting.** Kriteria 5 **tidak dapat dipulihkan** bila baseline tidak
 > ditetapkan sebelum hari pertama bootcamp (R-002). Kriteria 6 belum memiliki
 > definisi — tidak diisi dengan angka agar tidak menciptakan target fiktif.
+>
+> **Perubahan pada kriteria 2:** acuan lama menyebut "kelola tiket (termasuk
+> komentar, riwayat pergerakan, dan SLA)" — bagian itu **dihapus** karena M6
+> keluar dari lingkup. Rantai verifikasi kini berhenti di pelaporan sales.
 
 ---
 
@@ -393,7 +434,7 @@ konfigurasi webhook.
 
 | # | Asumsi | Risiko bila salah | Validasi |
 |---|---|---|---|
-| A-1 | Durasi bootcamp cukup untuk menghasilkan **core backend** yang mampu menyelesaikan seluruh fitur mandatory | Lingkup harus dipotong drastis atau bootcamp diperpanjang — belum direncanakan | **Perlu Validasi — kritis** |
+| A-1 | Durasi bootcamp cukup untuk menghasilkan **core backend** yang mampu menyelesaikan seluruh fitur mandatory | Lingkup harus dipotong lagi atau bootcamp diperpanjang — belum direncanakan. *Beban berkurang setelah M6 keluar (CR-20261008-001)* | **Perlu Validasi — kritis** |
 | A-2 | **Hari 1 cukup untuk memfinalkan seluruh requirement** | Requirement masuk hari 2 belum final; jendela pengembangan menyusut | Perlu Validasi |
 | A-3 | Peserta memiliki kompetensi dasar development | Sesi harus dirombak; waktu pondasi tidak tersedia | Perlu Validasi |
 | A-4 | AI OS tersedia dan dapat dipakai selama bootcamp | Sasaran pengukuran efektivitas AI tidak tercapai | Perlu Validasi |
@@ -414,6 +455,7 @@ konfigurasi webhook.
 | C-6 | Kustomisasi hanya **asynchronous** | DEC-014 |
 | C-7 | **Tidak ada item yang boleh diisi dengan asumsi** — field tanpa data ditulis "Belum ditentukan" | DEC-011 |
 | C-8 | Revenue berhenti di **nilai deal closed-won**; modul billing di luar lingkup | DEC-016 |
+| C-9 | **Lingkup dibatasi pada business process sales** — modul domain *service* (ticketing) di luar MVP | DEC-043 |
 
 ---
 
@@ -425,24 +467,28 @@ kekurangan dokumen, melainkan **tujuan utama workshop** (DEC-037, R-015).
 | # | Yang perlu difinalkan | Pemilik | Dampak bila tidak selesai hari 1 |
 |---|---|---|---|
 | 1 | **Jumlah & nama stage pipeline** (BR-010) | PO + peserta | Fitur peluang tidak dapat diimplementasikan konsisten |
-| 2 | **Daftar status tiket final** (BR-023) | PO + peserta | State machine tidak dapat dikodekan |
-| 3 | **Daftar prioritas & target waktu SLA** (BR-022) | PO + peserta | Perhitungan SLA tidak dapat berjalan |
-| 4 | **Ambang batas performa per tenant** — keputusan default 80% sudah ada (BR-015) | PO | — (sudah terjawab) |
-| 5 | **Definisi teknis "core backend selesai"** — kontrak API/endpoint per modul | PO + Head of Engineer | Penilaian hari 3 menjadi ambigu |
-| 6 | **Signing & kebijakan retry webhook** | Head of Engineer (TD-02) | EP-011 tidak dapat diimplementasikan |
-| 7 | **Strategi isolasi teknis multi-tenant** | Head of Engineer (TD-01) | Rework arsitektur di tengah bootcamp |
-| 8 | **Metrik efektivitas AI + baseline** | Head of Engineer (TD-03/04) | **Tidak dapat dipulihkan** bila lewat hari 1 |
-| 9 | **Stack teknologi** | Head of Engineer (TD-05) | Materi sesi & scaffolding tidak dapat disiapkan |
+| 2 | **Definisi teknis "core backend selesai"** — kontrak API/endpoint per modul | PO + Head of Engineer | Penilaian hari 3 menjadi ambigu |
+| 3 | **Kriteria selesai setelah M6 keluar** — DEC-028 masih mengacu "komentar tiket & riwayat pergerakan tiket" yang kini tidak ada | PO | Penilaian hasil hari 3 tidak memiliki definisi yang sah |
+| 4 | **Signing & kebijakan retry webhook** | Head of Engineer (TD-02) | EP-011 tidak dapat diimplementasikan |
+| 5 | **Strategi isolasi teknis multi-tenant** | Head of Engineer (TD-01) | Rework arsitektur di tengah bootcamp |
+| 6 | **Metrik efektivitas AI + baseline** | Head of Engineer (TD-03/04) | **Tidak dapat dipulihkan** bila lewat hari 1 |
+| 7 | **Stack teknologi** | Head of Engineer (TD-05) | Materi sesi & scaffolding tidak dapat disiapkan |
+| 8 | **Status M6 Ticketing ke depan (Q-032)** — modul lanjutan di roadmap produk, atau keluar sepenuhnya dari lingkup | PM/PO + Head of Product | Roadmap produk (tidak menghambat bootcamp) |
+
+**Yang sudah tidak perlu difinalkan** (sebelumnya ada, kini moot karena M6 keluar):
+daftar status tiket, daftar prioritas & target waktu SLA, mekanisme pelanggan
+membuat tiket, aturan status/SLA per jalur tiket.
 
 ---
 
 ## 10. Referensi Terkait
 
 - **Project Profile (hub):** [[project-profile]]
+- **Change Request (revisi lingkup ini):** [[CR-20261008-001-keluarkan-modul-ticketing-dari-mvp]]
 - **Requirement Analysis (bahan baku BRD ini):** [[requirement-analysis]]
 - **Requirement Backlog:** [[requirement-backlog]]
 - **Project Charter:** [[project-charter]]
-- **Decision Log:** [[decision-log]] (42 keputusan, DEC-001 s/d DEC-042)
+- **Decision Log:** [[decision-log]] (43 keputusan, DEC-001 s/d DEC-043)
 - **Risk Register:** [[risk-register]]
 - **RAID Log:** [[raid-log]]
 - **Catatan Teknis Head of Engineer:** [[open-tech-decisions]] (TD-01 s/d TD-05)
@@ -455,4 +501,4 @@ kekurangan dokumen, melainkan **tujuan utama workshop** (DEC-037, R-015).
 | **FRD** | Functional Requirements Document — penjabaran fungsi per modul | System Analyst | Belum disusun |
 | **SRS** | Software Requirements Specification — spesifikasi teknis | System Analyst | Belum disusun |
 | **RTM** | Requirement Traceability Matrix — peta BR → FR → test | System Analyst | Belum disusun |
-| **User Story** | 37 user story sudah tersedia di [[requirement-analysis]] bagian 6 | BA | Tersedia |
+| **User Story** | 25 user story tersedia di [[requirement-analysis]] bagian 6 (setelah 12 US ticketing dihapus) | BA | Tersedia |

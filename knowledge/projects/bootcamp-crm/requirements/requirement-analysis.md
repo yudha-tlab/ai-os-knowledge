@@ -3,11 +3,14 @@ title: "Requirement Analysis — CRM Multi-Tenant TLab"
 type: requirement-analysis
 project: bootcamp-crm
 status: draft
-version: "2.4"
+version: "2.5"
 created: 2026-10-02
-modified: 2026-10-02
+modified: 2026-10-08
 sumber: "Arahan Product Owner (Yudha Pratama) via sesi brainstorm 2026-10-02"
 changelog:
+  - version: "2.5"
+    date: 2026-10-08
+    purpose: "CR-20261008-001 / DEC-043 — modul Ticketing (M6) & Pelaporan Tiket (EP-009) dikeluarkan dari MVP; lingkup difokuskan ke business process sales. Epic 12→10, User Story 37→25, Objek 23→16, Proses 12→10, Stakeholder 10→6; Q-015/021/022/023 ditutup sebagai moot"
   - version: "2.4"
     date: 2026-10-02
     purpose: "Tutup Q-031 (DEC-042) — 'end-to-end' diukur pada kapabilitas backend, bukan kelengkapan UI; menyatukan DEC-028 dengan DEC-041"
@@ -28,8 +31,9 @@ changelog:
 # Requirement Analysis — CRM Multi-Tenant TLab
 
 **Posisi pipeline:** Langkah nol — output dokumen ini **telah diturunkan menjadi
-** **BRD v1.0** (`requirements/brd/bootcamp-crm-brd-v1.md`, 2026-10-02). FRD/SRS
-belum disusun (menunggu approval BRD).
+** **BRD v2.0** (`requirements/brd/bootcamp-crm-brd-v1.md`; v1.0 2026-10-02,
+direvisi 2026-10-08 oleh CR-20261008-001). FRD/SRS belum disusun (menunggu
+approval BRD).
 
 **Sumber:** Arahan langsung Product Owner (Yudha Pratama) pada sesi brainstorm
 2026-10-02. Bukan hasil analisis dokumen klien — tidak ada dokumen CRM/klien di
@@ -48,8 +52,8 @@ kustomisasi klien diakomodir **tanpa mengubah core**.
 
 Konsekuensi yang harus dipahami bersama:
 
-1. Core memuat pakem CRM yang relatif universal (lead, peluang, kontak, tiket,
-   laporan).
+1. Core memuat pakem CRM **untuk sales** (lead, peluang, kontak & akun,
+   laporan) — sesuai fokus domain DEC-043.
 2. Kebutuhan yang berbeda per klien **tidak diselesaikan dengan mengubah core**,
    melainkan dengan memanfaatkan event yang dipublikasikan core.
 3. Kustomisasi berbasis webhook bersifat **asynchronous** (event → reaksi di
@@ -74,14 +78,21 @@ Konsekuensi yang harus dipahami bersama:
 | M3 | Lead Management | **Mandatory** | Termasuk perubahan status lead |
 | M4 | Sales Pipeline / Opportunity | **Mandatory** | Sumber data revenue & performa sales |
 | M5 | Activity Management | Nice to have | Tidak masuk lingkup MVP |
-| M6 | Ticketing (internal + eksternal) | **Mandatory** | Satu model tiket, dua jalur |
-| M7 | Reporting & Analytics | **Mandatory** | Revenue, pipeline, performa sales, tiket |
+| ~~M6~~ | ~~Ticketing (internal + eksternal)~~ | **DIKELUARKAN** | **CR-20261008-001 / DEC-043** — domain *service*, bukan core CRM untuk sales tracking |
+| M7 | Reporting & Analytics | **Mandatory** | Revenue, pipeline, performa sales |
 | M8 | Webhook / Event Layer | **MVP minimal** (DEC-021) | Merevisi DEC-015 — event outbound inti + 1 endpoint inbound |
 
 **DIPUTUSKAN 2026-10-02 (DEC-021):** keberatan PM diterima PO — M8 masuk MVP
 secara **minimal** (event outbound inti + 1 endpoint inbound), merevisi penetapan
 awal *nice to have*. Implementasi teknisnya (retry, rate limit, fan-out,
 signing) diserahkan ke Head of Engineer (DEC-030).
+
+**Fokus domain (DEC-043):** lingkup bootcamp dibatasi pada **business process
+sales**. Modul domain *service* (ticketing) dikeluarkan — sejalan dengan pemisahan
+Salesforce (Sales Cloud vs Service Cloud) dan HubSpot (Sales Hub vs Service Hub),
+di mana *case/ticket management* bukan core feature produk sales.
+
+**Modul mandatory = 6** (M1, M2, M3, M4, M7, M8-minimal), turun dari 7.
 
 **Sasaran output (DEC-041):** hasil yang dikejar dari POV project & product adalah
 **core platform CRM (backend)** — desain core backend harus mampu menyelesaikan
@@ -106,21 +117,11 @@ rekonsiliasi dengan DEC-028 ada di Q-031.
 | Pelaksanaan | 04. Pengelolaan Pipeline & Peluang | 04.02 Pergerakan stage | 04.02.01 Perubahan stage peluang |
 | Pelaksanaan | 04. Pengelolaan Pipeline & Peluang | 04.03 Penutupan peluang | 04.03.01 Penandaan closed-won / closed-lost beserta alasan |
 | Pelaksanaan | 05. Pengelolaan Aktivitas | 05.01 Pencatatan aktivitas | 05.01.01 Pencatatan call / meeting / task / note |
-| Pelaksanaan | 06. Pengelolaan Tiket | 06.01 Pembuatan tiket | 06.01.01 Tiket jalur eksternal (pemohon: pelanggan) |
-| Pelaksanaan | 06. Pengelolaan Tiket | 06.01 Pembuatan tiket | 06.01.02 Tiket jalur internal (pemohon: karyawan tenant) — DEC-036 |
-| Pelaksanaan | 06. Pengelolaan Tiket | 06.01 Pembuatan tiket | 06.01.03 Tiket dari sistem klien via webhook inbound |
-| Pelaksanaan | 06. Pengelolaan Tiket | 06.02 Penanganan tiket | 06.02.01 Penugasan dan perubahan status tiket |
-| Pelaksanaan | 06. Pengelolaan Tiket | 06.03 Eskalasi tiket | 06.03.01 Eskalasi tiket ke tim internal |
-| Pelaksanaan | 06. Pengelolaan Tiket | 06.04 Penyelesaian tiket | 06.04.01 Penutupan tiket beserta catatan penyelesaian |
-| Pelaksanaan | 06. Pengelolaan Tiket | 06.05 Komunikasi & jejak tiket | 06.05.01 Komentar pada tiket |
-| Pelaksanaan | 06. Pengelolaan Tiket | 06.05 Komunikasi & jejak tiket | 06.05.02 Pencatatan riwayat pergerakan tiket |
-| Pelaksanaan | 06. Pengelolaan Tiket | 06.06 Pemantauan SLA | 06.06.01 Perhitungan SLA dan penandaan pelanggaran |
 | Evaluasi | 07. Pengukuran Performa Sales | 07.01 Perhitungan pencapaian | 07.01.01 Perhitungan quota attainment per sales |
 | Evaluasi | 07. Pengukuran Performa Sales | 07.02 Penilaian performa | 07.02.01 Penandaan status performa (mencapai / tidak mencapai target) |
 | Output | 08. Pelaporan Revenue & Pipeline | 08.01 Laporan revenue | 08.01.01 Rekap revenue dari peluang closed-won per periode |
 | Output | 08. Pelaporan Revenue & Pipeline | 08.02 Laporan pipeline | 08.02.01 Rekap pipeline dan forecast |
 | Output | 08. Pelaporan Revenue & Pipeline | 08.03 Laporan performa sales | 08.03.01 Rekap quota attainment per sales |
-| Output | 09. Pelaporan Tiket | 09.01 Laporan tiket | 09.01.01 Rekap volume dan status tiket |
 | Pendukung | 10. Tenancy & Kendali Akses | 10.01 Pengelolaan tenant | 10.01.01 Manajemen tenant dan isolasi data antar tenant |
 | Pendukung | 10. Tenancy & Kendali Akses | 10.02 Pengelolaan pengguna | 10.02.01 Manajemen user, role, dan permission per tenant |
 | Pendukung | 11. Integrasi Webhook | 11.01 Publikasi event | 11.01.01 Pengiriman event dari CRM ke sistem klien (outbound) |
@@ -129,6 +130,12 @@ rekonsiliasi dengan DEC-028 ada di Q-031.
 | Pendukung | 11. Integrasi Webhook | 11.03 Pengelolaan subscription | 11.03.02 Konfigurasi multiple target (fan-out satu event ke beberapa endpoint) |
 | Pendukung | 11. Integrasi Webhook | 11.04 Keandalan pengiriman | 11.04.01 Retry, rate limiting, dan pencatatan log |
 | — | 12. Assessment Tim Sales (HR) — **DIKELUARKAN DARI LINGKUP (DEC-031)** | — | — |
+
+Proses **06 Pengelolaan Tiket** (6 sub-proses) dan **09 Pelaporan Tiket**
+**dikeluarkan dari lingkup produk CRM** pada 2026-10-08 (CR-20261008-001 /
+DEC-043): ticketing adalah domain *service*, bukan core CRM untuk sales tracking.
+Nomor proses 06 dan 09 **sengaja tidak dipakai ulang** agar traceability tidak
+hilang.
 
 Proses 12 **dikeluarkan dari lingkup produk CRM** pada 2026-10-02 (DEC-031):
 kebutuhan ini bukan pakem CRM — CRM mengelola pelanggan, bukan penilaian
@@ -143,11 +150,11 @@ inisiatif internal terpisah.
 |----|-------------|-----------------|-------|----------------------|------------------------------|----------|----------------|------------|-----------|
 | SH001 | Sales | Sales Representative | Internal | Lead dan peluang terkelola, progres deal terlihat, pencapaian target terukur | Deal hilang tanpa jejak; performa tidak dapat dibuktikan | Modul Lead; Modul Pipeline; Skor Performa | 01; 04; 07 | Review pipeline per sales | Mingguan |
 | SH002 | Sales | Sales Manager | Internal | Visibilitas pipeline tim, penetapan kuota, identifikasi sales berkinerja rendah | Tidak dapat melakukan pembinaan berbasis data; target tim tidak terkelola | Modul Pipeline; Skor Performa; Laporan Performa | 03; 04; 07; 08 | Review performa tim | Bulanan |
-| SH003 | Support | Agent Support | Internal | Tiket masuk terdistribusi, status tiket jelas, jalur eskalasi tersedia | Tiket menumpuk; SLA tidak terpantau | Modul Tiket; Eskalasi | 06 | Monitoring tiket harian | Harian |
-| SH004 | Support | Support Lead / Manager | Internal | Rekap beban dan status tiket, penanganan eskalasi | Beban tim tidak terkelola; eskalasi tidak terkendali | Modul Tiket; Laporan Tiket | 06; 09 | Laporan tiket | Mingguan |
+| SH003 | Support | Agent Support | **DI LUAR LINGKUP** | Tiket masuk terdistribusi, status tiket jelas, jalur eskalasi tersedia | Tiket menumpuk; SLA tidak terpantau | Modul Tiket; Eskalasi | 06 | Monitoring tiket harian | Harian |
+| SH004 | Support | Support Lead / Manager | **DI LUAR LINGKUP** | Rekap beban dan status tiket, penanganan eskalasi | Beban tim tidak terkelola; eskalasi tidak terkendali | Modul Tiket; Laporan Tiket | 06; 09 | Laporan tiket | Mingguan |
 | SH005 | Administrasi Tenant | Tenant Admin | Internal | Isolasi data antar tenant, kendali user/role, konfigurasi integrasi | Kebocoran data antar tenant; integrasi tidak dapat dikonfigurasi | Modul Tenancy; Manajemen User; Webhook Subscription | 10; 11 | Audit akses | Bulanan |
-| SH006 | Pelanggan | Pelanggan / Klien Tenant | Eksternal | Dapat membuat tiket dan memperoleh penyelesaian | Keluhan tidak tercatat; kepuasan pelanggan turun | Modul Tiket (jalur eksternal) | 06 | Survei kepuasan | Per tiket |
-| SH007 | Karyawan Tenant | Internal Requester | Internal | Dapat mengajukan permintaan/tiket ke tim lain | Permintaan antar tim tidak terlacak | Modul Tiket (jalur internal) | 06 | Volume tiket internal | Bulanan |
+| SH006 | Pelanggan | Pelanggan / Klien Tenant | **DI LUAR LINGKUP** | Dapat membuat tiket dan memperoleh penyelesaian | Keluhan tidak tercatat; kepuasan pelanggan turun | Modul Tiket (jalur eksternal) | 06 | Survei kepuasan | Per tiket |
+| SH007 | Karyawan Tenant | Internal Requester | **DI LUAR LINGKUP** | Dapat mengajukan permintaan/tiket ke tim lain | Permintaan antar tim tidak terlacak | Modul Tiket (jalur internal) | 06 | Volume tiket internal | Bulanan |
 | SH008 | Sistem Eksternal | Sistem Klien (di luar CRM) | System/Eksternal | Menerima event CRM tepat waktu; dapat mengirim data ke CRM | Kustomisasi klien tidak dapat berjalan; integrasi manual | Integrasi Webhook | 11 | Log pengiriman & retry | Per event |
 | SH009 | Manajemen | Head of Sales / Manajemen | Internal | Laporan revenue dan pipeline yang dapat dipercaya | Keputusan berbasis data tidak dapat diambil | Laporan Revenue & Pipeline | 08 | Laporan revenue | Bulanan |
 | SH010 | HR | Tim HR | Internal | **Di luar lingkup produk CRM (DEC-031)** — kebutuhan penilaian karyawan, bukan pengelolaan pelanggan | Kemampuan assessment tim sales tidak terbangun di CRM | Inisiatif terpisah bila masih diperlukan | — | — | — |
@@ -163,24 +170,24 @@ inisiatif internal terpisah.
 | OB-003 | Akun | Data organisasi/perusahaan pelanggan (mendukung B2B dan B2C) |
 | OB-004 | Peluang | Deal berjalan (nilai, stage, tanggal tutup, pemilik) |
 | OB-005 | Pipeline & Stage | Definisi tahapan pipeline dan posisi peluang di dalamnya |
-| OB-006 | Aktivitas | Catatan call / meeting / task / note yang terhubung ke lead, peluang, atau tiket |
-| OB-007 | Tiket | Tiket dengan jalur internal atau eksternal, beserta status dan assignee |
-| OB-008 | Eskalasi Tiket | Rekaman eskalasi tiket ke tim internal |
-| OB-009 | Riwayat Tiket | Komentar dan jejak perubahan status tiket |
+| OB-006 | Aktivitas | Catatan call / meeting / task / note yang terhubung ke lead atau peluang |
+| OB-007 | Tiket | Tiket dengan jalur internal atau eksternal, beserta status dan assignee | **← DIHAPUS (CR-20261008-001)**
+| OB-008 | Eskalasi Tiket | Rekaman eskalasi tiket ke tim internal | **← DIHAPUS (CR-20261008-001)**
+| OB-009 | Riwayat Tiket | Komentar dan jejak perubahan status tiket | **← DIHAPUS (CR-20261008-001)**
 | OB-010 | Kuota / Target Sales | Target won per sales per periode |
 | OB-011 | Skor Performa Sales | Hasil perhitungan quota attainment dan status performa per sales |
 | OB-012 | Laporan Revenue | Rekap revenue dari peluang closed-won per periode |
 | OB-013 | Laporan Pipeline | Rekap pipeline dan forecast |
 | OB-014 | Laporan Performa Sales | Rekap quota attainment per sales |
-| OB-015 | Laporan Tiket | Rekap volume dan status tiket |
+| OB-015 | Laporan Tiket | Rekap volume dan status tiket | **← DIHAPUS (CR-20261008-001)**
 | OB-016 | Tenant | Entitas tenant beserta isolasi datanya |
 | OB-017 | Pengguna & Role | User, role, dan permission di dalam tenant |
 | OB-018 | Webhook Subscription | Konfigurasi langganan event per tenant (endpoint, secret, event yang di-subscribe) |
 | OB-019 | Event Payload | Muatan event yang dikirim/diterima (outbound dan inbound) |
 | OB-020 | Delivery Log | Log pengiriman event, retry, dan kegagalan |
-| OB-021 | Komentar Tiket | Komentar/percakapan pada tiket (DEC-028) |
-| OB-022 | Riwayat Pergerakan Tiket | Jejak perubahan status, assignee, dan eskalasi tiket (DEC-028) |
-| OB-023 | SLA Tiket | Target waktu penyelesaian tiket per prioritas beserta status pelanggaran (DEC-025) |
+| OB-021 | Komentar Tiket | Komentar/percakapan pada tiket (DEC-028) | **← DIHAPUS (CR-20261008-001)**
+| OB-022 | Riwayat Pergerakan Tiket | Jejak perubahan status, assignee, dan eskalasi tiket (DEC-028) | **← DIHAPUS (CR-20261008-001)**
+| OB-023 | SLA Tiket | Target waktu penyelesaian tiket per prioritas beserta status pelanggaran (DEC-025) | **← DIHAPUS (CR-20261008-001)**
 
 ---
 
@@ -200,29 +207,17 @@ inisiatif internal terpisah.
 | 04.02 Pergerakan stage | SH001 - Sales Rep | Memperbarui | OB-005-Pipeline & Stage | Perubahan stage peluang |
 | 04.03 Penutupan peluang | SH001 - Sales Rep | Menutup | OB-004-Peluang | Penandaan closed-won / closed-lost |
 | 05.01 Pencatatan aktivitas | SH001 - Sales Rep | Mencatat | OB-006-Aktivitas | Call / meeting / task / note |
-| 06.01 Pembuatan tiket | SH006 - Pelanggan | Membuat | OB-007-Tiket | Jalur eksternal |
-| 06.01 Pembuatan tiket | SH007 - Karyawan Tenant | Membuat | OB-007-Tiket | Jalur internal |
-| 06.01 Pembuatan tiket | SH008 - Sistem Klien | Mengirim | OB-007-Tiket | Tiket dari sistem klien via webhook inbound |
-| 06.02 Penanganan tiket | SH003 - Agent Support | Memperbarui | OB-007-Tiket | Penugasan dan perubahan status |
-| 06.02 Penanganan tiket | SH003 - Agent Support | Mencatat | OB-009-Riwayat Tiket | Komentar dan jejak perubahan status |
-| 06.03 Eskalasi tiket | SH003 - Agent Support | Mengeskalasi | OB-008-Eskalasi Tiket | Eskalasi ke tim internal |
-| 06.03 Eskalasi tiket | SH004 - Support Lead | Menerima | OB-008-Eskalasi Tiket | Penanganan eskalasi |
-| 06.04 Penyelesaian tiket | SH003 - Agent Support | Menutup | OB-007-Tiket | Penutupan beserta catatan penyelesaian |
 | 07.01 Perhitungan pencapaian | Sistem CRM | Menghitung | OB-011-Skor Performa Sales | Nilai won aktual dibanding kuota |
 | 07.02 Penilaian performa | SH002 - Sales Manager | Melihat | OB-011-Skor Performa Sales | Status performa per sales |
 | 08.01 Laporan revenue | SH009 - Manajemen | Mengunduh | OB-012-Laporan Revenue | Rekap closed-won per periode |
 | 08.02 Laporan pipeline | SH002 - Sales Manager | Mengunduh | OB-013-Laporan Pipeline | Pipeline dan forecast |
 | 08.03 Laporan performa sales | SH002 - Sales Manager | Mengunduh | OB-014-Laporan Performa Sales | Quota attainment per sales |
-| 09.01 Laporan tiket | SH004 - Support Lead | Mengunduh | OB-015-Laporan Tiket | Volume dan status tiket |
 | 10.01 Pengelolaan tenant | SH005 - Tenant Admin | Mengelola | OB-016-Tenant | Manajemen tenant dan isolasi data |
 | 10.02 Pengelolaan pengguna | SH005 - Tenant Admin | Mengelola | OB-017-Pengguna & Role | User, role, permission |
 | 11.01 Publikasi event | Sistem CRM | Mengirim | OB-019-Event Payload | Event outbound ke sistem klien |
 | 11.02 Penerimaan event | SH008 - Sistem Klien | Mengirim | OB-019-Event Payload | Event inbound ke CRM |
 | 11.03 Pengelolaan subscription | SH005 - Tenant Admin | Mengkonfigurasi | OB-018-Webhook Subscription | Endpoint dan secret per tenant |
 | 11.01 / 11.02 | SH005 - Tenant Admin | Memantau | OB-020-Delivery Log | Log pengiriman, retry, dan kegagalan |
-| 06.02 Penanganan tiket | SH003 - Agent Support | Mengomentari | OB-021-Komentar Tiket | Percakapan pada tiket (DEC-028) |
-| 06.02 Penanganan tiket | Sistem CRM | Mencatat | OB-022-Riwayat Pergerakan Tiket | Jejak status, assignee, eskalasi (DEC-028) |
-| 06.02 Penanganan tiket | Sistem CRM | Menghitung | OB-023-SLA Tiket | Perbandingan waktu terhadap target per prioritas (DEC-025) |
 | 03.01 Penetapan kuota | SH002 - Sales Manager | Mengonfigurasi | OB-010-Kuota/Target Sales | Kuota per sales **per bulan** (DEC-035); ambang batas performa configurable per tenant (DEC-023) |
 
 ---
@@ -361,10 +356,10 @@ mengatur.
 | EP-003 | Penetapan Target & Kuota Sales | M7 | Mandatory |
 | EP-004 | Pengelolaan Pipeline & Peluang | M4 | Mandatory |
 | EP-005 | Pengelolaan Aktivitas | M5 | Nice to have |
-| EP-006 | Pengelolaan Tiket (termasuk komentar, riwayat, SLA) | M6 | Mandatory |
+| EP-006 | ~~Pengelolaan Tiket~~ | — | **DIBATALKAN (CR-20261008-001)** — M6 keluar dari MVP |
 | EP-007 | Pengukuran Performa Sales | M7 | Mandatory |
 | EP-008 | Pelaporan Revenue & Pipeline | M7 | Mandatory |
-| EP-009 | Pelaporan Tiket | M7 | Mandatory |
+| EP-009 | ~~Pelaporan Tiket~~ | — | **DIBATALKAN (CR-20261008-001)** — M6 keluar dari MVP |
 | EP-010 | Tenancy & Kendali Akses | M1 | Mandatory |
 | EP-011 | Integrasi Webhook | M8 | MVP minimal (DEC-021) |
 | EP-012 | ~~Assessment Tim Sales (HR)~~ | — | **Dibatalkan (DEC-031)** — di luar lingkup produk CRM |
@@ -385,28 +380,16 @@ mengatur.
 | US-010 | Sebagai Sales Rep, saya ingin memindahkan peluang antar-stage, sehingga progres deal terlihat. | EP-004 |
 | US-011 | Sebagai Sales Rep, saya ingin menandai peluang sebagai closed-won atau closed-lost beserta alasan, sehingga hasil akhir deal tercatat. | EP-004 |
 | US-012 | Sebagai Sales Rep, saya ingin mencatat aktivitas (call/meeting/task/note), sehingga riwayat interaksi pelanggan tidak hilang. | EP-005 |
-| US-013 | Sebagai Pelanggan, saya ingin membuat tiket melalui jalur eksternal, sehingga keluhan saya tercatat dan ditangani. | EP-006 |
-| US-014 | Sebagai Karyawan Tenant, saya ingin membuat tiket melalui jalur internal (pemohon = karyawan tenant), sehingga permintaan antar tim dapat dilacak. | EP-006 |
-| US-015 | Sebagai Sistem Klien, saya ingin membuat tiket di CRM melalui webhook inbound, sehingga tiket dari sistem lain terpusat. | EP-006 |
-| US-016 | Sebagai Agent Support, saya ingin mengubah status dan penanggung jawab tiket, sehingga penanganan tiket terkendali. | EP-006 |
-| US-017 | Sebagai Agent Support, saya ingin mencatat riwayat dan komentar pada tiket, sehingga jejak penanganan tersimpan. | EP-006 |
-| US-018 | Sebagai Agent Support, saya ingin mengeskalasi tiket ke tim internal, sehingga tiket yang melewati kewenangan saya dapat ditangani pihak yang tepat. | EP-006 |
-| US-019 | Sebagai Support Lead, saya ingin menangani tiket yang dieskalasi, sehingga eskalasi tidak berhenti tanpa penanganan. | EP-006 |
-| US-020 | Sebagai Agent Support, saya ingin menutup tiket beserta catatan penyelesaian, sehingga status akhir tiket jelas. | EP-006 |
 | US-021 | Sebagai Sistem CRM, saya ingin menghitung quota attainment setiap sales, sehingga pencapaian target dapat diketahui secara otomatis. | EP-007 |
 | US-022 | Sebagai Sales Manager, saya ingin melihat status performa setiap sales (mencapai / tidak mencapai target), sehingga saya dapat melakukan pembinaan. | EP-007 |
 | US-023 | Sebagai Manajemen, saya ingin mengunduh laporan revenue dari peluang closed-won per periode, sehingga kinerja pendapatan terpantau. | EP-008 |
 | US-024 | Sebagai Sales Manager, saya ingin mengunduh laporan pipeline dan forecast, sehingga proyeksi pendapatan dapat disusun. | EP-008 |
 | US-025 | Sebagai Sales Manager, saya ingin mengunduh laporan performa sales, sehingga saya dapat membandingkan kinerja antar sales. | EP-008 |
-| US-026 | Sebagai Support Lead, saya ingin mengunduh laporan tiket, sehingga beban dan status penanganan tim terpantau. | EP-009 |
 | US-027 | Sebagai Tenant Admin, saya ingin mengelola tenant dan isolasi datanya, sehingga data antar tenant tidak tercampur. | EP-010 |
 | US-028 | Sebagai Tenant Admin, saya ingin mengelola user, role, dan permission, sehingga akses terkendali. | EP-010 |
 | US-029 | Sebagai Sistem CRM, saya ingin mengirim event ke sistem klien, sehingga klien dapat membangun kustomisasinya sendiri tanpa mengubah core. | EP-011 |
 | US-030 | Sebagai Tenant Admin, saya ingin mengkonfigurasi endpoint dan secret webhook per tenant, sehingga langganan event terisolasi antar tenant. | EP-011 |
 | US-031 | Sebagai Tenant Admin, saya ingin memantau log pengiriman dan retry webhook, sehingga kegagalan integrasi dapat ditelusuri. | EP-011 |
-| US-032 | Sebagai Agent Support, saya ingin menambahkan komentar pada tiket, sehingga percakapan penanganan tersimpan pada tiket yang sama. | EP-006 |
-| US-033 | Sebagai Support Lead, saya ingin melihat riwayat pergerakan tiket (status, assignee, eskalasi), sehingga jejak penanganan dapat diaudit. | EP-006 |
-| US-034 | Sebagai Sistem CRM, saya ingin menghitung SLA tiket dan menandai pelanggaran, sehingga tiket yang melewati target waktu dapat ditindaklanjuti. | EP-006 |
 | US-035 | Sebagai Tenant Admin, saya ingin mengonfigurasi satu webhook agar diteruskan ke beberapa target, sehingga beberapa sistem klien dapat menerima event yang sama. | EP-011 |
 | US-036 | Sebagai Tenant Admin, saya ingin mengatur retry dan rate limit pengiriman webhook, sehingga kegagalan sementara tidak menghilangkan event. | EP-011 |
 | US-037 | Sebagai Sales Manager, saya ingin mengonfigurasi ambang batas performa sales per tenant, sehingga kriteria "perform" dapat disesuaikan dengan kebijakan masing-masing tenant. | EP-007 |
@@ -439,15 +422,15 @@ teknologi).
 | Q-012 | Apakah ada anggaran terpisah untuk inisiatif ini? | Anggaran | Sponsor internal | **Catatan internal** (bukan keputusan project) |
 | Q-013 | Apa kelanjutan produk CRM setelah bootcamp? | Strategis | Sponsor internal + Head of Product | **Catatan internal** (bukan keputusan project) |
 | Q-014 | Definisi "revenue stream": dari closed-won atau dari invoice/pembayaran? | Proses 08 | PM/PO | **Terjawab 2026-10-02** — closed-won (DEC-016) |
-| Q-015 | Beda ticketing internal vs eksternal: satu entitas atau dua sub-sistem? | Proses 06 | PM/PO | **Terjawab 2026-10-02** — satu entitas (DEC-019) |
+| Q-015 | Beda ticketing internal vs eksternal: satu entitas atau dua sub-sistem? | Proses 06 | PM/PO | **Moot 2026-10-08** — objeknya (M6) keluar dari lingkup (CR-20261008-001); jawaban lama: — satu entitas (DEC-019) |
 | Q-016 | Tipe pelanggan yang didukung: B2B, B2C, atau keduanya? | Proses 02 | PM/PO | **Terjawab 2026-10-02** — keduanya (DEC-020) |
 | Q-017 | Assessment tim sales (HR) | Proses 12; di luar pakem CRM | Sponsor internal + Head of HR | **Terjawab 2026-10-02** — dikeluarkan dari lingkup CRM (DEC-031) |
 | Q-018 | Assessment HR: bagian produk yang dijual atau kebutuhan internal? | Proses 12 | Sponsor internal | **Terjawab 2026-10-02** — di luar lingkup (DEC-031) |
 | Q-019 | Ambang batas "performa" pada quota attainment | EP-007 | PM/PO | **Terjawab 2026-10-02** — configurable per tenant (DEC-023). **Nilai default = 80%** (DEC-039) |
 | Q-020 | Periode kuota sales | EP-003 | PM/PO | **Terjawab 2026-10-02** — **bulanan** (DEC-035) |
-| Q-021 | Pemetaan istilah tiket "internal" vs "external" | Proses 06; DEC-019 | PM/PO | **Terjawab 2026-10-02** — berdasarkan asal pemohon: eksternal = pelanggan, internal = karyawan tenant (DEC-022, DEC-036) |
-| Q-022 | Apakah tiket memerlukan SLA? | EP-006 | PM/PO | **Terjawab 2026-10-02** — ya, SLA harus ada (DEC-025) |
-| Q-023 | Aturan status/SLA per jalur tiket | EP-006 | PM/PO | **Terjawab 2026-10-02** — satu state machine, tidak dibedakan per jalur (DEC-026) |
+| Q-021 | Pemetaan istilah tiket "internal" vs "external" | Proses 06; DEC-019 | PM/PO | **Moot 2026-10-08** — objeknya (M6) keluar dari lingkup (CR-20261008-001); jawaban lama: — berdasarkan asal pemohon: eksternal = pelanggan, internal = karyawan tenant (DEC-022, DEC-036) |
+| Q-022 | Apakah tiket memerlukan SLA? | EP-006 | PM/PO | **Moot 2026-10-08** — objeknya (M6) keluar dari lingkup (CR-20261008-001); jawaban lama: — ya, SLA harus ada (DEC-025) |
+| Q-023 | Aturan status/SLA per jalur tiket | EP-006 | PM/PO | **Moot 2026-10-08** — objeknya (M6) keluar dari lingkup (CR-20261008-001); jawaban lama: — satu state machine, tidak dibedakan per jalur (DEC-026) |
 | Q-024 | Pengukuran aktivitas & pipeline (leading indicator) di MVP | EP-007 | PM/PO | **Terjawab 2026-10-02** — tidak termasuk MVP (DEC-027) |
 | Q-025 | Model data pelanggan B2C | EP-002 | PM/PO | **Terjawab 2026-10-02** — Kontak tanpa Akun diperbolehkan (DEC-024) |
 | Q-026 | Spesifikasi webhook | EP-011 | Head of Engineer | **Sebagian terjawab** — retry, rate limit, logging, multiple target (DEC-030); implementasi teknis diteruskan ke Head of Engineer |
@@ -456,6 +439,7 @@ teknologi).
 | Q-029 | Konfirmasi durasi bootcamp | DEC-033 | PM/PO | **Terjawab 2026-10-02** — tetap **3 hari**, hari 1 workshop (DEC-037) |
 | Q-030 | **Tanggal akhir bootcamp**: 13-15 Okt (3 hari dari 13 Okt) atau 13-14 Okt? | DEC-037 | PM/PO | **Ditutup tanpa tanggal (DEC-040)** — PO menegaskan yang mengikat adalah **durasi**, bukan rentang start-end. Bukan field kosong, melainkan keputusan sadar |
 | Q-031 | **Rekonsiliasi kriteria selesai:** DEC-028 (end-to-end modul mandatory) vs DEC-041 (core backend, frontend bukan penghambat) | DEC-028, DEC-041 | PM/PO | **Terjawab 2026-10-02 (DEC-042)** — DEC-028 tetap berlaku; **"end-to-end" diukur pada kapabilitas backend** (terverifikasi via API/kontrak data), bukan kelengkapan UI |
+| Q-032 | **Status M6 Ticketing ke depan** — menjadi modul lanjutan roadmap produk (setara Service Cloud/Service Hub), atau keluar sepenuhnya dari lingkup produk? | CR-20261008-001 / DEC-043 | PM/PO + Head of Product | **Terbuka 2026-10-08** — tidak menghambat bootcamp; diputuskan terpisah dari lingkup MVP |
 
 ---
 

@@ -3,10 +3,13 @@ title: "Project Charter — Bootcamp Internal CRM"
 type: project-charter
 project: bootcamp-crm
 status: Draft
-version: "6.0"
+version: "7.0"
 created: 2026-10-02
-modified: 2026-10-02
+modified: 2026-10-08
 changelog:
+  - version: "7.0"
+    date: 2026-10-08
+    purpose: "CR-20261008-001 / DEC-043 — modul Ticketing (M6) & Pelaporan Tiket (EP-009) dikeluarkan dari MVP; lingkup difokuskan ke business process sales. Modul mandatory 7→6; kriteria 'end-to-end' direvisi (buang acuan tiket); jumlah epic/US/objek/proses/stakeholder diperbarui"
   - version: "6.0"
     date: 2026-10-02
     purpose: "DEC-042 — rekonsiliasi kriteria kelulusan: DEC-028 tetap berlaku, 'end-to-end' diukur pada kapabilitas backend (API/kontrak data), bukan kelengkapan UI; menutup Q-031 & R-016"
@@ -32,7 +35,7 @@ changelog:
 **Tanggal Dibuat:** 2026-10-02
 **Project Manager:** Yudha Pratama
 **Client/Divisi:** TLab Internal
-**Status:** Draft v6.0 — menunggu persetujuan sponsor internal. Seluruh keputusan PM/PO sudah diterapkan (DEC-021 s/d DEC-042); tidak ada keputusan PM/PO yang tersisa.
+**Status:** Draft v7.0 — menunggu persetujuan sponsor internal. Seluruh keputusan PM/PO sudah diterapkan (DEC-021 s/d DEC-043); tidak ada keputusan PM/PO yang tersisa.
 
 ## 1. Latar Belakang & Tujuan
 
@@ -76,8 +79,8 @@ terpisah. Prinsip ini mengikat seluruh rancangan produk.
 - Pelaksanaan bootcamp internal 3 hari, dengan **hari 1 dipakai penuh untuk workshop memfinalkan requirement** dan **hari 2-3 untuk pengembangan prototype** (DEC-037).
 - Pengembangan **core CRM multi-tenant (backend)** selama hari 2-3 bootcamp,
   dengan lingkup MVP: **M1 Tenancy, M2 Contact & Account, M3 Lead, M4 Pipeline/
-  Opportunity, M6 Ticketing, **M7 Reporting**, dan **M8 Webhook/Event Layer
-  (minimal)** (DEC-015, direvisi DEC-021). Sasaran = kapabilitas backend
+  Opportunity, M7 Reporting**, dan **M8 Webhook/Event Layer (minimal)**
+  (DEC-015, direvisi DEC-021 dan CR-20261008-001 — M6 Ticketing dikeluarkan). Sasaran = kapabilitas backend
   menyelesaikan seluruh fitur mandatory (DEC-041).
 - Pengukuran kecepatan dan efektivitas penggunaan AI dalam proses development.
 - Pelaporan hasil: prototype, temuan pengukuran, dan rekomendasi lanjutan.
@@ -86,7 +89,11 @@ terpisah. Prinsip ini mengikat seluruh rancangan produk.
 
 - Modul M5 (Activity Management) — status *nice to have*, tidak masuk MVP.
 - Modul Billing/Invoice — revenue didefinisikan dari deal closed-won (DEC-016).
-- Lingkup modul di luar DEC-015/DEC-021; requirement berprioritas Should/Could (REQ-016, REQ-027, REQ-029, REQ-030) yang tidak selesai tidak menahan approval prototype.
+- Modul M6 (Ticketing) & Pelaporan Tiket (EP-009) — **dikeluarkan dari MVP**
+  (CR-20261008-001 / DEC-043): domain *service*, bukan core CRM untuk sales
+  tracking; sejalan dengan pemisahan Salesforce (Sales vs Service Cloud) dan
+  HubSpot (Sales vs Service Hub).
+- Lingkup modul di luar DEC-015/DEC-021; requirement berprioritas Should/Could (REQ-016, REQ-027, REQ-030) yang tidak selesai tidak menahan approval prototype.
 - Assessment tim sales (HR) — dikeluarkan dari lingkup (DEC-031).
 - Custom case klien yang menuntut validasi *blocking* di dalam core — memerlukan
   extension point synchronous (DEC-014).
@@ -103,11 +110,11 @@ terpisah. Prinsip ini mengikat seluruh rancangan produk.
 | Tujuan | Indikator Keberhasilan (KPI) |
 |---|---|
 | **Core platform CRM (backend) terbangun (DEC-041)** | **Desain core backend mampu menyelesaikan seluruh fitur mandatory** (DEC-015/DEC-021) dan terverifikasi melalui API/kontrak data. **Kelengkapan frontend TIDAK menjadi ukuran kelulusan** |
-| Modul mandatory berjalan end-to-end (DEC-028) | Login multi-tenant → kelola lead/kontak/peluang → kelola tiket (termasuk komentar, riwayat pergerakan, dan SLA) → tampilkan laporan. **"End-to-end" diukur pada kapabilitas backend — terverifikasi melalui API/kontrak data, bukan kelengkapan UI (DEC-042)** |
+| Modul mandatory berjalan end-to-end (DEC-028, direvisi CR-20261008-001) | Login multi-tenant → kelola lead → kelola kontak & akun → kelola peluang → tampilkan laporan sales. **"End-to-end" diukur pada kapabilitas backend — terverifikasi melalui API/kontrak data, bukan kelengkapan UI (DEC-042)** |
 | Requirement difinalkan bersama peserta di hari 1 | Seluruh pertanyaan terbuka pada requirement terjawab/ditutup pada akhir hari 1; BRD (atau versi final requirement) disetujui sebagai baseline kerja hari 2-3 |
 | Kecepatan AI dalam development terukur | **Jumlah requirement yang ter-cover dalam jangka waktu tertentu** (DEC-032) |
 | Efektivitas AI dalam development terukur | **Belum terdefinisi** — diteruskan ke Head of Engineer (Q-007/Q-008, TD-03/TD-04) |
-| Requirement produk CRM tersedia dan dapat dieksekusi | Requirement analysis tersusun (12 Epic, 37 User Story, 23 Objek, 10 stakeholder, 35 baris proses bisnis) dan BRD disetujui |
+| Requirement produk CRM tersedia dan dapat dieksekusi | Requirement analysis tersusun (10 Epic, 25 User Story, 16 Objek, 6 stakeholder, 25 baris proses bisnis) dan BRD disetujui |
 | Produk CRM memiliki potensi dikembangkan & dijual | Belum ditentukan — perlu definisi indikator kelayakan produk |
 
 Catatan: lingkup MVP kini sudah ditetapkan (DEC-015), namun **angka target dan
@@ -189,7 +196,8 @@ terpisah atau dihitung sebagai alokasi waktu internal tim.
 - **Peserta belum ditetapkan** oleh Tech Lead — menghambat perencanaan sesi dan
   pembagian peran.
 - **Jendela pengembangan efektif hanya 2 hari** (hari 1 = workshop requirement,
-  DEC-037) sementara modul mandatory mencakup 7 modul — risiko R-001 naik.
+  DEC-037) sementara modul mandatory mencakup 6 modul — risiko R-001 turun
+  setelah M6 dikeluarkan (CR-20261008-001), tetap High.
 - **Ketergantungan pada hasil hari 1**: bila requirement belum tuntas di hari 1,
   jendela pengembangan berkurang lagi (R-015).
 - ~~Kriteria selesai belum konsisten~~ — **diselesaikan**: DEC-042 menyatukan DEC-028 (end-to-end) dengan DEC-041 (core backend) — "end-to-end" diukur pada kapabilitas backend/R-016 ditutup.
@@ -237,10 +245,13 @@ sudah diterapkan). Tersisa keputusan milik **Head of Engineer**:
 Lingkup fitur MVP (DEC-015, direvisi DEC-021) · bentuk dokumen (BRD, DEC-017) ·
 definisi revenue (DEC-016) · tanggal pelaksanaan (DEC-033) · peserta (2 tim x 4
 orang, DEC-034) · definisi fungsional multi-tenant (DEC-029) · status M8 Webhook
-(DEC-021) · ambang batas performa configurable (DEC-023) · SLA tiket (DEC-025) ·
-assessment HR dikeluarkan dari lingkup (DEC-031) · metrik kecepatan AI (DEC-032) ·
-periode kuota **bulanan** (DEC-035) · istilah tiket berdasarkan asal pemohon
-(DEC-036) · struktur 3 hari dengan hari 1 workshop (DEC-037).
+(DEC-021) · ambang batas performa configurable (DEC-023) · assessment HR
+dikeluarkan dari lingkup (DEC-031) · metrik kecepatan AI (DEC-032) · periode
+kuota **bulanan** (DEC-035) · struktur 3 hari dengan hari 1 workshop (DEC-037).
+
+**Dicabut/direvisi 2026-10-08 (CR-20261008-001 / DEC-043):** SLA tiket
+(DEC-025), istilah tiket berdasarkan asal pemohon (DEC-036), komentar & riwayat
+tiket (DEC-028) — seluruhnya mengikuti keluarnya modul M6 Ticketing dari MVP.
 
 Catatan teknis yang diteruskan ke Head of Engineer terdokumentasi di
 `architecture/open-tech-decisions.md`.

@@ -1,5 +1,5 @@
 @startuml
-title Diagram 6 — Entity Relationship Diagram (konseptual)
+title Diagram 6 — Entity Relationship Diagram (konseptual, fokus sales)
 
 skinparam shadowing false
 skinparam linetype ortho
@@ -60,45 +60,50 @@ entity "Kuota Sales" as KUO {
   nilai target
 }
 
-entity "Tiket" as TIK {
+entity "Skor Performa Sales" as SKOR {
   * id
   --
   tenant_id
-  asal pemohon
-  prioritas
-  assignee
+  sales_id
+  quota attainment
+  status performa
 }
 
-entity "Komentar Tiket" as KOM {
-  * id
-  --
-  tiket_id
-  penulis
-  waktu
-}
-
-entity "Riwayat Pergerakan" as RIW {
-  * id
-  --
-  tiket_id
-  perubahan status
-  waktu
-}
-
-entity "Eskalasi" as ESK {
-  * id
-  --
-  tiket_id
-  tujuan
-  waktu
-}
-
-entity "SLA" as SLA {
+entity "Ambang Performa" as AMB {
   * id
   --
   tenant_id
-  prioritas
-  target waktu
+  nilai ambang
+  (default 80%)
+}
+
+entity "Laporan Revenue" as LRV {
+  * id
+  --
+  tenant_id
+  periode
+  nilai closed-won
+}
+
+entity "Laporan Pipeline" as LPL {
+  * id
+  --
+  tenant_id
+  pipeline & forecast
+}
+
+entity "Laporan Performa" as LPF {
+  * id
+  --
+  tenant_id
+  attainment per sales
+}
+
+entity "Aktivitas\n(nice to have — M5)" as AKT {
+  * id
+  --
+  tenant_id
+  jenis (call/meeting/task/note)
 }
 
 entity "Webhook Subscription" as SUB {
@@ -128,10 +133,14 @@ TEN ||--o{ AKN
 TEN ||--o{ KON
 TEN ||--o{ LEAD
 TEN ||--o{ PEL
-TEN ||--o{ TIK
-TEN ||--o{ SLA
-TEN ||--o{ SUB
 TEN ||--o{ KUO
+TEN ||--o{ SKOR
+TEN ||--o{ AMB
+TEN ||--o{ LRV
+TEN ||--o{ LPL
+TEN ||--o{ LPF
+TEN ||--o{ AKT
+TEN ||--o{ SUB
 
 AKN |o--o{ KON : "B2B: kontak di bawah akun\nB2C: kontak tanpa akun"
 LEAD ||..o{ KON : konversi
@@ -140,19 +149,24 @@ LEAD ||..o{ PEL : konversi
 PEL }o--|| AKN
 PEL }o--|| KON
 KUO }o--|| USR : target per sales
-
-TIK ||--o{ KOM
-TIK ||--o{ RIW
-TIK ||--o| ESK
-TIK }o--|| SLA : mengacu prioritas
-TIK }o--o| KON : pemohon eksternal
-TIK }o--o| USR : pemohon internal
-TIK }o--|| USR : assignee
+SKOR }o--|| KUO : dihitung dari kuota
+SKOR }o--|| AMB : memakai ambang
+LRV }o--o{ PEL : agregasi closed-won
+LPL }o--o{ PEL
+LPF }o--o{ SKOR
+AKT }o--o| PEL
+AKT }o--o| LEAD
 
 SUB ||--o{ WTG : fan-out (DEC-030)
 WTG ||--o{ LOG
 
 note bottom of KON
   Kontak B2C boleh berdiri tanpa Akun (DEC-024).
+end note
+
+note bottom of TEN
+  Entitas tiket (OB-007/008/009/021/022/023) dan
+  Laporan Tiket (OB-015) DIHAPUS dari model
+  karena M6 keluar dari lingkup (CR-20261008-001).
 end note
 @enduml

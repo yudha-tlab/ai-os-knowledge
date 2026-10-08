@@ -3,10 +3,13 @@ title: "Risk Register — Bootcamp Internal CRM"
 type: risk-register
 project: bootcamp-crm
 status: active
-version: "6.0"
+version: "7.0"
 created: 2026-10-02
-modified: 2026-10-02
+modified: 2026-10-08
 changelog:
+  - version: "7.0"
+    date: 2026-10-08
+    purpose: "CR-20261008-001 / DEC-043 — M6 Ticketing dikeluarkan dari MVP; modul mandatory 7→6. R-001 tetap High/High namun beban turun (6 modul/2 hari)"
   - version: "6.0"
     date: 2026-10-02
     purpose: "Tutup R-016 — kriteria kelulusan disatukan oleh DEC-042 (end-to-end diukur pada kapabilitas backend). Total 16 risiko, 5 ditutup"
@@ -29,7 +32,7 @@ changelog:
 
 # Risk Register — Bootcamp Internal CRM
 
-**Terakhir Diperbarui:** 2026-10-02
+**Terakhir Diperbarui:** 2026-10-08
 
 Fokus khusus risiko (bagian Risks dari RAID). Untuk asumsi, isu, dan
 dependency, lihat [[raid-log]].
@@ -43,7 +46,7 @@ dasar akan menyesatkan prioritisasi.
 
 | ID | Deskripsi | Kategori | Kemungkinan | Dampak | Severity | Owner | Rencana Mitigasi | Status |
 |---|---|---|---|---|---|---|---|---|
-| R-001 | Durasi bootcamp tidak cukup untuk menghasilkan prototype CRM multi-tenant yang bermakna | Scope/Schedule | High | High | **Tinggi** | PM/PO + Head of Product | **Jendela pengembangan efektif hanya 2 hari** (DEC-037: hari 1 = workshop finalisasi requirement) untuk 7 modul mandatory (DEC-015 + DEC-021). Mitigasi: kunci requirement sebelum hari 1 (BRD); prioritaskan jalur end-to-end; siapkan urutan modul per tim | Open — **NAIK ke High/High** |
+| R-001 | Durasi bootcamp tidak cukup untuk menghasilkan prototype CRM multi-tenant yang bermakna | Scope/Schedule | High | High | **Tinggi** | PM/PO + Head of Product | **Jendela pengembangan efektif hanya 2 hari** (DEC-037: hari 1 = workshop finalisasi requirement) untuk 6 modul mandatory (DEC-015 + DEC-021, direvisi CR-20261008-001 — M6 dikeluarkan). Mitigasi: kunci requirement sebelum hari 1 (BRD); prioritaskan jalur end-to-end; siapkan urutan modul per tim | Open — **NAIK ke High/High** |
 | R-002 | Metrik pengukuran efektivitas AI dan baseline pembanding tidak didefinisikan sebelum bootcamp → hasil pengukuran tidak dapat disimpulkan | Process | High | High | Tinggi | Head of Engineer | Kecepatan AI sudah ditetapkan (DEC-032); **efektivitas + baseline masih open** (TD-03/TD-04) — harus selesai sebelum hari pertama bootcamp; tidak dapat dipulihkan | Open |
 | R-003 | Nama peserta belum ditetapkan Tech Lead → perencanaan sesi dan pembagian peran tidak dapat difinalkan | Resourcing | Low | Low | **Rendah** | Tech Lead | **DITUTUP 2026-10-02** — jumlah & pembagian tim cukup (2 tim x 4 orang, DEC-034); nama tidak diperlukan saat ini (DEC-038) | **Closed** |
 | R-004 | Multi-tenancy didefinisikan terlalu kabur (shared DB vs schema-per-tenant vs DB-per-tenant) → rework arsitektur di tengah bootcamp | Teknis | Med | High | Tinggi | Head of Engineer | Kunci definisi teknis multi-tenant sebelum bootcamp dimulai; jadikan keputusan tertulis | Open |
@@ -64,7 +67,7 @@ dasar akan menyesatkan prioritisasi.
 
 | ID | Sebelum | Sesudah | Alasan |
 |---|---|---|---|
-| R-001 | Tinggi (Med/High) | Tinggi (**High/High**) | Jendela pengembangan efektif hanya **2 hari** (DEC-037: hari 1 = workshop requirement) untuk 7 modul mandatory |
+| R-001 | Tinggi (Med/High) | Tinggi (**High/High**) | Jendela pengembangan efektif hanya **2 hari** (DEC-037) untuk 6 modul mandatory (turun dari 7 setelah M6 dikeluarkan — CR-20261008-001) |
 | R-005 | Tinggi (High/Med) | Sedang (Low/Med) | Requirement analysis tersusun 2026-10-02; peserta sudah punya spesifikasi yang dapat dibaca |
 | R-003 | Tinggi (High/Med) | Sedang (Med/Med) | Jumlah & pembagian peserta sudah ditetapkan (2 tim x 4 orang, DEC-034); tersisa nama |
 | R-011 | Sedang (High/Med) | **Closed** | PO menerima keberatan PM — M8 masuk MVP minimal (DEC-021) |
@@ -81,8 +84,9 @@ ditetapkan (DEC-039). Total 16 risiko (R-001 s/d R-016).
 
 **Perubahan paling penting:** R-001 **naik ke High/High**. Konfirmasi struktur 3
 hari (DEC-037) tidak meredakan risiko — ia memindahkannya: yang semula terlihat
-seperti "3 hari" ternyata hanya **2 hari pengembangan efektif** untuk 7 modul
-mandatory. Risiko baru R-015 muncul dari ketergantungan pada hasil hari 1.
+seperti "3 hari" ternyata hanya **2 hari pengembangan efektif** untuk 6 modul
+mandatory (turun dari 7 setelah M6 dikeluarkan — CR-20261008-001). Risiko baru
+R-015 muncul dari ketergantungan pada hasil hari 1.
 
 Sisa risiko Tinggi: **R-001, R-002, R-004, R-015**. R-002 dan R-015 sama-sama
 tidak dapat dipulihkan bila terlewat — keduanya jatuh pada hari pertama bootcamp.

@@ -3,10 +3,13 @@ title: "RAID Log — Bootcamp Internal CRM"
 type: raid-log
 project: bootcamp-crm
 status: active
-version: "7.0"
+version: "8.0"
 created: 2026-10-02
-modified: 2026-10-02
+modified: 2026-10-08
 changelog:
+  - version: "8.0"
+    date: 2026-10-08
+    purpose: "CR-20261008-001 / DEC-043 — M6 Ticketing & EP-009 dikeluarkan dari MVP; modul mandatory 7→6. R-001 beban turun (tetap High/High); BRD v2.0 (25 BR, 7 diagram)"
   - version: "7.0"
     date: 2026-10-02
     purpose: "BRD v1.0 disusun — mitigasi parsial R-015 & penurunan R-005; R-005 kini tinggal menunggu approval, bukan penyusunan"
@@ -29,7 +32,7 @@ changelog:
 
 # RAID Log — Bootcamp Internal CRM
 
-**Terakhir Diperbarui:** 2026-10-02
+**Terakhir Diperbarui:** 2026-10-08
 
 Log gabungan Risks, Assumptions, Issues, dan Dependencies. Untuk risiko yang
 butuh tracking lebih detail, gunakan [[risk-register]].
@@ -41,23 +44,23 @@ Ringkasan risiko teratas. Detail lengkap, termasuk skala penilaian, ada di
 
 | ID | Deskripsi | Kemungkinan | Dampak | Severity | Owner | Mitigasi | Status |
 |---|---|---|---|---|---|---|---|
-| R-001 | Durasi bootcamp tidak cukup untuk prototype CRM multi-tenant yang bermakna | High | High | Tinggi | PM/PO + Head of Product | **Jendela pengembangan efektif hanya 2 hari** (hari 1 = workshop requirement, DEC-037) sementara modul mandatory mencakup 7 modul. Mitigasi: kunci requirement sebelum hari 1; prioritaskan jalur end-to-end di hari 2 | Open — **NAIK ke High/High** |
+| R-001 | Durasi bootcamp tidak cukup untuk prototype CRM multi-tenant yang bermakna | High | High | Tinggi | PM/PO + Head of Product | **Jendela pengembangan efektif hanya 2 hari** (hari 1 = workshop requirement, DEC-037) sementara modul mandatory mencakup 6 modul (turun dari 7 — M6 dikeluarkan, CR-20261008-001). Mitigasi: kunci requirement sebelum hari 1; prioritaskan jalur end-to-end di hari 2 | Open — **NAIK ke High/High** |
 | R-002 | Metrik AI tidak didefinisikan sebelum bootcamp → pengukuran tanpa baseline | High | High | Tinggi | PM/PO + Head of Engineer | Tetapkan definisi metrik + baseline sebelum hari pertama | Open |
 | R-003 | Peserta belum ditetapkan Tech Lead | Low | Low | Rendah | Tech Lead | **DITUTUP 2026-10-02** — jumlah & pembagian tim cukup (2 tim x 4 orang, DEC-034); nama tidak diperlukan saat ini (DEC-038) | **Closed** |
 | R-004 | Definisi multi-tenant belum dikunci → rework arsitektur | Med | High | Tinggi | Head of Engineer | Kunci definisi teknis sebagai keputusan tertulis | Open |
-| R-005 | Requirement CRM belum siap dalam bentuk yang dapat dieksekusi | Low | Med | Sedang | PM/PO | **Mitigasi dijalankan**: requirement analysis tersusun (12 Epic, 37 US, 23 Objek); **BRD v1.0 disusun** (30 BR + 8 diagram) — sisa hanya approval | Open — turun dari Tinggi |
+| R-005 | Requirement CRM belum siap dalam bentuk yang dapat dieksekusi | Low | Med | Sedang | PM/PO | **Mitigasi dijalankan**: requirement analysis tersusun (10 Epic, 25 US, 16 Objek); **BRD v2.0 disusun** (25 BR + 7 diagram) — sisa hanya approval | Open — turun dari Tinggi |
 | R-011 | Modul Webhook (M8) berstatus nice to have padahal prinsip produk (DEC-012) mengandalkannya | High | Med | Sedang | PM/PO + Head of Engineer | **DITUTUP 2026-10-02** — PO menerima keberatan PM; M8 masuk MVP minimal (DEC-021) | **Closed** |
 | R-012 | Kebutuhan "assessment tim sales (HR)" di luar pakem CRM dan belum ada pemiliknya → scope creep | Med | Med | Sedang | Sponsor internal + Head of HR | **DITUTUP 2026-10-02** — dikeluarkan dari lingkup CRM (DEC-031) | **Closed** |
 | R-013 | Penandaan status performa sales (EP-007) memerlukan ambang batas & periode kuota yang belum ditetapkan | Low | Low | Rendah | PM/PO | **Keduanya tertutup** — periode kuota **bulanan** (DEC-035) + ambang configurable (DEC-023) dengan **default 80%** (DEC-039) | Open — **turun ke Rendah** |
 | R-014 | Rentang bootcamp 13-14 Okt (2 hari) tidak konsisten dengan ketetapan durasi 3 hari (DEC-003) | Med | Med | Sedang | PM/PO | **DITUTUP 2026-10-02** — PO mengonfirmasi durasi tetap 3 hari dengan hari 1 sebagai workshop (DEC-037). Sisa: tanggal akhir (Q-030) | **Closed** |
-| R-015 | Hari 1 workshop tidak cukup untuk memfinalkan seluruh requirement → requirement masuk hari 2 dalam kondisi belum final, jendela pengembangan menyusut di bawah 2 hari | High | High | Tinggi | PM/PO | Kunci daftar keputusan terbuka & agendakan workshop hari 1 secara ketat; **BRD v1.0 sebagai bahan dasar telah disusun** (section 9 memuat daftar "yang belum final"); tetapkan kriteria "requirement dianggap final" | Open — **baru 2026-10-02; mitigasi parsial: BRD selesai** |
+| R-015 | Hari 1 workshop tidak cukup untuk memfinalkan seluruh requirement → requirement masuk hari 2 dalam kondisi belum final, jendela pengembangan menyusut di bawah 2 hari | High | High | Tinggi | PM/PO | Kunci daftar keputusan terbuka & agendakan workshop hari 1 secara ketat; **BRD v2.0 sebagai bahan dasar telah disusun** (section 9 memuat daftar "yang belum final"); tetapkan kriteria "requirement dianggap final" | Open — **baru 2026-10-02; mitigasi parsial: BRD v2.0 selesai** |
 | R-016 | Kriteria selesai tidak konsisten (DEC-028 end-to-end vs DEC-041 core backend) | — | — | — | PM/PO | **DITUTUP 2026-10-02** — DEC-042 menyatukan kedua definisi: "end-to-end" diukur pada kapabilitas backend | **Closed** |
 
 ## Assumptions (Asumsi)
 
 | ID | Deskripsi | Dampak Jika Salah | Owner | Status |
 |---|---|---|---|---|
-| A-001 | Durasi bootcamp cukup untuk menghasilkan **core backend** yang mampu menyelesaikan seluruh fitur mandatory (DEC-041) | Lingkup MVP harus dipotong drastis atau bootcamp diperpanjang — belum direncanakan | PM/PO + Head of Product | **Perlu Validasi — kritis**: durasi 3 hari tetapi pengembangan efektif hanya 2 hari (DEC-037); 7 modul mandatory |
+| A-001 | Durasi bootcamp cukup untuk menghasilkan **core backend** yang mampu menyelesaikan seluruh fitur mandatory (DEC-041) | Lingkup MVP harus dipotong drastis atau bootcamp diperpanjang — belum direncanakan | PM/PO + Head of Product | **Perlu Validasi — kritis**: durasi 3 hari tetapi pengembangan efektif hanya 2 hari (DEC-037); 6 modul mandatory (turun dari 7 — CR-20261008-001) |
 | A-002 | Peserta memiliki kompetensi dasar development sehingga tidak perlu materi fundamental | Sesi harus dirombak; alokasi waktu untuk pondasi tidak tersedia dalam 3 hari | Tech Lead | Perlu Validasi |
 | A-003 | AI OS dapat dipakai selama sesi bootcamp | Tujuan kedua project (pengukuran efektivitas AI) tidak dapat dicapai | Head of Engineer | Perlu Validasi |
 | A-004 | Tech Lead dapat menetapkan peserta sebelum tanggal bootcamp | Perencanaan sesi dan pembagian peran tidak dapat difinalkan | Tech Lead | Perlu Validasi |

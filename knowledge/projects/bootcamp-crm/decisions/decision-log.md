@@ -3,10 +3,13 @@ title: "Decision Log — Bootcamp Internal CRM"
 type: decision-log
 project: bootcamp-crm
 status: active
-version: "6.0"
+version: "7.0"
 created: 2026-10-02
-modified: 2026-10-02
+modified: 2026-10-08
 changelog:
+  - version: "7.0"
+    date: 2026-10-08
+    purpose: "CR-20261008-001 — modul Ticketing (M6) & Pelaporan Tiket (EP-009) dikeluarkan dari MVP; lingkup difokuskan ke business process sales. DEC-043 dicatat; DEC-019/022/025/026/036 dicabut; DEC-028/041/042 direvisi; DEC-015 direvisi"
   - version: "6.0"
     date: 2026-10-02
     purpose: "DEC-042 — rekonsiliasi kriteria kelulusan: DEC-028 tetap berlaku, 'end-to-end' diukur pada kapabilitas backend (bukan kelengkapan UI). Menutup Q-031, R-016, dan D-015. Seluruh keputusan PM/PO kini tertutup tanpa sisa"
@@ -29,7 +32,7 @@ changelog:
 
 # Decision Log — Bootcamp Internal CRM
 
-**Terakhir Diperbarui:** 2026-10-02
+**Terakhir Diperbarui:** 2026-10-08
 
 ## Keputusan
 
@@ -49,20 +52,20 @@ changelog:
 | DEC-012 | 2026-10-02 | **Prinsip produk:** core CRM bersifat stabil dan **tidak dimodifikasi per klien**; variasi proses bisnis klien diserap melalui **webhook + service eksternal terpisah** | Arahan PO — CRM memiliki pakem universal, namun implementasi tiap perusahaan berbeda karena proses bisnisnya; core tidak boleh di-fork per klien | Yudha Pratama | Active |
 | DEC-013 | 2026-10-02 | Prioritas webhook adalah **outbound (CRM → sistem klien)**, namun **inbound (sistem klien → CRM) tetap disertakan** dalam lingkup | Arahan PO — contoh nyata: perubahan status lead dipakai klien untuk memicu notifikasi ke PIC atau eskalasi | Yudha Pratama | Active |
 | DEC-014 | 2026-10-02 | Kustomisasi berbasis webhook bersifat **asynchronous**; custom case yang menuntut validasi *blocking* di dalam core **di luar lingkup MVP** | Konsekuensi langsung DEC-012 — webhook adalah reaksi terhadap event, bukan titik intersepsi sinkron | Yudha Pratama | Active |
-| DEC-015 | 2026-10-02 | Lingkup MVP ditetapkan: **M1 Tenancy, M2 Contact & Account, M3 Lead, M4 Pipeline/Opportunity, M6 Ticketing, M7 Reporting = mandatory**; **M5 Activity dan M8 Webhook = nice to have** | Arahan PO 2026-10-02 (poin 4.6). PM mencatat keberatan teknis atas status M8 — lihat catatan di bawah | Yudha Pratama | Active |
+| DEC-015 | 2026-10-02 | Lingkup MVP ditetapkan: **M1 Tenancy, M2 Contact & Account, M3 Lead, M4 Pipeline/Opportunity, M6 Ticketing, M7 Reporting = mandatory**; **M5 Activity dan M8 Webhook = nice to have** | Arahan PO 2026-10-02 (poin 4.6). PM mencatat keberatan teknis atas status M8 — lihat catatan di bawah | Yudha Pratama | Active — **direvisi CR-20261008-001**: M6 Ticketing keluar dari MVP |
 | DEC-016 | 2026-10-02 | **Revenue stream** didefinisikan dari **deal closed-won** (nilai peluang yang dimenangkan), bukan dari invoice/pembayaran aktual | Konfirmasi PO (poin 4.1) — menegaskan CRM berhenti di nilai deal; modul billing di luar lingkup | Yudha Pratama | Active |
 | DEC-017 | 2026-10-02 | Bentuk dokumen kebutuhan CRM dari PO adalah **BRD** | Konfirmasi PO (poin 4) — requirement analysis ini menjadi bahan bakunya | Yudha Pratama | Active |
 | DEC-018 | 2026-10-02 | **Tracking performance sales** diukur dengan pendekatan **kuota vs pencapaian aktual** (quota attainment) per sales; praktik standar industri dikaji dan diusulkan PM | Arahan PO (poin 4.2) — contoh: target won 5, tercapai 4 → muncul informasi performa/tidak; PO meminta cek praktik standar | Yudha Pratama | Active |
-| DEC-019 | 2026-10-02 | **Ticketing memakai satu model tiket** (satu entitas tiket), dengan **jalur eskalasi ke tim internal**. Bukan dua sub-sistem tiket yang terpisah | Klarifikasi PO (poin 4.4) — "harusnya tetap satu tiket, hanya bisa dieskalasi ke tim internal". Diperjelas oleh DEC-022 & DEC-036 | Yudha Pratama | Active — diperjelas DEC-022 & DEC-036 |
+| DEC-019 | 2026-10-02 | **Ticketing memakai satu model tiket** (satu entitas tiket), dengan **jalur eskalasi ke tim internal**. Bukan dua sub-sistem tiket yang terpisah | Klarifikasi PO (poin 4.4) — "harusnya tetap satu tiket, hanya bisa dieskalasi ke tim internal". Diperjelas oleh DEC-022 & DEC-036 | Yudha Pratama | **DICABUT oleh CR-20261008-001** — objeknya (M6) keluar dari MVP |
 | DEC-020 | 2026-10-02 | Tipe pelanggan yang didukung: **B2B dan B2C** | Konfirmasi PO (poin 4.5) — model Contact/Account harus mengakomodir keduanya | Yudha Pratama | Active |
 | DEC-021 | 2026-10-02 | **M8 Webhook / Event Layer masuk MVP secara minimal** — event outbound inti + 1 endpoint inbound. **Merevisi DEC-015** | PO menyetujui rekomendasi PM: webhook adalah mekanisme yang menjadikan prinsip produk (DEC-012) dapat didemonstrasikan; menunda penuh berisiko retrofit mahal karena event harus dikaitkan ulang ke seluruh modul. Menutup R-011 dan I-004 | Yudha Pratama | Active — merevisi DEC-015 |
-| DEC-022 | 2026-10-02 | Tiket **"eksternal" = berasal dari luar** (pemohon/pelanggan eksternal). Eskalasi ke tim internal TLab adalah **atribut terpisah** pada tiket, bukan jenis tiket yang berbeda | Jawaban PO atas Q-021 | Yudha Pratama | Active (istilah "internal": perlu konfirmasi) |
+| DEC-022 | 2026-10-02 | Tiket **"eksternal" = berasal dari luar** (pemohon/pelanggan eksternal). Eskalasi ke tim internal TLab adalah **atribut terpisah** pada tiket, bukan jenis tiket yang berbeda | Jawaban PO atas Q-021 | Yudha Pratama | **DICABUT oleh CR-20261008-001** — objeknya (M6) keluar dari MVP |
 | DEC-023 | 2026-10-02 | Ambang batas performa sales **configurable per tenant** — bukan nilai tetap di kode. Nilai default belum ditetapkan | Arahan PO atas Q-019 ("harusnya configurable"). PO meminta riset praktik industri untuk nilai default — hasil riset ada di `requirement-analysis.md` section 5.5; rekomendasi PM: **80%** | Yudha Pratama | Active — nilai default **80%** (DEC-039) |
 | DEC-024 | 2026-10-02 | Pelanggan B2C **tidak wajib memiliki Akun** — Kontak dapat berdiri sendiri tanpa Akun | Konfirmasi PO atas Q-025 | Yudha Pratama | Active |
-| DEC-025 | 2026-10-02 | Tiket **memiliki SLA** — target waktu penyelesaian per prioritas beserta penanda pelanggaran SLA | Arahan PO atas Q-022 ("harus ada") | Yudha Pratama | Active |
-| DEC-026 | 2026-10-02 | Aturan status tiket **tidak dibedakan per jalur** — satu state machine; SLA dibedakan hanya oleh prioritas | Konfirmasi PO atas Q-023 | Yudha Pratama | Active |
+| DEC-025 | 2026-10-02 | Tiket **memiliki SLA** — target waktu penyelesaian per prioritas beserta penanda pelanggaran SLA | Arahan PO atas Q-022 ("harus ada") | Yudha Pratama | **DICABUT oleh CR-20261008-001** — objeknya (M6) keluar dari MVP |
+| DEC-026 | 2026-10-02 | Aturan status tiket **tidak dibedakan per jalur** — satu state machine; SLA dibedakan hanya oleh prioritas | Konfirmasi PO atas Q-023 | Yudha Pratama | **DICABUT oleh CR-20261008-001** — objeknya (M6) keluar dari MVP |
 | DEC-027 | 2026-10-02 | Lapis pengukuran **aktivitas & pipeline (leading indicator) tidak termasuk MVP** — pengukuran performa memakai lapis outcome | Konfirmasi PO atas Q-024 | Yudha Pratama | Active |
-| DEC-028 | 2026-10-02 | Kriteria "prototype selesai" = **end-to-end untuk modul mandatory**, termasuk **komentar tiket** dan **riwayat pergerakan tiket** | Konfirmasi PO atas Q-010 | Yudha Pratama | Active — **diperjelas DEC-042**: "end-to-end" diukur pada kapabilitas backend |
+| DEC-028 | 2026-10-02 | Kriteria "prototype selesai" = **end-to-end untuk modul mandatory**, termasuk **komentar tiket** dan **riwayat pergerakan tiket** | Konfirmasi PO atas Q-010 | Yudha Pratama | **DIREVISI CR-20261008-001** — acuan "komentar & riwayat tiket" kehilangan objeknya; definisi selesai kini diarahkan ke kapabilitas core sales |
 | DEC-029 | 2026-10-02 | **Definisi fungsional multi-tenant:** platform dapat digunakan oleh banyak user dari banyak organisasi (B2B) maupun customer tanpa organisasi (B2C). **Strategi isolasi teknis** (shared DB / schema-per-tenant / DB-per-tenant) diteruskan ke Head of Engineer | Jawaban PO atas Q-005 | Yudha Pratama | Active (bagian teknis: open) |
 | DEC-030 | 2026-10-02 | **Spesifikasi webhook:** retry, rate limit, logging, dan dukungan **multiple target** (satu webhook dapat diteruskan ke beberapa target) | Arahan PO atas Q-026 | Yudha Pratama | Active |
 | DEC-031 | 2026-10-02 | **Assessment tim sales (HR) dikeluarkan dari lingkup** produk CRM | Keputusan PO atas Q-017/Q-018 — bukan pakem CRM (CRM mengelola pelanggan, bukan penilaian karyawan) | Yudha Pratama | Active — menutup REQ-031 |
@@ -70,13 +73,14 @@ changelog:
 | DEC-033 | 2026-10-02 | **Tanggal pelaksanaan bootcamp: 13-14 Oktober** | Arahan PO atas Q-001. Rentang ini **dikoreksi oleh DEC-037** (durasi tetap 3 hari) dan **tanggal akhirnya dibatalkan sebagai hal yang diabaikan oleh DEC-040** | Yudha Pratama | **Superseded — tanggal oleh DEC-037 & DEC-040** |
 | DEC-034 | 2026-10-02 | **Peserta bootcamp: 2 tim, masing-masing 4 orang (total 8 peserta)** | Arahan PO atas Q-002 — peserta sudah ditentukan dan sudah dibagi | Yudha Pratama | Active (nama: ditunda — DEC-038) |
 | DEC-035 | 2026-10-02 | **Periode kuota sales: BULANAN.** Kuota dan pencapaian dihitung per bulan, bukan kuartalan/tahunan | Jawaban PO atas Q-020 ("ok setuju bulanan"). Menutup Q-020 dan Q-024 | Yudha Pratama | Active |
-| DEC-036 | 2026-10-02 | **Tiket "internal" = karyawan tenant sebagai pemohon.** Istilah dipetakan berdasarkan **asal pemohon**: eksternal = pelanggan (DEC-022), internal = karyawan tenant | Jawaban PO atas Q-021 ("tiket internal ini betul karyawan tenant sebagai pemohon"). Menetapkan **Tafsir A** secara eksplisit | Yudha Pratama | Active — menutup Q-021 |
+| DEC-036 | 2026-10-02 | **Tiket "internal" = karyawan tenant sebagai pemohon.** Istilah dipetakan berdasarkan **asal pemohon**: eksternal = pelanggan (DEC-022), internal = karyawan tenant | Jawaban PO atas Q-021 ("tiket internal ini betul karyawan tenant sebagai pemohon"). Menetapkan **Tafsir A** secara eksplisit | Yudha Pratama | **DICABUT oleh CR-20261008-001** — objeknya (M6) keluar dari MVP |
 | DEC-037 | 2026-10-02 | **Bootcamp tetap 3 hari, dengan struktur: hari 1 = full workshop memfinalkan requirement; hari 2-3 = pengembangan.** Durasi 3 hari (DEC-003) tetap berlaku — bukan 2 hari | Jawaban PO atas Q-029 ("jadi sebenarnya 3 hari, namun hari 1 akan digunakan untuk full workshop memfinalkan requirement"). **Konsekuensi: jendela pengembangan efektif hanya 2 hari**, bukan 3 — lihat catatan di bawah | Yudha Pratama | Active — menutup Q-029 |
 | DEC-038 | 2026-10-02 | **Nama peserta bootcamp tidak diperlukan untuk saat ini** — dicatat hanya sebagai referensi | Jawaban PO atas B.2. Bukan penghapusan kebutuhan, hanya penundaan pencatatan | Yudha Pratama | Active |
 | DEC-039 | 2026-10-02 | **Nilai default ambang batas performa sales = 80%.** Berlaku bila tenant belum mengonfigurasi ambangnya sendiri; tenant tetap dapat mengubahnya | Jawaban PO atas Q-028 ("setuju") — menerima rekomendasi PM berbasis riset praktik industri (section 5.5 `requirement-analysis.md`). Ambang 100% akan melabeli mayoritas sales "tidak perform" karena hanya ~44% rep yang biasanya mencapai kuota penuh | Yudha Pratama | Active — menutup Q-028, melengkapi DEC-023 |
 | DEC-040 | 2026-10-02 | **Tanggal akhir bootcamp sengaja TIDAK ditetapkan.** Yang mengikat adalah **durasi** (3 hari, DEC-003/DEC-037), bukan rentang start-end | Jawaban PO atas Q-030 ("mungkin bisa diabaikan ya, yang perlu kita garis bawahi itu adalah durasinya, bukan start-end date nya"). Menutup Q-030 **tanpa tanggal** — dicatat sebagai keputusan sadar, bukan field kosong | Yudha Pratama | Active — menutup Q-030 sebagai tidak material |
-| DEC-041 | 2026-10-02 | **Sasaran output bootcamp = core platform CRM (backend).** Ukuran keberhasilan adalah **desain core backend mampu menyelesaikan seluruh fitur mandatory** (DEC-015/DEC-021). **Kesiapan frontend bukan penghambat kelulusan** — UI boleh belum selesai | Arahan PO (POV project & product). Menegaskan ulang tujuan project: mendapatkan core platform, bukan aplikasi jadi. **Perlu rekonsiliasi dengan DEC-028** — lihat catatan di bawah | Yudha Pratama | Active — perlu rekonsiliasi dengan DEC-028 |
-| DEC-042 | 2026-10-02 | **Rekonsiliasi kriteria kelulusan:** DEC-028 tetap berlaku, tetapi **"end-to-end" diukur pada kapabilitas backend** — seluruh fitur mandatory terlayani dan terverifikasi melalui **API/kontrak data**, bukan kelengkapan UI | Jawaban PO atas Q-031 ("setuju dengan rekomendasimu"). Menyatukan DEC-028 (end-to-end) dengan DEC-041 (core backend, frontend bukan penghambat) dalam satu definisi yang dapat dinilai | Yudha Pratama | Active — menutup Q-031, R-016, D-015 |
+| DEC-041 | 2026-10-02 | **Sasaran output bootcamp = core platform CRM (backend).** Ukuran keberhasilan adalah **desain core backend mampu menyelesaikan seluruh fitur mandatory** (DEC-015/DEC-021). **Kesiapan frontend bukan penghambat kelulusan** — UI boleh belum selesai | Arahan PO (POV project & product). Menegaskan ulang tujuan project: mendapatkan core platform, bukan aplikasi jadi. **Perlu rekonsiliasi dengan DEC-028** — lihat catatan di bawah | Yudha Pratama | Active — **direvisi CR-20261008-001**: daftar modul acuan berubah (7→6 modul) |
+| DEC-042 | 2026-10-02 | **Rekonsiliasi kriteria kelulusan:** DEC-028 tetap berlaku, tetapi **"end-to-end" diukur pada kapabilitas backend** — seluruh fitur mandatory terlayani dan terverifikasi melalui **API/kontrak data**, bukan kelengkapan UI | Jawaban PO atas Q-031 ("setuju dengan rekomendasimu"). Menyatukan DEC-028 (end-to-end) dengan DEC-041 (core backend, frontend bukan penghambat) dalam satu definisi yang dapat dinilai | Yudha Pratama | Active — menutup Q-031, R-016, D-015 · **direvisi CR-20261008-001**: tetap berlaku pada modul yang tersisa |
+| DEC-043 | 2026-10-08 | **Modul Ticketing (M6) dan Pelaporan Tiket (EP-009) dikeluarkan dari lingkup MVP.** Lingkup bootcamp difokuskan pada **business process sales** (lead, kontak & akun, pipeline/peluang, kuota & performa, pelaporan sales, tenancy, webhook). M5 Activity tetap *nice to have* — **modul mandatory kini 6** (sebelumnya 7) | Arahan PO 2026-10-08: *"tiket tidak perlu… terlalu besar… bukan termasuk general case CRM untuk tracking sales… bisa merefer ke hubspot ataupun salesforce… core feature dan business process yang akan digunakan untuk bootcamp adalah untuk sales"*. Riset mengonfirmasi pemisahan domain: Salesforce memisahkan **Sales Cloud vs Service Cloud** (case management & SLA = core Service Cloud, *not included* di Sales Cloud); HubSpot memisahkan **Sales Hub vs Service Hub** dengan seat terpisah. Diproses melalui **CR-20261008-001** | Yudha Pratama | Active — menutup Q-015/021/022/023 sebagai moot; menunggu approval Head of Product |
 
 ### Catatan atas DEC-015 (keberatan teknis PM — SELESAI)
 
@@ -91,7 +95,11 @@ mencatat risiko berikut untuk diputuskan ulang:
 **Hasil:** keberatan PM diterima PO pada 2026-10-02 — **M8 masuk MVP secara
 minimal** (DEC-021). DEC-015 direvisi pada bagian M8. R-011 dan I-004 ditutup.
 
-### Klarifikasi istilah ticketing (TERKONFIRMASI)
+**Revisi lanjutan 2026-10-08 (CR-20261008-001):** bagian **M6 Ticketing** pada
+DEC-015 **dikeluarkan dari MVP** — lingkup difokuskan ke business process sales.
+Modul mandatory menjadi **6**, bukan 7. Lihat DEC-043.
+
+### Klarifikasi istilah ticketing — **DICABUT oleh CR-20261008-001**
 
 DEC-019 mengubah istilah pada arahan awal PO (poin 4.4: "ada 2 ticketing
 internal dan external") menjadi **satu entitas tiket** dengan **jalur eskalasi
@@ -108,6 +116,10 @@ ke tim internal**.
 Pemetaan didasarkan pada **asal pemohon**, bukan tujuan penanganan (Tafsir B
 tidak dipakai). Model tiket tetap **satu entitas** dengan satu state machine
 (DEC-026). Q-021 **tertutup**.
+
+> **Status 2026-10-08:** seluruh pemetaan di atas **dicabut** karena modul M6
+> dikeluarkan dari MVP (CR-20261008-001 / DEC-043). Bagian ini dipertahankan
+> sebagai jejak keputusan, bukan sebagai aturan yang berlaku.
 
 ### Rekonsiliasi DEC-041 dengan DEC-028 (perlu keputusan PO)
 
@@ -148,6 +160,12 @@ milik **Head of Engineer**:
 | 3 | **Stack teknologi** (ditentukan TLab atau bebas) (TD-05) | Head of Engineer | Materi sesi & scaffolding |
 | 4 | **Spesifikasi implementasi webhook** (retry, rate limit, fan-out, signing) (TD-02) | Head of Engineer | EP-011 tidak dapat diimplementasikan |
 
+**Terbuka baru (dari CR-20261008-001):**
+
+| # | Keputusan | Pemilik | Menghambat |
+|---|-----------|---------|------------|
+| 5 | **Status M6 Ticketing ke depan** — modul lanjutan di roadmap produk (setara Service Cloud), atau keluar sepenuhnya dari lingkup produk (Q-032) | PM/PO + Head of Product | Roadmap produk; **tidak menghambat** pelaksanaan bootcamp |
+
 Detail: `architecture/open-tech-decisions.md`.
 
 ### Terjawab pada 2026-10-02
@@ -168,6 +186,7 @@ Detail: `architecture/open-tech-decisions.md`.
 | Struktur & durasi bootcamp | Terjawab — 3 hari, hari 1 workshop (DEC-037); tanggal akhir diabaikan (DEC-040) |
 | Sasaran output bootcamp | Terjawab — core platform CRM / backend (DEC-041); **rekonsiliasi kriteria selesai ditutup DEC-042** |
 | Cakupan assessment tim sales (HR) | Terjawab — dikeluarkan dari lingkup (DEC-031) |
+| Lingkup modul Ticketing (M6) | Terjawab 2026-10-08 — **dikeluarkan dari MVP**; lingkup difokuskan ke sales (DEC-043 / CR-20261008-001) |
 
 ## Catatan yang Diteruskan ke Head of Engineer
 
@@ -199,3 +218,4 @@ Disimpan di `notes/personal-notes.md`.
 - **Project Charter:** [[project-charter]]
 - **Requirement Analysis:** [[requirement-analysis]]
 - **Technical Decisions (Head of Engineer):** [[open-tech-decisions]]
+- **Change Request:** [[CR-20261008-001-keluarkan-modul-ticketing-dari-mvp]]

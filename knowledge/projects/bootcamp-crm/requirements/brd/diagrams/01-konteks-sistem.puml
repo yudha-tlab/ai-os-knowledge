@@ -1,5 +1,5 @@
 @startuml
-title Diagram 1 — Konteks Sistem: CRM Multi-Tenant TLab
+title Diagram 1 — Konteks Sistem: CRM Multi-Tenant TLab (fokus sales)
 
 skinparam shadowing false
 skinparam componentStyle rectangle
@@ -7,14 +7,11 @@ left to right direction
 
 actor "Sales Rep" as SR
 actor "Sales Manager" as SM
-actor "Agent Support" as AS
-actor "Support Lead" as SL
 actor "Tenant Admin" as TA
-actor "Pelanggan\n(B2B / B2C)" as CUST
-actor "Karyawan Tenant" as EMP
+actor "Manajemen /\nHead of Sales" as MG
 
 rectangle "CRM Multi-Tenant TLab" as CRMBOUND {
-  component "CORE CRM\n(stabil — tidak dimodifikasi per klien)" as CORE
+  component "CORE CRM — SALES\n(lead, kontak & akun, peluang,\nkuota, laporan; stabil — tidak\ndimodifikasi per klien)" as CORE
 }
 
 cloud "Sistem Klien\n(di luar CRM)" as EXT
@@ -22,11 +19,8 @@ component "Service Eksternal\n(buatan klien)" as SVC
 
 SR --> CORE
 SM --> CORE
-AS --> CORE
-SL --> CORE
 TA --> CORE
-EMP --> CORE : permintaan / tiket internal
-CUST --> CORE : keluhan / tiket eksternal
+MG --> CORE
 
 CORE ..> EXT : event outbound\n(webhook, async)
 EXT ..> CORE : data masuk\n(webhook inbound)
@@ -38,6 +32,9 @@ end note
 
 note bottom of CORE
   Dikelola per tenant dengan isolasi data
-  antar tenant (DEC-029)
+  antar tenant (DEC-029).
+
+  Lingkup = business process SALES (DEC-043).
+  Domain service (ticketing) di luar lingkup.
 end note
 @enduml

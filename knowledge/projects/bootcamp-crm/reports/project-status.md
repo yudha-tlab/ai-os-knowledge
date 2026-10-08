@@ -3,11 +3,14 @@ title: "Project Status — Bootcamp Internal CRM"
 type: project-status
 project: bootcamp-crm
 status: active
-version: "7.0"
+version: "8.0"
 created: 2026-10-02
-modified: 2026-10-02
-date: 2026-10-02
+modified: 2026-10-08
+date: 2026-10-08
 changelog:
+  - version: "8.0"
+    date: 2026-10-08
+    purpose: "CR-20261008-001 / DEC-043 — modul Ticketing (M6) & Pelaporan Tiket (EP-009) dikeluarkan dari MVP; lingkup difokuskan ke business process sales. Modul mandatory 7→6; BRD v2.0 (25 BR, 7 diagram)"
   - version: "7.0"
     date: 2026-10-02
     purpose: "BRD v1.0 disusun (requirements/brd/) — 30 business requirement + 8 diagram. Dependency kritis R-015 terpenuhi; sisa: review PO & approval Head of Product, lalu 4 item teknis Head of Engineer"
@@ -33,7 +36,7 @@ changelog:
 
 # Project Status — Bootcamp Internal CRM
 
-**Tanggal:** 2026-10-02
+**Tanggal:** 2026-10-08
 **Status Keseluruhan:** Perencanaan — **At Risk** untuk kesiapan pelaksanaan
 
 ## Ringkasan
@@ -57,6 +60,28 @@ pengembangan** — hari 1 adalah workshop finalisasi requirement. Artinya seluru
 7 modul mandatory harus dibangun dalam **2 hari efektif**. Ini bukan kabar baik
 yang dinetralkan oleh konfirmasi durasi; risiko R-001 karena itu **naik ke
 High/High** dan risiko baru R-015 tercatat.
+
+## Pembaruan 2026-10-08 — Penyesuaian Lingkup (CR-20261008-001 / DEC-043)
+
+Berdasarkan arahan PO, **modul Ticketing (M6)** beserta **Pelaporan Tiket
+(EP-009)** dikeluarkan dari lingkup MVP bootcamp (lihat
+[[CR-20261008-001-keluarkan-modul-ticketing-dari-mvp]]). Alasan: terlalu besar
+serta bukan general case CRM untuk *tracking sales*; mengacu pada pemisahan
+Salesforce (Sales vs Service Cloud) dan HubSpot (Sales vs Service Hub), di mana
+case/ticket management bukan core feature produk sales.
+
+Dampak terukur:
+
+- Modul mandatory **7 → 6** (M1, M2, M3, M4, M7, M8-minimal).
+- Epic **12 → 10**; User Story **37 → 25**; Objek **23 → 16**; Proses **12 → 10**;
+  Stakeholder **10 → 6**; Business Requirement **33 → 25**; Diagram **8 → 7**.
+- Keputusan yang **dicabut**: DEC-019, DEC-022, DEC-025, DEC-026, DEC-036.
+- Keputusan yang **direvisi**: DEC-015 (lingkup MVP), DEC-028 & DEC-042
+  (kriteria selesai — buang acuan "komentar tiket & riwayat pergerakan tiket").
+- BRD direvisi ke **v2.0** (`requirements/brd/bootcamp-crm-brd-v1.md`).
+
+**Efek pada risiko:** R-001 turun (beban 7→6 modul) tetapi **tetap High/High** —
+6 modul masih harus terlayani dalam 2 hari efektif. Lihat [[risk-register]].
 
 ## Progres Periode Ini
 
