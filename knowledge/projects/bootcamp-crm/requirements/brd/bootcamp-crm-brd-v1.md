@@ -3,7 +3,7 @@ title: "Business Requirements Document (BRD) — CRM Multi-Tenant TLab"
 type: brd
 project: bootcamp-crm
 status: Draft — menunggu review Product Owner & approval Head of Product & Project
-version: "3.1"
+version: "3.2"
 created: 2026-10-02
 modified: 2026-10-08
 disusun_oleh: "Yudha Pratama (PM / Product Owner)"
@@ -14,6 +14,9 @@ sumber_utama:
   - project-charter (v7.0)
   - CR-20261008-001 (penyesuaian lingkup)
 changelog:
+  - version: "3.2"
+    date: 2026-10-08
+    purpose: "DEC-047 — stage pipeline default ditetapkan (6 stage + 2 outcome) sehingga BR-010 final; item 3 §9 ditutup; use case AI minimum = AI-01; agenda hari 1 menyusut 10 -> 7 item"
   - version: "3.1"
     date: 2026-10-08
     purpose: "CR-20261008-002 — integrasi AI ditambahkan sebagai lapisan MVP minimal (M10 AI Assistance Layer, EP-015): BR-042..045, §2.1, §2.3, §4.11, §6.9, §9; use case prediktif ke roadmap (EP-016). BR MVP 25 -> 29"
@@ -331,11 +334,16 @@ MVP** — keduanya adalah fase roadmap SaaS (DEC-045).
 
 | ID | Business Requirement | Sumber | Prioritas | Status |
 |---|---|---|---|---|
-| BR-010 | Pengelolaan peluang mencakup: **nilai deal, stage pipeline, tanggal tutup, dan penandaan closed-won / closed-lost beserta alasan** | REQ-021 / DEC-015 | Must | Draft |
+| BR-010 | Pengelolaan peluang mencakup: **nilai deal, stage pipeline, tanggal tutup, dan penandaan closed-won / closed-lost beserta alasan** | REQ-021 / DEC-015 | Must | **Final (DEC-047)** |
+| BR-010a | **Stage pipeline default = 6 stage + 2 outcome**: Qualifikasi → Analisis Kebutuhan → Presentasi/Demo → Proposal → Negosiasi → Menunggu Keputusan; outcome **Closed-Won / Closed-Lost (+alasan)**. **Configurable per tenant**; B2C boleh memakai alur lebih pendek | DEC-047 | Must | **Final (DEC-047)** |
 | BR-011 | **Revenue didefinisikan dari deal closed-won** (nilai peluang yang dimenangkan), bukan dari invoice/pembayaran aktual | REQ-026 / DEC-016 | Must | Draft |
 
-> **Belum ditetapkan:** jumlah dan nama **stage pipeline**. Belum ada datanya di
-> knowledge base — perlu difinalkan pada workshop hari 1.
+> **Stage pipeline sudah ditetapkan (DEC-047, 2026-10-08)** — default 6 stage + 2
+> outcome, configurable per tenant. Alasan 6 (bukan 7): tahap *prospecting* sudah
+> dilayani **M3 Lead Management**, sehingga tidak diduplikasi di pipeline peluang.
+> Dasar riset & panduan workshop: `requirement-analysis.md` §5.7.
+> Sisa yang tetap perlu divalidasi peserta di hari 1: **nama stage** & **exit
+> criteria** per stage.
 
 ### 4.5 Kuota & Performa Sales (M7)
 
@@ -586,7 +594,7 @@ di core.
 | 5 | Efektivitas AI dalam development terukur | **Belum terdefinisi** — diteruskan ke Head of Engineer | Q-007, Q-008, TD-03/TD-04 |
 | 6 | Produk berpotensi dikembangkan & dijual | **Belum ditentukan** — perlu definisi indikator kelayakan produk | Catatan internal |
 | 7 | Produk berjalan sebagai **SaaS komersial** (fase roadmap) | **Belum ditentukan** — bergantung pada keputusan Q-033..Q-039 | DEC-045 |
-| 8 | **Integrasi AI terbukti berjalan** — lapisan AI (M10) menyajikan **minimal satu use case generatif end-to-end** (draf outreach atau ringkasan/insight), dengan konteks **terbatas pada tenant** | Hasil AI tersimpan pada record tenant dan terbaca kembali; konteks tidak melintas tenant (BR-045) | CR-20261008-002 |
+| 8 | **Integrasi AI terbukti berjalan** — lapisan AI (M10) menyajikan **minimal satu use case generatif end-to-end** — **AI-01 draf pesan outreach** (DEC-047; AI-02 ringkasan/insight opsional), dengan konteks **terbatas pada tenant** | Hasil AI tersimpan pada record tenant dan terbaca kembali; konteks tidak melintas tenant (BR-045) | CR-20261008-002 |
 
 > **Catatan penting.** Kriteria 5 **tidak dapat dipulihkan** bila baseline tidak
 > ditetapkan sebelum hari pertama bootcamp (R-002). Kriteria 6 belum memiliki
@@ -610,7 +618,7 @@ di core.
 | # | Asumsi | Risiko bila salah | Validasi |
 |---|---|---|---|
 | A-1 | Durasi bootcamp cukup untuk menghasilkan **core backend** yang mampu menyelesaikan seluruh fitur mandatory | Lingkup harus dipotong lagi atau bootcamp diperpanjang — belum direncanakan. *Beban berkurang setelah M6 keluar (CR-20261008-001)* | **Perlu Validasi — kritis** |
-| A-2 | **Hari 1 cukup untuk memfinalkan seluruh requirement** | Requirement masuk hari 2 belum final; jendela pengembangan menyusut | Perlu Validasi |
+| A-2 | **Hari 1 cukup untuk memfinalkan seluruh requirement** | Requirement masuk hari 2 belum final; jendela pengembangan menyusut | **Perlu Validasi — membaik**: agenda menyusut 10 → 7 item setelah DEC-047 (kewenangan PM/PO tertutup) |
 | A-3 | Peserta memiliki kompetensi dasar development | Sesi harus dirombak; waktu pondasi tidak tersedia | Perlu Validasi |
 | A-4 | AI OS tersedia dan dapat dipakai selama bootcamp | Sasaran pengukuran efektivitas AI tidak tercapai | Perlu Validasi |
 | A-5 | **Kesiapan frontend tidak menahan kelulusan** — UI minimal dapat ditinggalkan | Sasaran core platform tidak tercapai bila backend juga belum siap | DEC-041 |
@@ -643,31 +651,48 @@ di core.
 Bagian ini sengaja dikumpulkan agar hari 1 punya agenda tertutup. Ini bukan
 kekurangan dokumen, melainkan **tujuan utama workshop** (DEC-037, R-015).
 
+**Per 2026-10-08 (DEC-047): agenda menyusut dari 10 menjadi 7 item.** Tiga item
+yang menjadi kewenangan PO sudah difinalkan sebelum workshop — item 3 **ditutup**
+karena ternyata sudah terjawab oleh keputusan yang ada; item 1 dan 10 **ditetapkan
+nilainya**, sehingga peserta cukup memvalidasi (bukan memutuskan dari nol).
+
+### 9.1 Item yang masih perlu difinalkan di hari 1
+
 | # | Yang perlu difinalkan | Pemilik | Dampak bila tidak selesai hari 1 |
 |---|---|---|---|
-| 1 | **Jumlah & nama stage pipeline** (BR-010) | PO + peserta | Fitur peluang tidak dapat diimplementasikan konsisten |
+| 1 | **Exit criteria per stage pipeline** — nama & jumlah stage **sudah ditetapkan** (BR-010a); yang tersisa adalah kriteria keluar tiap stage | PO + peserta | Pergerakan peluang tidak konsisten antar tim |
 | 2 | **Definisi teknis "core backend selesai"** — kontrak API/endpoint per modul | PO + Head of Engineer | Penilaian hari 3 menjadi ambigu |
-| 3 | **Kriteria selesai setelah M6 keluar** — DEC-028 masih mengacu "komentar tiket & riwayat pergerakan tiket" yang kini tidak ada | PO | Penilaian hasil hari 3 tidak memiliki definisi yang sah |
-| 4 | **Signing & kebijakan retry webhook** | Head of Engineer (TD-02) | EP-011 tidak dapat diimplementasikan |
-| 5 | **Strategi isolasi teknis multi-tenant** | Head of Engineer (TD-01) | Rework arsitektur di tengah bootcamp |
-| 6 | **Metrik efektivitas AI + baseline** | Head of Engineer (TD-03/04) | **Tidak dapat dipulihkan** bila lewat hari 1 |
-| 7 | **Stack teknologi** | Head of Engineer (TD-05) | Materi sesi & scaffolding tidak dapat disiapkan |
-| 8 | **Titik simpan output AI di core** (rancangan, bukan implementasi M9/M10 penuh) | Head of Engineer (TD-07) | Migrasi data saat use case AI prediktif menyusul |
-| 9 | **Penyedia model & kredensial LLM** untuk M10 | Head of Engineer (Q-040) | M10 tidak dapat didemonstrasikan |
-| 10 | **Use case AI minimum M10** — AI-01 (draf outreach) atau AI-02 (ringkasan & insight) | PO + peserta (Q-041) | Tanpa penetapan, 2 tim dapat mengerjakan hal berbeda |
-| ~~8~~ | ~~Status M6 Ticketing ke depan (Q-032)~~ — **TERJAWAB 2026-10-08 (DEC-044): menjadi modul lanjutan roadmap produk**, di luar lingkup bootcamp | PM/PO + Head of Product | — (tidak lagi menjadi item terbuka) |
+| 3 | **Signing & kebijakan retry webhook** | Head of Engineer (TD-02) | EP-011 tidak dapat diimplementasikan |
+| 4 | **Strategi isolasi teknis multi-tenant** | Head of Engineer (TD-01) | Rework arsitektur di tengah bootcamp |
+| 5 | **Metrik efektivitas AI + baseline** | Head of Engineer (TD-03/04) | **Tidak dapat dipulihkan** bila lewat hari 1 |
+| 6 | **Stack teknologi** | Head of Engineer (TD-05) | Materi sesi & scaffolding tidak dapat disiapkan |
+| 7 | **Titik simpan output AI di core** (rancangan, bukan implementasi M9/M10 penuh) | Head of Engineer (TD-07) | Migrasi data saat use case AI prediktif menyusul |
+| 8 | **Penyedia model & kredensial LLM** untuk M10 | Head of Engineer (Q-040) | M10 tidak dapat didemonstrasikan |
 
-**Tambahan 2026-10-08 — pertanyaan fase roadmap (tidak menghambat bootcamp):**
-Q-033 (nama & jumlah paket), Q-034 (dimensi harga & nilai kuota), Q-035
-(struktur harga & mata uang), Q-036 (kebijakan penegakan batas), Q-037
-(mekanisme pembayaran), Q-038 (cara tenant mendaftar), Q-039 (kebijakan data
-saat soft delete), Q-042 (strategi model prediktif), Q-043 (batas isolasi tenant
-pada prompt AI). Daftar lengkap di [[requirement-analysis]] section 7.
+Seluruh 7 item di atas **tidak dapat difinalkan oleh PM/PO** — item 1 memerlukan
+peserta, item 2 memerlukan Head of Engineer, item 3–8 murni kewenangan teknis.
+Inilah sebabnya agenda hari 1 masih menyisakan pekerjaan meski kewenangan PM/PO
+sudah tertutup.
 
-**Item 8–10 berasal dari CR-20261008-002 (integrasi AI). Item 8 & 9 berbeda
-sifat dari item 6:** keduanya **dapat dipulihkan**, tetapi biayanya mahal
-(migrasi data untuk item 8, kegagalan demo untuk item 9) — karena itu keduanya
-ditempatkan di hari 1.
+### 9.2 Item yang sudah difinalkan sebelum hari 1 (DEC-047, 2026-10-08)
+
+| # | Item | Ketetapan | Ref |
+|---|---|---|---|
+| A | **Jumlah & nama stage pipeline** | **6 stage + 2 outcome** — Qualifikasi → Analisis Kebutuhan → Presentasi/Demo → Proposal → Negosiasi → Menunggu Keputusan; ditutup Closed-Won / Closed-Lost (+alasan). Configurable per tenant | **DEC-047** / BR-010a |
+| B | **Kriteria selesai setelah M6 keluar** | **Ditutup** — DEC-028 sudah berstatus DIREVISI (CR-20261008-001) dan rantai verifikasi penggantinya sudah berlaku (§7 kriteria 2, diukur via API — DEC-042) | **DEC-047** |
+| C | **Use case AI minimum M10** | **AI-01 — draf pesan outreach**; AI-02 (ringkasan & insight) opsional bila waktu mencukupi | **DEC-047** (menutup Q-041) |
+| ~~D~~ | ~~Status M6 Ticketing ke depan~~ | **Terjawab 2026-10-08** — modul lanjutan roadmap produk, di luar lingkup bootcamp | DEC-044 |
+
+Dasar riset stage pipeline (Salesforce 7 stage inti · HubSpot 7 deal stage default ·
+praktik B2B 5–7 stage) dan alasan pemilihan 6 stage ada di
+`requirement-analysis.md` §5.7.
+
+**Pertanyaan fase roadmap (tidak menghambat bootcamp):** Q-033 (nama & jumlah
+paket), Q-034 (dimensi harga & nilai kuota), Q-035 (struktur harga & mata uang),
+Q-036 (kebijakan penegakan batas), Q-037 (mekanisme pembayaran), Q-038 (cara
+tenant mendaftar), Q-039 (kebijakan data saat soft delete), Q-042 (strategi model
+prediktif), Q-043 (batas isolasi tenant pada prompt AI). Daftar lengkap di
+[[requirement-analysis]] section 7.
 
 **Yang sudah tidak perlu difinalkan** (sebelumnya ada, kini moot karena M6 keluar):
 daftar status tiket, daftar prioritas & target waktu SLA, mekanisme pelanggan

@@ -3,11 +3,14 @@ title: "Project Status — Bootcamp Internal CRM"
 type: project-status
 project: bootcamp-crm
 status: active
-version: "9.1"
+version: "9.2"
 created: 2026-10-02
 modified: 2026-10-08
 date: 2026-10-08
 changelog:
+  - version: "9.2"
+    date: 2026-10-08
+    purpose: "DEC-047 — tiga item BRD §9 difinalkan; agenda hari 1 menyusut 10 -> 7; stage pipeline default ditetapkan; Q-041 terjawab"
   - version: "9.1"
     date: 2026-10-08
     purpose: "CR-20261008-002 — integrasi AI masuk MVP minimal (M10; BR-042..045, EP-015, US-050..053, OB-032, proses 14, TD-07); AI prediktif ke roadmap; R-018 (beban R-001); BRD v3.1"

@@ -116,6 +116,16 @@ pertanyaan Q-007/Q-008/Q-011.
   (tenant model M1 menyimpan status langganan). Dampak: +SH011/SH012, +EP-013/014,
   +US-038..049, +OB-024..031, +proses 13, +BR-034..041 (8 BR), +diagram 09.
   Modul mandatory bootcamp **tetap 6**. Buka Q-033..Q-039 (tidak menghambat).
+- **DEC-047 (2026-10-08)** — finalisasi 3 item BRD §9 yang jadi kewenangan PO:
+  (1) **stage pipeline default = 6 stage + 2 outcome** (Qualifikasi → Analisis
+  Kebutuhan → Presentasi/Demo → Proposal → Negosiasi → Menunggu Keputusan;
+  ditutup Closed-Won / Closed-Lost + alasan; configurable per tenant, B2C boleh
+  alur pendek; alasan 6 bukan 7 = tahap prospecting sudah dilayani M3 Lead);
+  (2) **item kriteria selesai ditutup** — DEC-028 sudah DIREVISI (CR-001), rantai
+  verifikasi pengganti sudah ada (§7 kriteria 2);
+  (3) **use case AI minimum M10 = AI-01 draf outreach** (Q-041 terjawab; AI-02
+  opsional). Konsekuensi: agenda hari 1 menyusut **10 → 7 item**, sisanya murni
+  Head of Engineer (TD-01..07 + Q-040).
   Risiko baru R-017 → mitigasi TD-06 (rancangan tenant model di M1).
 - **CR-20261008-002 / DEC-046** — PO menemukan gap besar: **tidak ada satu pun
   kapabilitas AI di dalam produk** (seluruh "AI" sebelumnya = AI OS sebagai alat
@@ -134,10 +144,11 @@ pertanyaan Q-007/Q-008/Q-011.
 - Efek risiko: R-001 tetap High/High tetapi beban turun (6 modul/2 hari);
   R-015 mitigasi bertambah (agenda hari 1 menyusut 4 pertanyaan + 2 Epic).
 
-**Status per 2026-10-08: 46 keputusan (DEC-001 s/d DEC-046)**; tidak ada item
-terbuka milik PM/PO di luar lingkup roadmap. Sisa item **Head of Engineer**:
-TD-01..TD-07 (TD-06 & TD-07 jangan ditunda — risiko migrasi data). Pertanyaan
-yang menghambat M10: **Q-040** (penyedia LLM) & **Q-041** (use case minimum).
+**Status per 2026-10-08: 47 keputusan (DEC-001 s/d DEC-047)**; tidak ada item
+terbuka milik PM/PO di luar lingkup roadmap (DEC-047 menutup 3 item §9). Sisa
+item **Head of Engineer**: TD-01..TD-07 (TD-06 & TD-07 jangan ditunda — risiko
+migrasi data). Pertanyaan yang menghambat M10 kini **Q-040** saja (penyedia LLM);
+Q-041 sudah terjawab (AI-01).
 
 ---
 

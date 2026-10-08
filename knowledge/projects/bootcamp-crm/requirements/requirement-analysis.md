@@ -3,11 +3,14 @@ title: "Requirement Analysis — CRM Multi-Tenant TLab"
 type: requirement-analysis
 project: bootcamp-crm
 status: draft
-version: "3.1"
+version: "3.2"
 created: 2026-10-02
 modified: 2026-10-08
 sumber: "Arahan Product Owner (Yudha Pratama) via sesi brainstorm 2026-10-02"
 changelog:
+  - version: "3.2"
+    date: 2026-10-08
+    purpose: "DEC-047 — stage pipeline default ditetapkan (6 stage + 2 outcome) beserta dasar riset di §5.7; Q-041 terjawab (use case AI minimum = AI-01)"
   - version: "3.1"
     date: 2026-10-08
     purpose: "CR-20261008-002 — integrasi AI ditambahkan: EP-015 (MVP minimal, AI Assistance Layer M10), US-050..053, OB-032, Proses 14, SH001; Q-040..043 dibuka; use case prediktif ke roadmap"
@@ -244,7 +247,7 @@ inisiatif internal terpisah.
 | OB-002 | Kontak | Data orang (individu) yang terkait dengan pelanggan |
 | OB-003 | Akun | Data organisasi/perusahaan pelanggan (mendukung B2B dan B2C) |
 | OB-004 | Peluang | Deal berjalan (nilai, stage, tanggal tutup, pemilik) |
-| OB-005 | Pipeline & Stage | Definisi tahapan pipeline dan posisi peluang di dalamnya |
+| OB-005 | Pipeline & Stage | Definisi tahapan pipeline dan posisi peluang di dalamnya — **default 6 stage + 2 outcome (DEC-047)**, configurable per tenant |
 | OB-006 | Aktivitas | Catatan call / meeting / task / note yang terhubung ke lead atau peluang |
 | OB-007 | Tiket | Tiket dengan jalur internal atau eksternal, beserta status dan assignee | **← DIHAPUS (CR-20261008-001)**
 | OB-008 | Eskalasi Tiket | Rekaman eskalasi tiket ke tim internal | **← DIHAPUS (CR-20261008-001)**
@@ -473,6 +476,51 @@ harga, dan angka kuota menunggu keputusan PO (Q-033..Q-035).
 
 ---
 
+### 5.7 Stage Pipeline Default — Bahan & Ketetapan (DEC-047)
+
+**Ketetapan (DEC-047, 2026-10-08):** MVP memakai **6 stage + 2 outcome**:
+
+| Urutan | Stage | Tahap |
+|---|---|---|
+| 1 | **Qualifikasi** | Peluang baru, kebutuhan dasar & kelayakan sedang diverifikasi |
+| 2 | **Analisis Kebutuhan** | Kebutuhan dan cakupan solusi digali bersama calon pelanggan |
+| 3 | **Presentasi / Demo** | Solusi diperlihatkan & diuji |
+| 4 | **Proposal** | Penawaran/estimasi disampaikan |
+| 5 | **Negosiasi** | Harga & syarat dibahas |
+| 6 | **Menunggu Keputusan** | Menunggu keputusan akhir pembeli |
+
+**Outcome (bukan stage berjalan):** **Closed-Won** dan **Closed-Lost** — keduanya
+**wajib menyertakan alasan** (BR-010).
+
+**Configurable per tenant; pelanggan B2C** boleh memakai alur lebih pendek
+(dimensi pelanggan B2B/B2C sudah ditetapkan DEC-020).
+
+**Dasar riset (praktik industri):**
+
+| Rujukan | Struktur |
+|---|---|
+| Salesforce — *Stages of a Sales Pipeline* | **7 stage inti**, mulai dari *discovery* hingga pasca-penjualan |
+| HubSpot — *7 Default Deal Stages* | **7 stage** bawaan dengan *win probability* (mis. Appointment Scheduled 20%, Qualified to Buy 40%); titik awal, bukan strategi |
+| Praktik B2B high-velocity | Umumnya **5–7 stage**; B2C/transaksional memakai alur lebih pendek |
+| Rekomendasi praktik | Setiap stage perlu **exit criteria** yang dapat diamati — yang dilakukan pembeli, bukan yang dilakukan sales |
+
+**Alasan pemilihan 6 stage (bukan 7):** tahap **prospecting** pada rujukan industri
+sudah dilayani **M3 Lead Management** di produk ini — lead dikelola, dibagi,
+dikualifikasi, lalu dikonversi menjadi peluang. Menambahkan *prospecting* sebagai
+stage peluang akan **menduplikasi M3**. Pipeline peluang karena itu dimulai dari
+**Qualifikasi** (saat peluang terbentuk dari konversi lead).
+
+**Risiko yang perlu diantisipasi peserta:** praktik industri memperingatkan stage
+yang mendeskripsikan **tindakan sales** alih-alih **posisi pembeli** kurang
+bermakna sebagai indikator (contoh yang sering dikritik: *"Proposal Sent"* —
+mengirim proposal adalah tindakan sales dan tidak menunjukkan posisi keputusan
+pembeli). Pada 6 stage di atas, *Proposal* dan *Menunggu Keputusan* perlu
+**dibedakan tegas** agar tidak tumpang tindih.
+
+**Cara memandu workshop:** tabel di atas dipakai sebagai **default** pada hari 1.
+Peserta memvalidasi/menyesuaikan **nama stage** dan **exit criteria** per stage —
+bukan mengarang pipeline dari nol.
+
 ## 6. Hasil Konversi (Epic & User Story)
 
 ### Epic (dari Proses)
@@ -604,7 +652,7 @@ Q-040 s/d Q-043, menyangkut **integrasi AI (EP-015/M10)**. Q-040 & Q-041
 | Q-038 | **Cara tenant mendaftar**: self-serve mandiri atau dibuatkan Platform Owner? | Proses 13.03 | PM/PO | **Terbuka 2026-10-08** — kedua jalur mungkin; proporsi belum ditetapkan |
 | Q-039 | **Kebijakan data saat tenant di-soft-delete**: masa retensi, ekspor data, dan hak pemulihan | Proses 13.02 | PM/PO | **Terbuka 2026-10-08** |
 | Q-040 | **Penyedia model & kredensial LLM** untuk M10 — API key, kuota, latency, biaya | Proses 14.01; CR-20261008-002 | Head of Engineer | **Terbuka 2026-10-08** — **menghambat M10**, tetapkan hari 1 |
-| Q-041 | **Use case AI mana yang menjadi minimum M10** — AI-01 (draf outreach) atau AI-02 (ringkasan & insight)? | EP-015 | PM/PO + peserta | **Terbuka 2026-10-08** — rekomendasi PM: AI-01 atau AI-02 sebagai *vertical slice* |
+| Q-041 | **Use case AI mana yang menjadi minimum M10** — AI-01 (draf outreach) atau AI-02 (ringkasan & insight)? | EP-015 | PM/PO + peserta | **Terjawab 2026-10-08 (DEC-047)** — **AI-01 (draf pesan outreach)** sebagai *vertical slice*; AI-02 opsional bila waktu mencukupi |
 | Q-042 | **Strategi prediktif** — model per tenant vs global, dan sumber data latih | EP-016; Q-007/008 | Head of Engineer | **Terbuka 2026-10-08** — fase roadmap |
 | Q-043 | **Batas isolasi tenant pada prompt AI** — bagaimana konteks LLM dibatasi agar tidak bocor lintas tenant | BR-003; M10 | Head of Engineer | **Terbuka 2026-10-08** — syarat non-fungsional M10 |
 

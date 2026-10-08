@@ -3,10 +3,13 @@ title: "Requirement Backlog — Bootcamp Internal CRM"
 type: requirement-backlog
 project: bootcamp-crm
 status: active
-version: "3.8"
+version: "3.9"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "3.9"
+    date: 2026-10-08
+    purpose: "DEC-047 — Q-041 terjawab (AI-01); REQ-021 (stage pipeline) difinalkan 6 stage + 2 outcome"
   - version: "3.8"
     date: 2026-10-08
     purpose: "CR-20261008-002 — REQ-048 (integrasi AI, MVP minimal) + REQ-049..051 (prediktif, roadmap); Q-040..043"
@@ -99,7 +102,7 @@ ke Epic di [[requirement-analysis]]. Status **Draft** — menunggu BRD (DEC-017)
 | REQ-018 | Pengelolaan user, role, dan permission di dalam tenant | Arahan PO 2026-10-02 (DEC-015) | Functional | Must | EP-010 | Draft |
 | REQ-019 | Pengelolaan kontak (individu) dan akun (organisasi), mendukung pelanggan B2B dan B2C | Arahan PO 2026-10-02 (DEC-020) | Functional | Must | EP-002 | Draft |
 | REQ-020 | Pengelolaan lead: penangkapan, penugasan ke sales, perubahan status, dan konversi menjadi kontak + akun + peluang | Arahan PO 2026-10-02 (DEC-015) | Functional | Must | EP-001 | Draft |
-| REQ-021 | Pengelolaan peluang: nilai deal, stage pipeline, tanggal tutup, dan penandaan closed-won / closed-lost | Arahan PO 2026-10-02 (DEC-015) | Functional | Must | EP-004 | Draft |
+| REQ-021 | Pengelolaan peluang: nilai deal, stage pipeline, tanggal tutup, dan penandaan closed-won / closed-lost | Arahan PO 2026-10-02 (DEC-015) | Functional | Must | EP-004 | **Final (DEC-047)** — stage default 6+2 outcome, configurable per tenant |
 | REQ-022 | Penetapan target/kuota sales **per bulan** (periode bulanan — DEC-035) sebagai dasar pengukuran performa | Arahan PO 2026-10-02 (DEC-018, DEC-035) | Functional | Must | EP-003 | Draft |
 | REQ-023 | Perhitungan quota attainment per sales **per bulan** (nilai closed-won dibanding kuota bulanan) | Arahan PO 2026-10-02 (DEC-018, DEC-035) | Functional | Must | EP-007 | Draft |
 | REQ-024 | Penandaan status performa sales berdasarkan quota attainment, dengan **ambang batas configurable per tenant** (DEC-023) dan **nilai default 80%** (DEC-039) | Arahan PO 2026-10-02 (DEC-018, DEC-023) | Functional | Must | EP-007 | Draft |
@@ -224,7 +227,7 @@ Q-008, Q-011.
 | Q-038 | Cara tenant mendaftar (self-serve vs dibuatkan) | PM/PO | **Terbuka 2026-10-08** |
 | Q-039 | Kebijakan data saat soft delete (retensi/ekspor/pemulihan) | PM/PO | **Terbuka 2026-10-08** |
 | Q-040 | Penyedia model & kredensial LLM untuk M10 | Head of Engineer | **Terbuka 2026-10-08** — menghambat M10 |
-| Q-041 | Use case AI minimum M10 (AI-01 vs AI-02) | PM/PO + peserta | **Terbuka 2026-10-08** |
+| Q-041 | Use case AI minimum M10 (AI-01 vs AI-02) | PM/PO + peserta | **Terjawab 2026-10-08 (DEC-047)** — AI-01 draf pesan outreach |
 | Q-042 | Strategi prediktif (model per tenant vs global) | Head of Engineer | **Terbuka 2026-10-08** — roadmap |
 | Q-043 | Batas isolasi tenant pada prompt AI | Head of Engineer | **Terbuka 2026-10-08** |
 ## Related

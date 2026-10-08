@@ -3,7 +3,7 @@ title: "Project Context Pack — Bootcamp Internal CRM"
 type: project-context-pack
 project: bootcamp-crm
 status: draft-v5
-version: "8.1"
+version: "8.2"
 created: 2026-10-02
 modified: 2026-10-08
 depends_on:
@@ -13,6 +13,9 @@ depends_on:
   - requirement-analysis
 scope: Aggregated key fields untuk project internal TLab — Bootcamp CRM
 changelog:
+  - version: "8.2"
+    date: 2026-10-08
+    purpose: "DEC-047 — stage pipeline default ditetapkan, Q-041 terjawab"
   - version: "8.1"
     date: 2026-10-08
     purpose: "CR-20261008-002 — integrasi AI (M10) masuk MVP minimal; AI prediktif ke roadmap; TD-07; Q-040..041 menghambat M10"
@@ -147,7 +150,7 @@ Nice to have: M5 Activity saja.
 ## Dependencies
 
 - [x] Penetapan tanggal & struktur pelaksanaan — 3 hari mulai 13 Okt, hari 1 workshop (DEC-037)
-- [x] **BRD v3.1 disusun** 2026-10-08 (`requirements/brd/`) — sisa: **review PO + approval Head of Product & Project**
+- [x] **BRD v3.2 disusun** 2026-10-08 (`requirements/brd/`) — DEC-047 memfinalkan 3 item §9 (stage pipeline, kriteria selesai, use case AI); sisa review PO + approval Head of Product & Project
 - [ ] Approval BRD oleh Head of Product & Project (dependency R-015)
 - [ ] Definisi teknis multi-tenant — Head of Engineer (TD-01)
 - [ ] Rancangan teknis webhook — Head of Engineer (TD-02)

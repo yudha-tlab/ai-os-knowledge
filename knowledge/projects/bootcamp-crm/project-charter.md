@@ -3,10 +3,13 @@ title: "Project Charter — Bootcamp Internal CRM"
 type: project-charter
 project: bootcamp-crm
 status: Draft
-version: "8.1"
+version: "8.2"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "8.2"
+    date: 2026-10-08
+    purpose: "DEC-047 — stage pipeline default 6+2 outcome, use case AI minimum AI-01; tiga item §9 difinalkan"
   - version: "8.1"
     date: 2026-10-08
     purpose: "CR-20261008-002 — integrasi AI masuk MVP minimal (M10); kriteria keberhasilan baru (integrasi AI terbukti), batasan C-11, asumsi A-09/A-10; lingkup +1 lapisan MVP minimal"

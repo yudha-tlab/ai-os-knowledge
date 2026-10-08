@@ -4,10 +4,13 @@ type: project-profile
 project: bootcamp-crm
 client: tlab-internal
 status: active
-version: "1.10"
+version: "1.11"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "1.11"
+    date: 2026-10-08
+    purpose: "DEC-047 — stage pipeline default (6+2), use case AI minimum AI-01, item kriteria selesai ditutup; agenda hari 1 7 item"
   - version: "1.10"
     date: 2026-10-08
     purpose: "CR-20261008-002 — M10 AI Assistance Layer (integrasi AI, MVP minimal); AI prediktif ke roadmap; TD-07 titik simpan output AI; Q-040..043"

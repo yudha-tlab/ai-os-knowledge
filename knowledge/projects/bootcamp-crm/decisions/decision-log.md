@@ -3,10 +3,13 @@ title: "Decision Log — Bootcamp Internal CRM"
 type: decision-log
 project: bootcamp-crm
 status: active
-version: "10.0"
+version: "11.0"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "11.0"
+    date: 2026-10-08
+    purpose: "DEC-047 — finalisasi 3 item PM di BRD §9: (1) 6 stage pipeline default + 2 outcome; (2) item kriteria selesai ditutup (sudah terjawab DEC-042); (3) use case AI minimum M10 = AI-01 draf outreach (Q-041). Agenda hari 1 menyusut 10 -> 7 item"
   - version: "10.0"
     date: 2026-10-08
     purpose: "DEC-046 (CR-20261008-002) — integrasi AI ditambahkan: M10 AI Assistance Layer masuk MVP MINIMAL (1-2 use case generatif); AI prediktif (EP-016) ke fase roadmap; BR-042..045, EP-015, US-050..053, OB-032, proses 14, TD-07; Q-040..043"
@@ -93,6 +96,7 @@ changelog:
 | DEC-044 | 2026-10-08 | **Status M6 Ticketing ke depan: menjadi MODUL LANJUTAN di roadmap produk** (setara Service Cloud / Service Hub) — dikembangkan di luar lingkup MVP bootcamp, bukan dihapus dari visi produk. Fondasi multi-tenant & webhook (M1, M8) yang dibangun di bootcamp tetap menjadi prasyaratnya | Jawaban PO 2026-10-08 atas Q-032 ("setuju, jadikan modul lanjutan roadmap") — menerima rekomendasi PM. Tidak mengubah lingkup MVP (DEC-043 tetap: mandatory 6 modul); menutup Q-032 | Yudha Pratama | Active — menutup Q-032; tidak menghambat pelaksanaan bootcamp |
 | DEC-045 | 2026-10-08 | **Kontrol plane SaaS (Platform Owner/Superadmin TLab) ditambahkan sebagai FASE ROADMAP terpisah — M9 Platform Administration, DI LUAR MVP bootcamp.** Mencakup: paket pricing + kuota, kelola akun tenant (buat/ubah/**soft delete**), pendaftaran & aktivasi tenant, konfirmasi pembayaran, siklus langganan, penegakan batas → **penutupan akses otomatis**. **Tetap didokumentasikan penuh** (stakeholder, proses, objek, Epic, User Story) dan **WAJIB menjadi input arsitektur**: tenant model M1 harus menyimpan **status langganan** sejak awal agar tidak perlu rework. Modul mandatory bootcamp tetap **6** — angka ini tidak berubah | Arahan PO 2026-10-08: *"perlu ditampilkan bisnis proses dari superadmin (pemilik platform CRM yaitu TLab)… CRM ini akan jadi SaaS… mekanisme bagaimana tenant register, membayar, aktif, hingga misal melebihi batas aktif maka otomatis ditutup aksesnya"*. Penempatan fase dikonfirmasi PO via pilihan eksplisit (roadmap terpisah + input arsitektur) | Yudha Pratama | Active — membuka Q-033 s/d Q-039 (fase roadmap, tidak menghambat bootcamp) |
 | DEC-046 | 2026-10-08 | **Integrasi AI masuk produk CRM sebagai lapisan MVP MINIMAL — M10 AI Assistance Layer.** Bentuk: **service terpisah** yang mengonsumsi event M8 Webhook + membaca API core (konsisten DEC-012/DEC-030), menyajikan **1–2 use case generatif** (draf pesan outreach; ringkasan & AI insight record). **AI prediktif** (lead scoring, win probability, sales forecast) → **fase roadmap (EP-016)** karena memerlukan data historis tenant. **Tidak mengubah angka modul mandatory (tetap 6)**: M10 adalah lapisan tambahan MVP minimal. **Input arsitektur: TD-07** — core perlu titik simpan output AI sejak awal. Proses/CR: CR-20261008-002 | Arahan PO 2026-10-08: *"tambahkan harus ada integrasi AI nya nih, berikan ide integrasi AI untuk use case sales crm"*. Bentuk penempatan dipilih PO via pilihan eksplisit: MVP minimal (generatif), prediktif ke roadmap | Yudha Pratama | Active — membuka Q-040..Q-043 (Q-040/Q-041 menghambat M10) |
+| DEC-047 | 2026-10-08 | **Tiga item BRD §9 yang menjadi kewenangan PO difinalkan sebelum workshop hari 1.** (1) **Stage pipeline default = 6 stage + 2 outcome** — Qualifikasi → Analisis Kebutuhan → Presentasi/Demo → Proposal → Negosiasi → Menunggu Keputusan, ditutup **Closed-Won / Closed-Lost** (+alasan). Configurable per tenant; B2C boleh memakai alur lebih pendek. (2) **Item kriteria selesai ditutup** — DEC-028 sudah berstatus DIREVISI dan BRD §7 kriteria 2 sudah memuat rantai verifikasi penggantinya; tidak ada lagi yang menggantung. (3) **Use case AI minimum M10 = AI-01 (draf pesan outreach)** per Q-041; AI-02 (ringkasan & insight) tetap opsional bila waktu mencukupi. Konsekuensi: **agenda hari 1 menyusut dari 10 menjadi 7 item** — sisanya murni kewenangan Head of Engineer (TD-01..TD-07, Q-040) | Arahan PO 2026-10-08 (3 pilihan eksplisit). Bahan riset stage: Salesforce 7 stage inti, HubSpot 7 deal stage default, praktik B2B high-velocity 5-7 — dipilih 6 karena tahap *prospecting* sudah dilayani M3 Lead | Yudha Pratama | Active — menutup Q-041; menyisakan 7 item agenda hari 1 |
 
 ### Catatan atas DEC-015 (keberatan teknis PM — SELESAI)
 
