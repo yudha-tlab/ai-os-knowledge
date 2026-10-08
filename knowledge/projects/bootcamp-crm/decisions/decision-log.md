@@ -3,10 +3,13 @@ title: "Decision Log — Bootcamp Internal CRM"
 type: decision-log
 project: bootcamp-crm
 status: active
-version: "7.0"
+version: "8.0"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "8.0"
+    date: 2026-10-08
+    purpose: "DEC-044 — status M6 Ticketing ke depan ditetapkan PO: menjadi modul lanjutan roadmap produk (di luar lingkup MVP bootcamp). Menutup Q-032; tidak ada item terbuka baru dari CR-20261008-001"
   - version: "7.0"
     date: 2026-10-08
     purpose: "CR-20261008-001 — modul Ticketing (M6) & Pelaporan Tiket (EP-009) dikeluarkan dari MVP; lingkup difokuskan ke business process sales. DEC-043 dicatat; DEC-019/022/025/026/036 dicabut; DEC-028/041/042 direvisi; DEC-015 direvisi"
@@ -81,6 +84,7 @@ changelog:
 | DEC-041 | 2026-10-02 | **Sasaran output bootcamp = core platform CRM (backend).** Ukuran keberhasilan adalah **desain core backend mampu menyelesaikan seluruh fitur mandatory** (DEC-015/DEC-021). **Kesiapan frontend bukan penghambat kelulusan** — UI boleh belum selesai | Arahan PO (POV project & product). Menegaskan ulang tujuan project: mendapatkan core platform, bukan aplikasi jadi. **Perlu rekonsiliasi dengan DEC-028** — lihat catatan di bawah | Yudha Pratama | Active — **direvisi CR-20261008-001**: daftar modul acuan berubah (7→6 modul) |
 | DEC-042 | 2026-10-02 | **Rekonsiliasi kriteria kelulusan:** DEC-028 tetap berlaku, tetapi **"end-to-end" diukur pada kapabilitas backend** — seluruh fitur mandatory terlayani dan terverifikasi melalui **API/kontrak data**, bukan kelengkapan UI | Jawaban PO atas Q-031 ("setuju dengan rekomendasimu"). Menyatukan DEC-028 (end-to-end) dengan DEC-041 (core backend, frontend bukan penghambat) dalam satu definisi yang dapat dinilai | Yudha Pratama | Active — menutup Q-031, R-016, D-015 · **direvisi CR-20261008-001**: tetap berlaku pada modul yang tersisa |
 | DEC-043 | 2026-10-08 | **Modul Ticketing (M6) dan Pelaporan Tiket (EP-009) dikeluarkan dari lingkup MVP.** Lingkup bootcamp difokuskan pada **business process sales** (lead, kontak & akun, pipeline/peluang, kuota & performa, pelaporan sales, tenancy, webhook). M5 Activity tetap *nice to have* — **modul mandatory kini 6** (sebelumnya 7) | Arahan PO 2026-10-08: *"tiket tidak perlu… terlalu besar… bukan termasuk general case CRM untuk tracking sales… bisa merefer ke hubspot ataupun salesforce… core feature dan business process yang akan digunakan untuk bootcamp adalah untuk sales"*. Riset mengonfirmasi pemisahan domain: Salesforce memisahkan **Sales Cloud vs Service Cloud** (case management & SLA = core Service Cloud, *not included* di Sales Cloud); HubSpot memisahkan **Sales Hub vs Service Hub** dengan seat terpisah. Diproses melalui **CR-20261008-001** | Yudha Pratama | Active — menutup Q-015/021/022/023 sebagai moot; menunggu approval Head of Product |
+| DEC-044 | 2026-10-08 | **Status M6 Ticketing ke depan: menjadi MODUL LANJUTAN di roadmap produk** (setara Service Cloud / Service Hub) — dikembangkan di luar lingkup MVP bootcamp, bukan dihapus dari visi produk. Fondasi multi-tenant & webhook (M1, M8) yang dibangun di bootcamp tetap menjadi prasyaratnya | Jawaban PO 2026-10-08 atas Q-032 ("setuju, jadikan modul lanjutan roadmap") — menerima rekomendasi PM. Tidak mengubah lingkup MVP (DEC-043 tetap: mandatory 6 modul); menutup Q-032 | Yudha Pratama | Active — menutup Q-032; tidak menghambat pelaksanaan bootcamp |
 
 ### Catatan atas DEC-015 (keberatan teknis PM — SELESAI)
 
@@ -160,11 +164,9 @@ milik **Head of Engineer**:
 | 3 | **Stack teknologi** (ditentukan TLab atau bebas) (TD-05) | Head of Engineer | Materi sesi & scaffolding |
 | 4 | **Spesifikasi implementasi webhook** (retry, rate limit, fan-out, signing) (TD-02) | Head of Engineer | EP-011 tidak dapat diimplementasikan |
 
-**Terbuka baru (dari CR-20261008-001):**
-
-| # | Keputusan | Pemilik | Menghambat |
-|---|-----------|---------|------------|
-| 5 | **Status M6 Ticketing ke depan** — modul lanjutan di roadmap produk (setara Service Cloud), atau keluar sepenuhnya dari lingkup produk (Q-032) | PM/PO + Head of Product | Roadmap produk; **tidak menghambat** pelaksanaan bootcamp |
+**Ditutup 2026-10-08:** status M6 Ticketing ke depan **terjawab** — menjadi
+**modul lanjutan roadmap produk** (DEC-044). Tidak ada item terbuka baru dari
+CR-20261008-001.
 
 Detail: `architecture/open-tech-decisions.md`.
 
@@ -187,6 +189,7 @@ Detail: `architecture/open-tech-decisions.md`.
 | Sasaran output bootcamp | Terjawab — core platform CRM / backend (DEC-041); **rekonsiliasi kriteria selesai ditutup DEC-042** |
 | Cakupan assessment tim sales (HR) | Terjawab — dikeluarkan dari lingkup (DEC-031) |
 | Lingkup modul Ticketing (M6) | Terjawab 2026-10-08 — **dikeluarkan dari MVP**; lingkup difokuskan ke sales (DEC-043 / CR-20261008-001) |
+| Status M6 Ticketing ke depan | Terjawab 2026-10-08 — **modul lanjutan roadmap produk**, di luar lingkup bootcamp (DEC-044, menutup Q-032) |
 
 ## Catatan yang Diteruskan ke Head of Engineer
 

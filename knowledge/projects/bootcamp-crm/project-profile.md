@@ -4,10 +4,13 @@ type: project-profile
 project: bootcamp-crm
 client: tlab-internal
 status: active
-version: "1.7"
+version: "1.8"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "1.8"
+    date: 2026-10-08
+    purpose: "DEC-044 — status M6 Ticketing ke depan ditetapkan: modul lanjutan roadmap produk (di luar lingkup MVP). Menutup Q-032"
   - version: "1.7"
     date: 2026-10-08
     purpose: "CR-20261008-001 / DEC-043 — modul Ticketing (M6) & Pelaporan Tiket (EP-009) dikeluarkan dari MVP; lingkup difokuskan ke business process sales. BRD v2.0 (25 BR, 7 diagram). Modul mandatory 7→6"
@@ -76,7 +79,7 @@ event sebagai permukaan ekstensi.
 | M3 | Lead Management | Mandatory |
 | M4 | Sales Pipeline / Opportunity | Mandatory |
 | M5 | Activity Management | Nice to have |
-| ~~M6~~ | ~~Ticketing~~ | **DIKELUARKAN dari MVP (CR-20261008-001 / DEC-043)** — domain *service*, bukan core CRM untuk sales tracking |
+| ~~M6~~ | ~~Ticketing~~ | **DIKELUARKAN dari MVP (CR-20261008-001 / DEC-043)** — domain *service*, bukan core CRM untuk sales tracking. **Modul lanjutan roadmap (DEC-044)** |
 | M7 | Reporting & Analytics (revenue, pipeline, performa sales) | Mandatory |
 | M8 | Webhook / Event Layer | **MVP minimal (DEC-021)** — event outbound inti + 1 endpoint inbound. Merevisi DEC-015 |
 

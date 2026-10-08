@@ -3,7 +3,7 @@ title: "Project Context Pack — Bootcamp Internal CRM"
 type: project-context-pack
 project: bootcamp-crm
 status: draft-v5
-version: "7.0"
+version: "7.1"
 created: 2026-10-02
 modified: 2026-10-08
 depends_on:
@@ -13,6 +13,9 @@ depends_on:
   - requirement-analysis
 scope: Aggregated key fields untuk project internal TLab — Bootcamp CRM
 changelog:
+  - version: "7.1"
+    date: 2026-10-08
+    purpose: "DEC-044 — status M6 Ticketing ke depan ditetapkan: modul lanjutan roadmap produk (di luar lingkup MVP). Menutup Q-032"
   - version: "7.0"
     date: 2026-10-08
     purpose: "CR-20261008-001 / DEC-043 — modul Ticketing (M6) & Pelaporan Tiket (EP-009) dikeluarkan dari MVP; lingkup difokuskan ke business process sales. BRD v2.0 (25 BR, 7 diagram); modul mandatory 7→6"
@@ -62,6 +65,7 @@ changelog:
 Mandatory: M1 Tenancy, M2 Contact & Account (B2B & B2C), M3 Lead, M4 Pipeline/
 Opportunity, M7 Reporting, dan **M8 Webhook/Event Layer (minimal)** — merevisi
 DEC-015 melalui DEC-021 dan CR-20261008-001 (M6 Ticketing dikeluarkan, DEC-043).
+Status M6 ke depan: **modul lanjutan roadmap produk** (DEC-044), di luar bootcamp.
 
 Nice to have: M5 Activity saja.
 

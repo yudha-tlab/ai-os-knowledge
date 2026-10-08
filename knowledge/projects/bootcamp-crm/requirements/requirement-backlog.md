@@ -3,10 +3,13 @@ title: "Requirement Backlog — Bootcamp Internal CRM"
 type: requirement-backlog
 project: bootcamp-crm
 status: active
-version: "3.5"
+version: "3.6"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "3.6"
+    date: 2026-10-08
+    purpose: "DEC-044 — status M6 Ticketing ke depan ditetapkan: modul lanjutan roadmap produk (di luar lingkup MVP). Menutup Q-032"
   - version: "3.5"
     date: 2026-10-08
     purpose: "CR-20261008-001 / DEC-043 — modul Ticketing (M6) & Pelaporan Tiket (EP-009) dikeluarkan dari MVP. REQ-025/029/032/033/034 ditutup sebagai keluar lingkup; Q-015/021/022/023 ditandai moot. BRD v2.0 (25 business requirement, 7 diagram)"
@@ -167,7 +170,7 @@ Q-008, Q-011.
 | Q-029 | Konfirmasi durasi bootcamp | PM/PO | **Terjawab 2026-10-02** — tetap 3 hari, hari 1 workshop (DEC-037) |
 | Q-030 | **Tanggal akhir bootcamp**: 13-15 Okt (3 hari) atau 13-14 Okt? | PM/PO | **Ditutup tanpa tanggal (DEC-040)** — yang mengikat adalah durasi, bukan rentang start-end |
 | Q-031 | Rekonsiliasi kriteria selesai: DEC-028 (end-to-end) vs DEC-041 (core backend) | PM/PO | **Terjawab 2026-10-02 (DEC-042)** — "end-to-end" diukur pada kapabilitas backend |
-| Q-032 | **Status M6 Ticketing ke depan** — modul lanjutan roadmap produk atau keluar sepenuhnya? | PM/PO + Head of Product | **Terbuka 2026-10-08** — tidak menghambat bootcamp; diputuskan terpisah dari lingkup MVP (CR-20261008-001) |
+| Q-032 | **Status M6 Ticketing ke depan** — modul lanjutan roadmap produk atau keluar sepenuhnya? | PM/PO + Head of Product | **Terjawab 2026-10-08 (DEC-044)** — **modul lanjutan roadmap produk**, di luar lingkup MVP bootcamp (CR-20261008-001) |
 ## Related
 
 - **Requirement Analysis (bahan baku BRD):** [[requirement-analysis]]

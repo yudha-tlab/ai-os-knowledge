@@ -128,23 +128,23 @@ dan projects-hub.
 
 | Dokumen | Dampak | Status |
 |---------|--------|--------|
-| BRD (`requirements/brd/bootcamp-crm-brd-v1.md`) | **Perlu revisi besar** — 8 BR dihapus, diagram direvisi | Belum |
-| Requirement Analysis | **Perlu revisi** — Epic/US/Objek/Proses/Stakeholder/Q | Belum |
-| Requirement Backlog | **Perlu revisi** — REQ tiket dihapus/ditandai | Belum |
-| Project Charter | **Perlu revisi** — lingkup, kriteria keberhasilan | Belum |
-| Project Profile | **Perlu revisi** — lingkup MVP, milestone | Belum |
-| Project Status | **Perlu revisi** — progres & risiko | Belum |
-| Stakeholder Register | **Perlu revisi** — 4 stakeholder keluar | Belum |
-| RAID Log / Risk Register | **Perlu revisi** — R-001/R-015 turun | Belum |
+| BRD (`requirements/brd/bootcamp-crm-brd-v1.md`) | **Direvisi** — v2.0/v2.1: 8 BR dihapus (33→25), diagram 8→7 | **Selesai** |
+| Requirement Analysis | **Direvisi** — v2.5/v2.6: Epic 12→10, US 37→25, Objek 23→16, Proses 12→10, Stakeholder 10→6 | **Selesai** |
+| Requirement Backlog | **Direvisi** — v3.5/v3.6: 5 REQ tiket ditutup | **Selesai** |
+| Project Charter | **Direvisi** — v7.0/v7.1: lingkup, kriteria keberhasilan | **Selesai** |
+| Project Profile | **Direvisi** — v1.7/v1.8: lingkup MVP, milestone | **Selesai** |
+| Project Status | **Direvisi** — v8.0/v8.1: progres & risiko | **Selesai** |
+| Stakeholder Register | **Ditinjau** — register memuat stakeholder organisasi; persona SH003/004/006/007 dikeluarkan dari daftar produk (persona tidak tercatat sebagai baris) | **Selesai** |
+| RAID Log / Risk Register | **Direvisi** — RAID v8.0, Risk Register v7.0; R-001/R-015 turun | **Selesai** |
 | Architecture (TD-01..TD-05) | **Tidak terdampak** — TD tidak menyentuh ticketing | — |
-| Projects Hub | **Perlu revisi** — ringkasan status | Belum |
+| Projects Hub | **Ditinjau** — ringkasan portofolio (tidak memuat rincian modul) | **Selesai** |
 
 ### 3.4 Dependensi
 
 - **Tidak ada dependensi eksternal** — project internal, tidak ada klien.
-- **Bergantung pada keputusan terbuka:** status M6 ke depan (roadmap produk) —
-  tercatat sebagai **Q-032**, pemilik PM/PO + Head of Product. Tidak menghambat
-  pelaksanaan bootcamp.
+- ~~Bergantung pada keputusan terbuka: status M6 ke depan (Q-032)~~ — **DITUTUP
+  2026-10-08 oleh DEC-044:** M6 menjadi **modul lanjutan roadmap produk**
+  (setara Service Cloud/Service Hub), dikembangkan di luar bootcamp.
 - **Bergantung pada approval:** Head of Product & Project (approver lingkup).
 
 ---
@@ -155,7 +155,7 @@ dan projects-hub.
 
 | Risiko | Probabilitas | Dampak | Mitigasi |
 |--------|-------------|--------|----------|
-| Produk CRM tidak memiliki jalur penanganan keluhan pelanggan — celah fungsional bila kelak dijual | Sedang | Terbatas pada posisi produk; bukan kegagalan bootcamp | Catat sebagai modul lanjutan di roadmap produk; pemiliknya Head of Product (Q-032) |
+| Produk CRM tidak memiliki jalur penanganan keluhan pelanggan — celah fungsional bila kelak dijual | Sedang | Terbatas pada posisi produk; bukan kegagalan bootcamp | Catat sebagai modul lanjutan di roadmap produk — **DITETAPKAN DEC-044 (2026-10-08)**; pemilik Head of Product |
 | Kriteria kelulusan kehilangan acuan (DEC-028 menyebut komentar & riwayat tiket) → hari 3 ambigu | Tinggi | **Penilaian hasil menjadi tidak jelas** — dampak langsung ke sasaran bootcamp | **Revisi DEC-028 sebagai bagian CR ini** — definisi selesai diarahkan ke kapabilitas core sales |
 | Keputusan produk yang sudah tercatat (DEC-019/022/025/026/036) dicabut dalam jumlah besar → riwayat keputusan membingungkan | Sedang | Traceability keputusan menurun bila tidak dicatat rapi | Semua pencabutan dicatat eksplisit di decision-log dengan alasan, bukan dihapus senyap |
 | Persepsi bahwa lingkup bisa digeser tanpa proses — preseden scope creep | Rendah | Governance melemah | Perubahan diproses melalui CR formal ini, bukan edit langsung |

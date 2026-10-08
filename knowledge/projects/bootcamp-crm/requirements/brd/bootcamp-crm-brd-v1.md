@@ -3,7 +3,7 @@ title: "Business Requirements Document (BRD) — CRM Multi-Tenant TLab"
 type: brd
 project: bootcamp-crm
 status: Draft — menunggu review Product Owner & approval Head of Product & Project
-version: "2.0"
+version: "2.1"
 created: 2026-10-02
 modified: 2026-10-08
 disusun_oleh: "Yudha Pratama (PM / Product Owner)"
@@ -14,6 +14,9 @@ sumber_utama:
   - project-charter (v7.0)
   - CR-20261008-001 (penyesuaian lingkup)
 changelog:
+  - version: "2.1"
+    date: 2026-10-08
+    purpose: "DEC-044 — status M6 Ticketing ke depan ditetapkan: modul lanjutan roadmap produk (di luar lingkup MVP bootcamp). Menutup Q-032; tidak mengubah jumlah BR (25)"
   - version: "2.0"
     date: 2026-10-08
     purpose: "Terapkan CR-20261008-001 / DEC-043 — modul Ticketing (M6) & Pelaporan Tiket (EP-009) dikeluarkan dari MVP; lingkup difokuskan ke business process sales. Business requirement 33 → 25 (8 BR ticketing dihapus); diagram 8 → 7. PERBAIKAN: jumlah BR pada v1.0 tertulis 30, aktual 33"
@@ -24,7 +27,7 @@ changelog:
 
 # Business Requirements Document (BRD) — CRM Multi-Tenant TLab
 
-**Versi:** 2.0 (Draft)
+**Versi:** 2.1 (Draft)
 **Tanggal:** 2026-10-02 · direvisi 2026-10-08
 **Disusun Oleh:** Yudha Pratama — PM, berperan sebagai Product Owner
 **Status:** Draft — menunggu review PO dan approval Head of Product & Project
@@ -162,7 +165,7 @@ kehilangan objeknya seiring keluarnya M6 — lihat §9.*
 
 | Item | Alasan |
 |---|---|
-| **M6 Ticketing** | **Dikeluarkan 2026-10-08** (CR-20261008-001 / DEC-043) — ticketing adalah domain *service*, bukan core feature CRM untuk sales tracking; lingkup bootcamp terlalu besar bila disertakan. Sejalan dengan pemisahan Sales Cloud/Service Cloud dan Sales Hub/Service Hub |
+| **M6 Ticketing** | **Dikeluarkan dari MVP 2026-10-08** (CR-20261008-001 / DEC-043) — ticketing adalah domain *service*, bukan core feature CRM untuk sales tracking; lingkup bootcamp terlalu besar bila disertakan. Sejalan dengan pemisahan Sales Cloud/Service Cloud dan Sales Hub/Service Hub. **Status ke depan (DEC-044, 2026-10-08): tetap bagian visi produk sebagai modul lanjutan roadmap** (setara Service Cloud/Service Hub), dikembangkan di luar bootcamp |
 | **M5 Activity Management** | *Nice to have* — di luar MVP (DEC-015) |
 | **Modul Billing / Invoice** | Revenue didefinisikan dari deal closed-won, bukan tagihan (DEC-016) |
 | **Assessment tim sales (HR)** | Dikeluarkan dari lingkup produk CRM — CRM mengelola pelanggan, bukan penilaian karyawan (DEC-031) |
@@ -473,7 +476,7 @@ kekurangan dokumen, melainkan **tujuan utama workshop** (DEC-037, R-015).
 | 5 | **Strategi isolasi teknis multi-tenant** | Head of Engineer (TD-01) | Rework arsitektur di tengah bootcamp |
 | 6 | **Metrik efektivitas AI + baseline** | Head of Engineer (TD-03/04) | **Tidak dapat dipulihkan** bila lewat hari 1 |
 | 7 | **Stack teknologi** | Head of Engineer (TD-05) | Materi sesi & scaffolding tidak dapat disiapkan |
-| 8 | **Status M6 Ticketing ke depan (Q-032)** — modul lanjutan di roadmap produk, atau keluar sepenuhnya dari lingkup | PM/PO + Head of Product | Roadmap produk (tidak menghambat bootcamp) |
+| ~~8~~ | ~~Status M6 Ticketing ke depan (Q-032)~~ — **TERJAWAB 2026-10-08 (DEC-044): menjadi modul lanjutan roadmap produk**, di luar lingkup bootcamp | PM/PO + Head of Product | — (tidak lagi menjadi item terbuka) |
 
 **Yang sudah tidak perlu difinalkan** (sebelumnya ada, kini moot karena M6 keluar):
 daftar status tiket, daftar prioritas & target waktu SLA, mekanisme pelanggan

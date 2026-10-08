@@ -3,11 +3,14 @@ title: "Requirement Analysis — CRM Multi-Tenant TLab"
 type: requirement-analysis
 project: bootcamp-crm
 status: draft
-version: "2.5"
+version: "2.6"
 created: 2026-10-02
 modified: 2026-10-08
 sumber: "Arahan Product Owner (Yudha Pratama) via sesi brainstorm 2026-10-02"
 changelog:
+  - version: "2.6"
+    date: 2026-10-08
+    purpose: "DEC-044 — status M6 Ticketing ke depan ditetapkan: menjadi modul lanjutan roadmap produk (di luar lingkup MVP). Menutup Q-032"
   - version: "2.5"
     date: 2026-10-08
     purpose: "CR-20261008-001 / DEC-043 — modul Ticketing (M6) & Pelaporan Tiket (EP-009) dikeluarkan dari MVP; lingkup difokuskan ke business process sales. Epic 12→10, User Story 37→25, Objek 23→16, Proses 12→10, Stakeholder 10→6; Q-015/021/022/023 ditutup sebagai moot"
@@ -439,7 +442,7 @@ teknologi).
 | Q-029 | Konfirmasi durasi bootcamp | DEC-033 | PM/PO | **Terjawab 2026-10-02** — tetap **3 hari**, hari 1 workshop (DEC-037) |
 | Q-030 | **Tanggal akhir bootcamp**: 13-15 Okt (3 hari dari 13 Okt) atau 13-14 Okt? | DEC-037 | PM/PO | **Ditutup tanpa tanggal (DEC-040)** — PO menegaskan yang mengikat adalah **durasi**, bukan rentang start-end. Bukan field kosong, melainkan keputusan sadar |
 | Q-031 | **Rekonsiliasi kriteria selesai:** DEC-028 (end-to-end modul mandatory) vs DEC-041 (core backend, frontend bukan penghambat) | DEC-028, DEC-041 | PM/PO | **Terjawab 2026-10-02 (DEC-042)** — DEC-028 tetap berlaku; **"end-to-end" diukur pada kapabilitas backend** (terverifikasi via API/kontrak data), bukan kelengkapan UI |
-| Q-032 | **Status M6 Ticketing ke depan** — menjadi modul lanjutan roadmap produk (setara Service Cloud/Service Hub), atau keluar sepenuhnya dari lingkup produk? | CR-20261008-001 / DEC-043 | PM/PO + Head of Product | **Terbuka 2026-10-08** — tidak menghambat bootcamp; diputuskan terpisah dari lingkup MVP |
+| Q-032 | **Status M6 Ticketing ke depan** — modul lanjutan roadmap produk atau keluar sepenuhnya? | DEC-043 | PM/PO + Head of Product | **Terjawab 2026-10-08 (DEC-044)** — menjadi **modul lanjutan roadmap produk** (setara Service Cloud/Service Hub), dikembangkan di luar lingkup MVP bootcamp |
 
 ---
 

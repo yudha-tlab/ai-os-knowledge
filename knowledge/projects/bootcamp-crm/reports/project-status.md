@@ -3,11 +3,14 @@ title: "Project Status — Bootcamp Internal CRM"
 type: project-status
 project: bootcamp-crm
 status: active
-version: "8.0"
+version: "8.1"
 created: 2026-10-02
 modified: 2026-10-08
 date: 2026-10-08
 changelog:
+  - version: "8.1"
+    date: 2026-10-08
+    purpose: "DEC-044 — status M6 Ticketing ke depan ditetapkan PO: modul lanjutan roadmap produk (di luar lingkup MVP). Menutup Q-032"
   - version: "8.0"
     date: 2026-10-08
     purpose: "CR-20261008-001 / DEC-043 — modul Ticketing (M6) & Pelaporan Tiket (EP-009) dikeluarkan dari MVP; lingkup difokuskan ke business process sales. Modul mandatory 7→6; BRD v2.0 (25 BR, 7 diagram)"
@@ -79,6 +82,11 @@ Dampak terukur:
 - Keputusan yang **direvisi**: DEC-015 (lingkup MVP), DEC-028 & DEC-042
   (kriteria selesai — buang acuan "komentar tiket & riwayat pergerakan tiket").
 - BRD direvisi ke **v2.0** (`requirements/brd/bootcamp-crm-brd-v1.md`).
+
+**Status M6 ke depan (DEC-044):** PO memutuskan ticketing **tetap bagian visi
+produk sebagai modul lanjutan roadmap** — setara Service Cloud/Service Hub —
+dikembangkan **di luar** bootcamp. Menutup Q-032; tidak mengubah lingkup MVP
+(mandatory tetap 6 modul).
 
 **Efek pada risiko:** R-001 turun (beban 7→6 modul) tetapi **tetap High/High** —
 6 modul masih harus terlayani dalam 2 hari efektif. Lihat [[risk-register]].

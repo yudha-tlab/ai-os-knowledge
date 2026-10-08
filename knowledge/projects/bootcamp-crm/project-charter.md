@@ -3,10 +3,13 @@ title: "Project Charter — Bootcamp Internal CRM"
 type: project-charter
 project: bootcamp-crm
 status: Draft
-version: "7.0"
+version: "7.1"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "7.1"
+    date: 2026-10-08
+    purpose: "DEC-044 — status M6 Ticketing ke depan ditetapkan: modul lanjutan roadmap produk (di luar lingkup MVP bootcamp). Menutup Q-032"
   - version: "7.0"
     date: 2026-10-08
     purpose: "CR-20261008-001 / DEC-043 — modul Ticketing (M6) & Pelaporan Tiket (EP-009) dikeluarkan dari MVP; lingkup difokuskan ke business process sales. Modul mandatory 7→6; kriteria 'end-to-end' direvisi (buang acuan tiket); jumlah epic/US/objek/proses/stakeholder diperbarui"
@@ -92,7 +95,8 @@ terpisah. Prinsip ini mengikat seluruh rancangan produk.
 - Modul M6 (Ticketing) & Pelaporan Tiket (EP-009) — **dikeluarkan dari MVP**
   (CR-20261008-001 / DEC-043): domain *service*, bukan core CRM untuk sales
   tracking; sejalan dengan pemisahan Salesforce (Sales vs Service Cloud) dan
-  HubSpot (Sales vs Service Hub).
+  HubSpot (Sales vs Service Hub). **Status ke depan (DEC-044): tetap bagian
+  visi produk sebagai modul lanjutan roadmap**, dikembangkan setelah bootcamp.
 - Lingkup modul di luar DEC-015/DEC-021; requirement berprioritas Should/Could (REQ-016, REQ-027, REQ-030) yang tidak selesai tidak menahan approval prototype.
 - Assessment tim sales (HR) — dikeluarkan dari lingkup (DEC-031).
 - Custom case klien yang menuntut validasi *blocking* di dalam core — memerlukan

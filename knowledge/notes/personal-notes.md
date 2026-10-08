@@ -3,7 +3,7 @@
 Catatan pribadi untuk merangkum hal-hal yang perlu dilakukan.
 Lokasi: root knowledge repo (`knowledge/notes/personal-notes.md`).
 
-> Update terakhir: 2026-10-02
+> Update terakhir: 2026-10-08
 
 ---
 
@@ -19,6 +19,7 @@ Lokasi: root knowledge repo (`knowledge/notes/personal-notes.md`).
 | ⬜     | High      | **Selesaikan BRD CRM sebelum 13 Okt** — bahan dasar workshop hari 1        | Sebelum 13 Okt 2026 | DEC-037; DEC-017                                                                                                        |
 | ⬜     | High      | Siapkan agenda tertutup workshop hari 1 (13 Okt): sisa pertanyaan teknis, kriteria "requirement final", pembagian 2 tim | Sebelum 13 Okt 2026 | R-015                                                                                              |
 | ⬜     | High      | Tetapkan definisi teknis "core backend selesai" (kontrak API/endpoint per modul mandatory) | Sebelum hari 3 | DEC-041                                                                                                |
+| ⬜     | Med       | **Tetapkan owner & timeline modul lanjutan Ticketing (roadmap produk)** — di luar bootcamp | Setelah bootcamp | DEC-044 |
 | ⬜     | High      | Teruskan catatan teknis ke Head of Engineer (isolasi multi-tenant, webhook, metrik efektivitas AI + baseline, stack teknologi) | Sebelum 13 Okt 2026 | `bootcamp-crm/architecture/open-tech-decisions.md` (TD-01 s/d TD-05)                                                    |
 | ✅     | -         | ~~Tutup Q-031: rekonsiliasi kriteria kelulusan~~                            | —           | **DEC-042** — end-to-end diukur pada kapabilitas backend                                                                       |
 | ✅     | -         | ~~Minta nama peserta bootcamp ke Tech Lead~~                                | —           | Tidak diperlukan saat ini (DEC-038)                                                                                            |
@@ -91,6 +92,30 @@ Lokasi: root knowledge repo (`knowledge/notes/personal-notes.md`).
 s/d DEC-042). Tidak ada item terbuka milik PM/PO. Sisa empat item milik **Head of
 Engineer** (TD-01..TD-05 di `architecture/open-tech-decisions.md`) dan tiga
 pertanyaan Q-007/Q-008/Q-011.
+
+### 2026-10-08
+
+- **Keputusan besar PO — lingkup dipersempit ke domain sales** (diproses via
+  **CR-20261008-001**): modul **Ticketing (M6)** + **Pelaporan Tiket (EP-009)**
+  dikeluarkan dari MVP bootcamp. Alasan PO: terlalu besar dan bukan general case
+  CRM untuk tracking sales (rujukan Salesforce Sales/Service Cloud & HubSpot
+  Sales/Service Hub). Modul mandatory 7 → **6**.
+- Dampak terukur: Epic 12→10, User Story 37→25, Objek 23→16, Proses 12→10,
+  Stakeholder 10→6, Business Requirement 33→25, Diagram 8→7. Keputusan
+  **dicabut**: DEC-019/022/025/026/036; **direvisi**: DEC-015/028/041/042.
+- **DEC-043** dicatat; BRD direvisi ke **v2.0** (kemudian v2.1). 6 diagram
+  direvisi, diagram 05 (tiket & SLA) dihapus. Commit `95a87b2`.
+- **DEC-044** — Q-032 ditutup: status M6 ke depan = **modul lanjutan roadmap
+  produk** (setara Service Cloud/Service Hub), dikembangkan **di luar** bootcamp.
+  Tidak mengubah lingkup MVP; tidak menghambat pelaksanaan.
+- **Perbaikan temuan:** BRD v1.0 semula mengklaim "30 business requirement",
+  aktual **33** (BR-001..BR-033). Dikoreksi eksplisit di changelog v2.0 —
+  jangan sampai salah hitung berulang di artefak turunan.
+- Efek risiko: R-001 tetap High/High tetapi beban turun (6 modul/2 hari);
+  R-015 mitigasi bertambah (agenda hari 1 menyusut 4 pertanyaan + 2 Epic).
+
+**Status per 2026-10-08: 44 keputusan (DEC-001 s/d DEC-044)**; tidak ada item
+terbuka milik PM/PO. Sisa empat item milik **Head of Engineer** (TD-01..TD-05).
 
 ---
 
