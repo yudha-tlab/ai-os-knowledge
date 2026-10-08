@@ -3,10 +3,13 @@ title: "Requirement Backlog — Bootcamp Internal CRM"
 type: requirement-backlog
 project: bootcamp-crm
 status: active
-version: "3.9"
+version: "3.10"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "3.10"
+    date: 2026-10-08
+    purpose: "DEC-048 — Q-040 terjawab: penyedia model AI M10 = TLab LLM (akses tersedia)"
   - version: "3.9"
     date: 2026-10-08
     purpose: "DEC-047 — Q-041 terjawab (AI-01); REQ-021 (stage pipeline) difinalkan 6 stage + 2 outcome"
@@ -226,7 +229,7 @@ Q-008, Q-011.
 | Q-037 | Mekanisme pembayaran (manual vs payment gateway) | PM/PO | **Terbuka 2026-10-08** |
 | Q-038 | Cara tenant mendaftar (self-serve vs dibuatkan) | PM/PO | **Terbuka 2026-10-08** |
 | Q-039 | Kebijakan data saat soft delete (retensi/ekspor/pemulihan) | PM/PO | **Terbuka 2026-10-08** |
-| Q-040 | Penyedia model & kredensial LLM untuk M10 | Head of Engineer | **Terbuka 2026-10-08** — menghambat M10 |
+| Q-040 | Penyedia model & kredensial LLM untuk M10 | Head of Engineer | **Terjawab 2026-10-08 (DEC-048)** — TLab LLM (internal), akses tersedia |
 | Q-041 | Use case AI minimum M10 (AI-01 vs AI-02) | PM/PO + peserta | **Terjawab 2026-10-08 (DEC-047)** — AI-01 draf pesan outreach |
 | Q-042 | Strategi prediktif (model per tenant vs global) | Head of Engineer | **Terbuka 2026-10-08** — roadmap |
 | Q-043 | Batas isolasi tenant pada prompt AI | Head of Engineer | **Terbuka 2026-10-08** |

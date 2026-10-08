@@ -3,10 +3,13 @@ title: "Risk Register — Bootcamp Internal CRM"
 type: risk-register
 project: bootcamp-crm
 status: active
-version: "9.0"
+version: "10.0"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "10.0"
+    date: 2026-10-08
+    purpose: "DEC-048 — R-018 mitigasi diperjelas (M10 dibatasi ke AI-01, penyedia TLab LLM tersedia sehingga hambatan teknis berkurang)"
   - version: "9.0"
     date: 2026-10-08
     purpose: "CR-20261008-002 — tambah R-018 (beban MVP bertambah karena integrasi AI M10 menekan jendela 2 hari)"
@@ -69,7 +72,7 @@ dasar akan menyesatkan prioritisasi.
 | R-015 | Hari 1 workshop tidak cukup memfinalkan seluruh requirement → hari 2 dimulai dengan requirement belum final; jendela pengembangan menyusut di bawah 2 hari | Process/Scope | High | High | **Tinggi** | PM/PO | Kunci daftar keputusan terbuka & agenda ketat hari 1; **selesaikan BRD sebelum hari 1**; tetapkan kriteria eksplisit "requirement dianggap final" | Open — **baru 2026-10-02** |
 | R-016 | Kriteria selesai tidak konsisten — DEC-028 (end-to-end) vs DEC-041 (core backend) | Scope | — | — | — | PM/PO | **DITUTUP 2026-10-02** — DEC-042 menyatukan kedua definisi: "end-to-end" diukur pada kapabilitas backend | **Closed** |
 | R-017 | **Kontrol plane SaaS tidak dirancang saat bootcamp** → bila tenant model M1 tidak menyimpan status langganan & kuota paket, fase roadmap M9 memerlukan **migrasi data yang mahal** (rework) | Scope/Teknis | Med | Med | Sedang | PM/PO + Head of Engineer | **Mitigasi: TD-06** — putuskan rancangan tenant model yang menyimpan status langganan **selama bootcamp M1** (rancangan saja, bukan implementasi M9). Ditambah 2026-10-08 (DEC-045) | Open — **baru 2026-10-08** |
-| R-018 | **Integrasi AI (M10) menambah beban MVP** — 6 modul mandatory + lapisan AI dalam 2 hari; berisiko menekan kualitas modul mandatory | Scope/Schedule | **High** | Med | **Tinggi** | PM/PO + Tech Lead | **Mitigasi:** M10 dibatasi **1 use case minimum** sebagai *vertical slice*; AI service terpisah (DEC-012); evaluasi akhir hari 2 — bila tertinggal, M10 dipotong. Ditambah 2026-10-08 (CR-20261008-002) | Open — **baru 2026-10-08** |
+| R-018 | **Integrasi AI (M10) menambah beban MVP** — 6 modul mandatory + lapisan AI dalam 2 hari; berisiko menekan kualitas modul mandatory | Scope/Schedule | **High** | Med | **Tinggi** | PM/PO + Tech Lead | **Mitigasi:** M10 dibatasi **1 use case minimum — AI-01 draf outreach (DEC-047)** sebagai *vertical slice*; penyedia model sudah tersedia (TLab LLM, DEC-048); AI service terpisah (DEC-012); evaluasi akhir hari 2 — bila tertinggal, M10 dipotong. Ditambah 2026-10-08 (CR-20261008-002) | Open — **baru 2026-10-08** |
 
 ## Risiko yang Mengalami Perubahan Severity
 

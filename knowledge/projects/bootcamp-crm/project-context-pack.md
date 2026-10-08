@@ -3,7 +3,7 @@ title: "Project Context Pack — Bootcamp Internal CRM"
 type: project-context-pack
 project: bootcamp-crm
 status: draft-v5
-version: "8.2"
+version: "8.3"
 created: 2026-10-02
 modified: 2026-10-08
 depends_on:
@@ -13,6 +13,9 @@ depends_on:
   - requirement-analysis
 scope: Aggregated key fields untuk project internal TLab — Bootcamp CRM
 changelog:
+  - version: "8.3"
+    date: 2026-10-08
+    purpose: "DEC-048 — Q-040 terjawab (TLab LLM, akses tersedia); Q-041 terjawab (AI-01); agenda hari 1 6 item"
   - version: "8.2"
     date: 2026-10-08
     purpose: "DEC-047 — stage pipeline default ditetapkan, Q-041 terjawab"
@@ -145,7 +148,7 @@ Nice to have: M5 Activity saja.
 - Catatan teknis Head of Engineer: `architecture/open-tech-decisions.md` (TD-01 s/d TD-07).
 - Pertanyaan terbuka: 3 (Q-007, Q-008, Q-011 — Head of Engineer) + 7 pertanyaan
   fase roadmap (Q-033 s/d Q-039 — PM/PO, tidak menghambat bootcamp) + 4 pertanyaan
-  integrasi AI (Q-040..Q-043 — **Q-040/Q-041 menghambat M10**).
+  integrasi AI (Q-040..Q-043 — **Q-040 & Q-041 sudah terjawab 2026-10-08**; Q-042/Q-043 fase roadmap).
 
 ## Dependencies
 
@@ -165,8 +168,8 @@ Nice to have: M5 Activity saja.
 - [x] Periode kuota sales — bulanan (DEC-035)
 - [x] Nama peserta — tidak diperlukan saat ini (DEC-038)
 - [ ] **Titik simpan output AI pada model core** — Head of Engineer (TD-07, jangan tunda)
-- [ ] **Penyedia LLM + kredensial** — Head of Engineer (Q-040, menghambat M10)
-- [ ] **Penetapan use case AI minimum** — PM/PO + peserta (Q-041, hari 1)
+- [x] **Penyedia model AI M10** — **TLab LLM**, akses sudah tersedia (DEC-048)
+- [x] **Use case AI minimum** — **AI-01 draf pesan outreach** (DEC-047)
 - [ ] Estimasi effort M10 — Head of Engineer & Tech Lead
 
 ## Catatan Akses

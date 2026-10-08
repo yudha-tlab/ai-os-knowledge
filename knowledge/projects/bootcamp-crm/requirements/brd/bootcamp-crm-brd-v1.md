@@ -3,7 +3,7 @@ title: "Business Requirements Document (BRD) — CRM Multi-Tenant TLab"
 type: brd
 project: bootcamp-crm
 status: Draft — menunggu review Product Owner & approval Head of Product & Project
-version: "3.2"
+version: "3.3"
 created: 2026-10-02
 modified: 2026-10-08
 disusun_oleh: "Yudha Pratama (PM / Product Owner)"
@@ -14,6 +14,9 @@ sumber_utama:
   - project-charter (v7.0)
   - CR-20261008-001 (penyesuaian lingkup)
 changelog:
+  - version: "3.3"
+    date: 2026-10-08
+    purpose: "DEC-048 — penyedia model AI M10 ditetapkan TLab LLM (BR-044 final); Q-040 ditutup; A-10 terkonfirmasi; agenda hari 1 menjadi 6 item"
   - version: "3.2"
     date: 2026-10-08
     purpose: "DEC-047 — stage pipeline default ditetapkan (6 stage + 2 outcome) sehingga BR-010 final; item 3 §9 ditutup; use case AI minimum = AI-01; agenda hari 1 menyusut 10 -> 7 item"
@@ -419,7 +422,7 @@ webhook + service eksternal terpisah; **DEC-030**: webhook async). Integrasi AI
 |---|---|---|---|---|
 | BR-042 | Sales dapat menghasilkan **draf pesan outreach** untuk Lead/Kontak melalui AI, berdasarkan konteks record di CRM | Proses 14.01.01 / CR-20261008-002 | Must | Draft |
 | BR-043 | Sales dapat memperoleh **ringkasan & AI insight** atas Lead/Peluang beserta rekomendasi langkah berikutnya | Proses 14.01.02 / CR-20261008-002 | Must | Draft |
-| BR-044 | AI ditenagai **layanan model yang dapat dikonfigurasi** (penyedia/kredensial ditetapkan Head of Engineer) | Q-040 / CR-20261008-002 | Must | Draft |
+| BR-044 | AI ditenagai **layanan model yang dapat dikonfigurasi** — MVP memakai **TLab LLM** (model internal TLab, akses tersedia). Detail teknis lain (nama model, endpoint, kuota, latency) ditetapkan Head of Engineer | **DEC-048** / CR-20261008-002 | Must | **Final (DEC-048)** |
 | BR-045 | Konteks yang dikirim ke model AI **wajib dibatasi pada tenant terkait** — output AI tersimpan pada record tenant yang bersangkutan (tidak ada lintas tenant) | BR-003 / DEC-029 | Must | Draft |
 
 > **Batas MVP (penting):** hanya use case **generatif** yang masuk MVP —
@@ -626,7 +629,7 @@ di core.
 | A-7 | Kuota bulanan dapat didefinisikan dari nilai closed-won tanpa data historis | Status performa kurang bermakna di prototype | Perlu Validasi |
 | A-8 | Nama peserta tidak diperlukan untuk perencanaan sesi saat ini | Bila pembagian peran per individu dibutuhkan, sesi tidak dapat direncanakan | Terkonfirmasi DEC-038 |
 | A-9 | **Integrasi AI (M10) dapat dibangun dalam sisa jendela 2 hari** tanpa mengorbankan 6 modul mandatory | Bila terlalu besar, M10 harus dipotong ke satu use case atau keluar dari MVP | **Perlu Validasi — kritis** (CR-20261008-002) |
-| A-10 | **Penyedia model LLM beserta kredensial tersedia** selama bootcamp | M10 tidak dapat didemonstrasikan; alur integrasi hanya terbukti lewat *stub* | Perlu Validasi — Q-040 |
+| A-10 | **Penyedia model LLM beserta kredensial tersedia** selama bootcamp | M10 tidak dapat didemonstrasikan; alur integrasi hanya terbukti lewat *stub* | **Terkonfirmasi (DEC-048)** — TLab LLM, akses sudah tersedia |
 
 ### 8.2 Batasan (Constraints)
 
@@ -651,10 +654,10 @@ di core.
 Bagian ini sengaja dikumpulkan agar hari 1 punya agenda tertutup. Ini bukan
 kekurangan dokumen, melainkan **tujuan utama workshop** (DEC-037, R-015).
 
-**Per 2026-10-08 (DEC-047): agenda menyusut dari 10 menjadi 7 item.** Tiga item
-yang menjadi kewenangan PO sudah difinalkan sebelum workshop — item 3 **ditutup**
-karena ternyata sudah terjawab oleh keputusan yang ada; item 1 dan 10 **ditetapkan
-nilainya**, sehingga peserta cukup memvalidasi (bukan memutuskan dari nol).
+**Per 2026-10-08 (DEC-047 & DEC-048): agenda menyusut dari 10 menjadi 6 item.**
+Empat item sudah tertutup sebelum workshop: tiga item kewenangan PO difinalkan
+(DEC-047) dan item penyedia model AI terjawab (DEC-048 — **TLab LLM, akses sudah
+tersedia**). Peserta cukup memvalidasi ketetapan itu, bukan memutuskan dari nol.
 
 ### 9.1 Item yang masih perlu difinalkan di hari 1
 
@@ -667,12 +670,17 @@ nilainya**, sehingga peserta cukup memvalidasi (bukan memutuskan dari nol).
 | 5 | **Metrik efektivitas AI + baseline** | Head of Engineer (TD-03/04) | **Tidak dapat dipulihkan** bila lewat hari 1 |
 | 6 | **Stack teknologi** | Head of Engineer (TD-05) | Materi sesi & scaffolding tidak dapat disiapkan |
 | 7 | **Titik simpan output AI di core** (rancangan, bukan implementasi M9/M10 penuh) | Head of Engineer (TD-07) | Migrasi data saat use case AI prediktif menyusul |
-| 8 | **Penyedia model & kredensial LLM** untuk M10 | Head of Engineer (Q-040) | M10 tidak dapat didemonstrasikan |
+Seluruh **6 item** di atas **tidak dapat difinalkan oleh PM/PO** — item 1
+memerlukan peserta, item 2 memerlukan Head of Engineer, item 3–6 murni kewenangan
+teknis. Inilah sebabnya agenda hari 1 masih menyisakan pekerjaan meski kewenangan
+PM/PO sudah tertutup.
 
-Seluruh 7 item di atas **tidak dapat difinalkan oleh PM/PO** — item 1 memerlukan
-peserta, item 2 memerlukan Head of Engineer, item 3–8 murni kewenangan teknis.
-Inilah sebabnya agenda hari 1 masih menyisakan pekerjaan meski kewenangan PM/PO
-sudah tertutup.
+> **Catatan:** item lama nomor 8 (**penyedia model & kredensial LLM untuk M10**)
+> **sudah terjawab 2026-10-08 (DEC-048)** — MVP memakai **TLab LLM** (model
+> internal TLab) dan **aksesnya sudah tersedia**, sehingga tidak lagi menghambat
+> M10. Yang tersisa hanya detail operasional (nama model/endpoint, kuota,
+> latency, biaya) yang tidak menahan jadwal dan tidak perlu dibawa ke agenda
+> hari 1. **Nilai kredensial tidak dicatat dalam dokumen.**
 
 ### 9.2 Item yang sudah difinalkan sebelum hari 1 (DEC-047, 2026-10-08)
 
@@ -681,7 +689,8 @@ sudah tertutup.
 | A | **Jumlah & nama stage pipeline** | **6 stage + 2 outcome** — Qualifikasi → Analisis Kebutuhan → Presentasi/Demo → Proposal → Negosiasi → Menunggu Keputusan; ditutup Closed-Won / Closed-Lost (+alasan). Configurable per tenant | **DEC-047** / BR-010a |
 | B | **Kriteria selesai setelah M6 keluar** | **Ditutup** — DEC-028 sudah berstatus DIREVISI (CR-20261008-001) dan rantai verifikasi penggantinya sudah berlaku (§7 kriteria 2, diukur via API — DEC-042) | **DEC-047** |
 | C | **Use case AI minimum M10** | **AI-01 — draf pesan outreach**; AI-02 (ringkasan & insight) opsional bila waktu mencukupi | **DEC-047** (menutup Q-041) |
-| ~~D~~ | ~~Status M6 Ticketing ke depan~~ | **Terjawab 2026-10-08** — modul lanjutan roadmap produk, di luar lingkup bootcamp | DEC-044 |
+| D | **Penyedia model AI untuk M10** | **TLab LLM** (model internal TLab) — **akses sudah tersedia**; sisa detail teknis bersifat operasional | **DEC-048** (menutup Q-040) |
+| ~~E~~ | ~~Status M6 Ticketing ke depan~~ | **Terjawab 2026-10-08** — modul lanjutan roadmap produk, di luar lingkup bootcamp | DEC-044 |
 
 Dasar riset stage pipeline (Salesforce 7 stage inti · HubSpot 7 deal stage default ·
 praktik B2B 5–7 stage) dan alasan pemilihan 6 stage ada di

@@ -3,10 +3,13 @@ title: "Project Charter — Bootcamp Internal CRM"
 type: project-charter
 project: bootcamp-crm
 status: Draft
-version: "8.2"
+version: "8.3"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "8.3"
+    date: 2026-10-08
+    purpose: "DEC-048 — penyedia model AI M10 = TLab LLM; asumsi ketersediaan LLM terkonfirmasi; use case AI minimum = AI-01"
   - version: "8.2"
     date: 2026-10-08
     purpose: "DEC-047 — stage pipeline default 6+2 outcome, use case AI minimum AI-01; tiga item §9 difinalkan"

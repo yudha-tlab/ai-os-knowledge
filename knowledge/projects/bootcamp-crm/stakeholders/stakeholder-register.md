@@ -2,10 +2,13 @@
 title: "Stakeholder Register — Bootcamp Internal CRM"
 type: stakeholder-register
 project: bootcamp-crm
-version: "1.3"
+version: "1.4"
 created: 2026-10-02
 modified: 2026-10-02
 changelog:
+  - version: "1.4"
+    date: 2026-10-08
+    purpose: "DEC-048 — penyedia model AI M10 = TLab LLM (akses tersedia); use case minimum = AI-01 (DEC-047)"
   - version: "1.3"
     date: 2026-10-08
     purpose: "CR-20261008-002 — integrasi AI (M10): catat pemilik use case AI (Sales, SH001) dan prasyarat teknis"
@@ -65,8 +68,11 @@ Keduanya **tidak memengaruhi** daftar stakeholder eksekusi bootcamp di atas.
 
 Integrasi AI masuk MVP minimal (M10). Pengguna langsung use case AI adalah
 **Sales (SH001)** — draf pesan outreach dan ringkasan/AI insight record; tidak
-menambah stakeholder baru di luar daftar di atas. Prasyarat teknis (penyedia LLM
-& kredensial) berada pada **Head of Engineer** (Q-040/TD-07).
+menambah stakeholder baru di luar daftar di atas. Penyedia model AI **sudah ditetapkan = TLab LLM** dengan akses
+tersedia (DEC-048), sehingga prasyarat penyedia **tidak lagi terbuka**; yang
+tersisa adalah **TD-07** (rancangan titik simpan output AI di core — Head of
+Engineer) dan detail operasional model. Use case AI minimum = **AI-01 draf pesan
+outreach** (DEC-047).
 
 ## Strategi Engagement per Kelompok
 

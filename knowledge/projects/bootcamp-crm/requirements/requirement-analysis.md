@@ -3,11 +3,14 @@ title: "Requirement Analysis — CRM Multi-Tenant TLab"
 type: requirement-analysis
 project: bootcamp-crm
 status: draft
-version: "3.2"
+version: "3.3"
 created: 2026-10-02
 modified: 2026-10-08
 sumber: "Arahan Product Owner (Yudha Pratama) via sesi brainstorm 2026-10-02"
 changelog:
+  - version: "3.3"
+    date: 2026-10-08
+    purpose: "DEC-048 — penyedia model AI M10 = TLab LLM (akses tersedia); Q-040 terjawab"
   - version: "3.2"
     date: 2026-10-08
     purpose: "DEC-047 — stage pipeline default ditetapkan (6 stage + 2 outcome) beserta dasar riset di §5.7; Q-041 terjawab (use case AI minimum = AI-01)"
@@ -607,8 +610,7 @@ seluruhnya menyangkut **fase roadmap SaaS Platform Administration**. Tidak
 menghambat pelaksanaan bootcamp.
 
 **Per 2026-10-08 (CR-20261008-002):** terbuka **empat pertanyaan baru** —
-Q-040 s/d Q-043, menyangkut **integrasi AI (EP-015/M10)**. Q-040 & Q-041
-**menghambat M10** (harus terjawab hari 1); Q-042 & Q-043 menyangkut fase roadmap.
+Q-040 s/d Q-043, menyangkut **integrasi AI (EP-015/M10)**. **Q-041 dan Q-040 sudah terjawab** (DEC-047 & DEC-048); Q-042 & Q-043 menyangkut fase roadmap.
 
 | ID | Pertanyaan | Konteks | Ditujukan ke | Status |
 |----|------------|---------|--------------|--------|
@@ -651,7 +653,7 @@ Q-040 s/d Q-043, menyangkut **integrasi AI (EP-015/M10)**. Q-040 & Q-041
 | Q-037 | **Mekanisme pembayaran**: manual (transfer + konfirmasi Platform Owner) atau payment gateway? | Proses 13.04 | PM/PO | **Terbuka 2026-10-08** — konfirmasi manual sudah pasti masuk; gateway belum diputuskan |
 | Q-038 | **Cara tenant mendaftar**: self-serve mandiri atau dibuatkan Platform Owner? | Proses 13.03 | PM/PO | **Terbuka 2026-10-08** — kedua jalur mungkin; proporsi belum ditetapkan |
 | Q-039 | **Kebijakan data saat tenant di-soft-delete**: masa retensi, ekspor data, dan hak pemulihan | Proses 13.02 | PM/PO | **Terbuka 2026-10-08** |
-| Q-040 | **Penyedia model & kredensial LLM** untuk M10 — API key, kuota, latency, biaya | Proses 14.01; CR-20261008-002 | Head of Engineer | **Terbuka 2026-10-08** — **menghambat M10**, tetapkan hari 1 |
+| Q-040 | **Penyedia model & kredensial LLM** untuk M10 — API key, kuota, latency, biaya | Proses 14.01; CR-20261008-002 | Head of Engineer | **Terjawab 2026-10-08 (DEC-048)** — **TLab LLM (model internal TLab), akses sudah tersedia**. Sisa detail teknis (nama model/endpoint, kuota, latency) = operasional, tidak menghambat. **Nilai kredensial tidak dicatat di dokumen** |
 | Q-041 | **Use case AI mana yang menjadi minimum M10** — AI-01 (draf outreach) atau AI-02 (ringkasan & insight)? | EP-015 | PM/PO + peserta | **Terjawab 2026-10-08 (DEC-047)** — **AI-01 (draf pesan outreach)** sebagai *vertical slice*; AI-02 opsional bila waktu mencukupi |
 | Q-042 | **Strategi prediktif** — model per tenant vs global, dan sumber data latih | EP-016; Q-007/008 | Head of Engineer | **Terbuka 2026-10-08** — fase roadmap |
 | Q-043 | **Batas isolasi tenant pada prompt AI** — bagaimana konteks LLM dibatasi agar tidak bocor lintas tenant | BR-003; M10 | Head of Engineer | **Terbuka 2026-10-08** — syarat non-fungsional M10 |

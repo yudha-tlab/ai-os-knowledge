@@ -3,11 +3,14 @@ title: "Project Status — Bootcamp Internal CRM"
 type: project-status
 project: bootcamp-crm
 status: active
-version: "9.2"
+version: "9.3"
 created: 2026-10-02
 modified: 2026-10-08
 date: 2026-10-08
 changelog:
+  - version: "9.3"
+    date: 2026-10-08
+    purpose: "DEC-048 — penyedia model AI M10 = TLab LLM (akses tersedia); Q-040 ditutup; agenda hari 1 menjadi 6 item"
   - version: "9.2"
     date: 2026-10-08
     purpose: "DEC-047 — tiga item BRD §9 difinalkan; agenda hari 1 menyusut 10 -> 7; stage pipeline default ditetapkan; Q-041 terjawab"
@@ -129,8 +132,10 @@ Dampak terukur:
 - Use case AI: **generatif = MVP** (draf outreach, ringkasan/insight);
   **prediktif = roadmap** (lead scoring, win probability, forecast) karena butuh
   data historis tenant.
-- **TD-07** (titik simpan output AI di core) + **Q-040/Q-041** (menghambat M10).
-- BRD direvisi ke **v3.1**.
+- **TD-07** (titik simpan output AI di core) — Head of Engineer, jangan ditunda.
+- **Q-040 & Q-041 sudah terjawab 2026-10-08**: penyedia = **TLab LLM** (akses
+  tersedia, DEC-048); use case AI minimum = **AI-01** (DEC-047).
+- BRD direvisi ke **v3.3**.
 
 **Efek pada risiko:** R-001 turun (beban 7→6 modul) tetapi **tetap High/High** —
 6 modul masih harus terlayani dalam 2 hari efektif. Integrasi AI menambah beban

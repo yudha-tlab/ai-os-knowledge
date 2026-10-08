@@ -116,6 +116,11 @@ pertanyaan Q-007/Q-008/Q-011.
   (tenant model M1 menyimpan status langganan). Dampak: +SH011/SH012, +EP-013/014,
   +US-038..049, +OB-024..031, +proses 13, +BR-034..041 (8 BR), +diagram 09.
   Modul mandatory bootcamp **tetap 6**. Buka Q-033..Q-039 (tidak menghambat).
+- **DEC-048 (2026-10-08)** — **penyedia model AI untuk M10 = TLab LLM** (model
+  internal TLab), **akses sudah tersedia** (arahan PO). Menutup **Q-040**;
+  **A-012 terkonfirmasi**; BR-044 final. Nilai kredensial **tidak dicatat** di
+  dokumen. Sisa agenda hari 1 menyusut **7 → 6 item** (murni teknis: TD-01..TD-07
+  + detail operasional model).
 - **DEC-047 (2026-10-08)** — finalisasi 3 item BRD §9 yang jadi kewenangan PO:
   (1) **stage pipeline default = 6 stage + 2 outcome** (Qualifikasi → Analisis
   Kebutuhan → Presentasi/Demo → Proposal → Negosiasi → Menunggu Keputusan;
@@ -144,11 +149,11 @@ pertanyaan Q-007/Q-008/Q-011.
 - Efek risiko: R-001 tetap High/High tetapi beban turun (6 modul/2 hari);
   R-015 mitigasi bertambah (agenda hari 1 menyusut 4 pertanyaan + 2 Epic).
 
-**Status per 2026-10-08: 47 keputusan (DEC-001 s/d DEC-047)**; tidak ada item
-terbuka milik PM/PO di luar lingkup roadmap (DEC-047 menutup 3 item §9). Sisa
-item **Head of Engineer**: TD-01..TD-07 (TD-06 & TD-07 jangan ditunda — risiko
-migrasi data). Pertanyaan yang menghambat M10 kini **Q-040** saja (penyedia LLM);
-Q-041 sudah terjawab (AI-01).
+**Status per 2026-10-08: 48 keputusan (DEC-001 s/d DEC-048)**; tidak ada item
+terbuka milik PM/PO di luar lingkup roadmap (DEC-047 menutup 3 item §9, DEC-048
+menutup Q-040). Sisa item **Head of Engineer**: TD-01..TD-07 (TD-06 & TD-07
+jangan ditunda — risiko migrasi data). **Tidak ada pertanyaan yang menghambat
+M10** — Q-040 (penyedia = TLab LLM) & Q-041 (use case = AI-01) sudah terjawab.
 
 ---
 

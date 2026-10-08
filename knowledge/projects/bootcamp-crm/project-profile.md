@@ -4,10 +4,13 @@ type: project-profile
 project: bootcamp-crm
 client: tlab-internal
 status: active
-version: "1.11"
+version: "1.12"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "1.12"
+    date: 2026-10-08
+    purpose: "DEC-048 — penyedia model AI M10 = TLab LLM (akses tersedia); use case AI minimum = AI-01 (DEC-047); Q-040 ditutup"
   - version: "1.11"
     date: 2026-10-08
     purpose: "DEC-047 — stage pipeline default (6+2), use case AI minimum AI-01, item kriteria selesai ditutup; agenda hari 1 7 item"
@@ -142,7 +145,7 @@ Field berikut belum tersedia dan **tidak boleh diasumsikan** — menunggu input:
 | Rancangan teknis webhook | Belum ditentukan (TD-02) | Head of Engineer |
 | Target tanggal selesai prototype | Belum ditentukan | PM/PO + Head of Engineer |
 | Titik simpan output AI pada model core | Belum ditentukan (TD-07) | Head of Engineer |
-| Penyedia model LLM + kredensial | Belum ditentukan (Q-040) | Head of Engineer |
+| Penyedia model LLM + kredensial | **TLab LLM** — akses sudah tersedia (DEC-048); detail endpoint/kuota operasional | Head of Engineer |
 
 Catatan: **ruang lingkup fitur MVP** (DEC-015, direvisi DEC-021), **tanggal
 pelaksanaan & struktur bootcamp** (DEC-037: 3 hari, hari 1 workshop), **peserta**

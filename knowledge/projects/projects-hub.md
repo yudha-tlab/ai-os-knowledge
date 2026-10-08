@@ -27,7 +27,7 @@ project tersebut.
 
 | Project | Divisi | Status | Project Profile |
 |---|---|---|---|
-| **Bootcamp Internal CRM** | TLab Internal | Perencanaan (At Risk) — 47 keputusan, semua kewenangan PM/PO tertutup; bootcamp 3 hari mulai 13 Okt (hari 1 = workshop requirement); sasaran = core backend; **BRD v3.2 disusun** (menunggu approval); modul mandatory 6 (M6 Ticketing keluar — CR-20261008-001, jadi modul lanjutan roadmap DEC-044); kontrol plane SaaS = fase roadmap terpisah **M9** (DEC-045); **integrasi AI (M10)** masuk MVP minimal (CR-20261008-002) | [[bootcamp-crm/project-profile]] |
+| **Bootcamp Internal CRM** | TLab Internal | Perencanaan (At Risk) — 48 keputusan, semua kewenangan PM/PO tertutup; bootcamp 3 hari mulai 13 Okt (hari 1 = workshop requirement); sasaran = core backend; **BRD v3.3 disusun** (menunggu approval); modul mandatory 6 (M6 Ticketing keluar — CR-20261008-001, jadi modul lanjutan roadmap DEC-044); kontrol plane SaaS = fase roadmap terpisah **M9** (DEC-045); **integrasi AI (M10)** masuk MVP minimal (CR-20261008-002) | [[bootcamp-crm/project-profile]] |
 
 Project pada tabel ini **tidak memiliki klien eksternal** — tidak ada entri di
 `knowledge/clients/`. Dikelola melalui Hermes profile `pm-internal`; profile
