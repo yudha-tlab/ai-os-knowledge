@@ -3,11 +3,14 @@ title: "Project Status — Bootcamp Internal CRM"
 type: project-status
 project: bootcamp-crm
 status: active
-version: "9.0"
+version: "9.1"
 created: 2026-10-02
 modified: 2026-10-08
 date: 2026-10-08
 changelog:
+  - version: "9.1"
+    date: 2026-10-08
+    purpose: "CR-20261008-002 — integrasi AI masuk MVP minimal (M10; BR-042..045, EP-015, US-050..053, OB-032, proses 14, TD-07); AI prediktif ke roadmap; R-018 (beban R-001); BRD v3.1"
   - version: "9.0"
     date: 2026-10-08
     purpose: "DEC-045 — kontrol plane SaaS (Platform Owner/Superadmin TLab) ditambahkan sebagai FASE ROADMAP terpisah (M9), di luar MVP; wajib jadi input arsitektur (tenant model menyimpan status langganan). Modul mandatory tetap 6; +8 BR roadmap, +diagram 09; Q-033..Q-039 dibuka"
@@ -107,8 +110,28 @@ Dampak terukur (fase roadmap, bukan MVP):
 - Pertanyaan baru **Q-033..Q-039** (harga/paket, pembayaran, penegakan, soft delete).
 - BRD direvisi ke **v3.0**.
 
+**Integrasi AI (CR-20261008-002, 2026-10-08):** PO menemukan gap — dokumen
+requirement **tidak memiliki satu pun kapabilitas AI di dalam produk**; seluruh
+"AI" yang tercatat sebelumnya hanya menyangkut AI OS sebagai alat bantu
+*development* (DEC-032), bukan fitur produk. PO memutuskan: **integrasi AI masuk
+MVP secara minimal**, diwujudkan sebagai **lapisan terpisah M10 AI Assistance
+Layer**.
+
+Dampak terukur:
+
+- Modul MVP **+M10** (lapisan minimal, bukan modul mandatory — **tetap 6**);
+  Epic **+EP-015/EP-016**; User Story **+US-050..053**; Objek **+OB-032**;
+  Proses **+14**; Business Requirement **+BR-042..045 (4 BR, MVP 25→29)**;
+  Diagram **+1 (baru 09 — alur integrasi AI)** + diagram 03 & ERD 06 direvisi.
+- Use case AI: **generatif = MVP** (draf outreach, ringkasan/insight);
+  **prediktif = roadmap** (lead scoring, win probability, forecast) karena butuh
+  data historis tenant.
+- **TD-07** (titik simpan output AI di core) + **Q-040/Q-041** (menghambat M10).
+- BRD direvisi ke **v3.1**.
+
 **Efek pada risiko:** R-001 turun (beban 7→6 modul) tetapi **tetap High/High** —
-6 modul masih harus terlayani dalam 2 hari efektif. Lihat [[risk-register]].
+6 modul masih harus terlayani dalam 2 hari efektif. Integrasi AI menambah beban
+kembali → **R-018 (High/Med)**. Lihat [[risk-register]].
 
 ## Progres Periode Ini
 

@@ -3,7 +3,7 @@ title: "Business Requirements Document (BRD) — CRM Multi-Tenant TLab"
 type: brd
 project: bootcamp-crm
 status: Draft — menunggu review Product Owner & approval Head of Product & Project
-version: "3.0"
+version: "3.1"
 created: 2026-10-02
 modified: 2026-10-08
 disusun_oleh: "Yudha Pratama (PM / Product Owner)"
@@ -14,6 +14,9 @@ sumber_utama:
   - project-charter (v7.0)
   - CR-20261008-001 (penyesuaian lingkup)
 changelog:
+  - version: "3.1"
+    date: 2026-10-08
+    purpose: "CR-20261008-002 — integrasi AI ditambahkan sebagai lapisan MVP minimal (M10 AI Assistance Layer, EP-015): BR-042..045, §2.1, §2.3, §4.11, §6.9, §9; use case prediktif ke roadmap (EP-016). BR MVP 25 -> 29"
   - version: "3.0"
     date: 2026-10-08
     purpose: "Tambah kontrol plane SaaS sebagai FASE ROADMAP terpisah (DEC-045): aktor Platform Owner/Superadmin TLab + Calon Tenant, proses 13 (8 sub-proses), objek OB-024..031, business requirement BR-034..BR-041 (roadmap), usulan paket pricing, diagram 09. Di luar MVP bootcamp; WAJIB masuk input arsitektur (tenant model menyimpan status langganan). Jumlah BR MVP tetap 25"
@@ -147,14 +150,25 @@ turun setelah M6 dikeluarkan (CR-20261008-001).
 | ~~M6~~ | ~~Ticketing~~ | **DIKELUARKAN dari MVP** (CR-20261008-001 / DEC-043) |
 | M7 | Reporting & Analytics | **Mandatory** |
 | M8 | Webhook / Event Layer | **MVP minimal** (DEC-021) |
+| M10 | **AI Assistance Layer** | **MVP minimal** (CR-20261008-002) — service AI terpisah, 1–2 use case generatif |
 
 **Modul mandatory = 6** (M1, M2, M3, M4, M7, M8-minimal), turun dari 7 setelah
-ticketing dikeluarkan.
+ticketing dikeluarkan (DEC-043). **CR-20261008-002 tidak mengubah angka ini** —
+M10 adalah **lapisan tambahan MVP minimal**, bukan modul mandatory baru. Bila
+waktu tidak mencukupi, prioritas tetap pada 6 modul mandatory.
 
-**Fase roadmap (di luar MVP):** **M9 Platform Administration** — kontrol plane
-milik pemilik platform (TLab) untuk menjalankan produk sebagai SaaS (paket
-pricing, kelola akun tenant, konfirmasi pembayaran, siklus langganan,
-auto-suspend). Lihat §2.4. **Angka modul mandatory tidak berubah** oleh DEC-045.
+**Fase roadmap (di luar MVP):**
+
+1. **M9 Platform Administration** — kontrol plane milik pemilik platform (TLab)
+   untuk menjalankan produk sebagai SaaS (paket pricing, kelola akun tenant,
+   konfirmasi pembayaran, siklus langganan, auto-suspend). Lihat §2.3.
+2. **AI prediktif (EP-016)** — lead scoring, win probability/deal risk, sales
+   forecast, otomasi agentic lanjutan (CR-20261008-002). Tidak masuk MVP karena
+   model prediktif memerlukan **data historis** yang belum dimiliki tenant baru
+   — model lead scoring Microsoft mensyaratkan ≥ 40 lead qualified + 40
+   disqualified dalam 2 tahun terakhir.
+
+**Angka modul mandatory tidak berubah** oleh DEC-045 maupun CR-20261008-002.
 
 **Sasaran output yang diukur (DEC-041):** **desain core backend mampu
 menyelesaikan seluruh fitur mandatory** yang ditargetkan. **Kesiapan frontend
@@ -182,6 +196,7 @@ kehilangan objeknya seiring keluarnya M6 — lihat §9.*
 | **Dukungan pasca-bootcamp** | Belum ada keputusan kelanjutan (catatan internal Q-013) |
 | **Leading indicator (aktivitas & pipeline) di MVP** | Memerlukan M5 yang *nice to have* (DEC-027) |
 | **M9 Platform Administration (kontrol plane SaaS)** | **Fase roadmap terpisah** (DEC-045) — di luar MVP bootcamp; didokumentasikan penuh sebagai input arsitektur |
+| **AI prediktif (lead scoring, win probability, forecast)** | **Fase roadmap** (CR-20261008-002) — memerlukan data historis tenant yang belum tersedia saat bootcamp. Integrasi AI **generatif** masuk MVP minimal (M10) |
 
 ### 2.3 Fase Roadmap — SaaS Platform Administration (M9, DEC-045)
 
@@ -380,10 +395,38 @@ bawah ini milik **fase roadmap (M9)** — di luar MVP bootcamp.
 | BR-040 | Sistem **menutup akses tenant secara otomatis** (*suspend*/*read-only*) bila kuota paket terlampaui atau langganan berakhir | Proses 13.06 / DEC-045 | Should (roadmap) | Roadmap |
 | BR-041 | Platform Owner memiliki **pemantauan platform & jejak audit** tindakannya di control plane | Proses 13.07–13.08 / DEC-045 | Could (roadmap) | Roadmap |
 
-> **Catatan:** jumlah **25 BR MVP tidak berubah**. Delapan BR di atas adalah
-> tambahan fase roadmap, bukan bagian dari lingkup bootcamp.
+> **Catatan:** delapan BR di atas adalah tambahan **fase roadmap**, bukan bagian
+> dari lingkup bootcamp. Per CR-20261008-002, BR MVP bertambah dari **25 → 29**
+> (BR-042..BR-045, integrasi AI minimal — §4.10).
 
-### 4.10 Business Requirement yang Dihapus (CR-20261008-001)
+### 4.10 Integrasi AI (M10) — MVP Minimal (CR-20261008-002)
+
+Integrasi AI ke dalam produk diwujudkan sebagai **lapisan terpisah (M10 AI
+Assistance Layer)** yang mengonsumsi event M8 dan membaca API core — konsisten
+dengan prinsip produk yang mengikat (**DEC-012**: core stabil, kustomisasi via
+webhook + service eksternal terpisah; **DEC-030**: webhook async). Integrasi AI
+**tidak menyentuh kode core** dan tidak membongkar modul mandatory.
+
+| ID | Business Requirement | Sumber | Prioritas | Status |
+|---|---|---|---|---|
+| BR-042 | Sales dapat menghasilkan **draf pesan outreach** untuk Lead/Kontak melalui AI, berdasarkan konteks record di CRM | Proses 14.01.01 / CR-20261008-002 | Must | Draft |
+| BR-043 | Sales dapat memperoleh **ringkasan & AI insight** atas Lead/Peluang beserta rekomendasi langkah berikutnya | Proses 14.01.02 / CR-20261008-002 | Must | Draft |
+| BR-044 | AI ditenagai **layanan model yang dapat dikonfigurasi** (penyedia/kredensial ditetapkan Head of Engineer) | Q-040 / CR-20261008-002 | Must | Draft |
+| BR-045 | Konteks yang dikirim ke model AI **wajib dibatasi pada tenant terkait** — output AI tersimpan pada record tenant yang bersangkutan (tidak ada lintas tenant) | BR-003 / DEC-029 | Must | Draft |
+
+> **Batas MVP (penting):** hanya use case **generatif** yang masuk MVP —
+> minimal **satu** use case end-to-end (BR-042 atau BR-043). BR-045 adalah syarat
+> non-fungsional yang tidak boleh dikompromikan.
+
+**Fase roadmap integrasi AI (EP-016, bukan MVP):** lead scoring prediktif · win
+probability/deal risk · sales forecast · otomasi agentic lanjutan. Alasan
+penundaan: model prediktif memerlukan **data historis** yang belum dimiliki
+tenant baru (rujukan: model lead scoring Microsoft mensyaratkan ≥ 40 lead
+qualified + 40 disqualified dalam 2 tahun terakhir).
+
+---
+
+### 4.11 Business Requirement yang Dihapus (CR-20261008-001)
 
 Dipertahankan sebagai jejak agar traceability tidak hilang:
 
@@ -420,6 +463,8 @@ memahami proses mana yang dilayani modul mana dan oleh peran siapa.
 | P10 | Tenancy & Kendali Akses | M1 | Tenant Admin | BR-002, BR-003, BR-004 |
 | P11 | Integrasi Webhook | M8 | Tenant Admin, Sistem Klien | BR-024 … BR-028 |
 | P12 | ~~Assessment Tim Sales (HR)~~ | — | — | **Dikeluarkan dari lingkup (DEC-031)** |
+| P13 | SaaS Platform Administration *(roadmap)* | M9 | Platform Owner TLab, Calon Tenant | BR-034 … BR-041 |
+| P14 | Asistensi AI untuk Sales | **M10** | Sales Rep, Sales Manager | BR-042 … BR-045 |
 
 **Catatan:** penomoran proses **P01–P11 dipertahankan** (tanpa P06 dan P09) agar
 traceability ke [[requirement-analysis]] tidak hilang. Nomor yang kosong bukan
@@ -429,7 +474,7 @@ kelalaian, melainkan penanda proses yang dikeluarkan.
 
 ## 6. Diagram
 
-Delapan diagram berikut disusun untuk membantu tim memahami requirement secara
+Sembilan diagram berikut disusun untuk membantu tim memahami requirement secara
 visual saat di-share. Sumber PlantUML tersedia di
 `requirements/brd/diagrams/*.puml`; gambar tersedia dalam **PNG** (untuk
 presentasi/chat) dan **SVG** (untuk dokumen dan perbesaran tanpa pecah).
@@ -514,6 +559,22 @@ status langganan dan kuota paket.
 
 ---
 
+### 6.9 Diagram 9 — Alur Integrasi AI (M10, MVP Minimal)
+
+> Ditambahkan 2026-10-08 (CR-20261008-002). Menggambarkan bagaimana AI masuk
+> sebagai **lapisan terpisah** tanpa menyentuh kode core — konsisten DEC-012.
+
+![Diagram 9 — Alur Integrasi AI](diagrams/10-alur-integrasi-ai.png)
+
+*Poin kunci:* core CRM memancarkan event melalui **M8 Webhook** → **M10 AI
+Assistance Layer** menyusun konteks penuh dari API core → memanggil **model LLM**
+→ menyimpan hasil pada **record tenant** (OB-032) → terbaca kembali oleh Sales.
+Konteks yang dikirim ke model **wajib dibatasi pada tenant terkait** (BR-045).
+Karena AI adalah layanan terpisah, kegagalan AI **tidak memblokir** proses sales
+di core.
+
+---
+
 ## 7. Kriteria Keberhasilan
 
 | # | Kriteria | Indikator | Sumber |
@@ -525,6 +586,7 @@ status langganan dan kuota paket.
 | 5 | Efektivitas AI dalam development terukur | **Belum terdefinisi** — diteruskan ke Head of Engineer | Q-007, Q-008, TD-03/TD-04 |
 | 6 | Produk berpotensi dikembangkan & dijual | **Belum ditentukan** — perlu definisi indikator kelayakan produk | Catatan internal |
 | 7 | Produk berjalan sebagai **SaaS komersial** (fase roadmap) | **Belum ditentukan** — bergantung pada keputusan Q-033..Q-039 | DEC-045 |
+| 8 | **Integrasi AI terbukti berjalan** — lapisan AI (M10) menyajikan **minimal satu use case generatif end-to-end** (draf outreach atau ringkasan/insight), dengan konteks **terbatas pada tenant** | Hasil AI tersimpan pada record tenant dan terbaca kembali; konteks tidak melintas tenant (BR-045) | CR-20261008-002 |
 
 > **Catatan penting.** Kriteria 5 **tidak dapat dipulihkan** bila baseline tidak
 > ditetapkan sebelum hari pertama bootcamp (R-002). Kriteria 6 belum memiliki
@@ -533,6 +595,11 @@ status langganan dan kuota paket.
 > **Perubahan pada kriteria 2:** acuan lama menyebut "kelola tiket (termasuk
 > komentar, riwayat pergerakan, dan SLA)" — bagian itu **dihapus** karena M6
 > keluar dari lingkup. Rantai verifikasi kini berhenti di pelaporan sales.
+>
+> **Kriteria 8 (CR-20261008-002):** M10 adalah **lapisan MVP minimal**, bukan
+> modul mandatory ketujuh. Bila waktu pengembangan tidak mencukupi, **prioritas
+> tetap pada 6 modul mandatory** — tetapi minimal satu use case AI harus terbukti
+> agar integrasi AI tidak sekadar klaim arsitektur.
 
 ---
 
@@ -550,6 +617,8 @@ status langganan dan kuota paket.
 | A-6 | Kustomisasi klien cukup dilayani secara **asynchronous** | Klien dengan kebutuhan blocking tidak dapat dilayani | Perlu Validasi |
 | A-7 | Kuota bulanan dapat didefinisikan dari nilai closed-won tanpa data historis | Status performa kurang bermakna di prototype | Perlu Validasi |
 | A-8 | Nama peserta tidak diperlukan untuk perencanaan sesi saat ini | Bila pembagian peran per individu dibutuhkan, sesi tidak dapat direncanakan | Terkonfirmasi DEC-038 |
+| A-9 | **Integrasi AI (M10) dapat dibangun dalam sisa jendela 2 hari** tanpa mengorbankan 6 modul mandatory | Bila terlalu besar, M10 harus dipotong ke satu use case atau keluar dari MVP | **Perlu Validasi — kritis** (CR-20261008-002) |
+| A-10 | **Penyedia model LLM beserta kredensial tersedia** selama bootcamp | M10 tidak dapat didemonstrasikan; alur integrasi hanya terbukti lewat *stub* | Perlu Validasi — Q-040 |
 
 ### 8.2 Batasan (Constraints)
 
@@ -565,6 +634,7 @@ status langganan dan kuota paket.
 | C-8 | Revenue berhenti di **nilai deal closed-won**; modul billing di luar lingkup | DEC-016 |
 | C-9 | **Lingkup dibatasi pada business process sales** — modul domain *service* (ticketing) di luar MVP | DEC-043 |
 | C-10 | **Kontrol plane SaaS (M9) berada di luar MVP** — fase roadmap terpisah; namun **tenant model M1 wajib menyimpan status langganan** agar tidak rework | DEC-045 |
+| C-11 | **Integrasi AI berada di luar kode core** — diwujudkan sebagai layanan terpisah (M10) yang mengonsumsi event M8; AI **generatif** masuk MVP minimal, AI **prediktif** masuk fase roadmap | DEC-012, CR-20261008-002 |
 
 ---
 
@@ -582,13 +652,22 @@ kekurangan dokumen, melainkan **tujuan utama workshop** (DEC-037, R-015).
 | 5 | **Strategi isolasi teknis multi-tenant** | Head of Engineer (TD-01) | Rework arsitektur di tengah bootcamp |
 | 6 | **Metrik efektivitas AI + baseline** | Head of Engineer (TD-03/04) | **Tidak dapat dipulihkan** bila lewat hari 1 |
 | 7 | **Stack teknologi** | Head of Engineer (TD-05) | Materi sesi & scaffolding tidak dapat disiapkan |
+| 8 | **Titik simpan output AI di core** (rancangan, bukan implementasi M9/M10 penuh) | Head of Engineer (TD-07) | Migrasi data saat use case AI prediktif menyusul |
+| 9 | **Penyedia model & kredensial LLM** untuk M10 | Head of Engineer (Q-040) | M10 tidak dapat didemonstrasikan |
+| 10 | **Use case AI minimum M10** — AI-01 (draf outreach) atau AI-02 (ringkasan & insight) | PO + peserta (Q-041) | Tanpa penetapan, 2 tim dapat mengerjakan hal berbeda |
 | ~~8~~ | ~~Status M6 Ticketing ke depan (Q-032)~~ — **TERJAWAB 2026-10-08 (DEC-044): menjadi modul lanjutan roadmap produk**, di luar lingkup bootcamp | PM/PO + Head of Product | — (tidak lagi menjadi item terbuka) |
 
 **Tambahan 2026-10-08 — pertanyaan fase roadmap (tidak menghambat bootcamp):**
 Q-033 (nama & jumlah paket), Q-034 (dimensi harga & nilai kuota), Q-035
 (struktur harga & mata uang), Q-036 (kebijakan penegakan batas), Q-037
 (mekanisme pembayaran), Q-038 (cara tenant mendaftar), Q-039 (kebijakan data
-saat soft delete). Daftar lengkap di [[requirement-analysis]] section 7.
+saat soft delete), Q-042 (strategi model prediktif), Q-043 (batas isolasi tenant
+pada prompt AI). Daftar lengkap di [[requirement-analysis]] section 7.
+
+**Item 8–10 berasal dari CR-20261008-002 (integrasi AI). Item 8 & 9 berbeda
+sifat dari item 6:** keduanya **dapat dipulihkan**, tetapi biayanya mahal
+(migrasi data untuk item 8, kegagalan demo untuk item 9) — karena itu keduanya
+ditempatkan di hari 1.
 
 **Yang sudah tidak perlu difinalkan** (sebelumnya ada, kini moot karena M6 keluar):
 daftar status tiket, daftar prioritas & target waktu SLA, mekanisme pelanggan

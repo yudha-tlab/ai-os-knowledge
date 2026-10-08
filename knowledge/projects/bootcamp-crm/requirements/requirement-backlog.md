@@ -3,10 +3,13 @@ title: "Requirement Backlog — Bootcamp Internal CRM"
 type: requirement-backlog
 project: bootcamp-crm
 status: active
-version: "3.7"
+version: "3.8"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "3.8"
+    date: 2026-10-08
+    purpose: "CR-20261008-002 — REQ-048 (integrasi AI, MVP minimal) + REQ-049..051 (prediktif, roadmap); Q-040..043"
   - version: "3.7"
     date: 2026-10-08
     purpose: "DEC-045 — kontrol plane SaaS ditambahkan sebagai FASE ROADMAP (M9), di luar MVP. REQ-040..REQ-047 (roadmap); Q-033..Q-039 dibuka"
@@ -132,6 +135,21 @@ karyawan). Bila masih diperlukan, harus menjadi inisiatif internal terpisah.
 | REQ-046 | **Penegakan batas paket** + peringatan + **penutupan akses otomatis** (suspend/read-only) | Arahan PO 2026-10-08 (DEC-045) | Functional | Should | EP-014 | **Roadmap (M9)** |
 | REQ-047 | **Pemantauan platform & jejak audit** tindakan Platform Owner | Arahan PO 2026-10-08 (DEC-045) | Functional | Could | EP-014 | **Roadmap (M9)** |
 
+### Integrasi AI (CR-20261008-002)
+
+| ID | Deskripsi | Sumber | Tipe | Prioritas | Epic | Status |
+|---|---|---|---|---|---|---|
+| REQ-048 | **Asistensi AI generatif** untuk sales — draf pesan outreach + ringkasan/AI insight record (lapisan terpisah M10, 1–2 use case end-to-end) | Arahan PO 2026-10-08 (CR-20261008-002) | Functional | Must | EP-015 | **MVP minimal** |
+| REQ-049 | **Lead scoring prediktif** berbasis data historis | CR-20261008-002 | Functional | Could | EP-016 | **Roadmap** |
+| REQ-050 | **Win probability / deal risk** per peluang | CR-20261008-002 | Functional | Could | EP-016 | **Roadmap** |
+| REQ-051 | **Sales forecast** dari pipeline | CR-20261008-002 | Functional | Could | EP-016 | **Roadmap** |
+
+Catatan: integrasi AI diwujudkan sebagai **service terpisah** yang mengonsumsi
+event M8 Webhook dan membaca API core — konsisten dengan prinsip produk yang
+mengikat (DEC-012: core stabil, kustomisasi via service eksternal terpisah).
+Use case **prediktif tidak masuk MVP** karena memerlukan data historis yang
+belum dimiliki tenant pada saat bootcamp (REQ-049..051 → roadmap).
+
 Catatan: seluruh REQ di atas **di luar lingkup MVP** — menjadi fase roadmap
 M9 (DEC-045). Modul mandatory bootcamp tetap **6**. Namun **tenant model M1 wajib
 menyimpan status langganan** sejak awal agar tidak perlu rework.
@@ -205,6 +223,10 @@ Q-008, Q-011.
 | Q-037 | Mekanisme pembayaran (manual vs payment gateway) | PM/PO | **Terbuka 2026-10-08** |
 | Q-038 | Cara tenant mendaftar (self-serve vs dibuatkan) | PM/PO | **Terbuka 2026-10-08** |
 | Q-039 | Kebijakan data saat soft delete (retensi/ekspor/pemulihan) | PM/PO | **Terbuka 2026-10-08** |
+| Q-040 | Penyedia model & kredensial LLM untuk M10 | Head of Engineer | **Terbuka 2026-10-08** — menghambat M10 |
+| Q-041 | Use case AI minimum M10 (AI-01 vs AI-02) | PM/PO + peserta | **Terbuka 2026-10-08** |
+| Q-042 | Strategi prediktif (model per tenant vs global) | Head of Engineer | **Terbuka 2026-10-08** — roadmap |
+| Q-043 | Batas isolasi tenant pada prompt AI | Head of Engineer | **Terbuka 2026-10-08** |
 ## Related
 
 - **Requirement Analysis (bahan baku BRD):** [[requirement-analysis]]

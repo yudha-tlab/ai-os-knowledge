@@ -3,10 +3,13 @@ title: "RAID Log — Bootcamp Internal CRM"
 type: raid-log
 project: bootcamp-crm
 status: active
-version: "9.0"
+version: "10.0"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "10.0"
+    date: 2026-10-08
+    purpose: "CR-20261008-002 — tambah R-018 (beban MVP bertambah karena M10), A-011/A-012 (M10 dapat dibangun dalam 2 hari; penyedia LLM tersedia), D-018 (titik simpan output AI), D-019 (penetapan provider LLM & use case minimum)"
   - version: "9.0"
     date: 2026-10-08
     purpose: "DEC-045 — tambah R-017 (kontrol plane SaaS belum dirancang), A-010 (asumsi penegakan batas dapat dipisahkan dari M1), D-016 (rancangan tenant model menyimpan status langganan)"
@@ -47,7 +50,7 @@ Ringkasan risiko teratas. Detail lengkap, termasuk skala penilaian, ada di
 
 | ID | Deskripsi | Kemungkinan | Dampak | Severity | Owner | Mitigasi | Status |
 |---|---|---|---|---|---|---|---|
-| R-001 | Durasi bootcamp tidak cukup untuk prototype CRM multi-tenant yang bermakna | High | High | Tinggi | PM/PO + Head of Product | **Jendela pengembangan efektif hanya 2 hari** (hari 1 = workshop requirement, DEC-037) sementara modul mandatory mencakup 6 modul (turun dari 7 — M6 dikeluarkan, CR-20261008-001). Mitigasi: kunci requirement sebelum hari 1; prioritaskan jalur end-to-end di hari 2 | Open — **NAIK ke High/High** |
+| R-001 | Durasi bootcamp tidak cukup untuk prototype CRM multi-tenant yang bermakna | High | High | Tinggi | PM/PO + Head of Product | **Jendela pengembangan efektif hanya 2 hari** (hari 1 = workshop requirement, DEC-037) sementara modul mandatory mencakup 6 modul (turun dari 7 — M6 dikeluarkan, CR-20261008-001) **ditambah lapisan AI M10 yang kini masuk MVP minimal** (CR-20261008-002, lihat R-018). Mitigasi: kunci requirement sebelum hari 1; prioritaskan jalur end-to-end di hari 2; batasi M10 ke satu use case | Open — **NAIK ke High/High** |
 | R-002 | Metrik AI tidak didefinisikan sebelum bootcamp → pengukuran tanpa baseline | High | High | Tinggi | PM/PO + Head of Engineer | Tetapkan definisi metrik + baseline sebelum hari pertama | Open |
 | R-003 | Peserta belum ditetapkan Tech Lead | Low | Low | Rendah | Tech Lead | **DITUTUP 2026-10-02** — jumlah & pembagian tim cukup (2 tim x 4 orang, DEC-034); nama tidak diperlukan saat ini (DEC-038) | **Closed** |
 | R-004 | Definisi multi-tenant belum dikunci → rework arsitektur | Med | High | Tinggi | Head of Engineer | Kunci definisi teknis sebagai keputusan tertulis | Open |
@@ -59,6 +62,7 @@ Ringkasan risiko teratas. Detail lengkap, termasuk skala penilaian, ada di
 | R-015 | Hari 1 workshop tidak cukup untuk memfinalkan seluruh requirement → requirement masuk hari 2 dalam kondisi belum final, jendela pengembangan menyusut di bawah 2 hari | High | High | Tinggi | PM/PO | Kunci daftar keputusan terbuka & agendakan workshop hari 1 secara ketat; **BRD v2.0 sebagai bahan dasar telah disusun** (section 9 memuat daftar "yang belum final"); tetapkan kriteria "requirement dianggap final" | Open — **baru 2026-10-02; mitigasi parsial: BRD v2.0 selesai** |
 | R-016 | Kriteria selesai tidak konsisten (DEC-028 end-to-end vs DEC-041 core backend) | — | — | — | PM/PO | **DITUTUP 2026-10-02** — DEC-042 menyatukan kedua definisi: "end-to-end" diukur pada kapabilitas backend | **Closed** |
 | R-017 | Kontrol plane SaaS tidak dirancang saat bootcamp → tenant model tanpa status langganan/kuota paket memerlukan migrasi mahal di fase roadmap M9 | Med | Med | Sedang | PM/PO + Head of Engineer | **Mitigasi: TD-06** — putuskan rancangan tenant model yang menyimpan status langganan selama bootcamp M1 (rancangan saja). Ditambah 2026-10-08 (DEC-045) | Open — **baru 2026-10-08** |
+| R-018 | **Integrasi AI (M10) menambah beban MVP** → 2 tim harus menyelesaikan 6 modul mandatory **plus** lapisan AI dalam jendela **2 hari**; berisiko menekan kualitas modul mandatory | **High** | Med | **Tinggi** | PM/PO + Tech Lead | **Mitigasi:** batasi M10 ke **1 use case minimum** (AI-01 atau AI-02) sebagai *vertical slice*; AI sebagai service terpisah agar kegagalan terisolasi (DEC-012); evaluasi ulang akhir hari 2 — bila tertinggal, M10 dipotong dan prioritas kembali ke modul mandatory. Ditambah 2026-10-08 (CR-20261008-002) | Open — **baru 2026-10-08** |
 
 ## Assumptions (Asumsi)
 
@@ -74,6 +78,8 @@ Ringkasan risiko teratas. Detail lengkap, termasuk skala penilaian, ada di
 | A-008 | Nama peserta tidak diperlukan untuk perencanaan sesi bootcamp saat ini | Bila pembagian peran per individu dibutuhkan, sesi tidak dapat direncanakan | PM/PO | Terkonfirmasi 2026-10-02 (DEC-038) |
 | A-009 | Hari 1 cukup untuk memfinalkan seluruh requirement (BRD + keputusan terbuka) | Requirement masuk hari 2 belum final; jendela pengembangan menyusut (R-015) | PM/PO | Perlu Validasi |
 | A-010 | **Penegakan batas paket (M9) dapat dipisahkan dari tenant model M1** — cukup status langganan yang disimpan, mekanisme penegakannya menyusul | Bila tidak, sebagian M9 harus masuk MVP dan beban 2 hari bertambah | PM/PO + Head of Engineer | Perlu Validasi — **baru 2026-10-08 (DEC-045)** |
+| A-011 | **Integrasi AI (M10) dapat dibangun dalam sisa jendela 2 hari** tanpa mengorbankan 6 modul mandatory | Bila terlalu besar, M10 harus dipotong ke satu use case atau keluar dari MVP — R-018 | PM/PO + Tech Lead | **Perlu Validasi — kritis** (CR-20261008-002) |
+| A-012 | **Penyedia model LLM beserta kredensial tersedia** selama bootcamp | M10 tidak dapat didemonstrasikan; alur integrasi hanya terbukti lewat *stub* | Head of Engineer | Perlu Validasi — Q-040 |
 
 Seluruh asumsi berstatus **Perlu Validasi** — belum ada satu pun yang
 terkonfirmasi oleh pihak yang berwenang, kecuali A-008 (nama peserta tidak
@@ -109,6 +115,8 @@ diperlukan untuk perencanaan saat ini).
 | D-015 | Ukuran kelulusan yang disepakati (core backend vs end-to-end) | PM/PO | Yudha Pratama | **Terpenuhi 2026-10-02** | **Terpenuhi** — DEC-042: "end-to-end" diukur pada kapabilitas backend (API/kontrak data) |
 | D-016 | **Rancangan tenant model menyimpan status langganan + kuota paket** (input arsitektur M9) | Head of Engineer | Head of Engineer | **Selama bootcamp (M1)** — TD-06 | Open — **baru 2026-10-08 (DEC-045)**; jangan tunda, biaya rework tinggi |
 | D-017 | Keputusan paket pricing & mekanisme pembayaran (Q-033..Q-037) | PM/PO + Head of Product | Yudha Pratama | Fase roadmap (setelah bootcamp) | Open — tidak menghambat bootcamp |
+| D-018 | **Titik simpan output AI pada model core** (rancangan, bukan implementasi penuh) | Head of Engineer | Head of Engineer | **Selama bootcamp (M1)** — TD-07 | Open — **baru 2026-10-08 (CR-20261008-002)**; jangan tunda (migrasi data) |
+| D-019 | **Penetapan penyedia LLM + use case AI minimum (AI-01 vs AI-02)** | Head of Engineer + PM/PO | Yudha Pratama | **Hari 1 workshop (13 Okt)** — Q-040/Q-041 | Open — **baru 2026-10-08**; menghambat M10 |
 
 ## Aturan Eskalasi
 

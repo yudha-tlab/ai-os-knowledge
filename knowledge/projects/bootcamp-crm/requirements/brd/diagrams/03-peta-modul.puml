@@ -1,5 +1,5 @@
 @startuml
-title Diagram 3 — Peta Modul & Dependensi (M1–M8)
+title Diagram 3 — Peta Modul & Dependensi (M1–M10)
 
 skinparam shadowing false
 skinparam componentStyle rectangle
@@ -19,10 +19,16 @@ package "Mandatory (MVP)" {
 
 package "MVP minimal" {
   [M8 · Webhook / Event Layer] as M8
+  [M10 · AI Assistance Layer] as M10
 }
 
 package "Nice to have" {
   [M5 · Activity Management] as M5
+}
+
+package "Fase Roadmap (di luar MVP)" #LightGray {
+  [M9 · Platform Administration] as M9
+  [EP-016 · AI Prediktif] as AIP
 }
 
 M1 --> M2
@@ -30,6 +36,7 @@ M1 --> M3
 M1 --> M4
 M1 --> M7
 M1 --> M8
+M1 --> M10 : konteks dibatasi tenant
 
 M3 --> M2 : konversi lead
 M4 --> M2 : peluang merujuk kontak/akun
@@ -41,14 +48,28 @@ M5 ..> M4
 M8 ..> M3 : event perubahan status lead
 M8 ..> M4 : event pergerakan peluang
 
+M8 --> M10 : event outbound (async)
+M10 ..> M3 : draf outreach & insight
+M10 ..> M4 : ringkasan peluang
+M10 ..> AIP : kelola model & hasil prediksi
+
 note bottom of M1
   M1 adalah fondasi — isolasi data antar tenant
   tidak dapat ditambahkan belakangan tanpa rework.
+  Tenant model WAJIB menyimpan status langganan
+  sejak awal (TD-06, DEC-045).
 end note
 
 note bottom of M8
   Event outbound inti + 1 endpoint inbound (DEC-021).
   Retry, rate limit, logging, fan-out (DEC-030).
+end note
+
+note bottom of M10
+  Service TERPISAH — tidak menyentuh kode core
+  (DEC-012). Konsumen event M8 + baca API core.
+  MVP minimal: 1-2 use case generatif
+  (CR-20261008-002). Prediktif -> EP-016 (roadmap).
 end note
 
 note top of M7

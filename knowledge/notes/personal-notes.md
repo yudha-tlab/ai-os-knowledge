@@ -117,14 +117,27 @@ pertanyaan Q-007/Q-008/Q-011.
   +US-038..049, +OB-024..031, +proses 13, +BR-034..041 (8 BR), +diagram 09.
   Modul mandatory bootcamp **tetap 6**. Buka Q-033..Q-039 (tidak menghambat).
   Risiko baru R-017 → mitigasi TD-06 (rancangan tenant model di M1).
+- **CR-20261008-002 / DEC-046** — PO menemukan gap besar: **tidak ada satu pun
+  kapabilitas AI di dalam produk** (seluruh "AI" sebelumnya = AI OS sebagai alat
+  bantu development, DEC-032). PO minta integrasi AI + ide use case sales CRM.
+  Ditetapkan **MVP minimal**: lapisan **M10 AI Assistance Layer** (service
+  terpisah, konsumsi event M8) dengan 1–2 use case **generatif** (draf outreach,
+  ringkasan & insight). **Prediktif** (lead scoring/win probability/forecast) →
+  roadmap, karena butuh data historis tenant (rujukan: model lead scoring
+  Microsoft butuh ≥40 lead qualified + ≥40 disqualified). Dampak: +EP-015/016,
+  +US-050..053, +OB-032, +proses 14, +BR-042..045 (MVP 25→29), +diagram 09.
+  Modul mandatory **tetap 6**. Risiko baru **R-018** (beban) + **TD-07**
+  (titik simpan output AI) + Q-040/Q-041 (menghambat M10).
 - **Perbaikan temuan:** BRD v1.0 semula mengklaim "30 business requirement",
   aktual **33** (BR-001..BR-033). Dikoreksi eksplisit di changelog v2.0 —
   jangan sampai salah hitung berulang di artefak turunan.
 - Efek risiko: R-001 tetap High/High tetapi beban turun (6 modul/2 hari);
   R-015 mitigasi bertambah (agenda hari 1 menyusut 4 pertanyaan + 2 Epic).
 
-**Status per 2026-10-08: 44 keputusan (DEC-001 s/d DEC-044)**; tidak ada item
-terbuka milik PM/PO. Sisa empat item milik **Head of Engineer** (TD-01..TD-05).
+**Status per 2026-10-08: 46 keputusan (DEC-001 s/d DEC-046)**; tidak ada item
+terbuka milik PM/PO di luar lingkup roadmap. Sisa item **Head of Engineer**:
+TD-01..TD-07 (TD-06 & TD-07 jangan ditunda — risiko migrasi data). Pertanyaan
+yang menghambat M10: **Q-040** (penyedia LLM) & **Q-041** (use case minimum).
 
 ---
 

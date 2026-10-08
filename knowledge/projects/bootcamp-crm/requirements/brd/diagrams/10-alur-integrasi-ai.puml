@@ -1,0 +1,51 @@
+@startuml
+title Diagram 9 — Alur Integrasi AI (M10 AI Assistance Layer, MVP Minimal)
+
+skinparam shadowing false
+skinparam defaultFontSize 11
+skinparam sequenceMessageAlign center
+autonumber
+
+actor "Sales Rep" as SALES
+participant "Core CRM\n(M2/M3/M4 — mandatory)" as CORE
+participant "M8 Webhook\n(event outbound)" as HOOK
+participant "M10 AI Assistance Layer\n(service terpisah)" as AI
+participant "Model LLM\n(penyedia — TD-07/Q-040)" as LLM
+database "Data Tenant\n(OB-032 hasil AI)" as DB
+
+SALES -> CORE : buka Lead / Peluang
+CORE -> HOOK : pancarkan event (record berubah)
+HOOK -> AI : kirim event (async — DEC-030)
+AI -> CORE : ambil konteks record (API core)
+note right of AI
+  Konteks WAJIB dibatasi
+  pada tenant terkait
+  (BR-003 / BR-045)
+end note
+AI -> LLM : kirim prompt (konteks tenant)
+LLM --> AI : draf pesan / ringkasan & insight
+AI -> DB : simpan hasil AI pada record tenant\n(OB-032)
+DB --> CORE : hasil terbaca modul sales
+SALES -> CORE : lihat draf / ringkasan (hasil AI)
+
+alt Model LLM tidak tersedia / timeout
+  AI --> HOOK : catat kegagalan pada jejak pemanggilan AI
+  note right of AI
+    Kegagalan AI TIDAK memblokir
+    proses sales di core —
+    AI adalah layanan terpisah
+    (DEC-012)
+  end note
+end
+
+legend bottom
+  **MVP minimal (CR-20261008-002):** 1-2 use case *generatif* —
+  AI-01 draf pesan outreach, AI-02 ringkasan & AI insight record.
+
+  **Fase roadmap (EP-016, bukan MVP):** lead scoring prediktif,
+  win probability, sales forecast — butuh data historis tenant.
+
+  **Input arsitektur (TD-07):** core perlu titik simpan output AI
+  sejak awal agar tidak perlu migrasi data.
+endlegend
+@enduml

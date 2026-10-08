@@ -3,10 +3,13 @@ title: "Decision Log — Bootcamp Internal CRM"
 type: decision-log
 project: bootcamp-crm
 status: active
-version: "9.0"
+version: "10.0"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "10.0"
+    date: 2026-10-08
+    purpose: "DEC-046 (CR-20261008-002) — integrasi AI ditambahkan: M10 AI Assistance Layer masuk MVP MINIMAL (1-2 use case generatif); AI prediktif (EP-016) ke fase roadmap; BR-042..045, EP-015, US-050..053, OB-032, proses 14, TD-07; Q-040..043"
   - version: "9.0"
     date: 2026-10-08
     purpose: "DEC-045 — kontrol plane SaaS ditambahkan sebagai FASE ROADMAP terpisah (M9 Platform Administration), di luar MVP bootcamp; WAJIB jadi input arsitektur (tenant model menyimpan status langganan). Aktor baru SH011/SH012, proses 13, EP-013/EP-014, OB-024..031, US-038..049, BR-034..041, diagram 09; buka Q-033..Q-039"
@@ -89,6 +92,7 @@ changelog:
 | DEC-043 | 2026-10-08 | **Modul Ticketing (M6) dan Pelaporan Tiket (EP-009) dikeluarkan dari lingkup MVP.** Lingkup bootcamp difokuskan pada **business process sales** (lead, kontak & akun, pipeline/peluang, kuota & performa, pelaporan sales, tenancy, webhook). M5 Activity tetap *nice to have* — **modul mandatory kini 6** (sebelumnya 7) | Arahan PO 2026-10-08: *"tiket tidak perlu… terlalu besar… bukan termasuk general case CRM untuk tracking sales… bisa merefer ke hubspot ataupun salesforce… core feature dan business process yang akan digunakan untuk bootcamp adalah untuk sales"*. Riset mengonfirmasi pemisahan domain: Salesforce memisahkan **Sales Cloud vs Service Cloud** (case management & SLA = core Service Cloud, *not included* di Sales Cloud); HubSpot memisahkan **Sales Hub vs Service Hub** dengan seat terpisah. Diproses melalui **CR-20261008-001** | Yudha Pratama | Active — menutup Q-015/021/022/023 sebagai moot; menunggu approval Head of Product |
 | DEC-044 | 2026-10-08 | **Status M6 Ticketing ke depan: menjadi MODUL LANJUTAN di roadmap produk** (setara Service Cloud / Service Hub) — dikembangkan di luar lingkup MVP bootcamp, bukan dihapus dari visi produk. Fondasi multi-tenant & webhook (M1, M8) yang dibangun di bootcamp tetap menjadi prasyaratnya | Jawaban PO 2026-10-08 atas Q-032 ("setuju, jadikan modul lanjutan roadmap") — menerima rekomendasi PM. Tidak mengubah lingkup MVP (DEC-043 tetap: mandatory 6 modul); menutup Q-032 | Yudha Pratama | Active — menutup Q-032; tidak menghambat pelaksanaan bootcamp |
 | DEC-045 | 2026-10-08 | **Kontrol plane SaaS (Platform Owner/Superadmin TLab) ditambahkan sebagai FASE ROADMAP terpisah — M9 Platform Administration, DI LUAR MVP bootcamp.** Mencakup: paket pricing + kuota, kelola akun tenant (buat/ubah/**soft delete**), pendaftaran & aktivasi tenant, konfirmasi pembayaran, siklus langganan, penegakan batas → **penutupan akses otomatis**. **Tetap didokumentasikan penuh** (stakeholder, proses, objek, Epic, User Story) dan **WAJIB menjadi input arsitektur**: tenant model M1 harus menyimpan **status langganan** sejak awal agar tidak perlu rework. Modul mandatory bootcamp tetap **6** — angka ini tidak berubah | Arahan PO 2026-10-08: *"perlu ditampilkan bisnis proses dari superadmin (pemilik platform CRM yaitu TLab)… CRM ini akan jadi SaaS… mekanisme bagaimana tenant register, membayar, aktif, hingga misal melebihi batas aktif maka otomatis ditutup aksesnya"*. Penempatan fase dikonfirmasi PO via pilihan eksplisit (roadmap terpisah + input arsitektur) | Yudha Pratama | Active — membuka Q-033 s/d Q-039 (fase roadmap, tidak menghambat bootcamp) |
+| DEC-046 | 2026-10-08 | **Integrasi AI masuk produk CRM sebagai lapisan MVP MINIMAL — M10 AI Assistance Layer.** Bentuk: **service terpisah** yang mengonsumsi event M8 Webhook + membaca API core (konsisten DEC-012/DEC-030), menyajikan **1–2 use case generatif** (draf pesan outreach; ringkasan & AI insight record). **AI prediktif** (lead scoring, win probability, sales forecast) → **fase roadmap (EP-016)** karena memerlukan data historis tenant. **Tidak mengubah angka modul mandatory (tetap 6)**: M10 adalah lapisan tambahan MVP minimal. **Input arsitektur: TD-07** — core perlu titik simpan output AI sejak awal. Proses/CR: CR-20261008-002 | Arahan PO 2026-10-08: *"tambahkan harus ada integrasi AI nya nih, berikan ide integrasi AI untuk use case sales crm"*. Bentuk penempatan dipilih PO via pilihan eksplisit: MVP minimal (generatif), prediktif ke roadmap | Yudha Pratama | Active — membuka Q-040..Q-043 (Q-040/Q-041 menghambat M10) |
 
 ### Catatan atas DEC-015 (keberatan teknis PM — SELESAI)
 

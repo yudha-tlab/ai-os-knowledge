@@ -3,7 +3,7 @@ title: "Project Context Pack — Bootcamp Internal CRM"
 type: project-context-pack
 project: bootcamp-crm
 status: draft-v5
-version: "8.0"
+version: "8.1"
 created: 2026-10-02
 modified: 2026-10-08
 depends_on:
@@ -13,6 +13,9 @@ depends_on:
   - requirement-analysis
 scope: Aggregated key fields untuk project internal TLab — Bootcamp CRM
 changelog:
+  - version: "8.1"
+    date: 2026-10-08
+    purpose: "CR-20261008-002 — integrasi AI (M10) masuk MVP minimal; AI prediktif ke roadmap; TD-07; Q-040..041 menghambat M10"
   - version: "8.0"
     date: 2026-10-08
     purpose: "DEC-045 — kontrol plane SaaS (Platform Owner TLab) ditambahkan sebagai FASE ROADMAP terpisah (M9), di luar MVP; wajib jadi input arsitektur (tenant model menyimpan status langganan)"
@@ -81,9 +84,10 @@ Nice to have: M5 Activity saja.
    prototype CRM multi-tenant. Bootcamp adalah workstream, bukan project
    terpisah.
 3. **Penyusunan requirement**: PM diberi mandat menyusun requirement. Status:
-   requirement produk CRM tersusun sebagai bahan baku BRD (MVP: 10 Epic, 25 User
-   Story, 16 Objek; fase roadmap +4 Epic/+12 US/+15 Objek) dan **BRD v3.0 sudah
-   disusun** — menunggu review PO & approval Head of Product.
+   requirement produk CRM tersusun sebagai bahan baku BRD (MVP: 12 Epic, 29 User
+   Story, 17 Objek; termasuk integrasi AI M10; fase roadmap +Epic AI prediktif &
+   M9) dan **BRD v3.1 sudah disusun** — menunggu review PO & approval Head of
+   Product.
 4. **Peran PO**: PM berperan sebagai Product Owner yang bertindak selaku klien
    pemilik kebutuhan CRM, mensimulasikan alur permintaan requirement nyata.
 5. **Penetapan peserta**: Tech Lead membagi peserta. Status: jumlah & pembagian
@@ -135,14 +139,15 @@ Nice to have: M5 Activity saja.
 - Decision log: 45 keputusan (DEC-001 s/d DEC-045).
 - Risk register: 16 risiko (R-001 s/d R-016), 5 ditutup; R-001 naik ke High/High.
 - RAID log: 9 asumsi, 4 isu (3 resolved), 14 dependency.
-- Catatan teknis Head of Engineer: `architecture/open-tech-decisions.md` (TD-01 s/d TD-05).
+- Catatan teknis Head of Engineer: `architecture/open-tech-decisions.md` (TD-01 s/d TD-07).
 - Pertanyaan terbuka: 3 (Q-007, Q-008, Q-011 — Head of Engineer) + 7 pertanyaan
-  fase roadmap (Q-033 s/d Q-039 — PM/PO, tidak menghambat bootcamp).
+  fase roadmap (Q-033 s/d Q-039 — PM/PO, tidak menghambat bootcamp) + 4 pertanyaan
+  integrasi AI (Q-040..Q-043 — **Q-040/Q-041 menghambat M10**).
 
 ## Dependencies
 
 - [x] Penetapan tanggal & struktur pelaksanaan — 3 hari mulai 13 Okt, hari 1 workshop (DEC-037)
-- [x] **BRD v2.0 disusun** 2026-10-08 (`requirements/brd/`) — sisa: **review PO + approval Head of Product & Project**
+- [x] **BRD v3.1 disusun** 2026-10-08 (`requirements/brd/`) — sisa: **review PO + approval Head of Product & Project**
 - [ ] Approval BRD oleh Head of Product & Project (dependency R-015)
 - [ ] Definisi teknis multi-tenant — Head of Engineer (TD-01)
 - [ ] Rancangan teknis webhook — Head of Engineer (TD-02)
@@ -156,6 +161,10 @@ Nice to have: M5 Activity saja.
 - [x] Durasi bootcamp — 3 hari, hari 1 workshop (DEC-037)
 - [x] Periode kuota sales — bulanan (DEC-035)
 - [x] Nama peserta — tidak diperlukan saat ini (DEC-038)
+- [ ] **Titik simpan output AI pada model core** — Head of Engineer (TD-07, jangan tunda)
+- [ ] **Penyedia LLM + kredensial** — Head of Engineer (Q-040, menghambat M10)
+- [ ] **Penetapan use case AI minimum** — PM/PO + peserta (Q-041, hari 1)
+- [ ] Estimasi effort M10 — Head of Engineer & Tech Lead
 
 ## Catatan Akses
 

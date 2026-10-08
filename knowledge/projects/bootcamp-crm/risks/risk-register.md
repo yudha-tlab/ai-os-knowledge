@@ -3,10 +3,13 @@ title: "Risk Register — Bootcamp Internal CRM"
 type: risk-register
 project: bootcamp-crm
 status: active
-version: "8.0"
+version: "9.0"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "9.0"
+    date: 2026-10-08
+    purpose: "CR-20261008-002 — tambah R-018 (beban MVP bertambah karena integrasi AI M10 menekan jendela 2 hari)"
   - version: "8.0"
     date: 2026-10-08
     purpose: "DEC-045 — tambah R-017 (kontrol plane SaaS belum dirancang di MVP → risiko rework jika tenant model tidak menyimpan status langganan)"
@@ -66,12 +69,13 @@ dasar akan menyesatkan prioritisasi.
 | R-015 | Hari 1 workshop tidak cukup memfinalkan seluruh requirement → hari 2 dimulai dengan requirement belum final; jendela pengembangan menyusut di bawah 2 hari | Process/Scope | High | High | **Tinggi** | PM/PO | Kunci daftar keputusan terbuka & agenda ketat hari 1; **selesaikan BRD sebelum hari 1**; tetapkan kriteria eksplisit "requirement dianggap final" | Open — **baru 2026-10-02** |
 | R-016 | Kriteria selesai tidak konsisten — DEC-028 (end-to-end) vs DEC-041 (core backend) | Scope | — | — | — | PM/PO | **DITUTUP 2026-10-02** — DEC-042 menyatukan kedua definisi: "end-to-end" diukur pada kapabilitas backend | **Closed** |
 | R-017 | **Kontrol plane SaaS tidak dirancang saat bootcamp** → bila tenant model M1 tidak menyimpan status langganan & kuota paket, fase roadmap M9 memerlukan **migrasi data yang mahal** (rework) | Scope/Teknis | Med | Med | Sedang | PM/PO + Head of Engineer | **Mitigasi: TD-06** — putuskan rancangan tenant model yang menyimpan status langganan **selama bootcamp M1** (rancangan saja, bukan implementasi M9). Ditambah 2026-10-08 (DEC-045) | Open — **baru 2026-10-08** |
+| R-018 | **Integrasi AI (M10) menambah beban MVP** — 6 modul mandatory + lapisan AI dalam 2 hari; berisiko menekan kualitas modul mandatory | Scope/Schedule | **High** | Med | **Tinggi** | PM/PO + Tech Lead | **Mitigasi:** M10 dibatasi **1 use case minimum** sebagai *vertical slice*; AI service terpisah (DEC-012); evaluasi akhir hari 2 — bila tertinggal, M10 dipotong. Ditambah 2026-10-08 (CR-20261008-002) | Open — **baru 2026-10-08** |
 
 ## Risiko yang Mengalami Perubahan Severity
 
 | ID | Sebelum | Sesudah | Alasan |
 |---|---|---|---|
-| R-001 | Tinggi (Med/High) | Tinggi (**High/High**) | Jendela pengembangan efektif hanya **2 hari** (DEC-037) untuk 6 modul mandatory (turun dari 7 setelah M6 dikeluarkan — CR-20261008-001) |
+| R-001 | Tinggi (Med/High) | Tinggi (**High/High**) | Jendela pengembangan efektif hanya **2 hari** (DEC-037) untuk 6 modul mandatory (turun dari 7 setelah M6 dikeluarkan — CR-20261008-001) **+ lapisan AI M10 yang kini masuk MVP minimal** (CR-20261008-002) — beban naik kembali; lihat R-018 |
 | R-005 | Tinggi (High/Med) | Sedang (Low/Med) | Requirement analysis tersusun 2026-10-02; peserta sudah punya spesifikasi yang dapat dibaca |
 | R-003 | Tinggi (High/Med) | Sedang (Med/Med) | Jumlah & pembagian peserta sudah ditetapkan (2 tim x 4 orang, DEC-034); tersisa nama |
 | R-011 | Sedang (High/Med) | **Closed** | PO menerima keberatan PM — M8 masuk MVP minimal (DEC-021) |
@@ -82,7 +86,9 @@ dasar akan menyesatkan prioritisasi.
 | R-016 | Sedang (Med/Med) | **Closed** | Kriteria kelulusan disatukan — "end-to-end" diukur pada kapabilitas backend (DEC-042) |
 
 **Risiko baru 2026-10-08:** R-017 (kontrol plane SaaS belum dirancang → risiko
-rework) — dimitigasi dengan TD-06.
+rework) — dimitigasi dengan TD-06. **R-018** (integrasi AI/M10 menambah beban MVP
+dalam jendela 2 hari) — dimitigasi dengan pembatasan M10 ke satu use case.
+Total kini **18 risiko (R-001 s/d R-018)**.
 
 **Lima risiko ditutup** pada 2026-10-02: R-011, R-012 (tidak lagi berlaku), R-003,
 R-014 (terjawab keputusan PO), dan R-016 (kriteria kelulusan disatukan, DEC-042);

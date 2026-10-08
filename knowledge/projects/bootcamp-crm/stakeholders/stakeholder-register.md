@@ -2,10 +2,13 @@
 title: "Stakeholder Register — Bootcamp Internal CRM"
 type: stakeholder-register
 project: bootcamp-crm
-version: "1.2"
+version: "1.3"
 created: 2026-10-02
 modified: 2026-10-02
 changelog:
+  - version: "1.3"
+    date: 2026-10-08
+    purpose: "CR-20261008-002 — integrasi AI (M10): catat pemilik use case AI (Sales, SH001) dan prasyarat teknis"
   - version: "1.2"
     date: 2026-10-08
     purpose: "DEC-045 — tambah catatan stakeholder fase roadmap (Platform Owner/Superadmin TLab & Calon Tenant); bukan stakeholder MVP bootcamp"
@@ -57,6 +60,13 @@ dan SH012):
 | **SH012 — Calon Tenant** | Organisasi/individu yang mendaftar & berlangganan SaaS — melalui pendaftaran mandiri atau dibuatkan Platform Owner | DEC-045 |
 
 Keduanya **tidak memengaruhi** daftar stakeholder eksekusi bootcamp di atas.
+
+## Catatan Integrasi AI (CR-20261008-002)
+
+Integrasi AI masuk MVP minimal (M10). Pengguna langsung use case AI adalah
+**Sales (SH001)** — draf pesan outreach dan ringkasan/AI insight record; tidak
+menambah stakeholder baru di luar daftar di atas. Prasyarat teknis (penyedia LLM
+& kredensial) berada pada **Head of Engineer** (Q-040/TD-07).
 
 ## Strategi Engagement per Kelompok
 

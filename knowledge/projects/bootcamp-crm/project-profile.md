@@ -4,10 +4,13 @@ type: project-profile
 project: bootcamp-crm
 client: tlab-internal
 status: active
-version: "1.9"
+version: "1.10"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "1.10"
+    date: 2026-10-08
+    purpose: "CR-20261008-002 — M10 AI Assistance Layer (integrasi AI, MVP minimal); AI prediktif ke roadmap; TD-07 titik simpan output AI; Q-040..043"
   - version: "1.9"
     date: 2026-10-08
     purpose: "DEC-045 — kontrol plane SaaS (Platform Owner TLab) ditambahkan sebagai FASE ROADMAP terpisah (M9), di luar MVP; wajib jadi input arsitektur (tenant model menyimpan status langganan)"
@@ -86,6 +89,7 @@ event sebagai permukaan ekstensi.
 | M7 | Reporting & Analytics (revenue, pipeline, performa sales) | Mandatory |
 | M8 | Webhook / Event Layer | **MVP minimal (DEC-021)** — event outbound inti + 1 endpoint inbound. Merevisi DEC-015 |
 | M9 | **Platform Administration (kontrol plane SaaS)** | **FASE ROADMAP (DEC-045)** — paket pricing, kelola akun tenant, konfirmasi pembayaran, siklus langganan, auto-suspend. Di luar MVP; wajib jadi input arsitektur |
+| M10 | **AI Assistance Layer** | **MVP minimal (CR-20261008-002)** — service AI terpisah (konsumsi event M8), 1–2 use case generatif: draf outreach, ringkasan & insight. AI **prediktif** → roadmap (EP-016) |
 
 ## Tim Delivery
 
@@ -116,10 +120,11 @@ event sebagai permukaan ekstensi.
 | Milestone | Target Tanggal | Status |
 |-----------|---------------|--------|
 | Requirement produk CRM tersusun (bahan baku BRD) | 2026-10-02 | **Selesai** |
-| BRD CRM disusun | 2026-10-02 | **Selesai (v2.0)** — menunggu review PO & approval Head of Product |
+| BRD CRM disusun | 2026-10-02 | **Selesai (v3.1)** — menunggu review PO & approval Head of Product |
 | Bootcamp — Hari 1: workshop finalisasi requirement | **2026-10-13** (DEC-037) | Belum Mulai |
 | Bootcamp — Hari 2-3: pengembangan core backend | Mengikuti hari 1 | Belum Mulai — tanggal akhir tidak ditetapkan (DEC-040) |
 | **Core backend CRM menyelesaikan seluruh fitur mandatory** (DEC-041) | Belum ditentukan | Belum Mulai |
+| **Integrasi AI terbukti** — minimal 1 use case generatif end-to-end (CR-20261008-002) | Mengikuti hari 2-3 | Belum Mulai |
 | Laporan pengukuran kecepatan & efektivitas AI | Belum ditentukan | Belum Mulai |
 
 ## Kebutuhan Keputusan (Belum Ada Data)
@@ -133,6 +138,8 @@ Field berikut belum tersedia dan **tidak boleh diasumsikan** — menunggu input:
 | Stack teknologi CRM | Belum ditentukan (TD-05) | Head of Engineer |
 | Rancangan teknis webhook | Belum ditentukan (TD-02) | Head of Engineer |
 | Target tanggal selesai prototype | Belum ditentukan | PM/PO + Head of Engineer |
+| Titik simpan output AI pada model core | Belum ditentukan (TD-07) | Head of Engineer |
+| Penyedia model LLM + kredensial | Belum ditentukan (Q-040) | Head of Engineer |
 
 Catatan: **ruang lingkup fitur MVP** (DEC-015, direvisi DEC-021), **tanggal
 pelaksanaan & struktur bootcamp** (DEC-037: 3 hari, hari 1 workshop), **peserta**

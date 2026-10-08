@@ -121,6 +121,15 @@ entity "Webhook Target" as WTG {
   endpoint
 }
 
+entity "Hasil Asistensi AI\n(OB-032 — M10)" as AIO {
+  * id
+  --
+  tenant_id
+  record terkait (lead/peluang)
+  jenis use case (draf/ringkasan)
+  isi keluaran
+}
+
 entity "Delivery Log" as LOG {
   * id
   --
@@ -198,6 +207,10 @@ TEN ||--o{ ENF : "roadmap"
 SUBS ||..o{ ENF : "penegakan batas"
 AUD }o--|| TEN : "roadmap"
 
+TEN ||--o{ AIO : "hasil AI (M10)"
+AIO }o--o| LEAD : draf & insight
+AIO }o--o| PEL : ringkasan peluang
+
 AKN |o--o{ KON : "B2B: kontak di bawah akun\nB2C: kontak tanpa akun"
 LEAD ||..o{ KON : konversi
 LEAD ||..o{ AKN : konversi
@@ -218,6 +231,13 @@ WTG ||--o{ LOG
 
 note bottom of KON
   Kontak B2C boleh berdiri tanpa Akun (DEC-024).
+end note
+
+note bottom of AIO
+  Titik simpan output AI (TD-07) — WAJIB dirancang
+  sejak M1 agar use case AI prediktif (roadmap)
+  tidak memerlukan migrasi data.
+  Konteks AI dibatasi tenant (BR-045).
 end note
 
 note bottom of TEN

@@ -3,11 +3,14 @@ title: "Requirement Analysis — CRM Multi-Tenant TLab"
 type: requirement-analysis
 project: bootcamp-crm
 status: draft
-version: "3.0"
+version: "3.1"
 created: 2026-10-02
 modified: 2026-10-08
 sumber: "Arahan Product Owner (Yudha Pratama) via sesi brainstorm 2026-10-02"
 changelog:
+  - version: "3.1"
+    date: 2026-10-08
+    purpose: "CR-20261008-002 — integrasi AI ditambahkan: EP-015 (MVP minimal, AI Assistance Layer M10), US-050..053, OB-032, Proses 14, SH001; Q-040..043 dibuka; use case prediktif ke roadmap"
   - version: "3.0"
     date: 2026-10-08
     purpose: "Tambah kontrol plane SaaS — FASE ROADMAP terpisah (DEC-045): aktor SH011 Platform Owner/Superadmin (TLab), SH012 Calon Tenant; proses 13 SaaS Platform Administration (8 sub-proses); objek OB-024..031; Epic EP-013/EP-014; US-038..048; pertanyaan Q-033..Q-039. Wajib masuk sebagai input arsitektur (tenant model harus menyimpan status langganan) — di luar MVP bootcamp"
@@ -193,6 +196,20 @@ di luar MVP bootcamp. Tetap diturunkan lengkap ke stakeholder/objek/Epic/User
 Story agar tidak hilang, dan **wajib menjadi input arsitektur M1** (tenant model
 harus menyimpan status langganan).
 
+Proses **14 Asistensi AI untuk Sales** ditambahkan 2026-10-08 (CR-20261008-002):
+integrasi AI ke dalam produk. **Masuk MVP secara minimal** — use case *generatif*
+(LLM) yang tidak memerlukan data historis tenant — sebagai **lapisan terpisah
+(M10 AI Assistance Layer)** yang mengonsumsi event M8 dan membaca API core
+(konsisten DEC-012/DEC-030). Use case **prediktif** (lead scoring, win
+probability, forecast) **tidak masuk MVP**: model prediktif memerlukan riwayat
+data yang belum dimiliki tenant baru, sehingga ditetapkan ke fase roadmap
+(EP-016).
+
+| Fase | No | Proses | Sub-Proses |
+|---|---|---|---|
+| **MVP minimal** | 14 | Asistensi AI untuk Sales | 14.01.01 Draf pesan outreach per Lead/Kontak; 14.01.02 Ringkasan & AI insight record; 14.01.03 Ekstraksi catatan → field CRM *(opsional)* |
+| **Roadmap** | 14 | Asistensi AI untuk Sales (prediktif) | 14.02.01 Lead scoring; 14.02.02 Win probability / deal risk; 14.02.03 Sales forecast; 14.02.04 Otomasi agentic lanjutan |
+
 Proses 12 **dikeluarkan dari lingkup produk CRM** pada 2026-10-02 (DEC-031):
 kebutuhan ini bukan pakem CRM — CRM mengelola pelanggan, bukan penilaian
 karyawan. Tidak diturunkan ke Epic. Bila masih diperlukan, harus menjadi
@@ -204,7 +221,7 @@ inisiatif internal terpisah.
 
 | No | Stakeholder | Sub Stakeholder | Jenis | Kebutuhan & Harapan | Dampak Jika Tidak Terpenuhi | Tindakan | Proses Terkait | Pemantauan | Frekuensi |
 |----|-------------|-----------------|-------|----------------------|------------------------------|----------|----------------|------------|-----------|
-| SH001 | Sales | Sales Representative | Internal | Lead dan peluang terkelola, progres deal terlihat, pencapaian target terukur | Deal hilang tanpa jejak; performa tidak dapat dibuktikan | Modul Lead; Modul Pipeline; Skor Performa | 01; 04; 07 | Review pipeline per sales | Mingguan |
+| SH001 | Sales | Sales Representative | Internal | Lead dan peluang terkelola, progres deal terlihat, pencapaian target terukur; **penyusun utama use case AI (EP-015)** — draf outreach, ringkasan & insight record | Deal hilang tanpa jejak; performa tidak dapat dibuktikan | Modul Lead; Modul Pipeline; Skor Performa | 01; 04; 07 | Review pipeline per sales | Mingguan |
 | SH002 | Sales | Sales Manager | Internal | Visibilitas pipeline tim, penetapan kuota, identifikasi sales berkinerja rendah | Tidak dapat melakukan pembinaan berbasis data; target tim tidak terkelola | Modul Pipeline; Skor Performa; Laporan Performa | 03; 04; 07; 08 | Review performa tim | Bulanan |
 | SH003 | Support | Agent Support | **DI LUAR LINGKUP** | Tiket masuk terdistribusi, status tiket jelas, jalur eskalasi tersedia | Tiket menumpuk; SLA tidak terpantau | Modul Tiket; Eskalasi | 06 | Monitoring tiket harian | Harian |
 | SH004 | Support | Support Lead / Manager | **DI LUAR LINGKUP** | Rekap beban dan status tiket, penanganan eskalasi | Beban tim tidak terkelola; eskalasi tidak terkendali | Modul Tiket; Laporan Tiket | 06; 09 | Laporan tiket | Mingguan |
@@ -254,6 +271,7 @@ inisiatif internal terpisah.
 | OB-029 | **Status Penegakan (Enforcement)** | Status penegakan batas: peringatan, pembatasan, penutupan akses otomatis | **Roadmap (M9)** |
 | OB-030 | **Pendaftaran Tenant** | Permohonan pendaftaran tenant dari calon pelanggan sebelum aktivasi | **Roadmap (M9)** |
 | OB-031 | **Jejak Audit Platform** | Jejak tindakan Platform Owner (siapa, kapan, tindakan apa) untuk akuntabilitas kontrol plane | **Roadmap (M9)** |
+| OB-032 | **Hasil Asistensi AI** | Output AI yang tersimpan pada record: draf pesan, ringkasan/insight, hasil ekstraksi — beserta jejak pemanggilan (jenis use case, waktu, status) | **MVP minimal (CR-20261008-002)** — titik simpan output AI, input arsitektur TD-07 |
 
 ---
 
@@ -475,6 +493,8 @@ harga, dan angka kuota menunggu keputusan PO (Q-033..Q-035).
 | EP-012 | ~~Assessment Tim Sales (HR)~~ | — | **Dibatalkan (DEC-031)** — di luar lingkup produk CRM |
 | EP-013 | Penetapan Kuota per Paket *(roadmap)* | — | **Roadmap (M9)** — DEC-045; di luar MVP |
 | EP-014 | Pengaturan Penagihan & Pendaftaran Tenant *(roadmap)* | — | **Roadmap (M9)** — DEC-045; di luar MVP |
+| EP-015 | **Asistensi AI untuk Sales** | M10 | **MVP minimal (CR-20261008-002)** — integrasi AI generatif end-to-end 1–2 use case; prediktif ke roadmap |
+| EP-016 | Analitik Prediktif Sales *(roadmap)* | — | **Roadmap** — CR-20261008-002; butuh data historis tenant |
 
 ### User Story (dari SPOK)
 
@@ -517,6 +537,10 @@ harga, dan angka kuota menunggu keputusan PO (Q-033..Q-035).
 | US-047 | Sebagai Sistem, saya ingin menutup akses tenant secara otomatis ketika kuota paket terlampaui atau langganan berakhir, sehingga batas komersial ditegakkan tanpa intervensi manual. | EP-014 |
 | US-048 | Sebagai Calon Tenant, saya ingin mendaftar, memilih paket, dan memperoleh aktivasi setelah pembayaran dikonfirmasi, sehingga saya dapat mulai menggunakan CRM secara mandiri. | EP-014 |
 | US-049 | Sebagai Platform Owner TLab, saya ingin melihat jejak audit tindakan saya (siapa/kapan/apa) di control plane, sehingga akuntabilitas pengelolaan platform terjaga. | EP-014 |
+| US-050 | Sebagai Sales, saya ingin AI menyusun **draf pesan outreach** untuk Lead/Kontak berdasarkan konteks record, sehingga saya tidak perlu menyusun pesan dari nol. | EP-015 |
+| US-051 | Sebagai Sales, saya ingin AI memberikan **ringkasan & insight** atas Lead/Peluang beserta rekomendasi langkah berikutnya, sehingga saya cepat menangkap konteks. | EP-015 |
+| US-052 | Sebagai Sales, saya ingin AI meringkas **catatan bebas** menjadi field CRM (kebutuhan/anggaran/stakeholder), sehingga data terisi tanpa entry manual. *(opsional — bila waktu cukup)* | EP-015 |
+| US-053 | Sebagai Sales Manager, saya ingin melihat **skor prediktif** peluang/lead dan proyeksi pipeline, sehingga prioritas kerja berbasis data historis. *(roadmap)* | EP-016 |
 
 Task didekomposisi saat sprint planning (Taiga), bukan di tahap requirement ini.
 
@@ -533,6 +557,10 @@ teknologi).
 **Per 2026-10-08 (DEC-045):** terbuka **tujuh pertanyaan baru** — Q-033 s/d Q-039,
 seluruhnya menyangkut **fase roadmap SaaS Platform Administration**. Tidak
 menghambat pelaksanaan bootcamp.
+
+**Per 2026-10-08 (CR-20261008-002):** terbuka **empat pertanyaan baru** —
+Q-040 s/d Q-043, menyangkut **integrasi AI (EP-015/M10)**. Q-040 & Q-041
+**menghambat M10** (harus terjawab hari 1); Q-042 & Q-043 menyangkut fase roadmap.
 
 | ID | Pertanyaan | Konteks | Ditujukan ke | Status |
 |----|------------|---------|--------------|--------|
@@ -575,6 +603,10 @@ menghambat pelaksanaan bootcamp.
 | Q-037 | **Mekanisme pembayaran**: manual (transfer + konfirmasi Platform Owner) atau payment gateway? | Proses 13.04 | PM/PO | **Terbuka 2026-10-08** — konfirmasi manual sudah pasti masuk; gateway belum diputuskan |
 | Q-038 | **Cara tenant mendaftar**: self-serve mandiri atau dibuatkan Platform Owner? | Proses 13.03 | PM/PO | **Terbuka 2026-10-08** — kedua jalur mungkin; proporsi belum ditetapkan |
 | Q-039 | **Kebijakan data saat tenant di-soft-delete**: masa retensi, ekspor data, dan hak pemulihan | Proses 13.02 | PM/PO | **Terbuka 2026-10-08** |
+| Q-040 | **Penyedia model & kredensial LLM** untuk M10 — API key, kuota, latency, biaya | Proses 14.01; CR-20261008-002 | Head of Engineer | **Terbuka 2026-10-08** — **menghambat M10**, tetapkan hari 1 |
+| Q-041 | **Use case AI mana yang menjadi minimum M10** — AI-01 (draf outreach) atau AI-02 (ringkasan & insight)? | EP-015 | PM/PO + peserta | **Terbuka 2026-10-08** — rekomendasi PM: AI-01 atau AI-02 sebagai *vertical slice* |
+| Q-042 | **Strategi prediktif** — model per tenant vs global, dan sumber data latih | EP-016; Q-007/008 | Head of Engineer | **Terbuka 2026-10-08** — fase roadmap |
+| Q-043 | **Batas isolasi tenant pada prompt AI** — bagaimana konteks LLM dibatasi agar tidak bocor lintas tenant | BR-003; M10 | Head of Engineer | **Terbuka 2026-10-08** — syarat non-fungsional M10 |
 
 ---
 

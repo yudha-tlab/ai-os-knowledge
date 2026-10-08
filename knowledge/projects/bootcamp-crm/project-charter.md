@@ -3,10 +3,13 @@ title: "Project Charter — Bootcamp Internal CRM"
 type: project-charter
 project: bootcamp-crm
 status: Draft
-version: "8.0"
+version: "8.1"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "8.1"
+    date: 2026-10-08
+    purpose: "CR-20261008-002 — integrasi AI masuk MVP minimal (M10); kriteria keberhasilan baru (integrasi AI terbukti), batasan C-11, asumsi A-09/A-10; lingkup +1 lapisan MVP minimal"
   - version: "8.0"
     date: 2026-10-08
     purpose: "DEC-045 — kontrol plane SaaS (Platform Owner TLab) ditambahkan sebagai FASE ROADMAP terpisah (M9), di luar MVP; wajib jadi input arsitektur (tenant model menyimpan status langganan). Modul mandatory tetap 6"
@@ -88,12 +91,20 @@ terpisah. Prinsip ini mengikat seluruh rancangan produk.
   Opportunity, M7 Reporting**, dan **M8 Webhook/Event Layer (minimal)**
   (DEC-015, direvisi DEC-021 dan CR-20261008-001 — M6 Ticketing dikeluarkan). Sasaran = kapabilitas backend
   menyelesaikan seluruh fitur mandatory (DEC-041).
+- **Integrasi AI (CR-20261008-002)** — lapisan **M10 AI Assistance Layer**
+  masuk MVP secara **minimal**: 1–2 use case *generatif* (draf pesan outreach;
+  ringkasan & AI insight record) sebagai service terpisah yang mengonsumsi event
+  M8. Use case *prediktif* (lead scoring, win probability, forecast) masuk fase
+  roadmap. **Angka modul mandatory tetap 6** — M10 adalah lapisan tambahan.
 - Pengukuran kecepatan dan efektivitas penggunaan AI dalam proses development.
 - Pelaporan hasil: prototype, temuan pengukuran, dan rekomendasi lanjutan.
 
 ### Di Luar Lingkup
 
 - Modul M5 (Activity Management) — status *nice to have*, tidak masuk MVP.
+- **AI prediktif (EP-016)** — lead scoring, win probability/deal risk, sales
+  forecast, otomasi agentic lanjutan; **fase roadmap** (CR-20261008-002) karena
+  memerlukan data historis tenant yang belum tersedia saat bootcamp.
 - Modul Billing/Invoice — revenue didefinisikan dari deal closed-won (DEC-016).
 - **M9 Platform Administration (kontrol plane SaaS)** — **fase roadmap terpisah**
   (DEC-045), di luar MVP bootcamp: paket pricing, kelola akun tenant (buat/ubah/
@@ -126,7 +137,8 @@ terpisah. Prinsip ini mengikat seluruh rancangan produk.
 | Requirement difinalkan bersama peserta di hari 1 | Seluruh pertanyaan terbuka pada requirement terjawab/ditutup pada akhir hari 1; BRD (atau versi final requirement) disetujui sebagai baseline kerja hari 2-3 |
 | Kecepatan AI dalam development terukur | **Jumlah requirement yang ter-cover dalam jangka waktu tertentu** (DEC-032) |
 | Efektivitas AI dalam development terukur | **Belum terdefinisi** — diteruskan ke Head of Engineer (Q-007/Q-008, TD-03/TD-04) |
-| Requirement produk CRM tersedia dan dapat dieksekusi | Requirement analysis tersusun — **MVP: 10 Epic, 25 User Story, 16 Objek, 6 stakeholder, 25 baris proses bisnis**; **fase roadmap (+4 Epic, +12 User Story, +15 Objek)** per DEC-045. BRD menunggu approval |
+| **Integrasi AI terbukti berjalan** (CR-20261008-002) | Lapisan **M10** menyajikan **minimal satu use case generatif end-to-end** (draf outreach atau ringkasan/insight); hasil AI tersimpan pada record tenant dan konteks AI **tidak melintas tenant** |
+| Requirement produk CRM tersedia dan dapat dieksekusi | Requirement analysis tersusun — **MVP: 12 Epic, 29 User Story, 17 Objek, 7 stakeholder (SH001–SH005, SH008–SH012 = 10 baris + persona), 26 baris proses bisnis**; **fase roadmap** (+Epic AI prediktif & M9). BRD **v3.1** menunggu approval |
 | Produk CRM memiliki potensi dikembangkan & dijual | Belum ditentukan — perlu definisi indikator kelayakan produk |
 
 Catatan: lingkup MVP kini sudah ditetapkan (DEC-015), namun **angka target dan
