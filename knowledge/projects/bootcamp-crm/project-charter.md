@@ -3,10 +3,13 @@ title: "Project Charter — Bootcamp Internal CRM"
 type: project-charter
 project: bootcamp-crm
 status: Draft
-version: "7.1"
+version: "8.0"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "8.0"
+    date: 2026-10-08
+    purpose: "DEC-045 — kontrol plane SaaS (Platform Owner TLab) ditambahkan sebagai FASE ROADMAP terpisah (M9), di luar MVP; wajib jadi input arsitektur (tenant model menyimpan status langganan). Modul mandatory tetap 6"
   - version: "7.1"
     date: 2026-10-08
     purpose: "DEC-044 — status M6 Ticketing ke depan ditetapkan: modul lanjutan roadmap produk (di luar lingkup MVP bootcamp). Menutup Q-032"
@@ -92,6 +95,11 @@ terpisah. Prinsip ini mengikat seluruh rancangan produk.
 
 - Modul M5 (Activity Management) — status *nice to have*, tidak masuk MVP.
 - Modul Billing/Invoice — revenue didefinisikan dari deal closed-won (DEC-016).
+- **M9 Platform Administration (kontrol plane SaaS)** — **fase roadmap terpisah**
+  (DEC-045), di luar MVP bootcamp: paket pricing, kelola akun tenant (buat/ubah/
+  soft delete), pendaftaran & aktivasi tenant, konfirmasi pembayaran, siklus
+  langganan, penegakan batas → penutupan akses otomatis. **Wajib menjadi input
+  arsitektur**: tenant model M1 harus menyimpan status langganan sejak awal.
 - Modul M6 (Ticketing) & Pelaporan Tiket (EP-009) — **dikeluarkan dari MVP**
   (CR-20261008-001 / DEC-043): domain *service*, bukan core CRM untuk sales
   tracking; sejalan dengan pemisahan Salesforce (Sales vs Service Cloud) dan
@@ -118,7 +126,7 @@ terpisah. Prinsip ini mengikat seluruh rancangan produk.
 | Requirement difinalkan bersama peserta di hari 1 | Seluruh pertanyaan terbuka pada requirement terjawab/ditutup pada akhir hari 1; BRD (atau versi final requirement) disetujui sebagai baseline kerja hari 2-3 |
 | Kecepatan AI dalam development terukur | **Jumlah requirement yang ter-cover dalam jangka waktu tertentu** (DEC-032) |
 | Efektivitas AI dalam development terukur | **Belum terdefinisi** — diteruskan ke Head of Engineer (Q-007/Q-008, TD-03/TD-04) |
-| Requirement produk CRM tersedia dan dapat dieksekusi | Requirement analysis tersusun (10 Epic, 25 User Story, 16 Objek, 6 stakeholder, 25 baris proses bisnis) dan BRD disetujui |
+| Requirement produk CRM tersedia dan dapat dieksekusi | Requirement analysis tersusun — **MVP: 10 Epic, 25 User Story, 16 Objek, 6 stakeholder, 25 baris proses bisnis**; **fase roadmap (+4 Epic, +12 User Story, +15 Objek)** per DEC-045. BRD menunggu approval |
 | Produk CRM memiliki potensi dikembangkan & dijual | Belum ditentukan — perlu definisi indikator kelayakan produk |
 
 Catatan: lingkup MVP kini sudah ditetapkan (DEC-015), namun **angka target dan

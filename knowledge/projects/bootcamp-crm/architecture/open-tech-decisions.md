@@ -29,11 +29,19 @@ atas inisiatif sendiri — setiap baris menunggu penetapan penanggung jawabnya.
 | TD-03 | **Metrik efektivitas penggunaan AI** | Q-007 (DEC-032) | Sasaran kedua project tidak dapat diukur | Laporan pengukuran |
 | TD-04 | **Baseline pembanding (non-AI)** untuk pengukuran | Q-008 | Hasil pengukuran tidak dapat disimpulkan (tanpa pembanding) | Laporan pengukuran |
 | TD-05 | **Stack teknologi CRM** — ditentukan TLab atau bebas untuk peserta | Q-011 | Materi sesi & scaffolding tidak dapat disiapkan | Persiapan bootcamp |
+| TD-06 | **Model tenant yang menyimpan status langganan** — diputuskan sekarang meski M9 (kontrol plane SaaS) dikerjakan nanti | DEC-045 | **Rework arsitektur** saat fase roadmap dimulai: kolom/relasi status langganan & kuota paket tidak dapat ditambahkan tanpa migrasi data | Bootcamp (M1) — **jangan tunda** |
 
 **Catatan tenggat (TD-03 & TD-04):** metrik efektivitas AI dan baseline-nya
 **harus ditetapkan sebelum hari pertama bootcamp**. Baseline tidak dapat diambil
 ulang setelah bootcamp berjalan — ini satu-satunya risiko dalam daftar yang tidak
 dapat dipulihkan (R-002).
+
+**Catatan tenggat (TD-06):** ini satu-satunya keputusan teknis yang **harus
+diselesaikan selama bootcamp**, meski produknya (M9) baru dikerjakan pada fase
+roadmap. Alasannya bukan kesulitan, melainkan **biaya rework**: menambahkan
+konsep langganan ke model tenant setelah banyak data terbentuk memerlukan migrasi
+yang mahal. Cukup **rancangan**, bukan implementasi penuh — implementasi M9 tetap
+di fase roadmap (DEC-045).
 
 ## Konteks yang Sudah Ditetapkan PO (bukan lagi terbuka)
 
@@ -43,6 +51,7 @@ dapat dipulihkan (R-002).
 | Cakupan fungsional webhook | Retry, rate limit, logging, multiple target (fan-out) | DEC-030 |
 | Metrik kecepatan AI | Jumlah requirement yang ter-cover dalam jangka waktu tertentu | DEC-032 |
 | Lingkup webhook dalam MVP | Minimal: event outbound inti + 1 endpoint inbound | DEC-021 |
+| Penempatan kontrol plane SaaS | **Fase roadmap terpisah (M9)**, di luar MVP; input arsitektur wajib | DEC-045 |
 
 ## Related
 

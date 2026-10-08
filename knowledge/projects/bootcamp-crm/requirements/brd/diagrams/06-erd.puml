@@ -1,5 +1,5 @@
 @startuml
-title Diagram 6 — Entity Relationship Diagram (konseptual, fokus sales)
+title Diagram 5 — Entity Relationship Diagram (konseptual, fokus sales)
 
 skinparam shadowing false
 skinparam linetype ortho
@@ -11,6 +11,7 @@ entity "Tenant" as TEN {
   --
   nama
   konfigurasi
+  **status_langganan (roadmap)**
 }
 
 entity "Pengguna" as USR {
@@ -128,6 +129,52 @@ entity "Delivery Log" as LOG {
   percobaan / retry
 }
 
+package "FASE ROADMAP (M9) — DEC-045" #LightGray {
+  entity "Paket Pricing (Plan)" as PLAN {
+    * id
+    --
+    nama paket
+    struktur harga
+  }
+  entity "Kuota & Batas Paket" as QUOTA {
+    * id
+    --
+    plan_id
+    maks seat
+    maks record
+    kuota webhook
+  }
+  entity "Langganan (Subscription)" as SUBS {
+    * id
+    --
+    tenant_id
+    plan_id
+    periode mulai/berakhir
+    status
+  }
+  entity "Pembayaran" as PAY {
+    * id
+    --
+    tenant_id
+    subscription_id
+    bukti
+    status konfirmasi
+  }
+  entity "Status Penegakan" as ENF {
+    * id
+    --
+    tenant_id
+    level (peringatan/
+    suspend/read-only)
+  }
+  entity "Jejak Audit Platform" as AUD {
+    * id
+    --
+    actor (Platform Owner)
+    aksi, waktu
+  }
+}
+
 TEN ||--o{ USR
 TEN ||--o{ AKN
 TEN ||--o{ KON
@@ -141,6 +188,15 @@ TEN ||--o{ LPL
 TEN ||--o{ LPF
 TEN ||--o{ AKT
 TEN ||--o{ SUB
+
+TEN ||--o{ SUBS : "roadmap"
+SUBS }o--|| PLAN : "roadmap"
+PLAN ||--o{ QUOTA : "roadmap"
+TEN ||--o{ PAY : "roadmap"
+SUBS ||--o{ PAY : "roadmap"
+TEN ||--o{ ENF : "roadmap"
+SUBS ||..o{ ENF : "penegakan batas"
+AUD }o--|| TEN : "roadmap"
 
 AKN |o--o{ KON : "B2B: kontak di bawah akun\nB2C: kontak tanpa akun"
 LEAD ||..o{ KON : konversi
@@ -168,5 +224,10 @@ note bottom of TEN
   Entitas tiket (OB-007/008/009/021/022/023) dan
   Laporan Tiket (OB-015) DIHAPUS dari model
   karena M6 keluar dari lingkup (CR-20261008-001).
+
+  Entitas dalam package abu-abu = FASE ROADMAP (DEC-045),
+  di luar MVP bootcamp. Yang WAJIB diperhitungkan
+  sekarang: kolom status_langganan pada Tenant,
+  agar tidak perlu rework saat M9 dikerjakan.
 end note
 @enduml

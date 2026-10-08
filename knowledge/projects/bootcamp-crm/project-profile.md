@@ -4,10 +4,13 @@ type: project-profile
 project: bootcamp-crm
 client: tlab-internal
 status: active
-version: "1.8"
+version: "1.9"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "1.9"
+    date: 2026-10-08
+    purpose: "DEC-045 — kontrol plane SaaS (Platform Owner TLab) ditambahkan sebagai FASE ROADMAP terpisah (M9), di luar MVP; wajib jadi input arsitektur (tenant model menyimpan status langganan)"
   - version: "1.8"
     date: 2026-10-08
     purpose: "DEC-044 — status M6 Ticketing ke depan ditetapkan: modul lanjutan roadmap produk (di luar lingkup MVP). Menutup Q-032"
@@ -82,6 +85,7 @@ event sebagai permukaan ekstensi.
 | ~~M6~~ | ~~Ticketing~~ | **DIKELUARKAN dari MVP (CR-20261008-001 / DEC-043)** — domain *service*, bukan core CRM untuk sales tracking. **Modul lanjutan roadmap (DEC-044)** |
 | M7 | Reporting & Analytics (revenue, pipeline, performa sales) | Mandatory |
 | M8 | Webhook / Event Layer | **MVP minimal (DEC-021)** — event outbound inti + 1 endpoint inbound. Merevisi DEC-015 |
+| M9 | **Platform Administration (kontrol plane SaaS)** | **FASE ROADMAP (DEC-045)** — paket pricing, kelola akun tenant, konfirmasi pembayaran, siklus langganan, auto-suspend. Di luar MVP; wajib jadi input arsitektur |
 
 ## Tim Delivery
 

@@ -108,6 +108,15 @@ pertanyaan Q-007/Q-008/Q-011.
 - **DEC-044** — Q-032 ditutup: status M6 ke depan = **modul lanjutan roadmap
   produk** (setara Service Cloud/Service Hub), dikembangkan **di luar** bootcamp.
   Tidak mengubah lingkup MVP; tidak menghambat pelaksanaan.
+- **DEC-045** — PO meminta bisnis proses **superadmin/pemilik platform (TLab)**
+  ditampilkan (produk akan jadi **SaaS**): paket pricing, kelola akun tenant
+  (buat/ubah/**soft delete**), konfirmasi pembayaran, siklus tenant register →
+  bayar → aktif → **auto-suspend** saat melewati batas. Ditetapkan **fase
+  roadmap terpisah (M9), di luar MVP**, tapi **wajib jadi input arsitektur**
+  (tenant model M1 menyimpan status langganan). Dampak: +SH011/SH012, +EP-013/014,
+  +US-038..049, +OB-024..031, +proses 13, +BR-034..041 (8 BR), +diagram 09.
+  Modul mandatory bootcamp **tetap 6**. Buka Q-033..Q-039 (tidak menghambat).
+  Risiko baru R-017 → mitigasi TD-06 (rancangan tenant model di M1).
 - **Perbaikan temuan:** BRD v1.0 semula mengklaim "30 business requirement",
   aktual **33** (BR-001..BR-033). Dikoreksi eksplisit di changelog v2.0 —
   jangan sampai salah hitung berulang di artefak turunan.

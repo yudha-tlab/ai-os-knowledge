@@ -3,7 +3,7 @@ title: "Project Context Pack — Bootcamp Internal CRM"
 type: project-context-pack
 project: bootcamp-crm
 status: draft-v5
-version: "7.1"
+version: "8.0"
 created: 2026-10-02
 modified: 2026-10-08
 depends_on:
@@ -13,6 +13,9 @@ depends_on:
   - requirement-analysis
 scope: Aggregated key fields untuk project internal TLab — Bootcamp CRM
 changelog:
+  - version: "8.0"
+    date: 2026-10-08
+    purpose: "DEC-045 — kontrol plane SaaS (Platform Owner TLab) ditambahkan sebagai FASE ROADMAP terpisah (M9), di luar MVP; wajib jadi input arsitektur (tenant model menyimpan status langganan)"
   - version: "7.1"
     date: 2026-10-08
     purpose: "DEC-044 — status M6 Ticketing ke depan ditetapkan: modul lanjutan roadmap produk (di luar lingkup MVP). Menutup Q-032"
@@ -78,9 +81,9 @@ Nice to have: M5 Activity saja.
    prototype CRM multi-tenant. Bootcamp adalah workstream, bukan project
    terpisah.
 3. **Penyusunan requirement**: PM diberi mandat menyusun requirement. Status:
-   requirement produk CRM tersusun sebagai bahan baku BRD (10 Epic, 25 User
-   Story, 16 Objek) dan **BRD v2.0 sudah disusun** — menunggu review PO &
-   approval Head of Product.
+   requirement produk CRM tersusun sebagai bahan baku BRD (MVP: 10 Epic, 25 User
+   Story, 16 Objek; fase roadmap +4 Epic/+12 US/+15 Objek) dan **BRD v3.0 sudah
+   disusun** — menunggu review PO & approval Head of Product.
 4. **Peran PO**: PM berperan sebagai Product Owner yang bertindak selaku klien
    pemilik kebutuhan CRM, mensimulasikan alur permintaan requirement nyata.
 5. **Penetapan peserta**: Tech Lead membagi peserta. Status: jumlah & pembagian
@@ -121,17 +124,20 @@ Nice to have: M5 Activity saja.
 ## Outcomes (sejauh ini)
 
 - Bootstrap project selesai; dokumen starter + context pack dibuat.
-- Requirement analysis produk CRM tersusun: 10 Epic, 25 User Story, 16 Objek,
-  6 stakeholder, 25 baris proses bisnis, 25 baris SPOK.
+- Requirement analysis produk CRM tersusun — **MVP**: 10 Epic, 25 User Story,
+  16 Objek, 6 stakeholder, 25 baris proses bisnis, 25 baris SPOK; **fase roadmap**:
+  +4 Epic (EP-013/014 + dibatalkan), +12 US (US-038..049), +15 Objek (OB-024..031
+  + yang dihapus), + proses 13. **BRD v3.0** (25 BR MVP + 8 BR roadmap, 8 diagram).
 - **BRD v2.0 disusun** (`requirements/brd/bootcamp-crm-brd-v1.md`): 25 business
   requirement (BR-001..BR-033, 8 ticketing dihapus), peta proses→modul→peran,
   kriteria keberhasilan, dan **7 diagram** (PNG + SVG + sumber PlantUML).
 - Requirement backlog: REQ-001 s/d REQ-037 (5 REQ ticketing ditutup).
-- Decision log: 43 keputusan (DEC-001 s/d DEC-043).
+- Decision log: 45 keputusan (DEC-001 s/d DEC-045).
 - Risk register: 16 risiko (R-001 s/d R-016), 5 ditutup; R-001 naik ke High/High.
 - RAID log: 9 asumsi, 4 isu (3 resolved), 14 dependency.
 - Catatan teknis Head of Engineer: `architecture/open-tech-decisions.md` (TD-01 s/d TD-05).
-- Pertanyaan terbuka: 3 (Q-007, Q-008, Q-011 — semuanya Head of Engineer).
+- Pertanyaan terbuka: 3 (Q-007, Q-008, Q-011 — Head of Engineer) + 7 pertanyaan
+  fase roadmap (Q-033 s/d Q-039 — PM/PO, tidak menghambat bootcamp).
 
 ## Dependencies
 

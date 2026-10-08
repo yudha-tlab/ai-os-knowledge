@@ -3,11 +3,14 @@ title: "Requirement Analysis — CRM Multi-Tenant TLab"
 type: requirement-analysis
 project: bootcamp-crm
 status: draft
-version: "2.6"
+version: "3.0"
 created: 2026-10-02
 modified: 2026-10-08
 sumber: "Arahan Product Owner (Yudha Pratama) via sesi brainstorm 2026-10-02"
 changelog:
+  - version: "3.0"
+    date: 2026-10-08
+    purpose: "Tambah kontrol plane SaaS — FASE ROADMAP terpisah (DEC-045): aktor SH011 Platform Owner/Superadmin (TLab), SH012 Calon Tenant; proses 13 SaaS Platform Administration (8 sub-proses); objek OB-024..031; Epic EP-013/EP-014; US-038..048; pertanyaan Q-033..Q-039. Wajib masuk sebagai input arsitektur (tenant model harus menyimpan status langganan) — di luar MVP bootcamp"
   - version: "2.6"
     date: 2026-10-08
     purpose: "DEC-044 — status M6 Ticketing ke depan ditetapkan: menjadi modul lanjutan roadmap produk (di luar lingkup MVP). Menutup Q-032"
@@ -97,6 +100,30 @@ di mana *case/ticket management* bukan core feature produk sales.
 
 **Modul mandatory = 6** (M1, M2, M3, M4, M7, M8-minimal), turun dari 7.
 
+### 0.2 Fase Roadmap — SaaS Platform Administration (DEC-045)
+
+Produk CRM ini diposisikan sebagai **SaaS** yang dijual TLab kepada banyak
+organisasi. Di atas lapisan tenant terdapat **control plane** yang dikelola
+**pemilik platform (TLab)** — bukan oleh tenant — untuk menjalankan bisnis
+layanan: membuat paket pricing, mengelola akun tenant, mengonfirmasi pembayaran,
+dan menegakkan siklus langganan (registrasi → pembayaran → aktivasi → penutupan
+akses bila melewati batas).
+
+**Keputusan penempatan (DEC-045):** seluruh kontrol plane ini **DI LUAR MVP
+bootcamp** — ditetapkan sebagai **fase roadmap terpisah**, tetapi **WAJIB masuk
+sebagai input arsitektur**: rancangan tenant pada M1 harus menyimpan **status
+langganan** sejak awal agar tidak perlu rework saat fase ini dikerjakan.
+
+Modul roadmap: **M9 Platform Administration**. Modul mandatory bootcamp tetap
+**6** (M1, M2, M3, M4, M7, M8-minimal) — angka ini tidak berubah oleh DEC-045.
+
+| Aspek | MVP Bootcamp | Fase Roadmap (M9) |
+|---|---|---|
+| Pengelola tenant | Tenant Admin — di dalam satu tenant (M1) | **Platform Owner (TLab)** — lintas semua tenant |
+| Aktivasi tenant | tenant sudah tersedia untuk dipakai | registrasi → konfirmasi pembayaran → aktivasi |
+| Batas penggunaan | tidak ada penegakan | penegakan kuota paket → **suspend otomatis** |
+| Komersial | tidak ada | paket pricing, siklus langganan, pembayaran |
+
 **Sasaran output (DEC-041):** hasil yang dikejar dari POV project & product adalah
 **core platform CRM (backend)** — desain core backend harus mampu menyelesaikan
 seluruh fitur mandatory. **Kesiapan frontend bukan penghambat kelulusan.** Catatan
@@ -132,6 +159,26 @@ rekonsiliasi dengan DEC-028 ada di Q-031.
 | Pendukung | 11. Integrasi Webhook | 11.03 Pengelolaan subscription | 11.03.01 Konfigurasi endpoint dan secret per tenant |
 | Pendukung | 11. Integrasi Webhook | 11.03 Pengelolaan subscription | 11.03.02 Konfigurasi multiple target (fan-out satu event ke beberapa endpoint) |
 | Pendukung | 11. Integrasi Webhook | 11.04 Keandalan pengiriman | 11.04.01 Retry, rate limiting, dan pencatatan log |
+| **Roadmap** | **13. SaaS Platform Administration (Platform Owner / TLab)** — **fase roadmap terpisah (DEC-045)**, di luar MVP | 13.01 Pengelolaan paket pricing | 13.01.01 CRUD paket pricing (dimensi: seat, batas data, modul, kuota webhook, SLA/dukungan) |
+| **Roadmap** | 13. SaaS Platform Administration | 13.01 Pengelolaan paket pricing | 13.01.02 Penetapan kuota & batas per paket (nilai terukur, mis. jumlah seat / jumlah record) |
+| **Roadmap** | 13. SaaS Platform Administration | 13.02 Pengelolaan akun tenant | 13.02.01 Pembuatan akun tenant oleh Platform Owner |
+| **Roadmap** | 13. SaaS Platform Administration | 13.02 Pengelolaan akun tenant | 13.02.02 Perubahan data akun tenant |
+| **Roadmap** | 13. SaaS Platform Administration | 13.02 Pengelolaan akun tenant | 13.02.03 **Soft delete** akun tenant (penonaktifan tanpa kehilangan data) |
+| **Roadmap** | 13. SaaS Platform Administration | 13.03 Pendaftaran & aktivasi tenant | 13.03.01 Pendaftaran tenant mandiri (*self-serve*) |
+| **Roadmap** | 13. SaaS Platform Administration | 13.03 Pendaftaran & aktivasi tenant | 13.03.02 Aktivasi tenant setelah pembayaran dikonfirmasi |
+| **Roadmap** | 13. SaaS Platform Administration | 13.04 Konfirmasi pembayaran | 13.04.01 Pencatatan pembayaran langganan per periode |
+| **Roadmap** | 13. SaaS Platform Administration | 13.04 Konfirmasi pembayaran | 13.04.02 Konfirmasi/penolakan bukti pembayaran oleh Platform Owner |
+| **Roadmap** | 13. SaaS Platform Administration | 13.04 Konfirmasi pembayaran | 13.04.03 Riwayat pembayaran & masa aktif langganan |
+| **Roadmap** | 13. SaaS Platform Administration | 13.05 Siklus langganan | 13.05.01 Penetapan masa aktif langganan per periode |
+| **Roadmap** | 13. SaaS Platform Administration | 13.05 Siklus langganan | 13.05.02 Pergantian paket (*upgrade* / *downgrade*) |
+| **Roadmap** | 13. SaaS Platform Administration | 13.05 Siklus langganan | 13.05.03 Perpanjangan langganan |
+| **Roadmap** | 13. SaaS Platform Administration | 13.06 Penegakan batas paket | 13.06.01 Pemantauan pemakaian terhadap kuota paket |
+| **Roadmap** | 13. SaaS Platform Administration | 13.06 Penegakan batas paket | 13.06.02 Peringatan menjelang batas / menjelang jatuh tempo |
+| **Roadmap** | 13. SaaS Platform Administration | 13.06 Penegakan batas paket | 13.06.03 **Penutupan akses otomatis** (suspend/read-only) bila melewati batas atau langganan berakhir |
+| **Roadmap** | 13. SaaS Platform Administration | 13.07 Dukungan operasional | 13.07.01 Reset/penunjukan tenant admin |
+| **Roadmap** | 13. SaaS Platform Administration | 13.07 Dukungan operasional | 13.07.02 Penanganan keluhan lintas tenant |
+| **Roadmap** | 13. SaaS Platform Administration | 13.08 Pemantauan platform | 13.08.01 Pemantauan aktivitas platform & metrik penggunaan per tenant |
+| **Roadmap** | 13. SaaS Platform Administration | 13.08 Pemantauan platform | 13.08.02 Jejak audit tindakan Platform Owner |
 | — | 12. Assessment Tim Sales (HR) — **DIKELUARKAN DARI LINGKUP (DEC-031)** | — | — |
 
 Proses **06 Pengelolaan Tiket** (6 sub-proses) dan **09 Pelaporan Tiket**
@@ -139,6 +186,12 @@ Proses **06 Pengelolaan Tiket** (6 sub-proses) dan **09 Pelaporan Tiket**
 DEC-043): ticketing adalah domain *service*, bukan core CRM untuk sales tracking.
 Nomor proses 06 dan 09 **sengaja tidak dipakai ulang** agar traceability tidak
 hilang.
+
+Proses **13 SaaS Platform Administration** ditambahkan 2026-10-08 sebagai **fase
+roadmap terpisah (DEC-045)** — kontrol plane milik **pemilik platform (TLab)**,
+di luar MVP bootcamp. Tetap diturunkan lengkap ke stakeholder/objek/Epic/User
+Story agar tidak hilang, dan **wajib menjadi input arsitektur M1** (tenant model
+harus menyimpan status langganan).
 
 Proses 12 **dikeluarkan dari lingkup produk CRM** pada 2026-10-02 (DEC-031):
 kebutuhan ini bukan pakem CRM — CRM mengelola pelanggan, bukan penilaian
@@ -161,6 +214,8 @@ inisiatif internal terpisah.
 | SH008 | Sistem Eksternal | Sistem Klien (di luar CRM) | System/Eksternal | Menerima event CRM tepat waktu; dapat mengirim data ke CRM | Kustomisasi klien tidak dapat berjalan; integrasi manual | Integrasi Webhook | 11 | Log pengiriman & retry | Per event |
 | SH009 | Manajemen | Head of Sales / Manajemen | Internal | Laporan revenue dan pipeline yang dapat dipercaya | Keputusan berbasis data tidak dapat diambil | Laporan Revenue & Pipeline | 08 | Laporan revenue | Bulanan |
 | SH010 | HR | Tim HR | Internal | **Di luar lingkup produk CRM (DEC-031)** — kebutuhan penilaian karyawan, bukan pengelolaan pelanggan | Kemampuan assessment tim sales tidak terbangun di CRM | Inisiatif terpisah bila masih diperlukan | — | — | — |
+| SH011 | **Platform Owner** | **Superadmin TLab** | Internal | **Kontrol penuh atas bisnis SaaS**: paket pricing, akun tenant, konfirmasi pembayaran, siklus langganan, penegakan batas, pemantauan platform | **Platform tidak dapat dikomersialkan**; tenant tidak terkelola; tidak ada kendali atas pelanggaran batas langganan | Modul **Platform Administration (M9, roadmap)** | 13 | Dashboard penggunaan & status langganan per tenant | Harian/Bulanan |
+| SH012 | **Calon Tenant** | Organisasi calon pelanggan | Eksternal | Dapat mendaftar, memilih paket, membayar, dan memperoleh akses setelah aktivasi | Sulit masuk sebagai pelanggan; konversi penjualan terhambat | Alur registrasi & aktivasi mandiri (*self-serve*) | 13 | Status pendaftaran → aktivasi | Per pendaftaran |
 
 ---
 
@@ -191,6 +246,14 @@ inisiatif internal terpisah.
 | OB-021 | Komentar Tiket | Komentar/percakapan pada tiket (DEC-028) | **← DIHAPUS (CR-20261008-001)**
 | OB-022 | Riwayat Pergerakan Tiket | Jejak perubahan status, assignee, dan eskalasi tiket (DEC-028) | **← DIHAPUS (CR-20261008-001)**
 | OB-023 | SLA Tiket | Target waktu penyelesaian tiket per prioritas beserta status pelanggaran (DEC-025) | **← DIHAPUS (CR-20261008-001)**
+| OB-024 | **Paket Pricing (Plan)** | Definisi paket langganan beserta dimensi harga & kuota (seat, batas data, modul aktif, kuota webhook, SLA/dukungan) — DEC-045, fase roadmap | **Roadmap (M9)** |
+| OB-025 | **Kuota & Batas Paket** | Nilai terukur per paket (mis. maksimum seat, maksimum record) sebagai dasar penegakan otomatis | **Roadmap (M9)** |
+| OB-026 | **Akun Tenant (Langganan)** | Akun tenant sebagai entitas komersial: pemilik, paket aktif, status langganan — memperluas OB-016 untuk konteks SaaS | **Roadmap (M9)** |
+| OB-027 | **Langganan (Subscription)** | Masa aktif langganan tenant: periode mulai/berakhir, status (trial/aktif/past due/suspend/berhenti), riwayat perubahan paket | **Roadmap (M9)** |
+| OB-028 | **Pembayaran** | Pencatatan pembayaran langganan per periode beserta bukti dan status konfirmasi | **Roadmap (M9)** |
+| OB-029 | **Status Penegakan (Enforcement)** | Status penegakan batas: peringatan, pembatasan, penutupan akses otomatis | **Roadmap (M9)** |
+| OB-030 | **Pendaftaran Tenant** | Permohonan pendaftaran tenant dari calon pelanggan sebelum aktivasi | **Roadmap (M9)** |
+| OB-031 | **Jejak Audit Platform** | Jejak tindakan Platform Owner (siapa, kapan, tindakan apa) untuk akuntabilitas kontrol plane | **Roadmap (M9)** |
 
 ---
 
@@ -222,6 +285,17 @@ inisiatif internal terpisah.
 | 11.03 Pengelolaan subscription | SH005 - Tenant Admin | Mengkonfigurasi | OB-018-Webhook Subscription | Endpoint dan secret per tenant |
 | 11.01 / 11.02 | SH005 - Tenant Admin | Memantau | OB-020-Delivery Log | Log pengiriman, retry, dan kegagalan |
 | 03.01 Penetapan kuota | SH002 - Sales Manager | Mengonfigurasi | OB-010-Kuota/Target Sales | Kuota per sales **per bulan** (DEC-035); ambang batas performa configurable per tenant (DEC-023) |
+| 13.01 Pengelolaan paket pricing | SH011 - Platform Owner (Superadmin TLab) | Mengelola | OB-024-Paket Pricing | CRUD paket + penetapan kuota/batas per paket — **fase roadmap (DEC-045)** |
+| 13.02 Pengelolaan akun tenant | SH011 - Platform Owner | Mengelola | OB-026-Akun Tenant | Buat / ubah / **soft delete** akun tenant |
+| 13.03 Pendaftaran & aktivasi tenant | SH012 - Calon Tenant | Mendaftar | OB-030-Pendaftaran Tenant | Registrasi mandiri (*self-serve*) |
+| 13.03 Pendaftaran & aktivasi tenant | SH011 - Platform Owner | Mengaktifkan | OB-026-Akun Tenant | Aktivasi setelah pembayaran dikonfirmasi |
+| 13.04 Konfirmasi pembayaran | SH011 - Platform Owner | Mengonfirmasi | OB-028-Pembayaran | Verifikasi bukti bayar → masa aktif langganan |
+| 13.05 Siklus langganan | SH011 - Platform Owner | Mengelola | OB-027-Langganan | Masa aktif, perpanjangan, pergantian paket (upgrade/downgrade) |
+| 13.05 Siklus langganan | Sistem Platform | Menjalankan | OB-029-Status Penegakan | Penegakan batas → peringatan → penutupan akses otomatis |
+| 13.06 Penegakan batas paket | Sistem Platform | Memantau | OB-025-Kuota & Batas Paket | Pemakaian vs kuota paket |
+| 13.06 Penegakan batas paket | Sistem Platform | Menutup akses | OB-029-Status Penegakan | **Suspend otomatis** bila melewati batas / langganan berakhir |
+| 13.07 Dukungan operasional | SH011 - Platform Owner | Mendukung | OB-026-Akun Tenant | Reset/penunjukan tenant admin; penanganan keluhan lintas tenant |
+| 13.08 Pemantauan platform | SH011 - Platform Owner | Memantau | OB-031-Jejak Audit Platform | Metrik penggunaan per tenant + jejak audit tindakan Platform Owner |
 
 ---
 
@@ -348,6 +422,39 @@ mengatur.
 
 ---
 
+### 5.6 Dimensi Paket Pricing SaaS — Bahan Rekomendasi (DEC-045, fase roadmap)
+
+Dasar: praktik pasar CRM SaaS (per-seat dominan pada ACV di bawah USD 50K —
+Salesforce, Pipedrive, Zoho memakai *per user/bulan*) + sifat produk kita
+(core sales stabil, kustomisasi via webhook — DEC-012/DEC-030). **Angka harga
+tidak dicantumkan** karena belum ada data harga dari PO.
+
+**Dimensi yang layak dijadikan basis paket:**
+
+| Dimensi | Alasan |
+|---|---|
+| **Seat** (jumlah user aktif) | Dimensi paling dipahami pasar; model default CRM SaaS |
+| **Batas data** (jumlah Kontak + Akun + Lead + Peluang) | Alasan *upgrade* alami; mudah dihitung & ditegakkan |
+| **Modul yang aktif** | Gerbang fitur (Lead, Pipeline, Kuota & Performa, Reporting) |
+| **Kuota webhook** (event/bulan + jumlah target fan-out) | Nilai jual utama sekaligus biaya operasional (DEC-012/DEC-030) |
+| **Dukungan & SLA** | Pemisah tier atas |
+| **Storage & retensi/ekspor data** | *Add-on*, bukan gerbang tier |
+
+**Usulan struktur paket (nama & angka = belum ditetapkan):**
+
+| Paket | Cakupan yang diusulkan | Alur masuk |
+|---|---|---|
+| **Trial** | 14 hari; 3 user; 1 target webhook | Registrasi mandiri (*self-serve*) |
+| **Starter** | s/d 5 user; modul inti sales (Lead, Kontak & Akun, Pipeline); laporan dasar; webhook outbound terbatas | Self-serve + konfirmasi pembayaran |
+| **Growth** | s/d 20 user; seluruh modul sales + Kuota & Performa + Reporting lengkap; webhook + fan-out | Sales-led |
+| **Enterprise** | user *fair use* besar; seluruh modul; webhook + SLA; dukungan khusus | Sales-led |
+| **Add-on** | tambahan seat; tambahan kuota webhook; tambahan storage | — |
+
+**Catatan:** ini **rekomendasi desain**, bukan keputusan produk. Penetapan nama,
+harga, dan angka kuota menunggu keputusan PO (Q-033..Q-035).
+
+---
+
 ## 6. Hasil Konversi (Epic & User Story)
 
 ### Epic (dari Proses)
@@ -366,6 +473,8 @@ mengatur.
 | EP-010 | Tenancy & Kendali Akses | M1 | Mandatory |
 | EP-011 | Integrasi Webhook | M8 | MVP minimal (DEC-021) |
 | EP-012 | ~~Assessment Tim Sales (HR)~~ | — | **Dibatalkan (DEC-031)** — di luar lingkup produk CRM |
+| EP-013 | Penetapan Kuota per Paket *(roadmap)* | — | **Roadmap (M9)** — DEC-045; di luar MVP |
+| EP-014 | Pengaturan Penagihan & Pendaftaran Tenant *(roadmap)* | — | **Roadmap (M9)** — DEC-045; di luar MVP |
 
 ### User Story (dari SPOK)
 
@@ -396,6 +505,18 @@ mengatur.
 | US-035 | Sebagai Tenant Admin, saya ingin mengonfigurasi satu webhook agar diteruskan ke beberapa target, sehingga beberapa sistem klien dapat menerima event yang sama. | EP-011 |
 | US-036 | Sebagai Tenant Admin, saya ingin mengatur retry dan rate limit pengiriman webhook, sehingga kegagalan sementara tidak menghilangkan event. | EP-011 |
 | US-037 | Sebagai Sales Manager, saya ingin mengonfigurasi ambang batas performa sales per tenant, sehingga kriteria "perform" dapat disesuaikan dengan kebijakan masing-masing tenant. | EP-007 |
+| US-038 | Sebagai Platform Owner TLab, saya ingin membuat dan mengelola paket pricing (dimensi: seat, batas data, modul, kuota webhook, SLA), sehingga produk dapat dikomersialkan dalam tingkatan yang jelas. | EP-013 |
+| US-039 | Sebagai Platform Owner TLab, saya ingin melihat daftar seluruh tenant beserta paket dan status langganannya, sehingga saya dapat memantau basis pelanggan. | EP-013 |
+| US-040 | Sebagai Platform Owner TLab, saya ingin menetapkan kuota dan batas per paket, sehingga penegakan batas dapat dilakukan otomatis. | EP-013 |
+| US-041 | Sebagai Platform Owner TLab, saya ingin membuat akun tenant baru, sehingga pelanggan dapat mulai menggunakan CRM. | EP-013 |
+| US-042 | Sebagai Platform Owner TLab, saya ingin mengubah data akun tenant, sehingga perubahan data pelanggan dapat dicatat. | EP-013 |
+| US-043 | Sebagai Platform Owner TLab, saya ingin melakukan soft delete akun tenant, sehingga tenant yang berhenti tidak lagi aktif namun datanya tetap terjaga. | EP-013 |
+| US-044 | Sebagai Platform Owner TLab, saya ingin melihat riwayat langganan & pembayaran setiap tenant, sehingga status masa aktif dapat diverifikasi. | EP-014 |
+| US-045 | Sebagai Platform Owner TLab, saya ingin mengonfirmasi pembayaran tenant, sehingga masa aktif langganan dapat diaktifkan. | EP-014 |
+| US-046 | Sebagai Platform Owner TLab, saya ingin memperpanjang atau mengubah paket langganan tenant, sehingga tenant dapat naik/turun paket sesuai kebutuhan. | EP-014 |
+| US-047 | Sebagai Sistem, saya ingin menutup akses tenant secara otomatis ketika kuota paket terlampaui atau langganan berakhir, sehingga batas komersial ditegakkan tanpa intervensi manual. | EP-014 |
+| US-048 | Sebagai Calon Tenant, saya ingin mendaftar, memilih paket, dan memperoleh aktivasi setelah pembayaran dikonfirmasi, sehingga saya dapat mulai menggunakan CRM secara mandiri. | EP-014 |
+| US-049 | Sebagai Platform Owner TLab, saya ingin melihat jejak audit tindakan saya (siapa/kapan/apa) di control plane, sehingga akuntabilitas pengelolaan platform terjaga. | EP-014 |
 
 Task didekomposisi saat sprint planning (Taiga), bukan di tahap requirement ini.
 
@@ -408,6 +529,10 @@ traceable antar dokumen. Per 2026-10-02, **seluruh pertanyaan kewenangan PM/PO
 tertutup** (Q-031 ditutup oleh DEC-042). Tersisa tiga pertanyaan milik **Head of
 Engineer**: Q-007, Q-008 (metrik efektivitas + baseline) dan Q-011 (stack
 teknologi).
+
+**Per 2026-10-08 (DEC-045):** terbuka **tujuh pertanyaan baru** — Q-033 s/d Q-039,
+seluruhnya menyangkut **fase roadmap SaaS Platform Administration**. Tidak
+menghambat pelaksanaan bootcamp.
 
 | ID | Pertanyaan | Konteks | Ditujukan ke | Status |
 |----|------------|---------|--------------|--------|
@@ -443,6 +568,13 @@ teknologi).
 | Q-030 | **Tanggal akhir bootcamp**: 13-15 Okt (3 hari dari 13 Okt) atau 13-14 Okt? | DEC-037 | PM/PO | **Ditutup tanpa tanggal (DEC-040)** — PO menegaskan yang mengikat adalah **durasi**, bukan rentang start-end. Bukan field kosong, melainkan keputusan sadar |
 | Q-031 | **Rekonsiliasi kriteria selesai:** DEC-028 (end-to-end modul mandatory) vs DEC-041 (core backend, frontend bukan penghambat) | DEC-028, DEC-041 | PM/PO | **Terjawab 2026-10-02 (DEC-042)** — DEC-028 tetap berlaku; **"end-to-end" diukur pada kapabilitas backend** (terverifikasi via API/kontrak data), bukan kelengkapan UI |
 | Q-032 | **Status M6 Ticketing ke depan** — modul lanjutan roadmap produk atau keluar sepenuhnya? | DEC-043 | PM/PO + Head of Product | **Terjawab 2026-10-08 (DEC-044)** — menjadi **modul lanjutan roadmap produk** (setara Service Cloud/Service Hub), dikembangkan di luar lingkup MVP bootcamp |
+| Q-033 | **Nama & jumlah paket pricing** SaaS yang akan dijual | Proses 13.01; DEC-045 | PM/PO + Head of Product | **Terbuka 2026-10-08** — bahan rekomendasi ada di section 5.6; belum ditetapkan |
+| Q-034 | **Dimensi harga & nilai kuota per paket** (seat, batas data, kuota webhook) | Proses 13.01 | PM/PO | **Terbuka 2026-10-08** — dimensi diusulkan di section 5.6 |
+| Q-035 | **Struktur harga** (per user / per paket / berbasis pemakaian) & mata uang | Proses 13.01; DEC-045 | PM/PO | **Terbuka 2026-10-08** |
+| Q-036 | **Kebijakan penegakan batas**: apa yang terjadi saat kuota terlampaui atau langganan berakhir — peringatan, *read-only*, atau penutupan akses penuh? | Proses 13.06 | PM/PO + Head of Engineer | **Terbuka 2026-10-08** — mekanisme auto-suspend belum dirinci |
+| Q-037 | **Mekanisme pembayaran**: manual (transfer + konfirmasi Platform Owner) atau payment gateway? | Proses 13.04 | PM/PO | **Terbuka 2026-10-08** — konfirmasi manual sudah pasti masuk; gateway belum diputuskan |
+| Q-038 | **Cara tenant mendaftar**: self-serve mandiri atau dibuatkan Platform Owner? | Proses 13.03 | PM/PO | **Terbuka 2026-10-08** — kedua jalur mungkin; proporsi belum ditetapkan |
+| Q-039 | **Kebijakan data saat tenant di-soft-delete**: masa retensi, ekspor data, dan hak pemulihan | Proses 13.02 | PM/PO | **Terbuka 2026-10-08** |
 
 ---
 

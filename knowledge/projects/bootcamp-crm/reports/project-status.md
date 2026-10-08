@@ -3,11 +3,14 @@ title: "Project Status — Bootcamp Internal CRM"
 type: project-status
 project: bootcamp-crm
 status: active
-version: "8.1"
+version: "9.0"
 created: 2026-10-02
 modified: 2026-10-08
 date: 2026-10-08
 changelog:
+  - version: "9.0"
+    date: 2026-10-08
+    purpose: "DEC-045 — kontrol plane SaaS (Platform Owner/Superadmin TLab) ditambahkan sebagai FASE ROADMAP terpisah (M9), di luar MVP; wajib jadi input arsitektur (tenant model menyimpan status langganan). Modul mandatory tetap 6; +8 BR roadmap, +diagram 09; Q-033..Q-039 dibuka"
   - version: "8.1"
     date: 2026-10-08
     purpose: "DEC-044 — status M6 Ticketing ke depan ditetapkan PO: modul lanjutan roadmap produk (di luar lingkup MVP). Menutup Q-032"
@@ -87,6 +90,22 @@ Dampak terukur:
 produk sebagai modul lanjutan roadmap** — setara Service Cloud/Service Hub —
 dikembangkan **di luar** bootcamp. Menutup Q-032; tidak mengubah lingkup MVP
 (mandatory tetap 6 modul).
+
+**Kontrol plane SaaS (DEC-045, 2026-10-08):** PO meminta bisnis proses
+**superadmin/pemilik platform (TLab)** ditampilkan — produk ini akan menjadi
+**SaaS**, sehingga perlu mekanisme tenant **register → membayar → aktif → otomatis
+ditutup aksesnya bila melewati batas**. Ditetapkan sebagai **fase roadmap
+terpisah (M9 Platform Administration), di luar MVP**, namun **wajib menjadi input
+arsitektur** (tenant model M1 menyimpan status langganan).
+
+Dampak terukur (fase roadmap, bukan MVP):
+
+- Modul roadmap **+M9**; Epic **+EP-013/EP-014**; User Story **+US-038..049**;
+  Objek **+OB-024..031**; Proses **+13 (8 sub-proses)**; Stakeholder **+SH011/SH012**;
+  Business Requirement **+BR-034..041 (8 BR)**; Diagram **+1 (09)**.
+- **Modul mandatory bootcamp tetap 6** — angka ini tidak berubah.
+- Pertanyaan baru **Q-033..Q-039** (harga/paket, pembayaran, penegakan, soft delete).
+- BRD direvisi ke **v3.0**.
 
 **Efek pada risiko:** R-001 turun (beban 7→6 modul) tetapi **tetap High/High** —
 6 modul masih harus terlayani dalam 2 hari efektif. Lihat [[risk-register]].

@@ -3,10 +3,13 @@ title: "RAID Log — Bootcamp Internal CRM"
 type: raid-log
 project: bootcamp-crm
 status: active
-version: "8.0"
+version: "9.0"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "9.0"
+    date: 2026-10-08
+    purpose: "DEC-045 — tambah R-017 (kontrol plane SaaS belum dirancang), A-010 (asumsi penegakan batas dapat dipisahkan dari M1), D-016 (rancangan tenant model menyimpan status langganan)"
   - version: "8.0"
     date: 2026-10-08
     purpose: "CR-20261008-001 / DEC-043 — M6 Ticketing & EP-009 dikeluarkan dari MVP; modul mandatory 7→6. R-001 beban turun (tetap High/High); BRD v2.0 (25 BR, 7 diagram)"
@@ -55,6 +58,7 @@ Ringkasan risiko teratas. Detail lengkap, termasuk skala penilaian, ada di
 | R-014 | Rentang bootcamp 13-14 Okt (2 hari) tidak konsisten dengan ketetapan durasi 3 hari (DEC-003) | Med | Med | Sedang | PM/PO | **DITUTUP 2026-10-02** — PO mengonfirmasi durasi tetap 3 hari dengan hari 1 sebagai workshop (DEC-037). Sisa: tanggal akhir (Q-030) | **Closed** |
 | R-015 | Hari 1 workshop tidak cukup untuk memfinalkan seluruh requirement → requirement masuk hari 2 dalam kondisi belum final, jendela pengembangan menyusut di bawah 2 hari | High | High | Tinggi | PM/PO | Kunci daftar keputusan terbuka & agendakan workshop hari 1 secara ketat; **BRD v2.0 sebagai bahan dasar telah disusun** (section 9 memuat daftar "yang belum final"); tetapkan kriteria "requirement dianggap final" | Open — **baru 2026-10-02; mitigasi parsial: BRD v2.0 selesai** |
 | R-016 | Kriteria selesai tidak konsisten (DEC-028 end-to-end vs DEC-041 core backend) | — | — | — | PM/PO | **DITUTUP 2026-10-02** — DEC-042 menyatukan kedua definisi: "end-to-end" diukur pada kapabilitas backend | **Closed** |
+| R-017 | Kontrol plane SaaS tidak dirancang saat bootcamp → tenant model tanpa status langganan/kuota paket memerlukan migrasi mahal di fase roadmap M9 | Med | Med | Sedang | PM/PO + Head of Engineer | **Mitigasi: TD-06** — putuskan rancangan tenant model yang menyimpan status langganan selama bootcamp M1 (rancangan saja). Ditambah 2026-10-08 (DEC-045) | Open — **baru 2026-10-08** |
 
 ## Assumptions (Asumsi)
 
@@ -69,6 +73,7 @@ Ringkasan risiko teratas. Detail lengkap, termasuk skala penilaian, ada di
 | A-007 | Kuota bulanan dapat didefinisikan cukup dari nilai deal closed-won tanpa data historis | Status performa sales tidak bermakna di prototype karena tidak ada pembanding; periode sudah **bulanan** (DEC-035) | PM/PO | Perlu Validasi |
 | A-008 | Nama peserta tidak diperlukan untuk perencanaan sesi bootcamp saat ini | Bila pembagian peran per individu dibutuhkan, sesi tidak dapat direncanakan | PM/PO | Terkonfirmasi 2026-10-02 (DEC-038) |
 | A-009 | Hari 1 cukup untuk memfinalkan seluruh requirement (BRD + keputusan terbuka) | Requirement masuk hari 2 belum final; jendela pengembangan menyusut (R-015) | PM/PO | Perlu Validasi |
+| A-010 | **Penegakan batas paket (M9) dapat dipisahkan dari tenant model M1** — cukup status langganan yang disimpan, mekanisme penegakannya menyusul | Bila tidak, sebagian M9 harus masuk MVP dan beban 2 hari bertambah | PM/PO + Head of Engineer | Perlu Validasi — **baru 2026-10-08 (DEC-045)** |
 
 Seluruh asumsi berstatus **Perlu Validasi** — belum ada satu pun yang
 terkonfirmasi oleh pihak yang berwenang, kecuali A-008 (nama peserta tidak
@@ -102,6 +107,8 @@ diperlukan untuk perencanaan saat ini).
 | D-013 | Konfirmasi tanggal akhir bootcamp | PM/PO | Yudha Pratama | **Ditutup 2026-10-02** | **Ditutup tanpa tanggal** (DEC-040) — PO menegaskan yang mengikat adalah **durasi**, bukan rentang start-end. Tidak lagi menjadi dependency |
 | D-014 | BRD selesai & disetujui sebagai bahan workshop hari 1 | PM/PO + Head of Product | Yudha Pratama | Sebelum 2026-10-13 | Open — **baru**, menjadi input kritis DEC-037 |
 | D-015 | Ukuran kelulusan yang disepakati (core backend vs end-to-end) | PM/PO | Yudha Pratama | **Terpenuhi 2026-10-02** | **Terpenuhi** — DEC-042: "end-to-end" diukur pada kapabilitas backend (API/kontrak data) |
+| D-016 | **Rancangan tenant model menyimpan status langganan + kuota paket** (input arsitektur M9) | Head of Engineer | Head of Engineer | **Selama bootcamp (M1)** — TD-06 | Open — **baru 2026-10-08 (DEC-045)**; jangan tunda, biaya rework tinggi |
+| D-017 | Keputusan paket pricing & mekanisme pembayaran (Q-033..Q-037) | PM/PO + Head of Product | Yudha Pratama | Fase roadmap (setelah bootcamp) | Open — tidak menghambat bootcamp |
 
 ## Aturan Eskalasi
 

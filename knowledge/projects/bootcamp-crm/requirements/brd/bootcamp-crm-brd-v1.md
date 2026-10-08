@@ -3,7 +3,7 @@ title: "Business Requirements Document (BRD) — CRM Multi-Tenant TLab"
 type: brd
 project: bootcamp-crm
 status: Draft — menunggu review Product Owner & approval Head of Product & Project
-version: "2.1"
+version: "3.0"
 created: 2026-10-02
 modified: 2026-10-08
 disusun_oleh: "Yudha Pratama (PM / Product Owner)"
@@ -14,6 +14,9 @@ sumber_utama:
   - project-charter (v7.0)
   - CR-20261008-001 (penyesuaian lingkup)
 changelog:
+  - version: "3.0"
+    date: 2026-10-08
+    purpose: "Tambah kontrol plane SaaS sebagai FASE ROADMAP terpisah (DEC-045): aktor Platform Owner/Superadmin TLab + Calon Tenant, proses 13 (8 sub-proses), objek OB-024..031, business requirement BR-034..BR-041 (roadmap), usulan paket pricing, diagram 09. Di luar MVP bootcamp; WAJIB masuk input arsitektur (tenant model menyimpan status langganan). Jumlah BR MVP tetap 25"
   - version: "2.1"
     date: 2026-10-08
     purpose: "DEC-044 — status M6 Ticketing ke depan ditetapkan: modul lanjutan roadmap produk (di luar lingkup MVP bootcamp). Menutup Q-032; tidak mengubah jumlah BR (25)"
@@ -27,7 +30,7 @@ changelog:
 
 # Business Requirements Document (BRD) — CRM Multi-Tenant TLab
 
-**Versi:** 2.1 (Draft)
+**Versi:** 3.0 (Draft)
 **Tanggal:** 2026-10-02 · direvisi 2026-10-08
 **Disusun Oleh:** Yudha Pratama — PM, berperan sebagai Product Owner
 **Status:** Draft — menunggu review PO dan approval Head of Product & Project
@@ -148,6 +151,11 @@ turun setelah M6 dikeluarkan (CR-20261008-001).
 **Modul mandatory = 6** (M1, M2, M3, M4, M7, M8-minimal), turun dari 7 setelah
 ticketing dikeluarkan.
 
+**Fase roadmap (di luar MVP):** **M9 Platform Administration** — kontrol plane
+milik pemilik platform (TLab) untuk menjalankan produk sebagai SaaS (paket
+pricing, kelola akun tenant, konfirmasi pembayaran, siklus langganan,
+auto-suspend). Lihat §2.4. **Angka modul mandatory tidak berubah** oleh DEC-045.
+
 **Sasaran output yang diukur (DEC-041):** **desain core backend mampu
 menyelesaikan seluruh fitur mandatory** yang ditargetkan. **Kesiapan frontend
 bukan penghambat kelulusan** — UI boleh belum selesai selama kapabilitas backend
@@ -173,8 +181,68 @@ kehilangan objeknya seiring keluarnya M6 — lihat §9.*
 | **Implementasi produksi & integrasi ke sistem TLab lain** | Di luar mandat bootcamp; perlu keputusan lanjutan |
 | **Dukungan pasca-bootcamp** | Belum ada keputusan kelanjutan (catatan internal Q-013) |
 | **Leading indicator (aktivitas & pipeline) di MVP** | Memerlukan M5 yang *nice to have* (DEC-027) |
+| **M9 Platform Administration (kontrol plane SaaS)** | **Fase roadmap terpisah** (DEC-045) — di luar MVP bootcamp; didokumentasikan penuh sebagai input arsitektur |
 
-### 2.3 Requirement Berprioritas Rendah (Should / Could)
+### 2.3 Fase Roadmap — SaaS Platform Administration (M9, DEC-045)
+
+Produk ini diposisikan sebagai **SaaS** yang dijual TLab kepada banyak
+organisasi. Di atas lapisan tenant (M1) terdapat **control plane** yang dikelola
+**pemilik platform (TLab)** — bukan oleh tenant — untuk menjalankan bisnis
+layanan.
+
+**Keputusan penempatan (DEC-045):** seluruh kontrol plane ini **di luar MVP
+bootcamp**, ditetapkan sebagai **fase roadmap terpisah (M9)**, tetapi **WAJIB
+masuk sebagai input arsitektur** — rancangan tenant pada M1 harus menyimpan
+**status langganan** sejak awal agar tidak perlu rework.
+
+| Aspek | MVP Bootcamp | Fase Roadmap (M9) |
+|---|---|---|
+| Pengelola tenant | Tenant Admin — di dalam satu tenant (M1) | **Platform Owner (TLab)** — lintas semua tenant |
+| Aktivasi tenant | tenant sudah tersedia untuk dipakai | registrasi → konfirmasi pembayaran → aktivasi |
+| Batas penggunaan | tidak ada penegakan | penegakan kuota paket → **suspend otomatis** |
+| Komersial | tidak ada | paket pricing, siklus langganan, pembayaran |
+
+#### Ringkasan Kemampuan Control Plane
+
+| # | Kemampuan | Proses | Epic |
+|---|---|---|---|
+| 1 | Membuat & mengelola **paket pricing** | 13.01 | EP-013 |
+| 2 | Menetapkan **kuota & batas per paket** | 13.01 | EP-013 |
+| 3 | **Membuat, mengubah, soft delete akun tenant** | 13.02 | EP-013 |
+| 4 | **Pendaftaran & aktivasi tenant** | 13.03 | EP-014 |
+| 5 | **Konfirmasi pembayaran** & riwayat masa aktif | 13.04 | EP-014 |
+| 6 | **Siklus langganan** (perpanjangan, upgrade/downgrade) | 13.05 | EP-014 |
+| 7 | **Penegakan batas paket → penutupan akses otomatis** | 13.06 | EP-014 |
+| 8 | Dukungan operasional & pemantauan platform (jejak audit) | 13.07–13.08 | EP-014 |
+
+#### Usulan Dimensi Paket Pricing
+
+Dasar: praktik CRM SaaS (per-seat dominan pada ACV < USD 50K — Salesforce,
+Pipedrive, Zoho memakai *per user/bulan*) + sifat produk (core stabil,
+kustomisasi via webhook — DEC-012/DEC-030). **Angka harga tidak dicantumkan**
+karena belum ada data harga; penetapan menunggu Q-033..Q-035.
+
+| Dimensi | Alasan |
+|---|---|
+| **Seat** (jumlah user aktif) | Dimensi paling dipahami pasar; model default CRM SaaS |
+| **Batas data** (Kontak + Akun + Lead + Peluang) | Alasan *upgrade* alami; mudah dihitung & ditegakkan |
+| **Modul yang aktif** | Gerbang fitur per tingkatan |
+| **Kuota webhook** (event/bulan + target fan-out) | Nilai jual utama sekaligus biaya operasional |
+| **Dukungan & SLA** | Pemisah tier atas |
+| **Storage & retensi/ekspor** | *Add-on*, bukan gerbang tier |
+
+| Paket | Cakupan yang diusulkan | Alur masuk |
+|---|---|---|
+| **Trial** | 14 hari; 3 user; 1 target webhook | Registrasi mandiri (*self-serve*) |
+| **Starter** | s/d 5 user; modul inti sales; laporan dasar; webhook outbound terbatas | Self-serve + konfirmasi pembayaran |
+| **Growth** | s/d 20 user; seluruh modul sales + Kuota & Performa + Reporting lengkap; webhook + fan-out | Sales-led |
+| **Enterprise** | user *fair use* besar; seluruh modul; webhook + SLA; dukungan khusus | Sales-led |
+| **Add-on** | tambahan seat / kuota webhook / storage | — |
+
+> **Ini rekomendasi desain, bukan keputusan produk.** Nama, harga, dan angka
+> kuota belum ditetapkan — tidak diisi agar tidak menciptakan target fiktif.
+
+### 2.4 Requirement Berprioritas Rendah (Should / Could)
 
 Requirement berikut berada di dalam visi produk tetapi **tidak menahan approval
 prototype** bila tidak selesai: REQ-016 (inbound minimal), REQ-027 (laporan
@@ -191,6 +259,8 @@ pipeline), REQ-030 (aktivitas).
 | SH005 | **Tenant Admin** | Internal | Isolasi data antar tenant, kendali user/role, konfigurasi integrasi | M1, M8 |
 | SH008 | **Sistem Klien** (di luar CRM) | System/Eksternal | Menerima event tepat waktu; dapat mengirim data ke CRM | M8 |
 | SH009 | **Manajemen / Head of Sales** | Internal | Laporan revenue & pipeline yang dapat dipercaya | M7 |
+| SH011 | **Platform Owner (Superadmin TLab)** | Internal | Kontrol penuh atas bisnis SaaS: paket pricing, akun tenant, konfirmasi pembayaran, siklus langganan, penegakan batas | **M9 (roadmap)** |
+| SH012 | **Calon Tenant** | Eksternal | Dapat mendaftar, memilih paket, membayar, dan memperoleh akses setelah aktivasi | **M9 (roadmap)** |
 
 **Stakeholder yang keluar dari lingkup (CR-20261008-001):** SH003 Agent Support,
 SH004 Support Lead / Manager, SH006 Pelanggan (B2B/B2C), SH007 Karyawan Tenant —
@@ -209,7 +279,9 @@ keputusan delivery dicatat sebagai risiko R-006.
 
 Format ID: **BR-nnn**. Setiap requirement mencantumkan **sumber requirement**
 (REQ) dan **keputusan** (DEC) agar dapat ditelusuri. Prioritas memakai MoSCoW.
-**Total: 25 business requirement** (turun dari 33 setelah 8 BR ticketing dihapus).
+**Total: 25 business requirement MVP** (turun dari 33 setelah 8 BR ticketing
+dihapus). Tambahan **BR-034 s/d BR-041 (8 BR)** berada di **§4.9 dan bukan bagian
+MVP** — keduanya adalah fase roadmap SaaS (DEC-045).
 
 ### 4.1 Prinsip Produk & Multi-Tenancy
 
@@ -292,7 +364,26 @@ Format ID: **BR-nnn**. Setiap requirement mencantumkan **sumber requirement**
 |---|---|---|---|---|
 | BR-033 | Pengelolaan aktivitas (call / meeting / task / note) yang terhubung ke lead atau peluang | REQ-030 | Could | Draft |
 
-### 4.9 Business Requirement yang Dihapus (CR-20261008-001)
+### 4.9 Business Requirement Fase Roadmap — SaaS Platform Administration (DEC-045)
+
+Ditampilkan terpisah agar **tidak tercampur dengan 25 BR MVP**. Seluruh BR di
+bawah ini milik **fase roadmap (M9)** — di luar MVP bootcamp.
+
+| ID | Business Requirement | Sumber | Prioritas | Status |
+|---|---|---|---|---|
+| BR-034 | Platform Owner (TLab) dapat **membuat, mengubah, dan menghapus (soft delete) akun tenant** | Proses 13.02 / DEC-045 | Should (roadmap) | Roadmap |
+| BR-035 | Platform Owner dapat **membuat dan mengelola paket pricing** beserta **kuota & batasnya** | Proses 13.01 / DEC-045 | Should (roadmap) | Roadmap |
+| BR-036 | Calon tenant dapat **mendaftar mandiri (self-serve)**, memilih paket, dan diaktivasi setelah pembayaran dikonfirmasi | Proses 13.03 / DEC-045 | Should (roadmap) | Roadmap |
+| BR-037 | Platform Owner dapat **mengonfirmasi pembayaran** langganan dan sistem mencatat **riwayat pembayaran & masa aktif** | Proses 13.04 / DEC-045 | Should (roadmap) | Roadmap |
+| BR-038 | Sistem mengelola **siklus langganan tenant** — masa aktif, perpanjangan, dan pergantian paket (upgrade/downgrade) | Proses 13.05 / DEC-045 | Should (roadmap) | Roadmap |
+| BR-039 | Sistem **menegakkan batas paket** — memantau pemakaian terhadap kuota dan memberi peringatan mendekati batas | Proses 13.06 / DEC-045 | Should (roadmap) | Roadmap |
+| BR-040 | Sistem **menutup akses tenant secara otomatis** (*suspend*/*read-only*) bila kuota paket terlampaui atau langganan berakhir | Proses 13.06 / DEC-045 | Should (roadmap) | Roadmap |
+| BR-041 | Platform Owner memiliki **pemantauan platform & jejak audit** tindakannya di control plane | Proses 13.07–13.08 / DEC-045 | Could (roadmap) | Roadmap |
+
+> **Catatan:** jumlah **25 BR MVP tidak berubah**. Delapan BR di atas adalah
+> tambahan fase roadmap, bukan bagian dari lingkup bootcamp.
+
+### 4.10 Business Requirement yang Dihapus (CR-20261008-001)
 
 Dipertahankan sebagai jejak agar traceability tidak hilang:
 
@@ -338,7 +429,7 @@ kelalaian, melainkan penanda proses yang dikeluarkan.
 
 ## 6. Diagram
 
-Tujuh diagram berikut disusun untuk membantu tim memahami requirement secara
+Delapan diagram berikut disusun untuk membantu tim memahami requirement secara
 visual saat di-share. Sumber PlantUML tersedia di
 `requirements/brd/diagrams/*.puml`; gambar tersedia dalam **PNG** (untuk
 presentasi/chat) dan **SVG** (untuk dokumen dan perbesaran tanpa pecah).
@@ -408,6 +499,19 @@ fan-out, retry, dan rate limit (DEC-013, DEC-030). Seluruh kustomisasi bersifat
 Manager yang menetapkan kuota; hanya Tenant Admin yang menyentuh tenancy dan
 konfigurasi webhook.
 
+### 6.8 Diagram 8 — Siklus Hidup Langganan Tenant (Fase Roadmap, M9)
+
+> Ditambahkan 2026-10-08 (DEC-045). **Bukan bagian MVP bootcamp** — dimasukkan
+> agar mekanisme SaaS terdokumentasi dan menjadi input arsitektur M1.
+
+![Diagram 8 — Siklus Hidup Langganan Tenant](diagrams/09-siklus-langganan-tenant.png)
+
+*Poin kunci:* tenant melewati pendaftaran → pemilihan paket → pembayaran →
+konfirmasi Platform Owner → aktivasi. Bila langganan berakhir atau kuota paket
+terlampaui, sistem **menutup akses otomatis** (BR-040). Diagram ini juga
+memperlihatkan titik yang harus sudah diperhitungkan oleh **tenant model M1**:
+status langganan dan kuota paket.
+
 ---
 
 ## 7. Kriteria Keberhasilan
@@ -420,6 +524,7 @@ konfigurasi webhook.
 | 4 | Kecepatan AI dalam development terukur | **Jumlah requirement yang ter-cover dalam jangka waktu tertentu** | DEC-032 |
 | 5 | Efektivitas AI dalam development terukur | **Belum terdefinisi** — diteruskan ke Head of Engineer | Q-007, Q-008, TD-03/TD-04 |
 | 6 | Produk berpotensi dikembangkan & dijual | **Belum ditentukan** — perlu definisi indikator kelayakan produk | Catatan internal |
+| 7 | Produk berjalan sebagai **SaaS komersial** (fase roadmap) | **Belum ditentukan** — bergantung pada keputusan Q-033..Q-039 | DEC-045 |
 
 > **Catatan penting.** Kriteria 5 **tidak dapat dipulihkan** bila baseline tidak
 > ditetapkan sebelum hari pertama bootcamp (R-002). Kriteria 6 belum memiliki
@@ -459,6 +564,7 @@ konfigurasi webhook.
 | C-7 | **Tidak ada item yang boleh diisi dengan asumsi** — field tanpa data ditulis "Belum ditentukan" | DEC-011 |
 | C-8 | Revenue berhenti di **nilai deal closed-won**; modul billing di luar lingkup | DEC-016 |
 | C-9 | **Lingkup dibatasi pada business process sales** — modul domain *service* (ticketing) di luar MVP | DEC-043 |
+| C-10 | **Kontrol plane SaaS (M9) berada di luar MVP** — fase roadmap terpisah; namun **tenant model M1 wajib menyimpan status langganan** agar tidak rework | DEC-045 |
 
 ---
 
@@ -477,6 +583,12 @@ kekurangan dokumen, melainkan **tujuan utama workshop** (DEC-037, R-015).
 | 6 | **Metrik efektivitas AI + baseline** | Head of Engineer (TD-03/04) | **Tidak dapat dipulihkan** bila lewat hari 1 |
 | 7 | **Stack teknologi** | Head of Engineer (TD-05) | Materi sesi & scaffolding tidak dapat disiapkan |
 | ~~8~~ | ~~Status M6 Ticketing ke depan (Q-032)~~ — **TERJAWAB 2026-10-08 (DEC-044): menjadi modul lanjutan roadmap produk**, di luar lingkup bootcamp | PM/PO + Head of Product | — (tidak lagi menjadi item terbuka) |
+
+**Tambahan 2026-10-08 — pertanyaan fase roadmap (tidak menghambat bootcamp):**
+Q-033 (nama & jumlah paket), Q-034 (dimensi harga & nilai kuota), Q-035
+(struktur harga & mata uang), Q-036 (kebijakan penegakan batas), Q-037
+(mekanisme pembayaran), Q-038 (cara tenant mendaftar), Q-039 (kebijakan data
+saat soft delete). Daftar lengkap di [[requirement-analysis]] section 7.
 
 **Yang sudah tidak perlu difinalkan** (sebelumnya ada, kini moot karena M6 keluar):
 daftar status tiket, daftar prioritas & target waktu SLA, mekanisme pelanggan

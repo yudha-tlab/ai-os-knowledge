@@ -3,10 +3,13 @@ title: "Requirement Backlog — Bootcamp Internal CRM"
 type: requirement-backlog
 project: bootcamp-crm
 status: active
-version: "3.6"
+version: "3.7"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "3.7"
+    date: 2026-10-08
+    purpose: "DEC-045 — kontrol plane SaaS ditambahkan sebagai FASE ROADMAP (M9), di luar MVP. REQ-040..REQ-047 (roadmap); Q-033..Q-039 dibuka"
   - version: "3.6"
     date: 2026-10-08
     purpose: "DEC-044 — status M6 Ticketing ke depan ditetapkan: modul lanjutan roadmap produk (di luar lingkup MVP). Menutup Q-032"
@@ -116,6 +119,30 @@ Catatan REQ-031: kemampuan ini **dikeluarkan dari lingkup** pada 2026-10-02
 (DEC-031) — bukan bagian pakem CRM (CRM mengelola pelanggan, bukan penilaian
 karyawan). Bila masih diperlukan, harus menjadi inisiatif internal terpisah.
 
+### Fase Roadmap — SaaS Platform Administration (DEC-045, di luar MVP)
+
+| ID | Deskripsi | Sumber | Tipe | Prioritas | Epic | Status |
+|---|---|---|---|---|---|---|
+| REQ-040 | Membuat & mengelola **paket pricing** beserta kuota/batasnya (dimensi: seat, batas data, modul, kuota webhook, SLA) | Arahan PO 2026-10-08 (DEC-045) | Functional | Should | EP-013 | **Roadmap (M9)** |
+| REQ-041 | Melihat daftar tenant beserta paket & status langganannya | Arahan PO 2026-10-08 (DEC-045) | Functional | Should | EP-013 | **Roadmap (M9)** |
+| REQ-042 | **Membuat, mengubah, dan soft delete akun tenant** oleh Platform Owner | Arahan PO 2026-10-08 (DEC-045) | Functional | Should | EP-013 | **Roadmap (M9)** |
+| REQ-043 | **Pendaftaran mandiri (self-serve)** calon tenant + aktivasi | Arahan PO 2026-10-08 (DEC-045) | Functional | Should | EP-014 | **Roadmap (M9)** |
+| REQ-044 | **Konfirmasi pembayaran** langganan + riwayat pembayaran & masa aktif | Arahan PO 2026-10-08 (DEC-045) | Functional | Should | EP-014 | **Roadmap (M9)** |
+| REQ-045 | **Siklus langganan**: masa aktif, perpanjangan, upgrade/downgrade paket | Arahan PO 2026-10-08 (DEC-045) | Functional | Should | EP-014 | **Roadmap (M9)** |
+| REQ-046 | **Penegakan batas paket** + peringatan + **penutupan akses otomatis** (suspend/read-only) | Arahan PO 2026-10-08 (DEC-045) | Functional | Should | EP-014 | **Roadmap (M9)** |
+| REQ-047 | **Pemantauan platform & jejak audit** tindakan Platform Owner | Arahan PO 2026-10-08 (DEC-045) | Functional | Could | EP-014 | **Roadmap (M9)** |
+
+Catatan: seluruh REQ di atas **di luar lingkup MVP** — menjadi fase roadmap
+M9 (DEC-045). Modul mandatory bootcamp tetap **6**. Namun **tenant model M1 wajib
+menyimpan status langganan** sejak awal agar tidak perlu rework.
+
+**Dimensi paket pricing (usulan):** seat · batas data (Kontak+Akun+Lead+Peluang) ·
+modul aktif · kuota webhook (event/bulan + target fan-out) · dukungan & SLA ·
+storage & retensi (add-on). Struktur paket usulan: Trial / Starter / Growth /
+Enterprise + add-on. Angka & harga **belum ditetapkan** (Q-033..Q-035) — tidak
+diisi agar tidak menciptakan target fiktif. Detail: `requirement-analysis.md`
+section 5.6.
+
 Catatan prioritas: REQ-016, REQ-027, REQ-029, dan REQ-030 tetap Should/Could —
 di luar modul mandatory DEC-015.
 
@@ -171,6 +198,13 @@ Q-008, Q-011.
 | Q-030 | **Tanggal akhir bootcamp**: 13-15 Okt (3 hari) atau 13-14 Okt? | PM/PO | **Ditutup tanpa tanggal (DEC-040)** — yang mengikat adalah durasi, bukan rentang start-end |
 | Q-031 | Rekonsiliasi kriteria selesai: DEC-028 (end-to-end) vs DEC-041 (core backend) | PM/PO | **Terjawab 2026-10-02 (DEC-042)** — "end-to-end" diukur pada kapabilitas backend |
 | Q-032 | **Status M6 Ticketing ke depan** — modul lanjutan roadmap produk atau keluar sepenuhnya? | PM/PO + Head of Product | **Terjawab 2026-10-08 (DEC-044)** — **modul lanjutan roadmap produk**, di luar lingkup MVP bootcamp (CR-20261008-001) |
+| Q-033 | Nama & jumlah paket pricing SaaS | PM/PO + Head of Product | **Terbuka 2026-10-08** — usulan di `requirement-analysis` 5.6 |
+| Q-034 | Dimensi harga & nilai kuota per paket | PM/PO | **Terbuka 2026-10-08** |
+| Q-035 | Struktur harga (per user/paket/pemakaian) & mata uang | PM/PO | **Terbuka 2026-10-08** |
+| Q-036 | Kebijakan penegakan batas (peringatan/read-only/penuh) | PM/PO + Head of Engineer | **Terbuka 2026-10-08** |
+| Q-037 | Mekanisme pembayaran (manual vs payment gateway) | PM/PO | **Terbuka 2026-10-08** |
+| Q-038 | Cara tenant mendaftar (self-serve vs dibuatkan) | PM/PO | **Terbuka 2026-10-08** |
+| Q-039 | Kebijakan data saat soft delete (retensi/ekspor/pemulihan) | PM/PO | **Terbuka 2026-10-08** |
 ## Related
 
 - **Requirement Analysis (bahan baku BRD):** [[requirement-analysis]]

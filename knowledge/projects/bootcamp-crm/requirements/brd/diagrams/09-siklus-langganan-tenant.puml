@@ -1,0 +1,48 @@
+@startuml
+title Diagram 8 — Siklus Hidup Langganan Tenant (Fase Roadmap, M9)
+
+skinparam shadowing false
+skinparam defaultFontSize 11
+skinparam state {
+  BackgroundColor LightBlue
+  BorderColor Gray
+}
+
+[*] --> Terdaftar : calon tenant mendaftar (self-serve)
+Terdaftar --> MenungguPembayaran : pilih paket pricing
+state "Menunggu Pembayaran" as MenungguPembayaran
+MenungguPembayaran --> MenungguKonfirmasi : bayar langganan
+state "Menunggu Konfirmasi\n(Platform Owner)" as MenungguKonfirmasi
+MenungguKonfirmasi --> Ditolak : bukti tidak valid
+MenungguKonfirmasi --> Aktif : pembayaran dikonfirmasi
+
+state Aktif {
+  state "Pemakaian sesuai kuota paket" as Pakai
+  state "Peringatan menjelang batas / jatuh tempo" as Peringatan
+  [*] --> Pakai
+  Pakai --> Peringatan : mendekati batas paket
+  Peringatan --> Pakai : perpanjang / upgrade
+}
+
+Aktif --> Suspended : kuota terlampaui atau langganan berakhir
+state "Suspended\n(akses ditutup otomatis)" as Suspended
+Suspended --> Aktif : perpanjang + konfirmasi pembayaran
+Suspended --> Nonaktif : tidak diperpanjang
+state "Nonaktif (soft delete)" as Nonaktif
+
+Ditolak --> [*]
+Nonaktif --> [*]
+
+note right of Aktif
+  Fase roadmap (DEC-045) — DI LUAR MVP bootcamp.
+  Titik yang WAJIB sudah diperhitungkan
+  tenant model M1: status langganan
+  dan kuota paket (agar tidak rework).
+end note
+
+note bottom of Suspended
+  Soft delete (BR-034) = nonaktif tanpa
+  kehilangan data; kebijakan retensi
+  data = Q-039 (terbuka).
+end note
+@enduml

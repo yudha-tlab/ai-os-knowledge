@@ -3,10 +3,13 @@ title: "Decision Log — Bootcamp Internal CRM"
 type: decision-log
 project: bootcamp-crm
 status: active
-version: "8.0"
+version: "9.0"
 created: 2026-10-02
 modified: 2026-10-08
 changelog:
+  - version: "9.0"
+    date: 2026-10-08
+    purpose: "DEC-045 — kontrol plane SaaS ditambahkan sebagai FASE ROADMAP terpisah (M9 Platform Administration), di luar MVP bootcamp; WAJIB jadi input arsitektur (tenant model menyimpan status langganan). Aktor baru SH011/SH012, proses 13, EP-013/EP-014, OB-024..031, US-038..049, BR-034..041, diagram 09; buka Q-033..Q-039"
   - version: "8.0"
     date: 2026-10-08
     purpose: "DEC-044 — status M6 Ticketing ke depan ditetapkan PO: menjadi modul lanjutan roadmap produk (di luar lingkup MVP bootcamp). Menutup Q-032; tidak ada item terbuka baru dari CR-20261008-001"
@@ -85,6 +88,7 @@ changelog:
 | DEC-042 | 2026-10-02 | **Rekonsiliasi kriteria kelulusan:** DEC-028 tetap berlaku, tetapi **"end-to-end" diukur pada kapabilitas backend** — seluruh fitur mandatory terlayani dan terverifikasi melalui **API/kontrak data**, bukan kelengkapan UI | Jawaban PO atas Q-031 ("setuju dengan rekomendasimu"). Menyatukan DEC-028 (end-to-end) dengan DEC-041 (core backend, frontend bukan penghambat) dalam satu definisi yang dapat dinilai | Yudha Pratama | Active — menutup Q-031, R-016, D-015 · **direvisi CR-20261008-001**: tetap berlaku pada modul yang tersisa |
 | DEC-043 | 2026-10-08 | **Modul Ticketing (M6) dan Pelaporan Tiket (EP-009) dikeluarkan dari lingkup MVP.** Lingkup bootcamp difokuskan pada **business process sales** (lead, kontak & akun, pipeline/peluang, kuota & performa, pelaporan sales, tenancy, webhook). M5 Activity tetap *nice to have* — **modul mandatory kini 6** (sebelumnya 7) | Arahan PO 2026-10-08: *"tiket tidak perlu… terlalu besar… bukan termasuk general case CRM untuk tracking sales… bisa merefer ke hubspot ataupun salesforce… core feature dan business process yang akan digunakan untuk bootcamp adalah untuk sales"*. Riset mengonfirmasi pemisahan domain: Salesforce memisahkan **Sales Cloud vs Service Cloud** (case management & SLA = core Service Cloud, *not included* di Sales Cloud); HubSpot memisahkan **Sales Hub vs Service Hub** dengan seat terpisah. Diproses melalui **CR-20261008-001** | Yudha Pratama | Active — menutup Q-015/021/022/023 sebagai moot; menunggu approval Head of Product |
 | DEC-044 | 2026-10-08 | **Status M6 Ticketing ke depan: menjadi MODUL LANJUTAN di roadmap produk** (setara Service Cloud / Service Hub) — dikembangkan di luar lingkup MVP bootcamp, bukan dihapus dari visi produk. Fondasi multi-tenant & webhook (M1, M8) yang dibangun di bootcamp tetap menjadi prasyaratnya | Jawaban PO 2026-10-08 atas Q-032 ("setuju, jadikan modul lanjutan roadmap") — menerima rekomendasi PM. Tidak mengubah lingkup MVP (DEC-043 tetap: mandatory 6 modul); menutup Q-032 | Yudha Pratama | Active — menutup Q-032; tidak menghambat pelaksanaan bootcamp |
+| DEC-045 | 2026-10-08 | **Kontrol plane SaaS (Platform Owner/Superadmin TLab) ditambahkan sebagai FASE ROADMAP terpisah — M9 Platform Administration, DI LUAR MVP bootcamp.** Mencakup: paket pricing + kuota, kelola akun tenant (buat/ubah/**soft delete**), pendaftaran & aktivasi tenant, konfirmasi pembayaran, siklus langganan, penegakan batas → **penutupan akses otomatis**. **Tetap didokumentasikan penuh** (stakeholder, proses, objek, Epic, User Story) dan **WAJIB menjadi input arsitektur**: tenant model M1 harus menyimpan **status langganan** sejak awal agar tidak perlu rework. Modul mandatory bootcamp tetap **6** — angka ini tidak berubah | Arahan PO 2026-10-08: *"perlu ditampilkan bisnis proses dari superadmin (pemilik platform CRM yaitu TLab)… CRM ini akan jadi SaaS… mekanisme bagaimana tenant register, membayar, aktif, hingga misal melebihi batas aktif maka otomatis ditutup aksesnya"*. Penempatan fase dikonfirmasi PO via pilihan eksplisit (roadmap terpisah + input arsitektur) | Yudha Pratama | Active — membuka Q-033 s/d Q-039 (fase roadmap, tidak menghambat bootcamp) |
 
 ### Catatan atas DEC-015 (keberatan teknis PM — SELESAI)
 
@@ -169,6 +173,13 @@ milik **Head of Engineer**:
 CR-20261008-001.
 
 Detail: `architecture/open-tech-decisions.md`.
+
+### Terjawab pada 2026-10-08
+
+| Keputusan lama | Status sekarang |
+|---|---|
+| Status M6 Ticketing ke depan | Terjawab — **modul lanjutan roadmap produk** (DEC-044, menutup Q-032) |
+| Penempatan kontrol plane SaaS | Terjawab — **fase roadmap terpisah M9** (DEC-045); input arsitektur wajib |
 
 ### Terjawab pada 2026-10-02
 
