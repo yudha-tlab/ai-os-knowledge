@@ -5,7 +5,7 @@ project: bootcamp-crm
 status: active
 document: "../../requirements/brd/bootcamp-crm-brd-v1.md"
 created: 2026-10-08
-modified: 2026-10-08
+modified: 2026-10-12
 ---
 
 # Riwayat Perubahan BRD — CRM Multi-Tenant TLab
@@ -19,6 +19,7 @@ disimpan di sini agar traceability tidak hilang.
 
 | Versi | Tanggal | Perubahan |
 |---|---|---|
+| — | 2026-10-12 | **Dokumen pendamping BRD disusun:** `bootcamp-crm-sales-process-specification-v1.md` — spesifikasi proses sales (kasus umum B2B/B2C) untuk menyamakan pemahaman tim: inbound, field, laporan, workflow & pipeline, serta status lead beserta pemicu perubahannya. Ditambah 2 diagram baru (11 alur proses sales end-to-end, 12 status lead). BRD sendiri **tidak diubah** (tetap v4.0) |
 | **4.0** | 2026-10-08 | **Finalisasi dokumen presentasi.** Seluruh sitasi keputusan (DEC/Q/TD/REQ/EP/CR/OB/US), tautan wiki, kolom "Sumber", dan catatan riwayat dikeluarkan dari badan dokumen. Substansi requirement dipertahankan; §9 disusun ulang sebagai agenda workshop hari 1. Diagram dirender ulang tanpa sitasi. Riwayat dokumen dipindah ke file ini |
 | 3.3 | 2026-10-08 | Penyedia model AI M10 ditetapkan TLab LLM (BR-044 final); akses tersedia; penutupan pertanyaan penyedia model; agenda hari 1 menjadi 6 item |
 | 3.2 | 2026-10-08 | Stage pipeline default ditetapkan (6 stage + 2 outcome) sehingga BR-010 final; item kriteria selesai ditutup; use case AI minimum ditetapkan; agenda hari 1 menyusut 10 → 7 item |

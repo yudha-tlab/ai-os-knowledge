@@ -4,10 +4,13 @@ type: project-profile
 project: bootcamp-crm
 client: tlab-internal
 status: active
-version: "1.12"
+version: "1.13"
 created: 2026-10-02
-modified: 2026-10-08
+modified: 2026-10-12
 changelog:
+  - version: "1.13"
+    date: 2026-10-12
+    purpose: "Daftarkan dokumen pendamping BRD — Spesifikasi Proses Sales (requirements/brd/) pada Dokumen Kunci"
   - version: "1.12"
     date: 2026-10-08
     purpose: "DEC-048 — penyedia model AI M10 = TLab LLM (akses tersedia); use case AI minimum = AI-01 (DEC-047); Q-040 ditutup"
@@ -114,6 +117,7 @@ event sebagai permukaan ekstensi.
 - **Communication Plan:** [[communication-plan]]
 - **Requirement Analysis (bahan baku BRD):** [[requirement-analysis]]
 - **BRD:** [[bootcamp-crm-brd-v1]] (requirements/brd/)
+- **Spesifikasi Proses Sales (pendamping BRD):** [[bootcamp-crm-sales-process-specification-v1]] (requirements/brd/) — inbound, field, laporan, workflow & pipeline, status lead
 - **Requirement Backlog:** [[requirement-backlog]]
 - **Risk Register:** [[risk-register]]
 - **RAID Log:** [[raid-log]]

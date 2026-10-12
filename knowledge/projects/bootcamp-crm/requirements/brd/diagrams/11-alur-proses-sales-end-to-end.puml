@@ -1,0 +1,70 @@
+@startuml
+title Alur Proses Sales End-to-End — dari Lead Masuk sampai Laporan
+
+skinparam shadowing false
+skinparam defaultFontSize 12
+
+start
+partition "1 · Inbound — lead masuk" {
+  :Lead masuk ke CRM;
+  note right
+    Dua jalur masuk:
+    - input manual lewat form CRM
+    - kiriman sistem lain lewat webhook inbound
+  end note
+  :Lead tercatat beserta sumber dan waktu masuk;
+}
+partition "2 · Distribusi & kualifikasi" {
+  :Lead ditugaskan ke sales;
+  :Sales melakukan kontak awal;
+  if (Lolos kualifikasi?) then (ya)
+    :Status lead menjadi Kualifikasi;
+  else (tidak)
+    :Status lead menjadi Hilang (+alasan);
+    stop
+  endif
+}
+partition "3 · Konversi" {
+  :Lead dikonversi;
+  note right
+    Satu konversi menghasilkan
+    tiga entitas sekaligus:
+    Kontak + Akun + Peluang.
+    Pelanggan B2C boleh
+    berdiri sebagai Kontak
+    tanpa Akun.
+  end note
+}
+partition "4 · Pipeline — pergerakan peluang" {
+  :Peluang masuk stage Qualifikasi;
+  :Stage berpindah saat kriteria keluar terpenuhi;
+  note right
+    Enam stage berjalan:
+    Qualifikasi -> Analisis Kebutuhan
+    -> Presentasi/Demo -> Proposal
+    -> Negosiasi -> Menunggu Keputusan.
+    Kriteria keluar tiap stage
+    dibahas pada hari 1.
+  end note
+}
+partition "5 · Penutupan" {
+  if (Keputusan pembeli?) then (menang)
+    :Peluang ditutup Closed-Won (+alasan);
+  else (kalah)
+    :Peluang ditutup Closed-Lost (+alasan);
+  endif
+}
+partition "6 · Pelaporan" {
+  :Laporan revenue (dari closed-won);
+  :Laporan pipeline & forecast;
+  :Laporan performa sales (quota attainment);
+}
+:Proses sales selesai — hasilnya terukur;
+
+note right
+  Aktivitas penunjang (call/meeting/task/note) berada di luar
+  cakupan awal. Asistensi AI adalah lapisan bantuan yang berjalan
+  di samping alur ini, bukan bagian dari alur inti.
+end note
+stop
+@enduml

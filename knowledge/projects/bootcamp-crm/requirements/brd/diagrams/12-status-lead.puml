@@ -1,0 +1,32 @@
+@startuml
+title Status Lead & Kondisi yang Menyebabkan Perubahannya
+
+skinparam shadowing false
+skinparam defaultFontSize 12
+
+state "Lead Baru" as Baru
+state "Lead — Kualifikasi" as Kual
+state "Lead — Hilang" as Hilang
+state "Lead — Dikonversi" as Konv
+
+[*] --> Baru : lead tercatat di CRM\n(form manual atau webhook inbound)
+
+Baru --> Kual : lead ditugaskan ke sales\ndan kontak awal dilakukan
+Baru --> Hilang : data tidak valid / duplikat /\ndi luar kriteria dasar
+Kual --> Hilang : tidak lolos kualifikasi\n(tidak dapat dihubungi, kebutuhan tidak cocok,\nwaktu belum sesuai)
+Kual --> Konv : lolos kualifikasi dan siap\nmasuk pipeline
+Konv --> [*] : berlanjut sebagai Peluang
+
+note right of Baru
+  Empat status inti:
+  Baru, Kualifikasi, Hilang, Dikonversi.
+  Rincian sub-status (mis. percobaan kontak,
+  terhubung, nurturing) masih berupa usulan
+  dan divalidasi pada hari 1.
+end note
+
+note bottom of Hilang
+  Alasan hilang wajib dicatat untuk analisis,
+  bukan untuk penilaian individu.
+end note
+@enduml
