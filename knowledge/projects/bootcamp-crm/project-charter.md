@@ -107,7 +107,7 @@ terpisah. Prinsip ini mengikat seluruh rancangan produk.
 
 ### Di Luar Lingkup
 
-- Modul M5 (Activity Management) — status *nice to have*, tidak masuk MVP.
+- ~~Modul M5 (Activity Management) — nice to have~~: **naik ke mandatory minimal (CR-20261013-001 / DEC-049)**; sinkronisasi kalender/email, activity berulang, dan notifikasi tetap di luar lingkup.
 - **AI prediktif (EP-016)** — lead scoring, win probability/deal risk, sales
   forecast, otomasi agentic lanjutan; **fase roadmap** (CR-20261008-002) karena
   memerlukan data historis tenant yang belum tersedia saat bootcamp.
@@ -226,8 +226,8 @@ terpisah atau dihitung sebagai alokasi waktu internal tim.
 - **Peserta belum ditetapkan** oleh Tech Lead — menghambat perencanaan sesi dan
   pembagian peran.
 - **Jendela pengembangan efektif hanya 2 hari** (hari 1 = workshop requirement,
-  DEC-037) sementara modul mandatory mencakup 6 modul — risiko R-001 turun
-  setelah M6 dikeluarkan (CR-20261008-001), tetap High.
+  DEC-037) sementara modul mandatory kini mencakup 7 modul (M5 naik, CR-20261013-001) — risiko R-001
+  tetap High/High.
 - **Ketergantungan pada hasil hari 1**: bila requirement belum tuntas di hari 1,
   jendela pengembangan berkurang lagi (R-015).
 - ~~Kriteria selesai belum konsisten~~ — **diselesaikan**: DEC-042 menyatukan DEC-028 (end-to-end) dengan DEC-041 (core backend) — "end-to-end" diukur pada kapabilitas backend/R-016 ditutup.

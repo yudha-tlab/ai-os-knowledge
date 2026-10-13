@@ -100,11 +100,25 @@ entity "Laporan Performa" as LPF {
   attainment per sales
 }
 
-entity "Aktivitas\n(nice to have — M5)" as AKT {
+entity "Activity\n(M5 — minimal)" as AKT {
   * id
   --
   tenant_id
-  jenis (call/meeting/task/note)
+  jenis (call/meeting/email/task/note)
+  subjek
+  owner
+  jatuh tempo
+  status (open/selesai)
+  hasil / catatan
+}
+
+entity "Custom Field\n(definisi per tenant)" as CFD {
+  * id
+  --
+  tenant_id
+  entitas sasaran
+  nama, tipe
+  wajib, tampil di daftar
 }
 
 entity "Webhook Subscription" as SUB {
@@ -196,6 +210,7 @@ TEN ||--o{ LRV
 TEN ||--o{ LPL
 TEN ||--o{ LPF
 TEN ||--o{ AKT
+TEN ||--o{ CFD
 TEN ||--o{ SUB
 
 TEN ||--o{ SUBS : "roadmap"

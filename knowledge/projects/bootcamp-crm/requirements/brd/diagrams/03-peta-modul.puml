@@ -12,6 +12,7 @@ package "Fondasi" {
 
 package "Mandatory (MVP)" {
   [M2 · Contact & Account] as M2
+  [M5 · Activity Management (minimal)] as M5
   [M3 · Lead Management] as M3
   [M4 · Pipeline / Opportunity] as M4
   [M7 · Reporting & Analytics] as M7
@@ -20,10 +21,6 @@ package "Mandatory (MVP)" {
 package "MVP minimal" {
   [M8 · Webhook / Event Layer] as M8
   [M10 · AI Assistance Layer] as M10
-}
-
-package "Nice to have" {
-  [M5 · Activity Management] as M5
 }
 
 package "Fase Roadmap (di luar MVP)" #LightGray {
@@ -44,7 +41,8 @@ M7 ..> M4 : revenue & pipeline
 M7 ..> M3 : data lead
 M7 ..> M2 : data pelanggan
 M5 ..> M2
-M5 ..> M4
+M5 ..> M3 : next step lead
+M5 ..> M4 : next step peluang
 M8 ..> M3 : event perubahan status lead
 M8 ..> M4 : event pergerakan peluang
 
@@ -56,6 +54,8 @@ M10 ..> AIP : kelola model & hasil prediksi
 note bottom of M1
   M1 adalah fondasi — isolasi data antar tenant
   tidak dapat ditambahkan belakangan tanpa rework.
+  Konfigurasi tenant (status, pipeline, custom field,
+  mode penugasan) juga berada di M1.
   Tenant model WAJIB menyimpan status langganan
   sejak awal agar SaaS (M9) tidak perlu rework.
 end note

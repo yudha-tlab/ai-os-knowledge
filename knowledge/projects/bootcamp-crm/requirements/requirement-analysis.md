@@ -3,11 +3,23 @@ title: "Requirement Analysis — CRM Multi-Tenant TLab"
 type: requirement-analysis
 project: bootcamp-crm
 status: draft
-version: "3.3"
+version: "3.7"
 created: 2026-10-02
-modified: 2026-10-08
+modified: 2026-10-13
 sumber: "Arahan Product Owner (Yudha Pratama) via sesi brainstorm 2026-10-02"
 changelog:
+  - version: "3.7"
+    date: 2026-10-13
+    purpose: "Q-045 — usulan awal urutan potong lingkup ditulis di BRD §9.4; tetap terbuka sampai dicocokkan dengan Head of Engineer pada hari 1"
+  - version: "3.6"
+    date: 2026-10-13
+    purpose: "DEC-061/062 — Q-044 terjawab (kriteria aturan penugasan dinamis); Q-046 terjawab untuk alur login (workspace lalu email dan kata sandi)"
+  - version: "3.5"
+    date: 2026-10-13
+    purpose: "DEC-060 — aturan perpindahan stage (lompat maju sesuai kebijakan pipeline, syarat kumulatif, skipped); +US-068; Q-047 dan Q-048 terjawab"
+  - version: "3.4"
+    date: 2026-10-13
+    purpose: "CR-20261013-001 — Activity (M5) naik ke mandatory minimal (modul mandatory 7); proses 15 Konfigurasi Proses Sales per Tenant; penugasan lead + Queue; custom field MVP; convert ke Account/Contact ada, buka kembali lead Lost, stage mundur, import, dashboard, login workspace; EP-005 diperbarui, +EP-017/EP-018, +US-054..067, +OB-033..036, +Q-044..048; istilah baku sales memakai bahasa Inggris (DEC-057)"
   - version: "3.3"
     date: 2026-10-08
     purpose: "DEC-048 — penyedia model AI M10 = TLab LLM (akses tersedia); Q-040 terjawab"
@@ -34,7 +46,7 @@ changelog:
     purpose: "Tutup Q-028 (default ambang performa 80%, DEC-039) dan Q-030 (tanggal akhir sengaja diabaikan, DEC-040); catat sasaran output core platform/backend (DEC-041) dan pertanyaan rekonsiliasi kriteria selesai (Q-031)"
   - version: "2.2"
     date: 2026-10-02
-    purpose: "Terapkan keputusan lanjutan PO — periode kuota bulanan (DEC-035), istilah tiket internal (DEC-036), struktur 3 hari bootcamp dengan hari 1 workshop (DEC-037); tambah hasil riset ambang batas (section 5.5)"
+    purpose: "Terapkan keputusan lanjutan PO — periode quota bulanan (DEC-035), istilah tiket internal (DEC-036), struktur 3 hari bootcamp dengan hari 1 workshop (DEC-037); tambah hasil riset ambang batas (section 5.5)"
   - version: "2.0"
     date: 2026-10-02
     purpose: "Terapkan 14 keputusan sesi penetapan PO (DEC-021 s/d DEC-034) — M8 masuk MVP, SLA tiket, multi-target webhook, komentar & riwayat tiket, assessment HR keluar lingkup"
@@ -46,8 +58,8 @@ changelog:
 # Requirement Analysis — CRM Multi-Tenant TLab
 
 **Posisi pipeline:** Langkah nol — output dokumen ini **telah diturunkan menjadi
-** **BRD v2.0** (`requirements/brd/bootcamp-crm-brd-v1.md`; v1.0 2026-10-02,
-direvisi 2026-10-08 oleh CR-20261008-001). FRD/SRS belum disusun (menunggu
+** **BRD v5.0** (`requirements/brd/bootcamp-crm-brd-v1.md`; v1.0 2026-10-02,
+direvisi 2026-10-08 oleh CR-20261008-001/002 dan 2026-10-13 oleh CR-20261013-001). FRD/SRS belum disusun (menunggu
 approval BRD).
 
 **Sumber:** Arahan langsung Product Owner (Yudha Pratama) pada sesi brainstorm
@@ -67,7 +79,7 @@ kustomisasi klien diakomodir **tanpa mengubah core**.
 
 Konsekuensi yang harus dipahami bersama:
 
-1. Core memuat pakem CRM **untuk sales** (lead, peluang, kontak & akun,
+1. Core memuat pakem CRM **untuk sales** (lead, Opportunity, Contact & Account,
    laporan) — sesuai fokus domain DEC-043.
 2. Kebutuhan yang berbeda per klien **tidak diselesaikan dengan mengubah core**,
    melainkan dengan memanfaatkan event yang dipublikasikan core.
@@ -76,7 +88,13 @@ Konsekuensi yang harus dipahami bersama:
    **di luar lingkup MVP**.
 4. Contoh yang disepakati: klien butuh mekanisme antrian → dibangun *service*
    terpisah yang berlangganan event CRM, core tidak berubah.
-5. **Definisi multi-tenant (DEC-029):** platform dapat digunakan oleh banyak
+5. **Variasi proses sales antar tenant diserap oleh konfigurasi data, bukan kode
+   (DEC-051):** status turunan lead, alasan, source, pipeline dan stage, kriteria
+   keluar, mode penugasan lead, jenis activity, dan custom field diatur tenant.
+   Kategori sistem (empat kategori status lead, outcome Closed-Won/Closed-Lost)
+   tetap agar laporan dapat dibandingkan. Webhook tetap menjadi jalur untuk
+   logika di luar core.
+6. **Definisi multi-tenant (DEC-029):** platform dapat digunakan oleh banyak
    user dari banyak organisasi (B2B) maupun customer tanpa organisasi (B2C).
    **Strategi isolasi teknisnya** (shared DB / schema-per-tenant /
    DB-per-tenant) ditetapkan oleh Head of Engineer — lihat
@@ -92,7 +110,7 @@ Konsekuensi yang harus dipahami bersama:
 | M2 | Contact & Account Management | **Mandatory** | Mendukung B2B dan B2C |
 | M3 | Lead Management | **Mandatory** | Termasuk perubahan status lead |
 | M4 | Sales Pipeline / Opportunity | **Mandatory** | Sumber data revenue & performa sales |
-| M5 | Activity Management | Nice to have | Tidak masuk lingkup MVP |
+| M5 | Activity Management | **Mandatory — versi minimal** (DEC-049) | Call/meeting/email/task/note; Next step; overdue; activity tim. Tanpa sinkronisasi kalender/email, activity berulang, notifikasi |
 | ~~M6~~ | ~~Ticketing (internal + eksternal)~~ | **DIKELUARKAN** | **CR-20261008-001 / DEC-043** — domain *service*, bukan core CRM untuk sales tracking |
 | M7 | Reporting & Analytics | **Mandatory** | Revenue, pipeline, performa sales |
 | M8 | Webhook / Event Layer | **MVP minimal** (DEC-021) | Merevisi DEC-015 — event outbound inti + 1 endpoint inbound |
@@ -107,7 +125,7 @@ sales**. Modul domain *service* (ticketing) dikeluarkan — sejalan dengan pemis
 Salesforce (Sales Cloud vs Service Cloud) dan HubSpot (Sales Hub vs Service Hub),
 di mana *case/ticket management* bukan core feature produk sales.
 
-**Modul mandatory = 6** (M1, M2, M3, M4, M7, M8-minimal), turun dari 7.
+**Modul mandatory = 7** (M1, M2, M3, M4, M5-minimal, M7, M8-minimal). Turun dari 7 menjadi 6 saat M6 keluar (CR-20261008-001), kembali ke 7 saat M5 naik (CR-20261013-001 / DEC-049).
 
 ### 0.2 Fase Roadmap — SaaS Platform Administration (DEC-045)
 
@@ -123,8 +141,8 @@ bootcamp** — ditetapkan sebagai **fase roadmap terpisah**, tetapi **WAJIB masu
 sebagai input arsitektur**: rancangan tenant pada M1 harus menyimpan **status
 langganan** sejak awal agar tidak perlu rework saat fase ini dikerjakan.
 
-Modul roadmap: **M9 Platform Administration**. Modul mandatory bootcamp tetap
-**6** (M1, M2, M3, M4, M7, M8-minimal) — angka ini tidak berubah oleh DEC-045.
+Modul roadmap: **M9 Platform Administration**. Jumlah modul mandatory
+bootcamp tidak berubah oleh DEC-045.
 
 | Aspek | MVP Bootcamp | Fase Roadmap (M9) |
 |---|---|---|
@@ -144,30 +162,45 @@ rekonsiliasi dengan DEC-028 ada di Q-031.
 
 | Category | Proses | Sub Proses 1 | Sub Proses 2 |
 |----------|--------|--------------|--------------|
-| Input | 01. Manajemen Lead | 01.01 Penangkapan lead | 01.01.01 Input manual lead melalui form CRM |
+| Input | 01. Manajemen Lead | 01.01 Penangkapan lead | 01.01.01 Input manual lead melalui form CRM (Owner otomatis ke penginput bila mode aktif) |
 | Input | 01. Manajemen Lead | 01.01 Penangkapan lead | 01.01.02 Penerimaan lead dari sistem klien via webhook inbound |
-| Input | 01. Manajemen Lead | 01.02 Distribusi lead | 01.02.01 Penugasan lead ke sales |
-| Input | 01. Manajemen Lead | 01.03 Kualifikasi lead | 01.03.01 Perubahan status lead (baru / kualifikasi / konversi / hilang) |
-| Input | 01. Manajemen Lead | 01.04 Konversi lead | 01.04.01 Konversi lead menjadi kontak + akun + peluang |
-| Input | 02. Manajemen Kontak & Akun | 02.01 Pengelolaan kontak | 02.01.01 CRUD kontak |
-| Input | 02. Manajemen Kontak & Akun | 02.02 Pengelolaan akun | 02.02.01 CRUD akun/perusahaan |
-| Perencanaan | 03. Penetapan Target & Kuota Sales | 03.01 Penetapan kuota | 03.01.01 Penetapan target won per sales per periode |
-| Pelaksanaan | 04. Pengelolaan Pipeline & Peluang | 04.01 Pengelolaan peluang | 04.01.01 CRUD peluang (nilai, stage, tanggal tutup) |
-| Pelaksanaan | 04. Pengelolaan Pipeline & Peluang | 04.02 Pergerakan stage | 04.02.01 Perubahan stage peluang |
-| Pelaksanaan | 04. Pengelolaan Pipeline & Peluang | 04.03 Penutupan peluang | 04.03.01 Penandaan closed-won / closed-lost beserta alasan |
-| Pelaksanaan | 05. Pengelolaan Aktivitas | 05.01 Pencatatan aktivitas | 05.01.01 Pencatatan call / meeting / task / note |
+| Input | 01. Manajemen Lead | 01.01 Penangkapan lead | 01.01.03 **Import lead dari file (CSV/Excel)** — pemetaan kolom, source, owner, cek duplikat, ringkasan (*Should*, DEC-055) |
+| Input | 01. Manajemen Lead | 01.02 Penugasan lead & Queue | 01.02.01 Manager meng-assign lead dari Queue (satu atau banyak) |
+| Input | 01. Manajemen Lead | 01.02 Penugasan lead & Queue | 01.02.02 Sales meng-claim lead dari Queue |
+| Input | 01. Manajemen Lead | 01.02 Penugasan lead & Queue | 01.02.03 Owner otomatis (penginput/pengimpor); webhook/form/API mengikuti aturan lalu Queue (DEC-050) |
+| Input | 01. Manajemen Lead | 01.03 Qualification lead | 01.03.01 Perubahan status lead (4 kategori: New / In Progress / Lost / Converted + status turunan tenant) |
+| Input | 01. Manajemen Lead | 01.03 Qualification lead | 01.03.02 **Buka kembali lead Lost** dengan catatan; alasan Lost bertanda boleh dihubungi lagi (Nurturing) (DEC-053) |
+| Input | 01. Manajemen Lead | 01.04 Convert lead | 01.04.01 Convert lead menjadi Contact + Account + Opportunity |
+| Input | 01. Manajemen Lead | 01.04 Convert lead | 01.04.02 **Convert ke Account/Contact yang sudah ada**; cek duplikat saat lead dibuat dan saat convert (DEC-053) |
+| Input | 02. Manajemen Contact & Account | 02.01 Pengelolaan Contact | 02.01.01 CRUD Contact |
+| Input | 02. Manajemen Contact & Account | 02.02 Pengelolaan Account | 02.02.01 CRUD Account/perusahaan |
+| Perencanaan | 03. Penetapan Target & Quota Sales | 03.01 Penetapan quota | 03.01.01 Penetapan target won per sales per periode |
+| Pelaksanaan | 04. Pengelolaan Pipeline & Opportunity | 04.01 Pengelolaan Opportunity | 04.01.01 CRUD Opportunity (nilai, stage, tanggal tutup) |
+| Pelaksanaan | 04. Pengelolaan Pipeline & Opportunity | 04.02 Pergerakan stage | 04.02.01 Perubahan stage Opportunity |
+| Pelaksanaan | 04. Pengelolaan Pipeline & Opportunity | 04.02 Pergerakan stage | 04.02.02 **Stage mundur** dengan alasan wajib; kriteria keluar (guidance/warning/blocking) (DEC-051, DEC-054) |
+| Pelaksanaan | 04. Pengelolaan Pipeline & Opportunity | 04.03 Penutupan Opportunity | 04.03.01 Penandaan closed-won / closed-lost beserta alasan |
+| Pelaksanaan | 05. Pengelolaan Aktivitas (**M5 minimal, DEC-049**) | 05.01 Pencatatan activity | 05.01.01 Mencatat atau menjadwalkan call / meeting / email / task / note pada Lead, Opportunity, Contact, Account |
+| Pelaksanaan | 05. Pengelolaan Aktivitas | 05.02 Next step & overdue | 05.02.01 Next step = activity open terdekat; penanda overdue dan tanpa next step |
+| Pelaksanaan | 05. Pengelolaan Aktivitas | 05.03 Activity tim | 05.03.01 Sales Manager melihat dan memfilter activity tim |
 | Evaluasi | 07. Pengukuran Performa Sales | 07.01 Perhitungan pencapaian | 07.01.01 Perhitungan quota attainment per sales |
 | Evaluasi | 07. Pengukuran Performa Sales | 07.02 Penilaian performa | 07.02.01 Penandaan status performa (mencapai / tidak mencapai target) |
-| Output | 08. Pelaporan Revenue & Pipeline | 08.01 Laporan revenue | 08.01.01 Rekap revenue dari peluang closed-won per periode |
+| Output | 08. Pelaporan Revenue & Pipeline | 08.01 Laporan revenue | 08.01.01 Rekap revenue dari Opportunity closed-won per periode |
 | Output | 08. Pelaporan Revenue & Pipeline | 08.02 Laporan pipeline | 08.02.01 Rekap pipeline dan forecast |
 | Output | 08. Pelaporan Revenue & Pipeline | 08.03 Laporan performa sales | 08.03.01 Rekap quota attainment per sales |
+| Output | 08. Pelaporan Revenue & Pipeline | 08.04 Dashboard beranda | 08.04.01 Beranda menurut peran: yang perlu ditindak (Sales); Queue, attainment tim, deal perlu perhatian, activity terlewat (Manager) (*Should*, DEC-058) |
 | Pendukung | 10. Tenancy & Kendali Akses | 10.01 Pengelolaan tenant | 10.01.01 Manajemen tenant dan isolasi data antar tenant |
 | Pendukung | 10. Tenancy & Kendali Akses | 10.02 Pengelolaan pengguna | 10.02.01 Manajemen user, role, dan permission per tenant |
+| Pendukung | 10. Tenancy & Kendali Akses | 10.03 Akses multi-tenant | 10.03.01 Login dengan mengidentifikasi tenant lewat alamat workspace (DEC-059) |
+| Pendukung | 10. Tenancy & Kendali Akses | 10.04 Cakupan data per peran | 10.04.01 Sales: milik sendiri + Queue; Manager: tim; Manajemen: tenant (*usulan*, DEC-056) |
 | Pendukung | 11. Integrasi Webhook | 11.01 Publikasi event | 11.01.01 Pengiriman event dari CRM ke sistem klien (outbound) |
 | Pendukung | 11. Integrasi Webhook | 11.02 Penerimaan event | 11.02.01 Penerimaan event dari sistem klien ke CRM (inbound) |
 | Pendukung | 11. Integrasi Webhook | 11.03 Pengelolaan subscription | 11.03.01 Konfigurasi endpoint dan secret per tenant |
 | Pendukung | 11. Integrasi Webhook | 11.03 Pengelolaan subscription | 11.03.02 Konfigurasi multiple target (fan-out satu event ke beberapa endpoint) |
 | Pendukung | 11. Integrasi Webhook | 11.04 Keandalan pengiriman | 11.04.01 Retry, rate limiting, dan pencatatan log |
+| Pendukung | **15. Konfigurasi Proses Sales per Tenant** (DEC-051/052) | 15.01 Daftar pilihan | 15.01.01 Status turunan lead, source, alasan Lost/Won/Closed-Lost, jenis activity |
+| Pendukung | 15. Konfigurasi Proses Sales per Tenant | 15.02 Pipeline & stage | 15.02.01 Multi-pipeline; stage, kriteria keluar, mode penegakan, batas stale per stage, probability opsional |
+| Pendukung | 15. Konfigurasi Proses Sales per Tenant | 15.03 Penugasan lead | 15.03.01 Mode penugasan, default per cara masuk, aturan berurutan, Queue cadangan |
+| Pendukung | 15. Konfigurasi Proses Sales per Tenant | 15.04 Custom field | 15.04.01 Custom field pada Lead, Contact, Account, Opportunity, Activity |
 | **Roadmap** | **13. SaaS Platform Administration (Platform Owner / TLab)** — **fase roadmap terpisah (DEC-045)**, di luar MVP | 13.01 Pengelolaan paket pricing | 13.01.01 CRUD paket pricing (dimensi: seat, batas data, modul, kuota webhook, SLA/dukungan) |
 | **Roadmap** | 13. SaaS Platform Administration | 13.01 Pengelolaan paket pricing | 13.01.02 Penetapan kuota & batas per paket (nilai terukur, mis. jumlah seat / jumlah record) |
 | **Roadmap** | 13. SaaS Platform Administration | 13.02 Pengelolaan akun tenant | 13.02.01 Pembuatan akun tenant oleh Platform Owner |
@@ -213,8 +246,14 @@ data yang belum dimiliki tenant baru, sehingga ditetapkan ke fase roadmap
 
 | Fase | No | Proses | Sub-Proses |
 |---|---|---|---|
-| **MVP minimal** | 14 | Asistensi AI untuk Sales | 14.01.01 Draf pesan outreach per Lead/Kontak; 14.01.02 Ringkasan & AI insight record; 14.01.03 Ekstraksi catatan → field CRM *(opsional)* |
+| **MVP minimal** | 14 | Asistensi AI untuk Sales | 14.01.01 Draf pesan outreach per Lead/Contact; 14.01.02 Ringkasan & AI insight record; 14.01.03 Ekstraksi catatan → field CRM *(opsional)* |
 | **Roadmap** | 14 | Asistensi AI untuk Sales (prediktif) | 14.02.01 Lead scoring; 14.02.02 Win probability / deal risk; 14.02.03 Sales forecast; 14.02.04 Otomasi agentic lanjutan |
+
+Proses **15 Konfigurasi Proses Sales per Tenant** ditambahkan 2026-10-13
+(CR-20261013-001): perbedaan proses sales antar tenant diatur lewat data, dengan
+**kategori sistem tetap** dan **label serta daftar pilihan milik tenant**. Proses
+05 (Aktivitas) kini masuk MVP sebagai **M5 minimal** (DEC-049). Penomoran proses
+06, 09, dan 12 tetap tidak dipakai ulang.
 
 Proses 12 **dikeluarkan dari lingkup produk CRM** pada 2026-10-02 (DEC-031):
 kebutuhan ini bukan pakem CRM — CRM mengelola pelanggan, bukan penilaian
@@ -227,11 +266,11 @@ inisiatif internal terpisah.
 
 | No | Stakeholder | Sub Stakeholder | Jenis | Kebutuhan & Harapan | Dampak Jika Tidak Terpenuhi | Tindakan | Proses Terkait | Pemantauan | Frekuensi |
 |----|-------------|-----------------|-------|----------------------|------------------------------|----------|----------------|------------|-----------|
-| SH001 | Sales | Sales Representative | Internal | Lead dan peluang terkelola, progres deal terlihat, pencapaian target terukur; **penyusun utama use case AI (EP-015)** — draf outreach, ringkasan & insight record | Deal hilang tanpa jejak; performa tidak dapat dibuktikan | Modul Lead; Modul Pipeline; Skor Performa | 01; 04; 07 | Review pipeline per sales | Mingguan |
-| SH002 | Sales | Sales Manager | Internal | Visibilitas pipeline tim, penetapan kuota, identifikasi sales berkinerja rendah | Tidak dapat melakukan pembinaan berbasis data; target tim tidak terkelola | Modul Pipeline; Skor Performa; Laporan Performa | 03; 04; 07; 08 | Review performa tim | Bulanan |
+| SH001 | Sales | Sales Representative | Internal | Lead dan Opportunity terkelola, **tindak lanjut (Activity dan Next step) tercatat**, progres deal terlihat, pencapaian target terukur; **penyusun utama use case AI (EP-015)** — draf outreach, ringkasan & insight record | Deal hilang tanpa jejak; performa tidak dapat dibuktikan | Modul Lead; Modul Pipeline; Skor Performa | 01; 04; 07 | Review pipeline per sales | Mingguan |
+| SH002 | Sales | Sales Manager | Internal | Visibilitas pipeline dan **activity tim**, **meng-assign lead dari Queue**, penetapan quota, identifikasi sales berkinerja rendah | Tidak dapat melakukan pembinaan berbasis data; target tim tidak terkelola | Modul Pipeline; Activity; Skor Performa; Laporan Performa | 01; 03; 04; 05; 07; 08 | Review performa tim | Bulanan |
 | SH003 | Support | Agent Support | **DI LUAR LINGKUP** | Tiket masuk terdistribusi, status tiket jelas, jalur eskalasi tersedia | Tiket menumpuk; SLA tidak terpantau | Modul Tiket; Eskalasi | 06 | Monitoring tiket harian | Harian |
 | SH004 | Support | Support Lead / Manager | **DI LUAR LINGKUP** | Rekap beban dan status tiket, penanganan eskalasi | Beban tim tidak terkelola; eskalasi tidak terkendali | Modul Tiket; Laporan Tiket | 06; 09 | Laporan tiket | Mingguan |
-| SH005 | Administrasi Tenant | Tenant Admin | Internal | Isolasi data antar tenant, kendali user/role, konfigurasi integrasi | Kebocoran data antar tenant; integrasi tidak dapat dikonfigurasi | Modul Tenancy; Manajemen User; Webhook Subscription | 10; 11 | Audit akses | Bulanan |
+| SH005 | Administrasi Tenant | Tenant Admin | Internal | Isolasi data antar tenant, kendali user/role, konfigurasi integrasi, **konfigurasi proses sales tenant (status, pipeline, custom field, penugasan)** | Kebocoran data antar tenant; integrasi tidak dapat dikonfigurasi | Modul Tenancy; Manajemen User; Webhook Subscription; Konfigurasi Tenant | 10; 11; 15 | Audit akses | Bulanan |
 | SH006 | Pelanggan | Pelanggan / Klien Tenant | **DI LUAR LINGKUP** | Dapat membuat tiket dan memperoleh penyelesaian | Keluhan tidak tercatat; kepuasan pelanggan turun | Modul Tiket (jalur eksternal) | 06 | Survei kepuasan | Per tiket |
 | SH007 | Karyawan Tenant | Internal Requester | **DI LUAR LINGKUP** | Dapat mengajukan permintaan/tiket ke tim lain | Permintaan antar tim tidak terlacak | Modul Tiket (jalur internal) | 06 | Volume tiket internal | Bulanan |
 | SH008 | Sistem Eksternal | Sistem Klien (di luar CRM) | System/Eksternal | Menerima event CRM tepat waktu; dapat mengirim data ke CRM | Kustomisasi klien tidak dapat berjalan; integrasi manual | Integrasi Webhook | 11 | Log pengiriman & retry | Per event |
@@ -246,18 +285,18 @@ inisiatif internal terpisah.
 
 | Kode | Nama | Deskripsi |
 |------|------|-----------|
-| OB-001 | Lead | Calon pelanggan beserta status dan pemiliknya |
-| OB-002 | Kontak | Data orang (individu) yang terkait dengan pelanggan |
-| OB-003 | Akun | Data organisasi/perusahaan pelanggan (mendukung B2B dan B2C) |
-| OB-004 | Peluang | Deal berjalan (nilai, stage, tanggal tutup, pemilik) |
-| OB-005 | Pipeline & Stage | Definisi tahapan pipeline dan posisi peluang di dalamnya — **default 6 stage + 2 outcome (DEC-047)**, configurable per tenant |
-| OB-006 | Aktivitas | Catatan call / meeting / task / note yang terhubung ke lead atau peluang |
+| OB-001 | Lead | Calon pelanggan beserta kategori status, status turunan, source, dan Owner (atau berada di Queue) |
+| OB-002 | Contact | Data orang (individu) yang terkait dengan pelanggan |
+| OB-003 | Account | Data organisasi/perusahaan pelanggan (mendukung B2B dan B2C) |
+| OB-004 | Opportunity | Deal berjalan (nilai, stage, tanggal tutup, pemilik) |
+| OB-005 | Pipeline & Stage | Definisi tahapan pipeline dan posisi Opportunity di dalamnya — **default 6 stage + 2 outcome (DEC-047)**; tenant boleh punya lebih dari satu pipeline; kriteria keluar, mode penegakan, batas stale, probability diatur tenant (DEC-051) |
+| OB-006 | Activity | Catatan call / meeting / email / task / note yang terhubung ke Lead, Opportunity, Contact, atau Account; dicatat atau dijadwalkan; owner, jatuh tempo, status — **M5 minimal (DEC-049)** |
 | OB-007 | Tiket | Tiket dengan jalur internal atau eksternal, beserta status dan assignee | **← DIHAPUS (CR-20261008-001)**
 | OB-008 | Eskalasi Tiket | Rekaman eskalasi tiket ke tim internal | **← DIHAPUS (CR-20261008-001)**
 | OB-009 | Riwayat Tiket | Komentar dan jejak perubahan status tiket | **← DIHAPUS (CR-20261008-001)**
-| OB-010 | Kuota / Target Sales | Target won per sales per periode |
+| OB-010 | Quota / Target Sales | Target won per sales per periode |
 | OB-011 | Skor Performa Sales | Hasil perhitungan quota attainment dan status performa per sales |
-| OB-012 | Laporan Revenue | Rekap revenue dari peluang closed-won per periode |
+| OB-012 | Laporan Revenue | Rekap revenue dari Opportunity closed-won per periode |
 | OB-013 | Laporan Pipeline | Rekap pipeline dan forecast |
 | OB-014 | Laporan Performa Sales | Rekap quota attainment per sales |
 | OB-015 | Laporan Tiket | Rekap volume dan status tiket | **← DIHAPUS (CR-20261008-001)**
@@ -278,6 +317,10 @@ inisiatif internal terpisah.
 | OB-030 | **Pendaftaran Tenant** | Permohonan pendaftaran tenant dari calon pelanggan sebelum aktivasi | **Roadmap (M9)** |
 | OB-031 | **Jejak Audit Platform** | Jejak tindakan Platform Owner (siapa, kapan, tindakan apa) untuk akuntabilitas kontrol plane | **Roadmap (M9)** |
 | OB-032 | **Hasil Asistensi AI** | Output AI yang tersimpan pada record: draf pesan, ringkasan/insight, hasil ekstraksi — beserta jejak pemanggilan (jenis use case, waktu, status) | **MVP minimal (CR-20261008-002)** — titik simpan output AI, input arsitektur TD-07 |
+| OB-033 | **Queue Lead** | Antrian lead tanpa Owner; sumber lead untuk Manager meng-assign atau Sales meng-claim (DEC-050) | **MVP** |
+| OB-034 | **Aturan Penugasan** | Aturan berurutan (kriteria → Owner / Queue / pola round-robin) dan default per cara masuk (DEC-050) | **MVP** |
+| OB-035 | **Konfigurasi Tenant** | Daftar pilihan milik tenant: status turunan lead, source, alasan Lost/Won/Closed-Lost, jenis activity, ambang performa (DEC-051) | **MVP** |
+| OB-036 | **Definisi Custom Field** | Definisi field tambahan per tenant dan entitas: nama, tipe, wajib, tampil di daftar (DEC-052) | **MVP** |
 
 ---
 
@@ -287,15 +330,21 @@ inisiatif internal terpisah.
 |--------|----------------------|----------|---------------|------------|
 | 01.01 Penangkapan lead | SH001 - Sales Rep | Menginput | OB-001-Lead | Input manual melalui form CRM |
 | 01.01 Penangkapan lead | SH008 - Sistem Klien | Mengirim | OB-001-Lead | Web-to-lead via webhook inbound |
-| 01.02 Distribusi lead | SH002 - Sales Manager | Menugaskan | OB-001-Lead | Penugasan lead ke sales |
-| 01.03 Kualifikasi lead | SH001 - Sales Rep | Memperbarui | OB-001-Lead | Perubahan status lead |
-| 01.04 Konversi lead | SH001 - Sales Rep | Mengkonversi | OB-001-Lead | Konversi menjadi kontak + akun + peluang |
-| 02.01 Pengelolaan kontak | SH001 - Sales Rep | Mengelola | OB-002-Kontak | CRUD kontak |
-| 02.02 Pengelolaan akun | SH001 - Sales Rep | Mengelola | OB-003-Akun | CRUD akun; mendukung B2B dan B2C |
-| 03.01 Penetapan kuota | SH002 - Sales Manager | Menetapkan | OB-010-Kuota/Target Sales | Target won per sales per periode |
-| 04.01 Pengelolaan peluang | SH001 - Sales Rep | Mengelola | OB-004-Peluang | CRUD peluang |
-| 04.02 Pergerakan stage | SH001 - Sales Rep | Memperbarui | OB-005-Pipeline & Stage | Perubahan stage peluang |
-| 04.03 Penutupan peluang | SH001 - Sales Rep | Menutup | OB-004-Peluang | Penandaan closed-won / closed-lost |
+| 01.02 Penugasan lead & Queue | SH002 - Sales Manager | Meng-assign | OB-001-Lead / OB-033-Queue Lead | Penugasan dari Queue, satu atau banyak lead |
+| 01.02 Penugasan lead & Queue | SH001 - Sales Rep | Meng-claim | OB-033-Queue Lead | Mengambil lead dari Queue |
+| 01.01 Penangkapan lead | SH001 - Sales Rep | Meng-import | OB-001-Lead | Import file; Owner = pengimpor bila mode aktif |
+| 01.03 Qualification lead | SH001 - Sales Rep | Memperbarui | OB-001-Lead | Perubahan status lead (4 kategori + status turunan tenant); buka kembali lead Lost |
+| 01.04 Konversi lead | SH001 - Sales Rep | Mengkonversi | OB-001-Lead | Konversi menjadi Contact + Account + Opportunity |
+| 02.01 Pengelolaan Contact | SH001 - Sales Rep | Mengelola | OB-002-Contact | CRUD Contact |
+| 02.02 Pengelolaan Account | SH001 - Sales Rep | Mengelola | OB-003-Account | CRUD Account; mendukung B2B dan B2C |
+| 03.01 Penetapan quota | SH002 - Sales Manager | Menetapkan | OB-010-Kuota/Target Sales | Target won per sales per periode |
+| 04.01 Pengelolaan Opportunity | SH001 - Sales Rep | Mengelola | OB-004-Opportunity | CRUD Opportunity |
+| 04.02 Pergerakan stage | SH001 - Sales Rep | Memperbarui | OB-005-Pipeline & Stage | Perubahan stage Opportunity |
+| 04.03 Penutupan Opportunity | SH001 - Sales Rep | Menutup | OB-004-Opportunity | Penandaan closed-won / closed-lost |
+| 05.02 Next step & overdue | Sistem CRM | Menandai | OB-006-Activity | Next step, overdue, tanpa next step |
+| 05.03 Activity tim | SH002 - Sales Manager | Melihat | OB-006-Activity | Filter menurut Sales, jenis, tanggal, status |
+| 15.01-15.03 Konfigurasi proses sales | SH005 - Tenant Admin | Mengonfigurasi | OB-035-Konfigurasi Tenant / OB-034-Aturan Penugasan | Daftar pilihan, pipeline dan stage, mode penugasan |
+| 15.04 Custom field | SH005 - Tenant Admin | Mengelola | OB-036-Definisi Custom Field | Field tambahan per tenant |
 | 05.01 Pencatatan aktivitas | SH001 - Sales Rep | Mencatat | OB-006-Aktivitas | Call / meeting / task / note |
 | 07.01 Perhitungan pencapaian | Sistem CRM | Menghitung | OB-011-Skor Performa Sales | Nilai won aktual dibanding kuota |
 | 07.02 Penilaian performa | SH002 - Sales Manager | Melihat | OB-011-Skor Performa Sales | Status performa per sales |
@@ -308,7 +357,7 @@ inisiatif internal terpisah.
 | 11.02 Penerimaan event | SH008 - Sistem Klien | Mengirim | OB-019-Event Payload | Event inbound ke CRM |
 | 11.03 Pengelolaan subscription | SH005 - Tenant Admin | Mengkonfigurasi | OB-018-Webhook Subscription | Endpoint dan secret per tenant |
 | 11.01 / 11.02 | SH005 - Tenant Admin | Memantau | OB-020-Delivery Log | Log pengiriman, retry, dan kegagalan |
-| 03.01 Penetapan kuota | SH002 - Sales Manager | Mengonfigurasi | OB-010-Kuota/Target Sales | Kuota per sales **per bulan** (DEC-035); ambang batas performa configurable per tenant (DEC-023) |
+| 03.01 Penetapan quota | SH002 - Sales Manager | Mengonfigurasi | OB-010-Kuota/Target Sales | Quota per sales **per bulan** (DEC-035); ambang batas performa configurable per tenant (DEC-023) |
 | 13.01 Pengelolaan paket pricing | SH011 - Platform Owner (Superadmin TLab) | Mengelola | OB-024-Paket Pricing | CRUD paket + penetapan kuota/batas per paket — **fase roadmap (DEC-045)** |
 | 13.02 Pengelolaan akun tenant | SH011 - Platform Owner | Mengelola | OB-026-Akun Tenant | Buat / ubah / **soft delete** akun tenant |
 | 13.03 Pendaftaran & aktivasi tenant | SH012 - Calon Tenant | Mendaftar | OB-030-Pendaftaran Tenant | Registrasi mandiri (*self-serve*) |
@@ -327,7 +376,7 @@ inisiatif internal terpisah.
 
 PO meminta rekomendasi praktik standar pengukuran performa sales (arahan
 2026-10-02). Berikut hasil riset terhadap sumber industri. **[Sudah diputuskan:**
-periode kuota **bulanan** (DEC-035) dan ambang default **80%** (DEC-039);
+periode quota **bulanan** (DEC-035) dan ambang default **80%** (DEC-039);
 scope MVP memakai lapis outcome saja (DEC-027)]
 
 ### 5.1 Prinsip: pisahkan leading indicator dari lagging indicator
@@ -351,7 +400,7 @@ Kebutuhan PO ("target won 5, tercapai 4 → muncul informasi perform atau tidak"
 persis sama dengan **quota attainment**, yaitu persentase pencapaian terhadap
 target pada satu periode.
 
-> `Quota attainment = (Revenue dari deal closed-won ÷ Kuota) × 100`
+> `Quota attainment = (Revenue dari deal closed-won ÷ Quota) × 100`
 
 Sumber: [Salesforce — Quota Attainment](https://www.salesforce.com/blog/sales/quota-attainment/),
 [Everstage — Sales Performance Metrics](https://www.everstage.com/sales-performance/sales-performance-metrics).
@@ -381,11 +430,11 @@ Catatan: dengan DEC-037, jendela pengembangan efektif adalah **hari 2-3** (hari 
 adalah workshop finalisasi requirement).
 
 Scope MVP yang diusulkan **hanya lapis outcome**, karena lapis aktivitas dan
-pipeline memerlukan modul Aktivitas (M5, nice to have):
+pipeline belum memiliki laporan analitiknya (data Activity tersedia lewat M5 minimal, tetapi laporan leading indicator di luar MVP):
 
 | Laporan/Widget | Rumus | Dasar |
 |---|---|---|
-| Quota attainment per sales | Nilai closed-won ÷ kuota × 100% | Kebutuhan PO |
+| Quota attainment per sales | Nilai closed-won ÷ quota × 100% | Kebutuhan PO |
 | Status performa | Mencapai / tidak mencapai target berdasarkan **ambang batas configurable per tenant** (DEC-023); **nilai default = 80%** (DEC-039, dasar riset section 5.5) | Kebutuhan PO |
 | Leaderboard sales | Peringkat sales menurut attainment | Praktik standar |
 | Win rate per sales | Won ÷ (won + lost) | Praktik standar |
@@ -458,7 +507,7 @@ tidak dicantumkan** karena belum ada data harga dari PO.
 | Dimensi | Alasan |
 |---|---|
 | **Seat** (jumlah user aktif) | Dimensi paling dipahami pasar; model default CRM SaaS |
-| **Batas data** (jumlah Kontak + Akun + Lead + Peluang) | Alasan *upgrade* alami; mudah dihitung & ditegakkan |
+| **Batas data** (jumlah Contact + Account + Lead + Opportunity) | Alasan *upgrade* alami; mudah dihitung & ditegakkan |
 | **Modul yang aktif** | Gerbang fitur (Lead, Pipeline, Kuota & Performa, Reporting) |
 | **Kuota webhook** (event/bulan + jumlah target fan-out) | Nilai jual utama sekaligus biaya operasional (DEC-012/DEC-030) |
 | **Dukungan & SLA** | Pemisah tier atas |
@@ -469,7 +518,7 @@ tidak dicantumkan** karena belum ada data harga dari PO.
 | Paket | Cakupan yang diusulkan | Alur masuk |
 |---|---|---|
 | **Trial** | 14 hari; 3 user; 1 target webhook | Registrasi mandiri (*self-serve*) |
-| **Starter** | s/d 5 user; modul inti sales (Lead, Kontak & Akun, Pipeline); laporan dasar; webhook outbound terbatas | Self-serve + konfirmasi pembayaran |
+| **Starter** | s/d 5 user; modul inti sales (Lead, Contact & Account, Pipeline); laporan dasar; webhook outbound terbatas | Self-serve + konfirmasi pembayaran |
 | **Growth** | s/d 20 user; seluruh modul sales + Kuota & Performa + Reporting lengkap; webhook + fan-out | Sales-led |
 | **Enterprise** | user *fair use* besar; seluruh modul; webhook + SLA; dukungan khusus | Sales-led |
 | **Add-on** | tambahan seat; tambahan kuota webhook; tambahan storage | — |
@@ -481,16 +530,16 @@ harga, dan angka kuota menunggu keputusan PO (Q-033..Q-035).
 
 ### 5.7 Stage Pipeline Default — Bahan & Ketetapan (DEC-047)
 
-**Ketetapan (DEC-047, 2026-10-08):** MVP memakai **6 stage + 2 outcome**:
+**Ketetapan (DEC-047, 2026-10-08):** MVP memakai **6 stage + 2 outcome** sebagai **templat bawaan**. Sejak CR-20261013-001, nama, urutan, dan jumlah stage diatur tenant, tenant boleh memiliki lebih dari satu pipeline, dan nama stage memakai istilah Inggris (DEC-057):
 
 | Urutan | Stage | Tahap |
 |---|---|---|
-| 1 | **Qualifikasi** | Peluang baru, kebutuhan dasar & kelayakan sedang diverifikasi |
-| 2 | **Analisis Kebutuhan** | Kebutuhan dan cakupan solusi digali bersama calon pelanggan |
-| 3 | **Presentasi / Demo** | Solusi diperlihatkan & diuji |
+| 1 | **Qualification** | Opportunity baru, kebutuhan dasar & kelayakan sedang diverifikasi |
+| 2 | **Needs Analysis** | Kebutuhan dan cakupan solusi digali bersama calon pelanggan |
+| 3 | **Demo** | Solusi diperlihatkan & diuji |
 | 4 | **Proposal** | Penawaran/estimasi disampaikan |
-| 5 | **Negosiasi** | Harga & syarat dibahas |
-| 6 | **Menunggu Keputusan** | Menunggu keputusan akhir pembeli |
+| 5 | **Negotiation** | Harga & syarat dibahas |
+| 6 | **Decision Pending** | Menunggu keputusan akhir pembeli |
 
 **Outcome (bukan stage berjalan):** **Closed-Won** dan **Closed-Lost** — keduanya
 **wajib menyertakan alasan** (BR-010).
@@ -509,15 +558,15 @@ harga, dan angka kuota menunggu keputusan PO (Q-033..Q-035).
 
 **Alasan pemilihan 6 stage (bukan 7):** tahap **prospecting** pada rujukan industri
 sudah dilayani **M3 Lead Management** di produk ini — lead dikelola, dibagi,
-dikualifikasi, lalu dikonversi menjadi peluang. Menambahkan *prospecting* sebagai
-stage peluang akan **menduplikasi M3**. Pipeline peluang karena itu dimulai dari
-**Qualifikasi** (saat peluang terbentuk dari konversi lead).
+dikualifikasi, lalu dikonversi menjadi Opportunity. Menambahkan *prospecting* sebagai
+stage Opportunity akan **menduplikasi M3**. Pipeline Opportunity karena itu dimulai dari
+**Qualification** (saat Opportunity terbentuk dari konversi lead).
 
 **Risiko yang perlu diantisipasi peserta:** praktik industri memperingatkan stage
 yang mendeskripsikan **tindakan sales** alih-alih **posisi pembeli** kurang
 bermakna sebagai indikator (contoh yang sering dikritik: *"Proposal Sent"* —
 mengirim proposal adalah tindakan sales dan tidak menunjukkan posisi keputusan
-pembeli). Pada 6 stage di atas, *Proposal* dan *Menunggu Keputusan* perlu
+pembeli). Pada 6 stage di atas, *Proposal* dan *Decision Pending* perlu
 **dibedakan tegas** agar tidak tumpang tindih.
 
 **Cara memandu workshop:** tabel di atas dipakai sebagai **default** pada hari 1.
@@ -531,10 +580,10 @@ bukan mengarang pipeline dari nol.
 | Epic | Nama | Modul | MVP |
 |---|---|---|---|
 | EP-001 | Manajemen Lead | M3 | Mandatory |
-| EP-002 | Manajemen Kontak & Akun | M2 | Mandatory |
-| EP-003 | Penetapan Target & Kuota Sales | M7 | Mandatory |
-| EP-004 | Pengelolaan Pipeline & Peluang | M4 | Mandatory |
-| EP-005 | Pengelolaan Aktivitas | M5 | Nice to have |
+| EP-002 | Manajemen Contact & Account | M2 | Mandatory |
+| EP-003 | Penetapan Target & Quota Sales | M7 | Mandatory |
+| EP-004 | Pengelolaan Pipeline & Opportunity | M4 | Mandatory |
+| EP-005 | Pengelolaan Activity | M5 | **Mandatory — versi minimal (DEC-049)** — naik dari Nice to have (CR-20261013-001) |
 | EP-006 | ~~Pengelolaan Tiket~~ | — | **DIBATALKAN (CR-20261008-001)** — M6 keluar dari MVP |
 | EP-007 | Pengukuran Performa Sales | M7 | Mandatory |
 | EP-008 | Pelaporan Revenue & Pipeline | M7 | Mandatory |
@@ -546,6 +595,8 @@ bukan mengarang pipeline dari nol.
 | EP-014 | Pengaturan Penagihan & Pendaftaran Tenant *(roadmap)* | — | **Roadmap (M9)** — DEC-045; di luar MVP |
 | EP-015 | **Asistensi AI untuk Sales** | M10 | **MVP minimal (CR-20261008-002)** — integrasi AI generatif end-to-end 1–2 use case; prediktif ke roadmap |
 | EP-016 | Analitik Prediktif Sales *(roadmap)* | — | **Roadmap** — CR-20261008-002; butuh data historis tenant |
+| EP-017 | **Konfigurasi Proses Sales per Tenant** | M1 | **Mandatory (DEC-051/052)** — daftar pilihan, pipeline, penugasan, custom field |
+| EP-018 | **Dashboard Beranda** | M7 | **MVP, *Should* (DEC-058)** |
 
 ### User Story (dari SPOK)
 
@@ -553,19 +604,19 @@ bukan mengarang pipeline dari nol.
 |---|---|---|
 | US-001 | Sebagai Sales Rep, saya ingin menginput lead melalui form CRM, sehingga calon pelanggan tercatat sebagai lead. | EP-001 |
 | US-002 | Sebagai Sistem Klien, saya ingin mengirim lead ke CRM melalui webhook inbound, sehingga lead dari sistem lain tidak perlu diinput manual. | EP-001 |
-| US-003 | Sebagai Sales Manager, saya ingin menugaskan lead ke sales, sehingga setiap lead memiliki penanggung jawab. | EP-001 |
-| US-004 | Sebagai Sales Rep, saya ingin memperbarui status lead, sehingga tahap kualifikasi setiap lead terlihat. | EP-001 |
-| US-005 | Sebagai Sales Rep, saya ingin mengkonversi lead menjadi kontak, akun, dan peluang, sehingga prospek yang lolos kualifikasi langsung masuk pipeline. | EP-001 |
-| US-006 | Sebagai Sales Rep, saya ingin mengelola kontak, sehingga data orang yang terkait pelanggan selalu mutakhir. | EP-002 |
-| US-007 | Sebagai Sales Rep, saya ingin mengelola akun/perusahaan, sehingga pelanggan B2B maupun B2C terorganisir. | EP-002 |
+| US-003 | Sebagai Sales Manager, saya ingin menugaskan lead ke sales, sehingga setiap lead memiliki penanggung jawab (dari Queue, satu atau banyak sekaligus). | EP-001 |
+| US-004 | Sebagai Sales Rep, saya ingin memperbarui status lead, sehingga tahap qualification setiap lead terlihat (kategori New / In Progress / Lost / Converted dan status turunan tenant). | EP-001 |
+| US-005 | Sebagai Sales Rep, saya ingin mengkonversi lead menjadi Contact, Account, dan Opportunity, sehingga prospek yang lolos kualifikasi langsung masuk pipeline. | EP-001 |
+| US-006 | Sebagai Sales Rep, saya ingin mengelola Contact, sehingga data orang yang terkait pelanggan selalu mutakhir. | EP-002 |
+| US-007 | Sebagai Sales Rep, saya ingin mengelola Account/perusahaan, sehingga pelanggan B2B maupun B2C terorganisir. | EP-002 |
 | US-008 | Sebagai Sales Manager, saya ingin menetapkan target won per sales per periode, sehingga pencapaian setiap sales dapat dinilai. | EP-003 |
-| US-009 | Sebagai Sales Rep, saya ingin mengelola peluang beserta nilai dan tanggal tutupnya, sehingga deal berjalan terpantau. | EP-004 |
-| US-010 | Sebagai Sales Rep, saya ingin memindahkan peluang antar-stage, sehingga progres deal terlihat. | EP-004 |
-| US-011 | Sebagai Sales Rep, saya ingin menandai peluang sebagai closed-won atau closed-lost beserta alasan, sehingga hasil akhir deal tercatat. | EP-004 |
-| US-012 | Sebagai Sales Rep, saya ingin mencatat aktivitas (call/meeting/task/note), sehingga riwayat interaksi pelanggan tidak hilang. | EP-005 |
+| US-009 | Sebagai Sales Rep, saya ingin mengelola Opportunity beserta nilai dan tanggal tutupnya, sehingga deal berjalan terpantau. | EP-004 |
+| US-010 | Sebagai Sales Rep, saya ingin memindahkan Opportunity antar-stage, sehingga progres deal terlihat. | EP-004 |
+| US-011 | Sebagai Sales Rep, saya ingin menandai Opportunity sebagai closed-won atau closed-lost beserta alasan, sehingga hasil akhir deal tercatat. | EP-004 |
+| US-012 | Sebagai Sales Rep, saya ingin mencatat atau menjadwalkan activity (call/meeting/email/task/note) pada lead, opportunity, contact, atau account, sehingga riwayat interaksi pelanggan tidak hilang. | EP-005 |
 | US-021 | Sebagai Sistem CRM, saya ingin menghitung quota attainment setiap sales, sehingga pencapaian target dapat diketahui secara otomatis. | EP-007 |
 | US-022 | Sebagai Sales Manager, saya ingin melihat status performa setiap sales (mencapai / tidak mencapai target), sehingga saya dapat melakukan pembinaan. | EP-007 |
-| US-023 | Sebagai Manajemen, saya ingin mengunduh laporan revenue dari peluang closed-won per periode, sehingga kinerja pendapatan terpantau. | EP-008 |
+| US-023 | Sebagai Manajemen, saya ingin mengunduh laporan revenue dari Opportunity closed-won per periode, sehingga kinerja pendapatan terpantau. | EP-008 |
 | US-024 | Sebagai Sales Manager, saya ingin mengunduh laporan pipeline dan forecast, sehingga proyeksi pendapatan dapat disusun. | EP-008 |
 | US-025 | Sebagai Sales Manager, saya ingin mengunduh laporan performa sales, sehingga saya dapat membandingkan kinerja antar sales. | EP-008 |
 | US-027 | Sebagai Tenant Admin, saya ingin mengelola tenant dan isolasi datanya, sehingga data antar tenant tidak tercampur. | EP-010 |
@@ -588,10 +639,25 @@ bukan mengarang pipeline dari nol.
 | US-047 | Sebagai Sistem, saya ingin menutup akses tenant secara otomatis ketika kuota paket terlampaui atau langganan berakhir, sehingga batas komersial ditegakkan tanpa intervensi manual. | EP-014 |
 | US-048 | Sebagai Calon Tenant, saya ingin mendaftar, memilih paket, dan memperoleh aktivasi setelah pembayaran dikonfirmasi, sehingga saya dapat mulai menggunakan CRM secara mandiri. | EP-014 |
 | US-049 | Sebagai Platform Owner TLab, saya ingin melihat jejak audit tindakan saya (siapa/kapan/apa) di control plane, sehingga akuntabilitas pengelolaan platform terjaga. | EP-014 |
-| US-050 | Sebagai Sales, saya ingin AI menyusun **draf pesan outreach** untuk Lead/Kontak berdasarkan konteks record, sehingga saya tidak perlu menyusun pesan dari nol. | EP-015 |
-| US-051 | Sebagai Sales, saya ingin AI memberikan **ringkasan & insight** atas Lead/Peluang beserta rekomendasi langkah berikutnya, sehingga saya cepat menangkap konteks. | EP-015 |
+| US-050 | Sebagai Sales, saya ingin AI menyusun **draf pesan outreach** untuk Lead/Contact berdasarkan konteks record, sehingga saya tidak perlu menyusun pesan dari nol. | EP-015 |
+| US-051 | Sebagai Sales, saya ingin AI memberikan **ringkasan & insight** atas Lead/Opportunity beserta rekomendasi langkah berikutnya, sehingga saya cepat menangkap konteks. | EP-015 |
 | US-052 | Sebagai Sales, saya ingin AI meringkas **catatan bebas** menjadi field CRM (kebutuhan/anggaran/stakeholder), sehingga data terisi tanpa entry manual. *(opsional — bila waktu cukup)* | EP-015 |
-| US-053 | Sebagai Sales Manager, saya ingin melihat **skor prediktif** peluang/lead dan proyeksi pipeline, sehingga prioritas kerja berbasis data historis. *(roadmap)* | EP-016 |
+| US-053 | Sebagai Sales Manager, saya ingin melihat **skor prediktif** Opportunity/lead dan proyeksi pipeline, sehingga prioritas kerja berbasis data historis. *(roadmap)* | EP-016 |
+| US-054 | Sebagai Sales Rep, saya ingin meng-claim lead dari Queue, sehingga saya dapat menangani lead tanpa menunggu penugasan Manager. | EP-001 |
+| US-055 | Sebagai Sales Manager, saya ingin meng-assign lead dari Queue ke Sales, satu atau banyak sekaligus, sehingga tidak ada lead yang menggantung. | EP-001 |
+| US-056 | Sebagai Sales Rep, saya ingin meng-import lead dari file CSV/Excel dengan pemetaan kolom dan pemeriksaan duplikat, sehingga lead dari pameran atau daftar lama tidak diinput satu per satu. *(Should)* | EP-001 |
+| US-057 | Sebagai Sales Rep, saya ingin meng-convert lead ke Account dan Contact yang sudah ada, sehingga tidak tercipta data duplikat. | EP-001 |
+| US-058 | Sebagai Sales Rep, saya ingin membuka kembali lead Lost dengan catatan, sehingga lead yang waktunya baru tepat dapat ditindaklanjuti. | EP-001 |
+| US-059 | Sebagai Sales Rep, saya ingin memundurkan stage Opportunity dengan alasan, sehingga pipeline mencerminkan keadaan sebenarnya. | EP-004 |
+| US-060 | Sebagai Sales Rep, saya ingin melihat Next step dan penanda overdue pada lead dan opportunity, sehingga tidak ada deal yang menggantung tanpa tindakan. | EP-005 |
+| US-061 | Sebagai Sales Manager, saya ingin melihat dan memfilter activity tim (Sales, jenis, tanggal, status), sehingga saya dapat memantau tindak lanjut dan membina. | EP-005 |
+| US-062 | Sebagai Tenant Admin, saya ingin mengatur mode penugasan lead, default per cara masuk, dan aturan berurutan, sehingga alur penugasan sesuai proses perusahaan. | EP-017 |
+| US-063 | Sebagai Tenant Admin, saya ingin mengatur daftar pilihan (status turunan lead, source, alasan Lost/Won, jenis activity), sehingga istilah dan laporan sesuai bisnis kami. | EP-017 |
+| US-064 | Sebagai Tenant Admin, saya ingin mengatur pipeline, stage, kriteria keluar beserta mode penegakan, batas stale, dan probability, sehingga pipeline mengikuti proses sales perusahaan. | EP-017 |
+| US-065 | Sebagai Tenant Admin, saya ingin menambah custom field pada lead, contact, account, opportunity, dan activity, sehingga data khas perusahaan tercatat tanpa mengubah core. | EP-017 |
+| US-066 | Sebagai Pengguna, saya ingin masuk dengan mengidentifikasi workspace perusahaan saya, sehingga hanya data tenant saya yang terlihat. | EP-010 |
+| US-067 | Sebagai Sales Rep atau Sales Manager, saya ingin beranda yang menampilkan hal yang perlu ditindak hari ini, sehingga saya langsung tahu prioritas. *(Should)* | EP-018 |
+| US-068 | Sebagai Sales Rep, saya ingin memindahkan Opportunity maju melompat beberapa stage bila situasinya memang begitu, dengan syarat setiap stage yang dilewati tetap diperiksa dan stage yang dilewati tercatat sebagai skipped, sehingga data pipeline tetap jujur. | EP-004 |
 
 Task didekomposisi saat sprint planning (Taiga), bukan di tahap requirement ini.
 
@@ -608,6 +674,8 @@ teknologi).
 **Per 2026-10-08 (DEC-045):** terbuka **tujuh pertanyaan baru** — Q-033 s/d Q-039,
 seluruhnya menyangkut **fase roadmap SaaS Platform Administration**. Tidak
 menghambat pelaksanaan bootcamp.
+
+**Per 2026-10-13 (CR-20261013-001):** terbuka **lima pertanyaan baru** — Q-044 s/d Q-048. **Q-044, Q-046 (alur), Q-047, dan Q-048 terjawab pada hari yang sama**; tersisa Q-045 (urutan potong lingkup) dan bentuk alamat teknis workspace.
 
 **Per 2026-10-08 (CR-20261008-002):** terbuka **empat pertanyaan baru** —
 Q-040 s/d Q-043, menyangkut **integrasi AI (EP-015/M10)**. **Q-041 dan Q-040 sudah terjawab** (DEC-047 & DEC-048); Q-042 & Q-043 menyangkut fase roadmap.
@@ -637,8 +705,8 @@ Q-040 s/d Q-043, menyangkut **integrasi AI (EP-015/M10)**. **Q-041 dan Q-040 sud
 | Q-021 | Pemetaan istilah tiket "internal" vs "external" | Proses 06; DEC-019 | PM/PO | **Moot 2026-10-08** — objeknya (M6) keluar dari lingkup (CR-20261008-001); jawaban lama: — berdasarkan asal pemohon: eksternal = pelanggan, internal = karyawan tenant (DEC-022, DEC-036) |
 | Q-022 | Apakah tiket memerlukan SLA? | EP-006 | PM/PO | **Moot 2026-10-08** — objeknya (M6) keluar dari lingkup (CR-20261008-001); jawaban lama: — ya, SLA harus ada (DEC-025) |
 | Q-023 | Aturan status/SLA per jalur tiket | EP-006 | PM/PO | **Moot 2026-10-08** — objeknya (M6) keluar dari lingkup (CR-20261008-001); jawaban lama: — satu state machine, tidak dibedakan per jalur (DEC-026) |
-| Q-024 | Pengukuran aktivitas & pipeline (leading indicator) di MVP | EP-007 | PM/PO | **Terjawab 2026-10-02** — tidak termasuk MVP (DEC-027) |
-| Q-025 | Model data pelanggan B2C | EP-002 | PM/PO | **Terjawab 2026-10-02** — Kontak tanpa Akun diperbolehkan (DEC-024) |
+| Q-024 | Pengukuran aktivitas & pipeline (leading indicator) di MVP | EP-007 | PM/PO | **Terjawab 2026-10-02** — laporan tidak termasuk MVP (DEC-027). **Diperjelas 2026-10-13 (DEC-049):** data Activity tersedia lewat M5 minimal; yang di luar MVP adalah laporan leading indicator |
+| Q-025 | Model data pelanggan B2C | EP-002 | PM/PO | **Terjawab 2026-10-02** — Contact tanpa Account diperbolehkan (DEC-024) |
 | Q-026 | Spesifikasi webhook | EP-011 | Head of Engineer | **Sebagian terjawab** — retry, rate limit, logging, multiple target (DEC-030); implementasi teknis diteruskan ke Head of Engineer |
 | Q-027 | Status M8 Webhook di MVP | Lingkup MVP | PM/PO + Head of Engineer | **Terjawab 2026-10-02** — masuk MVP minimal (DEC-021, merevisi DEC-015) |
 | Q-028 | **Nilai default ambang batas performa** bila tenant tidak mengonfigurasi | EP-007; DEC-023 | PM/PO | **Terjawab 2026-10-02** — **default 80%** (DEC-039), melengkapi DEC-023. Dasar riset: section 5.5 |
@@ -657,6 +725,11 @@ Q-040 s/d Q-043, menyangkut **integrasi AI (EP-015/M10)**. **Q-041 dan Q-040 sud
 | Q-041 | **Use case AI mana yang menjadi minimum M10** — AI-01 (draf outreach) atau AI-02 (ringkasan & insight)? | EP-015 | PM/PO + peserta | **Terjawab 2026-10-08 (DEC-047)** — **AI-01 (draf pesan outreach)** sebagai *vertical slice*; AI-02 opsional bila waktu mencukupi |
 | Q-042 | **Strategi prediktif** — model per tenant vs global, dan sumber data latih | EP-016; Q-007/008 | Head of Engineer | **Terbuka 2026-10-08** — fase roadmap |
 | Q-043 | **Batas isolasi tenant pada prompt AI** — bagaimana konteks LLM dibatasi agar tidak bocor lintas tenant | BR-003; M10 | Head of Engineer | **Terbuka 2026-10-08** — syarat non-fungsional M10 |
+| Q-044 | **Kriteria apa yang boleh dipakai pada aturan penugasan lead** (Source, wilayah, industri, dan seterusnya) | Proses 15.03; DEC-050 | PM/PO + peserta | **Terjawab 2026-10-13 (DEC-061)** — dinamis: field lead bawaan dan custom field; tujuan Queue, Sales, round-robin |
+| Q-045 | **Urutan potong lingkup** bila 2 hari tidak cukup, beserta estimasi effort mesin konfigurasi tenant | R-001, R-019; DEC-051/052 | PM/PO + Head of Engineer | **Terbuka 2026-10-13** — usulan awal di BRD §9.4; dicocokkan dengan Head of Engineer pada hari 1 (agenda butir 7) |
+| Q-046 | **Mekanisme login lewat alamat workspace**: subdomain atau path | US-066; DEC-059 | Head of Engineer | **Terjawab untuk alur 2026-10-13 (DEC-062)** — workspace, lalu email dan kata sandi. Bentuk alamat teknis (subdomain atau path) tetap bagian keputusan isolasi tenant (agenda hari 1 butir 4) |
+| Q-047 | **Cakupan data per peran** (Sales: milik + Queue; Manager: tim; Manajemen: tenant) | BR-057; DEC-056 | PM/PO | **Terjawab 2026-10-13 (DEC-056/060)** — dikonfirmasi PO |
+| Q-048 | **Isi bawaan exit criteria** untuk 6 stage templat | BUKA-04; DEC-051 | PM/PO + peserta | **Terjawab 2026-10-13 (DEC-060)** — templat spesifikasi §6.2 diterima PO sebagai isi bawaan; peserta menyesuaikan hari 1 |
 
 ---
 

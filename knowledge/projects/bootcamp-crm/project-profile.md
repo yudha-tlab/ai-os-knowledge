@@ -4,10 +4,13 @@ type: project-profile
 project: bootcamp-crm
 client: tlab-internal
 status: active
-version: "1.13"
+version: "1.14"
 created: 2026-10-02
-modified: 2026-10-12
+modified: 2026-10-13
 changelog:
+  - version: "1.14"
+    date: 2026-10-13
+    purpose: "CR-20261013-001 — M5 Activity naik ke mandatory minimal (modul mandatory 7); model konfigurasi tenant dan custom field masuk MVP; BRD v5.0; mockup dibuat (mockup/)"
   - version: "1.13"
     date: 2026-10-12
     purpose: "Daftarkan dokumen pendamping BRD — Spesifikasi Proses Sales (requirements/brd/) pada Dokumen Kunci"
@@ -93,7 +96,7 @@ event sebagai permukaan ekstensi.
 | M2 | Contact & Account Management (B2B & B2C) | Mandatory |
 | M3 | Lead Management | Mandatory |
 | M4 | Sales Pipeline / Opportunity | Mandatory |
-| M5 | Activity Management | Nice to have |
+| M5 | Activity Management | **Mandatory — versi minimal (CR-20261013-001 / DEC-049)** |
 | ~~M6~~ | ~~Ticketing~~ | **DIKELUARKAN dari MVP (CR-20261008-001 / DEC-043)** — domain *service*, bukan core CRM untuk sales tracking. **Modul lanjutan roadmap (DEC-044)** |
 | M7 | Reporting & Analytics (revenue, pipeline, performa sales) | Mandatory |
 | M8 | Webhook / Event Layer | **MVP minimal (DEC-021)** — event outbound inti + 1 endpoint inbound. Merevisi DEC-015 |

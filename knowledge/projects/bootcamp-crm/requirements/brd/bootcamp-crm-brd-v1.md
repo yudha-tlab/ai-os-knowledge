@@ -3,9 +3,9 @@ title: "Business Requirements Document (BRD) — CRM Multi-Tenant TLab"
 type: brd
 project: bootcamp-crm
 status: Final — bahan presentasi & workshop hari 1
-version: "4.0"
+version: "5.3"
 disusun_oleh: "Yudha Pratama (PM / Product Owner)"
-date: 2026-10-08
+date: 2026-10-13
 ---
 
 # Business Requirements Document (BRD) — CRM Multi-Tenant TLab
@@ -31,7 +31,7 @@ date: 2026-10-08
 
 TLab membutuhkan **produk CRM milik sendiri** yang bersifat multi-tenant, dapat
 dikembangkan lebih lanjut, dan pada akhirnya dapat dijual. Saat ini belum ada
-sistem CRM terpusat: pengelolaan lead, peluang, dan pelanggan belum memiliki
+sistem CRM terpusat: pengelolaan lead, Opportunity, dan pelanggan belum memiliki
 tempat tunggal yang dapat diandalkan, sehingga riwayat interaksi pelanggan
 tercecer dan pencapaian target sales sulit dibuktikan dengan data.
 
@@ -60,7 +60,7 @@ Masalah yang ingin diselesaikan:
 
 Konsekuensi yang harus dipahami seluruh pihak:
 
-1. Core memuat pakem CRM **untuk sales**: lead, peluang, kontak & akun, dan
+1. Core memuat pakem CRM **untuk sales**: lead, Opportunity, Contact & Account, dan
    laporan.
 2. Kebutuhan yang berbeda per klien **tidak** diselesaikan dengan mengubah core,
    melainkan dengan memanfaatkan event yang dipublikasikan core.
@@ -94,7 +94,7 @@ komposisi:
 | Hari 2–3 | **Pengembangan core platform CRM (backend)** |
 
 **Implikasi yang harus disadari:** durasi total 3 hari, tetapi **jendela
-pengembangan efektif hanya 2 hari** untuk 6 modul mandatory. Ini risiko tertinggi
+pengembangan efektif hanya 2 hari** untuk 7 modul mandatory. Ini risiko tertinggi
 pada inisiatif ini.
 
 ---
@@ -109,17 +109,30 @@ pada inisiatif ini.
 | M2 | Contact & Account Management | **Mandatory** |
 | M3 | Lead Management | **Mandatory** |
 | M4 | Sales Pipeline / Opportunity | **Mandatory** |
-| M5 | Activity Management | *Nice to have* — di luar MVP |
+| M5 | Activity Management | **Mandatory** — versi minimal |
 | M6 | Ticketing | **Di luar lingkup** — domain *service* (§1.4) |
 | M7 | Reporting & Analytics | **Mandatory** |
 | M8 | Webhook / Event Layer | **MVP minimal** |
 | M9 | Platform Administration | Fase roadmap (§2.3) |
 | M10 | AI Assistance Layer | **MVP minimal** — service AI terpisah |
 
-**Modul mandatory = 6** (M1, M2, M3, M4, M7, M8-minimal). **M9 dan M10 tidak
-mengubah angka ini** — M10 adalah **lapisan tambahan MVP minimal**, bukan modul
-mandatory baru. Bila waktu tidak mencukupi, prioritas tetap pada 6 modul
-mandatory.
+**Modul mandatory = 7** (M1, M2, M3, M4, M5-minimal, M7, M8-minimal). **M9 dan
+M10 tidak mengubah angka ini** — M10 adalah **lapisan tambahan MVP minimal**,
+bukan modul mandatory baru. Bila waktu tidak mencukupi, prioritas tetap pada 7
+modul mandatory.
+
+**Batas M5 versi minimal:** activity (call, meeting, email, task, note) yang
+terhubung ke lead, Opportunity, Contact, atau Account; dapat dicatat atau dijadwalkan;
+memiliki owner, tanggal jatuh tempo, dan status; menjadi dasar *next step* dan
+penanda *overdue*. **Tidak termasuk:** sinkronisasi kalender atau email,
+activity berulang, dan notifikasi.
+
+**Konfigurasi tenant.** Perbedaan proses sales antar perusahaan diserap melalui
+**pengaturan per tenant (data), bukan kode**: status lead, alasan, source,
+pipeline & stage, kriteria keluar, mode penugasan lead, ambang performa, jenis
+activity, dan **custom field**. Pola yang dipakai: **kategori sistem yang tetap**
+(agar laporan dapat dibandingkan) dengan **label dan daftar pilihan yang diatur
+tenant**.
 
 **Sasaran output yang diukur:** **desain core backend mampu menyelesaikan
 seluruh fitur mandatory** yang ditargetkan. **Kesiapan frontend bukan penghambat
@@ -129,7 +142,7 @@ semua fitur mandatory.
 **Cara mengukur "selesai":** modul mandatory berjalan **end-to-end**, tetapi
 **"end-to-end" diukur pada kapabilitas backend** — terverifikasi melalui
 **API/kontrak data**, bukan kelengkapan UI. Rantai verifikasi berhenti di proses
-sales: login multi-tenant → kelola lead → kelola kontak & akun → kelola peluang →
+sales: login multi-tenant → kelola lead → kelola Contact & Account → kelola Opportunity →
 tampilkan laporan sales.
 
 ### 2.2 Di Luar Lingkup (Out of Scope)
@@ -137,13 +150,12 @@ tampilkan laporan sales.
 | Item | Alasan |
 |---|---|
 | **M6 Ticketing** | Domain *service*, bukan core feature CRM untuk sales tracking. Sejalan dengan pemisahan Sales Cloud/Service Cloud dan Sales Hub/Service Hub. **Tetap bagian visi produk** sebagai modul lanjutan roadmap, dikembangkan di luar bootcamp |
-| **M5 Activity Management** | *Nice to have* — tidak menahan kelulusan prototype |
 | **Modul Billing / Invoice** | Revenue didefinisikan dari deal closed-won, bukan tagihan |
 | **Assessment tim sales (HR)** | CRM mengelola pelanggan, bukan penilaian karyawan |
 | **Extension point synchronous / blocking** | Kustomisasi hanya asynchronous |
 | **Implementasi produksi & integrasi ke sistem TLab lain** | Di luar mandat bootcamp; perlu keputusan lanjutan |
 | **Dukungan pasca-bootcamp** | Belum ada keputusan kelanjutan |
-| **Leading indicator (aktivitas & pipeline) di MVP** | Memerlukan M5 yang *nice to have* |
+| **Laporan leading indicator (aktivitas & pipeline) di MVP** | Data activity tersedia lewat M5, tetapi laporan analitiknya belum masuk MVP |
 | **M9 Platform Administration (kontrol plane SaaS)** | **Fase roadmap terpisah** — di luar MVP bootcamp; didokumentasikan penuh sebagai input arsitektur (§2.3) |
 | **AI prediktif (lead scoring, win probability, forecast)** | Memerlukan **data historis** tenant yang belum tersedia saat bootcamp. Integrasi AI **generatif** masuk MVP minimal (M10) |
 
@@ -189,7 +201,7 @@ harga; penetapan menunggu keputusan lanjutan.
 | Dimensi | Alasan |
 |---|---|
 | **Seat** (jumlah user aktif) | Dimensi paling dipahami pasar; model default CRM SaaS |
-| **Batas data** (Kontak + Akun + Lead + Peluang) | Alasan *upgrade* alami; mudah dihitung & ditegakkan |
+| **Batas data** (Contact + Account + Lead + Opportunity) | Alasan *upgrade* alami; mudah dihitung & ditegakkan |
 | **Modul yang aktif** | Gerbang fitur per tingkatan |
 | **Kuota webhook** (event/bulan + target fan-out) | Nilai jual utama sekaligus biaya operasional |
 | **Dukungan & SLA** | Pemisah tier atas |
@@ -199,7 +211,7 @@ harga; penetapan menunggu keputusan lanjutan.
 |---|---|---|
 | **Trial** | 14 hari; 3 user; 1 target webhook | Registrasi mandiri (*self-serve*) |
 | **Starter** | s/d 5 user; modul inti sales; laporan dasar; webhook outbound terbatas | Self-serve + konfirmasi pembayaran |
-| **Growth** | s/d 20 user; seluruh modul sales + Kuota & Performa + Reporting lengkap; webhook + fan-out | Sales-led |
+| **Growth** | s/d 20 user; seluruh modul sales + Quota & Performa + Reporting lengkap; webhook + fan-out | Sales-led |
 | **Enterprise** | user *fair use* besar; seluruh modul; webhook + SLA; dukungan khusus | Sales-led |
 | **Add-on** | tambahan seat / kuota webhook / storage | — |
 
@@ -210,7 +222,8 @@ harga; penetapan menunggu keputusan lanjutan.
 
 Requirement berikut berada di dalam visi produk tetapi **tidak menahan approval
 prototype** bila tidak selesai: **lead masuk dari luar CRM (webhook inbound)**,
-**laporan pipeline**, dan **pengelolaan aktivitas**.
+**import lead dari file**, **laporan pipeline**, **dashboard beranda**, dan
+**cakupan data per peran**.
 
 ---
 
@@ -218,8 +231,8 @@ prototype** bila tidak selesai: **lead masuk dari luar CRM (webhook inbound)**,
 
 | No | Stakeholder | Jenis | Kepentingan Utama | Modul Terkait |
 |---|---|---|---|---|
-| SH001 | **Sales Rep** | Internal | Lead & peluang terkelola, progres deal terlihat, pencapaian terukur | M3, M4, M7 |
-| SH002 | **Sales Manager** | Internal | Visibilitas pipeline tim, penetapan kuota, identifikasi sales berkinerja rendah | M4, M7 |
+| SH001 | **Sales Rep** | Internal | Lead & Opportunity terkelola, progres deal terlihat, pencapaian terukur | M3, M4, M7 |
+| SH002 | **Sales Manager** | Internal | Visibilitas pipeline tim, penetapan quota, identifikasi sales berkinerja rendah | M4, M7 |
 | SH005 | **Tenant Admin** | Internal | Isolasi data antar tenant, kendali user/role, konfigurasi integrasi | M1, M8 |
 | SH008 | **Sistem Klien** (di luar CRM) | System/Eksternal | Menerima event tepat waktu; dapat mengirim data ke CRM | M8 |
 | SH009 | **Manajemen / Head of Sales** | Internal | Laporan revenue & pipeline yang dapat dipercaya | M7 |
@@ -248,55 +261,67 @@ MVP berada pada §4.1–§4.8 dan §4.10. Blok **§4.9 adalah fase roadmap** dan
 | BR-004 | Tenant Admin harus dapat mengelola **user, role, dan permission** di dalam tenant-nya | Must |
 | BR-005 | Kustomisasi klien hanya boleh bersifat **asynchronous**; validasi blocking di dalam core tidak disediakan di MVP | Must |
 
+| BR-049 | Tenant Admin dapat mengatur **daftar pilihan** milik tenant: status turunan lead (di bawah empat kategori tetap), source lead, alasan lead Lost, alasan Closed-Won dan Closed-Lost, serta jenis activity | Must |
+| BR-051 | Tenant Admin dapat menambah **custom field** pada Lead, Contact, Account, Opportunity, dan Activity (tipe: teks, angka, mata uang, tanggal, pilihan, centang, URL), menandainya wajib, dan memilih tampil di daftar. Custom field ikut terkirim pada event webhook dan dapat dipetakan saat import | Must |
+| BR-057 | Cakupan data mengikuti peran: Sales Rep melihat record miliknya dan Queue; Sales Manager melihat seluruh tim; Manajemen melihat seluruh tenant | Should |
+| BR-058 | Pengguna masuk dengan mengidentifikasi **tenant lewat alamat workspace**, lalu autentikasi dengan **email dan kata sandi**; data tidak pernah melintas tenant | Must |
+
 > **Catatan arsitektur (belum selesai).** *Strategi isolasi teknis* multi-tenant
 > (shared DB / schema-per-tenant / DB-per-tenant) **belum ditetapkan** — menjadi
 > keputusan **Head of Engineer**. Dokumen ini menetapkan **kebutuhan bisnisnya**
 > (isolasi wajib), bukan mekanismenya.
 
-### 4.2 Kontak & Akun (M2)
+### 4.2 Contact & Account (M2)
 
 | ID | Business Requirement | Prioritas |
 |---|---|---|
-| BR-006 | Pengelolaan **Kontak** (individu) dan **Akun** (organisasi), mendukung pelanggan **B2B dan B2C** | Must |
-| BR-007 | Pelanggan **B2C boleh berdiri sebagai Kontak tanpa Akun** — Akun bersifat opsional untuk B2C | Must |
+| BR-006 | Pengelolaan **Contact** (individu) dan **Account** (organisasi), mendukung pelanggan **B2B dan B2C** | Must |
+| BR-007 | Pelanggan **B2C boleh berdiri sebagai Contact tanpa Account** — Account bersifat opsional untuk B2C | Must |
 
 ### 4.3 Lead Management (M3)
 
 | ID | Business Requirement | Prioritas |
 |---|---|---|
-| BR-008 | Pengelolaan lead mencakup: **penangkapan, penugasan ke sales, perubahan status, dan konversi** menjadi Kontak + Akun + Peluang | Must |
+| BR-008 | Pengelolaan lead mencakup: **penangkapan, penugasan ke sales, perubahan status, dan konversi** menjadi Contact + Account + Opportunity | Must |
 | BR-009 | Lead dapat **masuk dari luar CRM** melalui webhook inbound, tanpa input manual | Should |
+| BR-048 | Lead yang belum punya Owner berada di **Queue**. Tenant memilih satu atau lebih mode penugasan: **Manager meng-assign**, **Sales meng-claim dari Queue**, dan **Owner otomatis** (pembuat atau pengimpor lead). Tenant mengatur default per cara lead masuk (input manual, import, webhook/form/API) dan **aturan penugasan berurutan** dengan pemilik cadangan. Kondisi aturan dapat memakai field lead bawaan maupun custom field tenant; tujuan aturan: Queue, Sales tertentu, atau round-robin | Must |
+| BR-052 | Convert lead dapat memakai **Account dan Contact yang sudah ada**; pemeriksaan duplikat berjalan saat lead dibuat **dan** saat convert | Must |
+| BR-053 | Lead berstatus Lost dapat **dibuka kembali dengan catatan**; setiap alasan Lost memiliki penanda **boleh dihubungi lagi** | Must |
+| BR-055 | Lead dapat di-**import dari file** (CSV/Excel) dengan pemetaan kolom, pemeriksaan duplikat, pilihan Owner, dan ringkasan hasil | Should |
 
-### 4.4 Pipeline, Peluang & Revenue (M4)
+### 4.4 Pipeline, Opportunity & Revenue (M4)
 
 | ID | Business Requirement | Prioritas |
 |---|---|---|
-| BR-010 | Pengelolaan peluang mencakup: **nilai deal, stage pipeline, tanggal tutup, dan penandaan closed-won / closed-lost beserta alasan** | Must |
-| BR-010a | **Stage pipeline default = 6 stage + 2 outcome**: Qualifikasi → Analisis Kebutuhan → Presentasi/Demo → Proposal → Negosiasi → Menunggu Keputusan; outcome **Closed-Won / Closed-Lost (+alasan)**. **Configurable per tenant**; B2C boleh memakai alur lebih pendek | Must |
-| BR-011 | **Revenue didefinisikan dari deal closed-won** (nilai peluang yang dimenangkan), bukan dari invoice/pembayaran aktual | Must |
+| BR-010 | Pengelolaan Opportunity mencakup: **nilai deal, stage pipeline, tanggal tutup, dan penandaan closed-won / closed-lost beserta alasan** | Must |
+| BR-010a | **Stage pipeline default = 6 stage + 2 outcome**: Qualification → Needs Analysis → Demo → Proposal → Negotiation → Decision Pending; outcome **Closed-Won / Closed-Lost (+alasan)**. **Configurable per tenant**; B2C boleh memakai alur lebih pendek | Must |
+| BR-050 | Tenant dapat memiliki **lebih dari satu pipeline**. Tiap pipeline mengatur stage, **kriteria keluar** berupa daftar periksa, **mode penegakan** per stage (*guidance*, *warning*, *blocking*; bawaan *guidance*), **kebijakan perpindahan maju**, **batas stale per stage**, dan **probability per stage** yang dapat diaktifkan | Must |
+| BR-054 | Pergerakan stage **mundur selalu diizinkan** dan wajib disertai alasan. Pergerakan **maju boleh melompat** sesuai pengaturan pipeline (*lompat diizinkan* atau *satu stage per langkah*); **syarat setiap stage yang dilewati diperiksa**, dan stage yang dilewati dicatat sebagai *skipped* di riwayat. Penutupan langsung ke Closed-Won atau Closed-Lost dari stage mana pun diizinkan dengan alasan | Must |
+| BR-011 | **Revenue didefinisikan dari deal closed-won** (nilai Opportunity yang dimenangkan), bukan dari invoice/pembayaran aktual | Must |
 
 > **Alasan 6 stage (bukan 7):** tahap *prospecting* pada praktik industri sudah
 > dilayani **M3 Lead Management** — lead dikelola, dibagi, dikualifikasi, lalu
-> dikonversi menjadi peluang. Menambahkan *prospecting* sebagai stage peluang akan
+> dikonversi menjadi Opportunity. Menambahkan *prospecting* sebagai stage Opportunity akan
 > menduplikasi M3.
 >
 > **Risiko yang perlu diantisipasi:** stage yang mendeskripsikan **tindakan sales**
 > alih-alih **posisi pembeli** kurang bermakna sebagai indikator (contoh yang
 > sering dikritik: *"Proposal Sent"*). Pada 6 stage di atas, *Proposal* dan
-> *Menunggu Keputusan* perlu **dibedakan tegas** agar tidak tumpang tindih.
+> *Decision Pending* perlu **dibedakan tegas** agar tidak tumpang tindih.
 >
-> **Yang masih terbuka:** **exit criteria per stage** — divalidasi peserta pada
-> hari 1 (§9).
+> **Yang masih terbuka:** isi bawaan **exit criteria per stage** — divalidasi
+> peserta pada hari 1 (§9). Karena kriteria diatur tenant, isi bawaan hanya
+> menjadi templat awal.
 
-### 4.5 Kuota & Performa Sales (M7)
+### 4.5 Quota & Performa Sales (M7)
 
 | ID | Business Requirement | Prioritas |
 |---|---|---|
-| BR-012 | Sales Manager dapat menetapkan **target/kuota won per sales per periode BULANAN** | Must |
-| BR-013 | Sistem menghitung **quota attainment** per sales per bulan (nilai closed-won dibanding kuota bulanan) | Must |
+| BR-012 | Sales Manager dapat menetapkan **target/quota won per sales per periode BULANAN** | Must |
+| BR-013 | Sistem menghitung **quota attainment** per sales per bulan (nilai closed-won dibanding quota bulanan) | Must |
 | BR-014 | Sistem menandai **status performa** (mencapai / tidak mencapai target) dengan **ambang batas configurable per tenant** | Must |
 | BR-015 | **Nilai default ambang batas = 80%**, berlaku hanya bila tenant belum mengonfigurasi ambangnya sendiri | Must |
-| BR-016 | Pengukuran lapis **aktivitas & pipeline (leading indicator) tidak termasuk MVP** — MVP memakai lapis outcome | Won't (MVP) |
+| BR-016 | **Laporan** lapis aktivitas & pipeline (leading indicator) tidak termasuk MVP — data activity tersedia, tetapi laporan MVP memakai lapis outcome | Won't (MVP) |
 
 ### 4.6 Integrasi Webhook (M8)
 
@@ -312,19 +337,26 @@ MVP berada pada §4.1–§4.8 dan §4.10. Blok **§4.9 adalah fase roadmap** dan
 > dead-letter, kebijakan retry detail — menjadi keputusan **Head of Engineer**.
 > Dokumen ini menetapkan kebutuhan bisnisnya saja.
 
-### 4.7 Pelaporan (M7)
+### 4.7 Pelaporan & Dashboard (M7)
 
 | ID | Business Requirement | Prioritas |
 |---|---|---|
-| BR-029 | **Laporan revenue** dari peluang closed-won per periode | Must |
+| BR-029 | **Laporan revenue** dari Opportunity closed-won per periode | Must |
 | BR-030 | **Laporan pipeline dan forecast** | Should |
 | BR-031 | **Laporan performa sales** (quota attainment per sales) | Must |
+| BR-056 | **Dashboard beranda** menurut peran: Sales melihat yang perlu ditindak hari ini; Sales Manager melihat Queue, attainment tim, Opportunity yang perlu perhatian, dan activity yang terlewat | Should |
 
-### 4.8 Aktivitas (M5) — Nice to Have
+### 4.8 Aktivitas (M5) — Mandatory (Versi Minimal)
 
 | ID | Business Requirement | Prioritas |
 |---|---|---|
-| BR-033 | Pengelolaan aktivitas (call / meeting / task / note) yang terhubung ke lead atau peluang | Could |
+| BR-033 | Pengelolaan **activity** (call / meeting / email / task / note) yang terhubung ke lead, Opportunity, Contact, atau Account; dapat **dicatat** (sudah terjadi) atau **dijadwalkan**, dengan owner, tanggal jatuh tempo, dan status | Must |
+| BR-046 | **Next step** lead dan Opportunity adalah activity terbuka terdekat; activity yang terlewat ditandai **overdue**; lead atau Opportunity tanpa next step ditandai | Must |
+| BR-047 | Sales Manager dapat melihat dan memfilter **activity tim** menurut Sales, jenis, tanggal, dan status | Must |
+
+> **Batas:** tanpa sinkronisasi kalender atau email, tanpa activity berulang,
+> tanpa notifikasi. Waktu kontak pertama pada lead terisi dari activity pertama
+> yang tercatat.
 
 ### 4.9 Business Requirement Fase Roadmap — SaaS Platform Administration
 
@@ -352,8 +384,8 @@ membongkar modul mandatory.
 
 | ID | Business Requirement | Prioritas |
 |---|---|---|
-| BR-042 | Sales dapat menghasilkan **draf pesan outreach** untuk Lead/Kontak melalui AI, berdasarkan konteks record di CRM | Must |
-| BR-043 | Sales dapat memperoleh **ringkasan & AI insight** atas Lead/Peluang beserta rekomendasi langkah berikutnya | Must |
+| BR-042 | Sales dapat menghasilkan **draf pesan outreach** untuk Lead/Contact melalui AI, berdasarkan konteks record di CRM | Must |
+| BR-043 | Sales dapat memperoleh **ringkasan & AI insight** atas Lead/Opportunity beserta rekomendasi langkah berikutnya | Must |
 | BR-044 | AI ditenagai **layanan model yang dapat dikonfigurasi** — MVP memakai **TLab LLM** (model internal TLab, akses tersedia). Detail teknis lain (nama model, endpoint, kuota, latency) ditetapkan Head of Engineer | Must |
 | BR-045 | Konteks yang dikirim ke model AI **wajib dibatasi pada tenant terkait** — output AI tersimpan pada record tenant yang bersangkutan (tidak ada lintas tenant) | Must |
 
@@ -377,14 +409,15 @@ memahami proses mana yang dilayani modul mana dan oleh peran siapa.
 
 | Proses | Nama Proses | Modul | Aktor Utama | Business Requirement |
 |---|---|---|---|---|
-| P01 | Manajemen Lead | M3 | Sales Rep, Sales Manager, Sistem Klien | BR-008, BR-009 |
-| P02 | Manajemen Kontak & Akun | M2 | Sales Rep | BR-006, BR-007 |
-| P03 | Penetapan Target & Kuota Sales | M7 | Sales Manager | BR-012 |
-| P04 | Pengelolaan Pipeline & Peluang | M4 | Sales Rep | BR-010, BR-010a, BR-011 |
-| P05 | Pengelolaan Aktivitas | M5 *(nice to have)* | Sales Rep | BR-033 |
+| P01 | Manajemen Lead | M3 | Sales Rep, Sales Manager, Sistem Klien | BR-008, BR-009, BR-048, BR-052, BR-053, BR-055 |
+| P02 | Manajemen Contact & Account | M2 | Sales Rep | BR-006, BR-007 |
+| P03 | Penetapan Target & Quota Sales | M7 | Sales Manager | BR-012 |
+| P04 | Pengelolaan Pipeline & Opportunity | M4 | Sales Rep | BR-010, BR-010a, BR-011, BR-050, BR-054 |
+| P05 | Pengelolaan Aktivitas | M5 *(minimal)* | Sales Rep, Sales Manager | BR-033, BR-046, BR-047 |
 | P06 | Pengukuran Performa Sales | M7 | Sales Manager, Sistem | BR-013, BR-014, BR-015 |
-| P07 | Pelaporan Revenue & Pipeline | M7 | Manajemen, Sales Manager | BR-029, BR-030, BR-031 |
-| P08 | Tenancy & Kendali Akses | M1 | Tenant Admin | BR-002, BR-003, BR-004 |
+| P07 | Pelaporan Revenue & Pipeline | M7 | Manajemen, Sales Manager | BR-029, BR-030, BR-031, BR-056 |
+| P08 | Tenancy & Kendali Akses | M1 | Tenant Admin | BR-002, BR-003, BR-004, BR-057, BR-058 |
+| P12 | Konfigurasi Proses Sales per Tenant | M1 | Tenant Admin | BR-049, BR-050, BR-051 |
 | P09 | Integrasi Webhook | M8 | Tenant Admin, Sistem Klien | BR-024 … BR-028 |
 | P10 | SaaS Platform Administration *(roadmap)* | M9 | Platform Owner TLab, Calon Tenant | BR-034 … BR-041 |
 | P11 | Asistensi AI untuk Sales | **M10** | Sales Rep, Sales Manager | BR-042 … BR-045 |
@@ -414,8 +447,8 @@ Alur proses sales dari lead masuk sampai pelaporan.
 
 ![Diagram 2 — Proses Bisnis End-to-End](diagrams/02-proses-bisnis.png)
 
-*Poin kunci:* alur berhenti di **pelaporan sales**. P05 (Aktivitas) berada di
-luar MVP; Tenancy dan Webhook adalah proses pendukung yang berjalan lintas semua
+*Poin kunci:* alur berhenti di **pelaporan sales**. P05 (Aktivitas) berjalan di
+samping seluruh fase (call, meeting, task, note terhubung ke lead dan Opportunity); Tenancy dan Webhook adalah proses pendukung yang berjalan lintas semua
 fase.
 
 ### 6.3 Diagram 3 — Peta Modul & Dependensi
@@ -429,19 +462,19 @@ bergantung pada modul lain.
 ditambahkan belakangan tanpa rework. M7 hanya mengonsumsi data modul lain; M8
 mengaitkan event ke seluruh modul sales.
 
-### 6.4 Diagram 4 — Siklus Hidup Lead → Peluang
+### 6.4 Diagram 4 — Siklus Hidup Lead → Opportunity
 
-![Diagram 4 — Siklus Hidup Lead → Peluang](diagrams/04-siklus-lead-peluang.png)
+![Diagram 4 — Siklus Hidup Lead → Opportunity](diagrams/04-siklus-lead-Opportunity.png)
 
-*Poin kunci:* konversi lead menghasilkan tiga entitas sekaligus (Kontak + Akun +
-Peluang); nilai deal pada Closed-Won menjadi sumber revenue & quota attainment.
+*Poin kunci:* konversi lead menghasilkan tiga entitas sekaligus (Contact + Account +
+Opportunity); nilai deal pada Closed-Won menjadi sumber revenue & quota attainment.
 
 ### 6.5 Diagram 5 — Entity Relationship Diagram (Konseptual)
 
 ![Diagram 5 — Entity Relationship Diagram](diagrams/06-erd.png)
 
 *Poin kunci:* hampir semua entitas terikat ke `Tenant` — ini wujud teknis dari
-kebutuhan isolasi (BR-003). Kontak B2C tidak wajib terhubung ke Akun. Entitas
+kebutuhan isolasi (BR-003). Contact B2C tidak wajib terhubung ke Account. Entitas
 bergaris abu-abu adalah **fase roadmap**; yang wajib diperhitungkan sekarang
 adalah kolom `status_langganan` pada Tenant.
 
@@ -457,7 +490,7 @@ fan-out, retry, dan rate limit. Seluruh kustomisasi bersifat **asynchronous**.
 ![Diagram 7 — Peran & Hak Akses per Modul](diagrams/08-peran-akses.png)
 
 *Poin kunci:* pemisahan peran menentukan batas kewenangan — mis. hanya Sales
-Manager yang menetapkan kuota; hanya Tenant Admin yang menyentuh tenancy dan
+Manager yang menetapkan quota; hanya Tenant Admin yang menyentuh tenancy dan
 konfigurasi webhook.
 
 ### 6.8 Diagram 8 — Siklus Hidup Langganan Tenant (Fase Roadmap, M9)
@@ -493,7 +526,7 @@ layanan terpisah, kegagalan AI **tidak memblokir** proses sales di core.
 | # | Kriteria | Indikator |
 |---|---|---|
 | 1 | **Core platform CRM (backend) terbangun** | Desain core backend mampu menyelesaikan **seluruh fitur mandatory**, terverifikasi melalui **API/kontrak data** |
-| 2 | Modul mandatory berjalan end-to-end | Alur sales: login multi-tenant → kelola lead → kelola kontak & akun → kelola peluang → tampilkan laporan sales (revenue, pipeline, performa) |
+| 2 | Modul mandatory berjalan end-to-end | Alur sales: login multi-tenant → kelola lead → kelola Contact & Account → kelola Opportunity → catat atau jadwalkan activity → tampilkan laporan sales (revenue, pipeline, performa) |
 | 3 | Requirement difinalkan bersama peserta | Seluruh pertanyaan terbuka terjawab/ditutup pada akhir hari 1; BRD disetujui sebagai baseline kerja hari 2–3 |
 | 4 | Kecepatan AI dalam development terukur | **Jumlah requirement yang ter-cover dalam jangka waktu tertentu** |
 | 5 | Efektivitas AI dalam development terukur | **Belum terdefinisi** — diteruskan ke Head of Engineer |
@@ -507,7 +540,7 @@ layanan terpisah, kegagalan AI **tidak memblokir** proses sales di core.
 > target fiktif.
 >
 > **Kriteria 8:** M10 adalah **lapisan MVP minimal**, bukan modul mandatory
-> ketujuh. Bila waktu pengembangan tidak mencukupi, **prioritas tetap pada 6
+> tambahan. Bila waktu pengembangan tidak mencukupi, **prioritas tetap pada 7
 > modul mandatory** — tetapi minimal satu use case AI harus terbukti agar
 > integrasi AI tidak sekadar klaim arsitektur.
 
@@ -519,15 +552,16 @@ layanan terpisah, kegagalan AI **tidak memblokir** proses sales di core.
 
 | # | Asumsi | Risiko bila salah | Status |
 |---|---|---|---|
-| A-1 | Durasi bootcamp cukup untuk menghasilkan **core backend** yang mampu menyelesaikan seluruh fitur mandatory | Lingkup harus dipotong lagi atau bootcamp diperpanjang — belum direncanakan | **Perlu Validasi — kritis** |
+| A-1 | Durasi bootcamp cukup untuk menghasilkan **core backend** yang mampu menyelesaikan seluruh fitur mandatory, termasuk Activity minimal dan konfigurasi tenant | Lingkup harus dipotong lagi atau bootcamp diperpanjang — belum direncanakan | **Perlu Validasi — kritis** |
 | A-2 | **Hari 1 cukup untuk memfinalkan seluruh requirement** | Requirement masuk hari 2 belum final; jendela pengembangan menyusut | Perlu Validasi |
 | A-3 | Peserta memiliki kompetensi dasar development | Sesi harus dirombak; waktu pondasi tidak tersedia | Perlu Validasi |
 | A-4 | AI OS tersedia dan dapat dipakai selama bootcamp | Sasaran pengukuran efektivitas AI tidak tercapai | Perlu Validasi |
 | A-5 | **Kesiapan frontend tidak menahan kelulusan** — UI minimal dapat ditinggalkan | Sasaran core platform tidak tercapai bila backend juga belum siap | Terkonfirmasi |
 | A-6 | Kustomisasi klien cukup dilayani secara **asynchronous** | Klien dengan kebutuhan blocking tidak dapat dilayani | Perlu Validasi |
-| A-7 | Kuota bulanan dapat didefinisikan dari nilai closed-won tanpa data historis | Status performa kurang bermakna di prototype | Perlu Validasi |
+| A-7 | Quota bulanan dapat didefinisikan dari nilai closed-won tanpa data historis | Status performa kurang bermakna di prototype | Perlu Validasi |
 | A-8 | Nama peserta tidak diperlukan untuk perencanaan sesi saat ini | Bila pembagian peran per individu dibutuhkan, sesi tidak dapat direncanakan | Terkonfirmasi |
-| A-9 | **Integrasi AI (M10) dapat dibangun dalam sisa jendela 2 hari** tanpa mengorbankan 6 modul mandatory | Bila terlalu besar, M10 harus dipotong ke satu use case atau keluar dari MVP | **Perlu Validasi — kritis** |
+| A-9 | **Integrasi AI (M10) dapat dibangun dalam sisa jendela 2 hari** tanpa mengorbankan 7 modul mandatory | Bila terlalu besar, M10 harus dipotong ke satu use case atau keluar dari MVP | **Perlu Validasi — kritis** |
+| A-11 | **Mesin konfigurasi tenant** (custom field, pipeline & stage, status, aturan penugasan) dapat dibangun dalam jendela 2 hari bersama modul mandatory | Konfigurasi dipotong ke daftar pilihan dan pipeline; custom field menyusul | **Perlu Validasi — kritis** |
 | A-10 | **Penyedia model LLM beserta akses tersedia** selama bootcamp | M10 tidak dapat didemonstrasikan | **Terkonfirmasi** — TLab LLM, akses sudah tersedia |
 
 ### 8.2 Batasan (Constraints)
@@ -544,6 +578,7 @@ layanan terpisah, kegagalan AI **tidak memblokir** proses sales di core.
 | C-8 | Revenue berhenti di **nilai deal closed-won**; modul billing di luar lingkup |
 | C-9 | **Lingkup dibatasi pada business process sales** — modul domain *service* (ticketing) di luar MVP |
 | C-10 | **Kontrol plane SaaS (M9) berada di luar MVP** — fase roadmap terpisah; namun **tenant model M1 wajib menyimpan status langganan** agar tidak rework |
+| C-12 | **Variasi proses sales antar tenant dikonfigurasi lewat data**, bukan kode; kategori sistem (status lead, outcome) bersifat tetap |
 | C-11 | **Integrasi AI berada di luar kode core** — diwujudkan sebagai layanan terpisah (M10) yang mengonsumsi event M8; AI **generatif** masuk MVP minimal, AI **prediktif** masuk fase roadmap |
 
 ---
@@ -558,25 +593,35 @@ digunakan untuk pengembangan tanpa requirement yang menggantung.
 
 | # | Yang perlu difinalkan | Pemilik | Dampak bila tidak selesai hari 1 |
 |---|---|---|---|
-| 1 | **Exit criteria per stage pipeline** — nama & jumlah stage **sudah ditetapkan** (BR-010a); yang tersisa adalah kriteria keluar tiap stage | PO + peserta | Pergerakan peluang tidak konsisten antar tim |
+| 1 | **Exit criteria per stage pipeline** — nama & jumlah stage **sudah ditetapkan** (BR-010a); yang tersisa adalah kriteria keluar tiap stage | PO + peserta | Pergerakan Opportunity tidak konsisten antar tim |
 | 2 | **Definisi teknis "core backend selesai"** — kontrak API/endpoint per modul | PO + Head of Engineer | Penilaian hari 3 menjadi ambigu |
 | 3 | **Signing & kebijakan retry webhook** | Head of Engineer | Webhook tidak dapat diimplementasikan secara aman |
 | 4 | **Strategi isolasi teknis multi-tenant** | Head of Engineer | Rework arsitektur di tengah bootcamp |
 | 5 | **Metrik efektivitas AI + baseline** | Head of Engineer | **Tidak dapat dipulihkan** bila lewat hari 1 |
 | 6 | **Stack teknologi** | Head of Engineer | Materi sesi & scaffolding tidak dapat disiapkan |
+| 7 | **Urutan potong lingkup** bila waktu tidak cukup, beserta estimasi effort mesin konfigurasi tenant. Usulan awal ada di §9.4 | PO + Head of Engineer | Keputusan potong diambil terburu-buru pada hari 3 |
 
-Seluruh 6 item di atas **tidak dapat difinalkan oleh PM/PO** — item 1 memerlukan
-peserta, item 2 memerlukan Head of Engineer, item 3–6 murni kewenangan teknis.
+Seluruh 7 item di atas **tidak dapat difinalkan oleh PM/PO sendiri** — item 1
+memerlukan peserta, item 2 dan 7 memerlukan Head of Engineer, item 3–6 murni
+kewenangan teknis.
 
 ### 9.2 Yang sudah ditetapkan (cukup divalidasi peserta)
 
 | # | Item | Ketetapan |
 |---|---|---|
-| A | **Jumlah & nama stage pipeline** | **6 stage + 2 outcome** — Qualifikasi → Analisis Kebutuhan → Presentasi/Demo → Proposal → Negosiasi → Menunggu Keputusan; ditutup Closed-Won / Closed-Lost (+alasan). Configurable per tenant |
+| A | **Jumlah & nama stage pipeline** | **6 stage + 2 outcome** — Qualification → Needs Analysis → Demo → Proposal → Negotiation → Decision Pending; ditutup Closed-Won / Closed-Lost (+alasan). Configurable per tenant |
 | B | **Kriteria selesai modul mandatory** | Rantai verifikasi berhenti di pelaporan sales, diukur melalui **API/kontrak data** (§2.1, §7) |
 | C | **Use case AI minimum M10** | **Draf pesan outreach**; ringkasan & AI insight opsional bila waktu mencukupi |
 | D | **Penyedia model AI untuk M10** | **TLab LLM** (model internal TLab) — **akses sudah tersedia**; sisa detail teknis bersifat operasional |
 | E | **Titik simpan output AI di core** | Perlu dirancang sejak M1 (bukan implementasi penuh) agar use case AI prediktif tidak memerlukan migrasi data |
+| F | **Penugasan lead** | Tiga mode yang dapat dipakai bersamaan: Manager meng-assign, Sales meng-claim dari Queue, Owner otomatis. Pola lain (round-robin, wilayah) menjadi tujuan aturan, bukan syarat |
+| G | **Model konfigurasi tenant** | Kategori sistem tetap + label dan daftar pilihan diatur tenant (status lead, alasan, source, pipeline & stage, kriteria keluar, jenis activity) |
+| H | **Status lead** | Empat kategori tetap: New, In Progress, Lost, Converted. Status turunan diatur tenant; bawaan: Attempted to Contact, Connected, Qualifying |
+| I | **Custom field** | Masuk MVP untuk lima entitas (lihat BR-051) |
+| J | **Activity (M5)** | Mandatory versi minimal (lihat §2.1 dan §4.8) |
+| K | **Istilah** | Istilah baku sales tetap dalam bahasa Inggris (Lead, Opportunity, Won, Lost, Qualification, Quota, dan seterusnya) |
+| L | **Kriteria aturan penugasan lead** | Dinamis: field lead mana pun, bawaan maupun custom field tenant; semua kondisi dalam satu aturan harus cocok; tujuan Queue, Sales, atau round-robin |
+| M | **Alur login** | Alamat workspace, lalu email dan kata sandi |
 
 ### 9.3 Keputusan yang menunggu fase roadmap (tidak menghambat bootcamp)
 
@@ -584,6 +629,26 @@ Nama & jumlah paket pricing · dimensi harga & nilai kuota · struktur harga & m
 uang · kebijakan penegakan batas paket · mekanisme pembayaran · cara tenant
 mendaftar · kebijakan data saat *soft delete* · strategi model prediktif (per
 tenant vs global) · batas isolasi tenant pada konteks AI.
+
+### 9.4 Usulan Awal Urutan Potong Lingkup
+
+Jendela pengembangan hanya 2 hari, sedangkan isinya mencakup 7 modul mandatory,
+lapisan AI, dan mesin konfigurasi tenant. Urutan di bawah adalah **usulan awal**
+agar keputusan potong tidak diambil terburu-buru pada hari 3. **Head of Engineer
+dan PO mencocokkannya pada hari 1** berdasarkan estimasi effort.
+
+| Urutan potong | Yang dipotong | Yang tetap |
+|---|---|---|
+| 1 (paling dulu) | Import lead; dashboard beranda | Input manual dan webhook inbound |
+| 2 | Laporan pipeline & forecast; cakupan data per peran | Laporan revenue dan laporan performa |
+| 3 | Pembuat aturan penugasan | Tiga mode penugasan (Manager assign, Sales claim, Owner otomatis) dan Queue |
+| 4 | Custom field untuk Account, Contact, dan Activity | Custom field untuk Lead dan Opportunity |
+| 5 | Multi-pipeline | Satu pipeline per tenant dengan stage yang dapat diatur |
+| 6 | Lapisan AI (M10) | Use case minimum (draf pesan outreach) bila sempat |
+
+**Tidak boleh dipotong:** M1 Tenancy, M2 Contact & Account, M3 Lead, M4 Pipeline /
+Opportunity, M5 Activity (minimal), M7 (laporan revenue dan performa), dan M8
+(event outbound).
 
 ---
 

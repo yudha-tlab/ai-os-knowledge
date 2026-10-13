@@ -8,50 +8,53 @@ start
 partition "1 · Inbound — lead masuk" {
   :Lead masuk ke CRM;
   note right
-    Dua jalur masuk:
+    Tiga jalur masuk:
     - input manual lewat form CRM
+    - import file (CSV/Excel)
     - kiriman sistem lain lewat webhook inbound
   end note
   :Lead tercatat beserta sumber dan waktu masuk;
 }
-partition "2 · Distribusi & kualifikasi" {
-  :Lead ditugaskan ke sales;
+partition "2 · Penugasan & qualification" {
+  :Lead punya Owner (Manager assign, Sales claim dari Queue,\natau Owner otomatis);
   :Sales melakukan kontak awal;
-  if (Lolos kualifikasi?) then (ya)
-    :Status lead menjadi Kualifikasi;
+  if (Lolos qualification?) then (ya)
+    :Status lead menjadi In Progress;
   else (tidak)
-    :Status lead menjadi Hilang (+alasan);
+    :Status lead menjadi Lost (+alasan);
     stop
   endif
 }
-partition "3 · Konversi" {
-  :Lead dikonversi;
+partition "3 · Convert" {
+  :Lead di-convert;
   note right
-    Satu konversi menghasilkan
+    Satu convert menghasilkan
     tiga entitas sekaligus:
-    Kontak + Akun + Peluang.
-    Pelanggan B2C boleh
-    berdiri sebagai Kontak
-    tanpa Akun.
+    Contact + Account + Opportunity,
+    atau memakai Account/Contact
+    yang sudah ada.
+    Pelanggan B2C boleh berdiri
+    sebagai Contact tanpa Account.
   end note
 }
 partition "4 · Pipeline — pergerakan peluang" {
-  :Peluang masuk stage Qualifikasi;
+  :Opportunity masuk stage Qualification;
   :Stage berpindah saat kriteria keluar terpenuhi;
   note right
     Enam stage berjalan:
-    Qualifikasi -> Analisis Kebutuhan
-    -> Presentasi/Demo -> Proposal
-    -> Negosiasi -> Menunggu Keputusan.
-    Kriteria keluar tiap stage
-    dibahas pada hari 1.
+    Qualification -> Needs Analysis
+    -> Demo -> Proposal
+    -> Negotiation -> Decision Pending.
+    Stage dan kriteria keluar diatur
+    tenant. Stage boleh mundur
+    dengan alasan wajib.
   end note
 }
 partition "5 · Penutupan" {
-  if (Keputusan pembeli?) then (menang)
-    :Peluang ditutup Closed-Won (+alasan);
-  else (kalah)
-    :Peluang ditutup Closed-Lost (+alasan);
+  if (Keputusan pembeli?) then (won)
+    :Opportunity ditutup Closed-Won (+alasan);
+  else (lost)
+    :Opportunity ditutup Closed-Lost (+alasan);
   endif
 }
 partition "6 · Pelaporan" {
@@ -62,9 +65,9 @@ partition "6 · Pelaporan" {
 :Proses sales selesai — hasilnya terukur;
 
 note right
-  Aktivitas penunjang (call/meeting/task/note) berada di luar
-  cakupan awal. Asistensi AI adalah lapisan bantuan yang berjalan
-  di samping alur ini, bukan bagian dari alur inti.
+  Activity (call/meeting/email/task/note) berjalan di samping seluruh
+  fase dan menjadi dasar next step. Asistensi AI adalah lapisan bantuan
+  yang berjalan di samping alur ini, bukan bagian dari alur inti.
 end note
 stop
 @enduml

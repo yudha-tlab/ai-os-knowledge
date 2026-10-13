@@ -11,21 +11,28 @@ actor "Tenant Admin" as TA
 actor "Manajemen /\nHead of Sales" as MG
 
 rectangle "CRM Multi-Tenant — per Tenant" {
-  usecase "Kelola lead" as UC1
+  usecase "Kelola lead\n(input, claim, convert)" as UC1
+  usecase "Assign lead dari Queue" as UC1b
   usecase "Kelola kontak & akun" as UC2
   usecase "Kelola peluang\n& stage" as UC3
+  usecase "Catat & jadwalkan\nactivity" as UC7
+  usecase "Lihat activity tim" as UC8
   usecase "Tetapkan kuota bulanan" as UC4
   usecase "Lihat status performa\n& laporan performa" as UC5
   usecase "Lihat laporan revenue\n& pipeline" as UC6
   usecase "Kelola tenant, user,\nrole & permission" as UC11
+  usecase "Konfigurasi proses sales\n(status, pipeline, custom field,\nmode penugasan)" as UC13
   usecase "Konfigurasi webhook\n& pantau delivery log" as UC12
 }
 
 SR --> UC1
 SR --> UC2
 SR --> UC3
+SR --> UC7
 
+SM --> UC1b
 SM --> UC3
+SM --> UC8
 SM --> UC4
 SM --> UC5
 SM --> UC6
@@ -34,7 +41,13 @@ MG --> UC6
 MG --> UC5
 
 TA --> UC11
+TA --> UC13
 TA --> UC12
+
+note bottom of UC1
+  Cakupan data: Sales Rep melihat record miliknya dan Queue;
+  Sales Manager seluruh tim; Manajemen seluruh tenant.
+end note
 
 note bottom of UC11
   Isolasi data antar tenant bersifat WAJIB —

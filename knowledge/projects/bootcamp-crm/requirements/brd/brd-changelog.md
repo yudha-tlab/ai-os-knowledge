@@ -5,7 +5,7 @@ project: bootcamp-crm
 status: active
 document: "../../requirements/brd/bootcamp-crm-brd-v1.md"
 created: 2026-10-08
-modified: 2026-10-12
+modified: 2026-10-13
 ---
 
 # Riwayat Perubahan BRD — CRM Multi-Tenant TLab
@@ -19,6 +19,10 @@ disimpan di sini agar traceability tidak hilang.
 
 | Versi | Tanggal | Perubahan |
 |---|---|---|
+| **5.3** | 2026-10-13 | Usulan awal urutan potong lingkup ditambahkan (§9.4); agenda hari 1 butir 7 merujuk ke sana |
+| **5.2** | 2026-10-13 | Kriteria aturan penugasan lead dinamis (BR-048) dan alur login workspace lalu email dan kata sandi (BR-058) ditetapkan; agenda hari 1 menyusut dari 8 menjadi 7 item; §9.2 butir L dan M |
+| **5.1** | 2026-10-13 | **Aturan perpindahan stage.** BR-054 diperluas: mundur selalu boleh dengan alasan; maju boleh melompat sesuai pengaturan pipeline; syarat stage yang dilewati diperiksa kumulatif; stage dilewati dicatat *skipped*. BR-050 memuat kebijakan perpindahan maju. Cakupan data per peran (BR-057) dan templat exit criteria dikonfirmasi PO |
+| **5.0** | 2026-10-13 | **Penyesuaian lingkup proses sales dan konfigurasi tenant.** Activity (M5) naik ke mandatory minimal sehingga modul mandatory menjadi 7; BR-033 menjadi Must; BR-046..BR-058 ditambahkan (Next step, Activity tim, Queue dan mode penugasan, convert ke Account/Contact ada, buka kembali lead Lost, import, pipeline dan konfigurasi tenant, stage mundur, dashboard, cakupan data, custom field, login workspace); BR-016 diperjelas (hanya laporan); proses P05 dan P12; asumsi A-11 dan batasan C-12; agenda hari 1 butir 7-8 dan §9.2 F-K; nama stage default memakai istilah Inggris; Diagram 2, 3, 4, 5 (ERD), 7, 11, 12 dirender ulang. Business requirement MVP 29 → 42 |
 | — | 2026-10-12 | **Dokumen pendamping BRD disusun:** `bootcamp-crm-sales-process-specification-v1.md` — spesifikasi proses sales (kasus umum B2B/B2C) untuk menyamakan pemahaman tim: inbound, field, laporan, workflow & pipeline, serta status lead beserta pemicu perubahannya. Ditambah 2 diagram baru (11 alur proses sales end-to-end, 12 status lead). BRD sendiri **tidak diubah** (tetap v4.0) |
 | **4.0** | 2026-10-08 | **Finalisasi dokumen presentasi.** Seluruh sitasi keputusan (DEC/Q/TD/REQ/EP/CR/OB/US), tautan wiki, kolom "Sumber", dan catatan riwayat dikeluarkan dari badan dokumen. Substansi requirement dipertahankan; §9 disusun ulang sebagai agenda workshop hari 1. Diagram dirender ulang tanpa sitasi. Riwayat dokumen dipindah ke file ini |
 | 3.3 | 2026-10-08 | Penyedia model AI M10 ditetapkan TLab LLM (BR-044 final); akses tersedia; penutupan pertanyaan penyedia model; agenda hari 1 menjadi 6 item |

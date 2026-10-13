@@ -43,7 +43,7 @@ partition "P07 · Output: Pelaporan Sales" {
 :Core platform CRM selesai
 (backend menyelesaikan seluruh fitur mandatory);
 note right
-  P05 (Aktivitas) = nice to have, di luar lingkup MVP.
+  P05 (Aktivitas) = mandatory minimal, berjalan di samping seluruh fase.
   P08–P09 (Tenancy, Webhook) = proses pendukung
   yang berjalan lintas semua fase di atas.
   P11 (Asistensi AI) = lapisan MVP minimal, terpisah dari alur ini.

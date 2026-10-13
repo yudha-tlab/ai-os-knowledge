@@ -3,10 +3,13 @@ title: "Risk Register — Bootcamp Internal CRM"
 type: risk-register
 project: bootcamp-crm
 status: active
-version: "10.0"
+version: "11.0"
 created: 2026-10-02
-modified: 2026-10-08
+modified: 2026-10-13
 changelog:
+  - version: "11.0"
+    date: 2026-10-13
+    purpose: "CR-20261013-001 — R-001 diperbarui (7 modul mandatory + M10 + konfigurasi tenant); +R-019 (mesin konfigurasi dan custom field)"
   - version: "10.0"
     date: 2026-10-08
     purpose: "DEC-048 — R-018 mitigasi diperjelas (M10 dibatasi ke AI-01, penyedia TLab LLM tersedia sehingga hambatan teknis berkurang)"
@@ -55,7 +58,7 @@ dasar akan menyesatkan prioritisasi.
 
 | ID | Deskripsi | Kategori | Kemungkinan | Dampak | Severity | Owner | Rencana Mitigasi | Status |
 |---|---|---|---|---|---|---|---|---|
-| R-001 | Durasi bootcamp tidak cukup untuk menghasilkan prototype CRM multi-tenant yang bermakna | Scope/Schedule | High | High | **Tinggi** | PM/PO + Head of Product | **Jendela pengembangan efektif hanya 2 hari** (DEC-037: hari 1 = workshop finalisasi requirement) untuk 6 modul mandatory (DEC-015 + DEC-021, direvisi CR-20261008-001 — M6 dikeluarkan). Mitigasi: kunci requirement sebelum hari 1 (BRD); prioritaskan jalur end-to-end; siapkan urutan modul per tim | Open — **NAIK ke High/High** |
+| R-001 | Durasi bootcamp tidak cukup untuk menghasilkan prototype CRM multi-tenant yang bermakna | Scope/Schedule | High | High | **Tinggi** | PM/PO + Head of Product | **Jendela pengembangan efektif hanya 2 hari** (DEC-037: hari 1 = workshop finalisasi requirement) untuk 7 modul mandatory (DEC-015 + DEC-021 + DEC-049; M6 dikeluarkan CR-20261008-001; **M5 naik CR-20261013-001**) **+ mesin konfigurasi tenant dan custom field (DEC-051/052)**. Mitigasi: kunci requirement sebelum hari 1 (BRD); prioritaskan jalur end-to-end; siapkan urutan modul per tim | Open — **NAIK ke High/High** |
 | R-002 | Metrik pengukuran efektivitas AI dan baseline pembanding tidak didefinisikan sebelum bootcamp → hasil pengukuran tidak dapat disimpulkan | Process | High | High | Tinggi | Head of Engineer | Kecepatan AI sudah ditetapkan (DEC-032); **efektivitas + baseline masih open** (TD-03/TD-04) — harus selesai sebelum hari pertama bootcamp; tidak dapat dipulihkan | Open |
 | R-003 | Nama peserta belum ditetapkan Tech Lead → perencanaan sesi dan pembagian peran tidak dapat difinalkan | Resourcing | Low | Low | **Rendah** | Tech Lead | **DITUTUP 2026-10-02** — jumlah & pembagian tim cukup (2 tim x 4 orang, DEC-034); nama tidak diperlukan saat ini (DEC-038) | **Closed** |
 | R-004 | Multi-tenancy didefinisikan terlalu kabur (shared DB vs schema-per-tenant vs DB-per-tenant) → rework arsitektur di tengah bootcamp | Teknis | Med | High | Tinggi | Head of Engineer | Kunci definisi teknis multi-tenant sebelum bootcamp dimulai; jadikan keputusan tertulis | Open |
@@ -72,13 +75,14 @@ dasar akan menyesatkan prioritisasi.
 | R-015 | Hari 1 workshop tidak cukup memfinalkan seluruh requirement → hari 2 dimulai dengan requirement belum final; jendela pengembangan menyusut di bawah 2 hari | Process/Scope | High | High | **Tinggi** | PM/PO | Kunci daftar keputusan terbuka & agenda ketat hari 1; **selesaikan BRD sebelum hari 1**; tetapkan kriteria eksplisit "requirement dianggap final" | Open — **baru 2026-10-02** |
 | R-016 | Kriteria selesai tidak konsisten — DEC-028 (end-to-end) vs DEC-041 (core backend) | Scope | — | — | — | PM/PO | **DITUTUP 2026-10-02** — DEC-042 menyatukan kedua definisi: "end-to-end" diukur pada kapabilitas backend | **Closed** |
 | R-017 | **Kontrol plane SaaS tidak dirancang saat bootcamp** → bila tenant model M1 tidak menyimpan status langganan & kuota paket, fase roadmap M9 memerlukan **migrasi data yang mahal** (rework) | Scope/Teknis | Med | Med | Sedang | PM/PO + Head of Engineer | **Mitigasi: TD-06** — putuskan rancangan tenant model yang menyimpan status langganan **selama bootcamp M1** (rancangan saja, bukan implementasi M9). Ditambah 2026-10-08 (DEC-045) | Open — **baru 2026-10-08** |
-| R-018 | **Integrasi AI (M10) menambah beban MVP** — 6 modul mandatory + lapisan AI dalam 2 hari; berisiko menekan kualitas modul mandatory | Scope/Schedule | **High** | Med | **Tinggi** | PM/PO + Tech Lead | **Mitigasi:** M10 dibatasi **1 use case minimum — AI-01 draf outreach (DEC-047)** sebagai *vertical slice*; penyedia model sudah tersedia (TLab LLM, DEC-048); AI service terpisah (DEC-012); evaluasi akhir hari 2 — bila tertinggal, M10 dipotong. Ditambah 2026-10-08 (CR-20261008-002) | Open — **baru 2026-10-08** |
+| R-018 | **Integrasi AI (M10) menambah beban MVP** — 7 modul mandatory + lapisan AI dalam 2 hari; berisiko menekan kualitas modul mandatory | Scope/Schedule | **High** | Med | **Tinggi** | PM/PO + Tech Lead | **Mitigasi:** M10 dibatasi **1 use case minimum — AI-01 draf outreach (DEC-047)** sebagai *vertical slice*; penyedia model sudah tersedia (TLab LLM, DEC-048); AI service terpisah (DEC-012); evaluasi akhir hari 2 — bila tertinggal, M10 dipotong. Ditambah 2026-10-08 (CR-20261008-002) | Open — **baru 2026-10-08** |
+| R-019 | **Mesin konfigurasi tenant dan custom field (DEC-051/052) lebih berat dari perkiraan** — model data dinamis, validasi, payload webhook, pemetaan import | Scope/Teknis | Med | High | **Tinggi** | PM/PO + Head of Engineer | **Mitigasi:** tetapkan urutan potong hari 1 (BRD §9.1 butir 7); mulai dari satu entitas (Lead) sebagai *vertical slice*; bila tertinggal, custom field Account dan Contact menyusul, daftar pilihan dan pipeline tetap | Open — **baru 2026-10-13** |
 
 ## Risiko yang Mengalami Perubahan Severity
 
 | ID | Sebelum | Sesudah | Alasan |
 |---|---|---|---|
-| R-001 | Tinggi (Med/High) | Tinggi (**High/High**) | Jendela pengembangan efektif hanya **2 hari** (DEC-037) untuk 6 modul mandatory (turun dari 7 setelah M6 dikeluarkan — CR-20261008-001) **+ lapisan AI M10 yang kini masuk MVP minimal** (CR-20261008-002) — beban naik kembali; lihat R-018 |
+| R-001 | Tinggi (Med/High) | Tinggi (**High/High**) | Jendela pengembangan efektif hanya **2 hari** (DEC-037) untuk 7 modul mandatory (M6 keluar CR-20261008-001, **M5 masuk CR-20261013-001**) **+ lapisan AI M10 yang kini masuk MVP minimal** (CR-20261008-002) — beban naik kembali; lihat R-018 |
 | R-005 | Tinggi (High/Med) | Sedang (Low/Med) | Requirement analysis tersusun 2026-10-02; peserta sudah punya spesifikasi yang dapat dibaca |
 | R-003 | Tinggi (High/Med) | Sedang (Med/Med) | Jumlah & pembagian peserta sudah ditetapkan (2 tim x 4 orang, DEC-034); tersisa nama |
 | R-011 | Sedang (High/Med) | **Closed** | PO menerima keberatan PM — M8 masuk MVP minimal (DEC-021) |

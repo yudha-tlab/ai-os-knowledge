@@ -4,23 +4,23 @@ title Diagram 4 — Siklus Hidup Lead → Peluang
 skinparam shadowing false
 skinparam defaultFontSize 12
 
-state "Lead Baru" as LB
-state "Lead — Kualifikasi" as LK
-state "Lead — Hilang" as LH
-state "Kontak + Akun + Peluang\n(hasil konversi)" as CONV
+state "Lead — New" as LB
+state "Lead — In Progress" as LK
+state "Lead — Lost" as LH
+state "Contact + Account + Opportunity\n(hasil convert)" as CONV
 
-[*] --> LB : lead ditangkap\n(manual / webhook inbound)
-LB --> LK : penugasan ke sales\n+ mulai kualifikasi
-LK --> LH : tidak lolos kualifikasi
-LK --> CONV : konversi
+[*] --> LB : lead ditangkap\n(manual / import / webhook inbound)
+LB --> LK : punya Owner\n+ mulai qualification
+LK --> LH : tidak lolos qualification\nLH --> LK : dibuka kembali
+LK --> CONV : convert
 
-state "Pipeline Peluang" as PIPE {
-  state "Qualifikasi" as S1
-  state "Analisis Kebutuhan" as S2
-  state "Presentasi / Demo" as S3
+state "Pipeline Opportunity" as PIPE {
+  state "Qualification" as S1
+  state "Needs Analysis" as S2
+  state "Demo" as S3
   state "Proposal" as S4
-  state "Negosiasi" as S5
-  state "Menunggu Keputusan" as S6
+  state "Negotiation" as S5
+  state "Decision Pending" as S6
   state "Closed-Won" as CW
   state "Closed-Lost" as CL
 
@@ -30,8 +30,8 @@ state "Pipeline Peluang" as PIPE {
   S3 --> S4
   S4 --> S5
   S5 --> S6
-  S6 --> CW : menang
-  S6 --> CL : kalah (+alasan)
+  S6 --> CW : won
+  S6 --> CL : lost (+alasan)
 }
 
 CONV --> S1
@@ -40,7 +40,7 @@ CL --> [*]
 
 note right of PIPE
   Stage default: 6 stage + 2 outcome.
-  Configurable per tenant; alur B2C boleh lebih pendek.
+  Pipeline, stage, dan kriteria keluar diatur tenant;\n  tenant boleh punya lebih dari satu pipeline (mis. B2C lebih pendek).\n  Stage boleh mundur dengan alasan wajib.
   Tahap prospecting tidak diulang di sini —
   sudah dilayani Lead Management.
 
@@ -49,7 +49,7 @@ note right of PIPE
 end note
 
 note bottom of LH
-  Alasan hilang dicatat untuk analisis,
+  Alasan Lost dicatat untuk analisis,
   bukan untuk penilaian individu.
 end note
 @enduml

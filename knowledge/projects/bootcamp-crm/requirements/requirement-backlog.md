@@ -3,10 +3,16 @@ title: "Requirement Backlog — Bootcamp Internal CRM"
 type: requirement-backlog
 project: bootcamp-crm
 status: active
-version: "3.10"
+version: "3.12"
 created: 2026-10-02
-modified: 2026-10-08
+modified: 2026-10-13
 changelog:
+  - version: "3.12"
+    date: 2026-10-13
+    purpose: "DEC-060 — REQ-059 diperluas (lompat maju sesuai kebijakan pipeline, syarat kumulatif, skipped)"
+  - version: "3.11"
+    date: 2026-10-13
+    purpose: "CR-20261013-001 — REQ-030 (Activity) naik ke Must/MVP minimal; +REQ-052..062 (Queue dan penugasan, konfigurasi tenant, pipeline, custom field, convert/reopen, stage mundur, import, dashboard, cakupan data, login workspace)"
   - version: "3.10"
     date: 2026-10-08
     purpose: "DEC-048 — Q-040 terjawab: penyedia model AI M10 = TLab LLM (akses tersedia)"
@@ -119,7 +125,7 @@ ke Epic di [[requirement-analysis]]. Status **Draft** — menunggu BRD (DEC-017)
 | REQ-027 | Pelaporan pipeline dan forecast | Arahan PO 2026-10-02 (DEC-015) | Functional | Should | EP-008 | Draft |
 | REQ-028 | Pelaporan performa sales (quota attainment per sales) | Arahan PO 2026-10-02 (DEC-018) | Functional | Must | EP-008 | Draft |
 | REQ-029 | Pelaporan tiket (volume, status penanganan, dan kepatuhan SLA) | Arahan PO 2026-10-02 (DEC-019, DEC-025) | Functional | Should | EP-009 | **Ditutup 2026-10-08 — keluar lingkup (CR-20261008-001 / DEC-043)** |
-| REQ-030 | Pengelolaan aktivitas (call/meeting/task/note) — **nice to have**, di luar lingkup MVP | Arahan PO 2026-10-02 (DEC-015) | Functional | Could | EP-005 | Draft |
+| REQ-030 | Pengelolaan **activity** (call/meeting/email/task/note) terhubung ke lead, peluang, kontak, akun — dicatat atau dijadwalkan; owner, jatuh tempo, status; **versi minimal** | Arahan PO 2026-10-12 (DEC-049) | Functional | **Must** | EP-005 | **MVP minimal** — naik dari Could (CR-20261013-001) |
 | REQ-031 | Assessment tim sales (HR) — **dikeluarkan dari lingkup produk CRM** (DEC-031) | Arahan PO 2026-10-02 | — | — | ~~EP-012~~ | **Ditutup 2026-10-02** |
 | REQ-037 | Kriteria "prototype selesai": **modul mandatory berjalan end-to-end**, dibangun dalam **2 hari pengembangan** (DEC-037). **Direkonsiliasi (DEC-042):** titik pengukuran "end-to-end" = kapabilitas backend, bukan kelengkapan UI | Arahan PO 2026-10-02 (DEC-028, DEC-037) | Functional | Must | EP-001..EP-011 | Draft |
 | REQ-039 | **Sasaran output: core platform CRM (backend)** — desain core backend harus mampu menyelesaikan seluruh fitur mandatory; **kesiapan frontend bukan penghambat kelulusan** | Arahan PO 2026-10-02 (DEC-041) | Business | Must | EP-001..EP-011 | Draft |
@@ -149,6 +155,17 @@ karyawan). Bila masih diperlukan, harus menjadi inisiatif internal terpisah.
 | REQ-049 | **Lead scoring prediktif** berbasis data historis | CR-20261008-002 | Functional | Could | EP-016 | **Roadmap** |
 | REQ-050 | **Win probability / deal risk** per peluang | CR-20261008-002 | Functional | Could | EP-016 | **Roadmap** |
 | REQ-051 | **Sales forecast** dari pipeline | CR-20261008-002 | Functional | Could | EP-016 | **Roadmap** |
+| REQ-052 | **Next step** = activity open terdekat; overdue ditandai; lead/peluang tanpa next step ditandai | Arahan PO 2026-10-12/13 (DEC-049) | Functional | Must | EP-005 | **MVP** (CR-20261013-001) |
+| REQ-053 | Sales Manager melihat dan memfilter **activity tim** (Sales, jenis, tanggal, status) | Arahan PO 2026-10-12/13 (DEC-049) | Functional | Must | EP-005 | **MVP** (CR-20261013-001) |
+| REQ-054 | **Queue lead** dan tiga mode penugasan (Manager assign, Sales claim, Owner otomatis), default per cara masuk, aturan berurutan + Queue cadangan | Arahan PO 2026-10-12/13 (DEC-050) | Functional | Must | EP-001 | **MVP** (CR-20261013-001) |
+| REQ-055 | Tenant mengatur daftar pilihan: status turunan lead, source, alasan Lost/Won/Closed-Lost, jenis activity | Arahan PO 2026-10-12/13 (DEC-051) | Functional | Must | EP-010 | **MVP** (CR-20261013-001) |
+| REQ-056 | **Multi-pipeline** per tenant; stage, kriteria keluar (daftar periksa + mode guidance/warning/blocking), stale per stage, probability opsional | Arahan PO 2026-10-12/13 (DEC-051) | Functional | Must | EP-004 | **MVP** (CR-20261013-001) |
+| REQ-057 | **Custom field** per tenant (5 entitas, 7 tipe, wajib, tampil di daftar, ikut payload webhook dan import) | Arahan PO 2026-10-12/13 (DEC-052) | Functional | Must | EP-010 | **MVP** (CR-20261013-001) |
+| REQ-058 | **Convert** memakai Account/Contact yang ada; duplikat dicek saat lead dibuat dan saat convert; **lead Lost dapat dibuka kembali**; alasan Lost bertanda boleh dihubungi lagi | Arahan PO 2026-10-12/13 (DEC-053) | Functional | Must | EP-001 | **MVP** (CR-20261013-001) |
+| REQ-059 | Perpindahan stage: **mundur** selalu boleh (alasan wajib); **maju boleh melompat** sesuai kebijakan pipeline; syarat stage yang dilewati dievaluasi kumulatif; stage dilewati dicatat *skipped*; tutup langsung diizinkan | Arahan PO 2026-10-13 (DEC-054, DEC-060) | Functional | Must | EP-004 | **MVP** (CR-20261013-001) |
+| REQ-060 | **Import lead** CSV/Excel (pemetaan kolom, source, owner, duplikat, ringkasan) | Arahan PO 2026-10-12/13 (DEC-055) | Functional | Should | EP-001 | **MVP** (CR-20261013-001) |
+| REQ-061 | **Dashboard beranda** per peran; **cakupan data** per peran (usulan) | Arahan PO 2026-10-12/13 (DEC-058, DEC-056) | Functional | Should | EP-008 | **MVP** (CR-20261013-001) |
+| REQ-062 | **Login multi-tenant lewat alamat workspace** | Arahan PO 2026-10-12/13 (DEC-059) | Functional | Must | EP-010 | **MVP** (CR-20261013-001) |
 
 Catatan: integrasi AI diwujudkan sebagai **service terpisah** yang mengonsumsi
 event M8 Webhook dan membaca API core — konsisten dengan prinsip produk yang
@@ -167,8 +184,8 @@ Enterprise + add-on. Angka & harga **belum ditetapkan** (Q-033..Q-035) — tidak
 diisi agar tidak menciptakan target fiktif. Detail: `requirement-analysis.md`
 section 5.6.
 
-Catatan prioritas: REQ-016, REQ-027, REQ-029, dan REQ-030 tetap Should/Could —
-di luar modul mandatory DEC-015.
+Catatan prioritas: REQ-016, REQ-027, REQ-060, dan REQ-061 berstatus Should —
+tidak menahan kelulusan prototype. REQ-030 naik ke Must (CR-20261013-001).
 
 **Catatan jendela pengembangan (DEC-037):** seluruh requirement modul mandatory
 harus selesai dalam **hari 2-3**. Bila hari 1 tidak berhasil memfinalkan
@@ -177,7 +194,7 @@ requirement, jendela pengembangan berkurang lagi — lihat R-001 dan R-015.
 **Inkonsistensi MVP vs prioritas — SUDAH TERSELESAIKAN:** keberatan PM atas
 status *nice to have* modul M8 (DEC-015) diterima PO pada 2026-10-02 — **M8 masuk
 MVP secara minimal** (DEC-021). REQ-015/REQ-016/REQ-035/REQ-036 kini berada di
-dalam lingkup MVP. Modul yang tetap *nice to have*: **M5 Activity** (REQ-030).
+dalam lingkup MVP. **M5 Activity naik ke mandatory minimal** (REQ-030, DEC-049); tidak ada lagi modul *nice to have*.
 
 ---
 

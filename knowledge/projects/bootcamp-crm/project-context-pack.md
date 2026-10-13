@@ -82,7 +82,7 @@ Opportunity, M7 Reporting, dan **M8 Webhook/Event Layer (minimal)** — merevisi
 DEC-015 melalui DEC-021 dan CR-20261008-001 (M6 Ticketing dikeluarkan, DEC-043).
 Status M6 ke depan: **modul lanjutan roadmap produk** (DEC-044), di luar bootcamp.
 
-Nice to have: M5 Activity saja.
+Nice to have: tidak ada. **M5 Activity naik ke mandatory minimal** (CR-20261013-001, DEC-049).
 
 ## Core Flow
 
@@ -118,7 +118,7 @@ Nice to have: M5 Activity saja.
 
 - ~~Belum ada tanggal pelaksanaan~~ → **terjawab 2026-10-02**: mulai 13 Okt, 3 hari (DEC-037).
 - ~~Belum ada daftar peserta~~ → **terjawab (DEC-034, DEC-038)**: 2 tim x 4 orang; nama tidak diperlukan saat ini.
-- **Jendela pengembangan efektif hanya 2 hari** untuk 6 modul mandatory (DEC-037) → R-001/R-015 (beban turun setelah M6 dikeluarkan, CR-20261008-001).
+- **Jendela pengembangan efektif hanya 2 hari** untuk 7 modul mandatory (DEC-037; M5 naik CR-20261013-001) → R-001/R-015 (beban turun setelah M6 dikeluarkan, CR-20261008-001).
 - **BRD harus selesai sebelum hari 1** karena menjadi bahan workshop (DEC-037).
 - Definisi **teknis** multi-tenant belum dikunci → risiko rework arsitektur
   (definisi fungsional sudah ditetapkan, DEC-029).

@@ -3,11 +3,14 @@ title: "Project Status — Bootcamp Internal CRM"
 type: project-status
 project: bootcamp-crm
 status: active
-version: "9.4"
+version: "9.5"
 created: 2026-10-02
-modified: 2026-10-08
-date: 2026-10-08
+modified: 2026-10-13
+date: 2026-10-13
 changelog:
+  - version: "9.5"
+    date: 2026-10-13
+    purpose: "CR-20261013-001 — mockup dibuat (20 halaman); Activity naik ke mandatory (7 modul); konfigurasi tenant dan custom field masuk MVP; BRD v5.0; R-019 baru"
   - version: "9.4"
     date: 2026-10-08
     purpose: "BRD v4.0 final — dokumen presentasi bersih dari sitasi & catatan proses (riwayat dipindah ke brd-changelog.md); diagram dirender ulang tanpa sitasi"
@@ -143,6 +146,17 @@ Dampak terukur:
 **Efek pada risiko:** R-001 turun (beban 7→6 modul) tetapi **tetap High/High** —
 6 modul masih harus terlayani dalam 2 hari efektif. Integrasi AI menambah beban
 kembali → **R-018 (High/Med)**. Lihat [[risk-register]].
+
+## Pembaruan 2026-10-13: Mockup dan Penyesuaian Lingkup (CR-20261013-001)
+
+- **Mockup dibuat** di `mockup/` (20 halaman HTML statis, buka `index.html`): login, dashboard, leads, lead detail, contacts & accounts, pipeline, opportunity, activities, quota, performance, reports, tenant settings, users & roles, webhooks, mobile, dan katalog komponen. Panduan dan temuan di `mockup/00-pemahaman-produk.md`.
+- **Lingkup berubah:** Activity (M5) naik ke mandatory minimal, sehingga **modul mandatory menjadi 7** (DEC-049). Penugasan lead memakai Queue dan tiga mode (DEC-050). Model konfigurasi tenant dan **custom field masuk MVP** (DEC-051/052). Convert ke Account/Contact yang ada, buka kembali lead Lost, stage mundur, import lead, dashboard, dan login workspace (DEC-053 s/d DEC-059).
+- **Dokumen direvisi:** BRD v5.0, Spesifikasi Proses Sales v1.1 (kedua versi), diagram 02/03/04/06/08/11/12, decision log v13.0, requirement backlog v3.11, risk register v11.0.
+- **Risiko:** R-001 tetap High/High dengan beban lebih berat; **R-019 baru** (mesin konfigurasi dan custom field). Mitigasi: urutan potong lingkup ditetapkan pada hari 1 (BRD §9.1 butir 7).
+- `requirement-analysis.md` direvisi ke v3.4 (EP-017/EP-018, US-054..067, OB-033..036, Q-044..048).
+- **Aturan perpindahan stage ditetapkan (DEC-060):** mundur selalu boleh; maju boleh melompat sesuai pengaturan pipeline; syarat kumulatif; stage dilewati dicatat skipped. Mockup diperbarui. Cakupan data per peran dan templat exit criteria dikonfirmasi PO.
+- **Kriteria aturan penugasan lead dinamis (DEC-061)** dan **alur login workspace lalu email dan kata sandi (DEC-062)** ditetapkan. Pembuat aturan penugasan kini ada di mockup. Tersisa terbuka: Q-045 urutan potong lingkup; usulan awal ditulis di BRD §9.4 dan dicocokkan dengan Head of Engineer pada hari 1.
+- Approval tambahan atas CR tidak diperlukan; keputusan dibebaskan ke tim (PO, 2026-10-13).
 
 ## Progres Periode Ini
 
