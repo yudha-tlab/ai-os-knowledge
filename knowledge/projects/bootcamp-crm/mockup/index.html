@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="crm.css">
+<style>
+  .wrap { max-width: 880px; margin: 0 auto; padding: 40px 20px; }
+  .item { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; padding: 14px 16px; background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); color: inherit; text-decoration: none; }
+  .item:hover { border-color: var(--navy-700); text-decoration: none; }
+  .item b { font-size: 15px; }
+  .item span.d { grid-column: 1; color: var(--muted); }
+  .item .go { grid-row: 1 / span 2; grid-column: 2; align-self: center; color: var(--navy-700); }
+  ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  h2 { margin: 28px 0 8px; }
+  p { max-width: 68ch; }
+</style>
+</head>
+<body data-shell="none">
+<div class="wrap">
+  <h1>Mockup CRM Multi-Tenant</h1>
+  <p class="muted">Bahan workshop hari 1. Data di dalamnya fiktif (tenant contoh: Arunika Teknologi). Pengaturan seperti batas stale dan mode exit criteria adalah <b>konfigurasi tenant contoh</b>, bukan bawaan produk.</p>
+
+  <h2>Mulai dari sini</h2>
+  <ul>
+    <li><a class="item" href="login.html"><b>Login multi-tenant</b><span class="d">Masuk lewat alamat workspace; error workspace tidak ditemukan</span><span class="go" data-ic="right"></span></a></li>
+    <li><a class="item" href="components.html"><b>Komponen</b><span class="d">Warna, tipografi, Stage Path, deal card, dialog alasan wajib, panel AI</span><span class="go" data-ic="right"></span></a></li>
+    <li><a class="item" href="home.html"><b>Dashboard</b><span class="d">Berbeda untuk Sales Rep dan Sales Manager</span><span class="go" data-ic="right"></span></a></li>
+  </ul>
+  <h2>Sales</h2>
+  <ul>
+    <li><a class="item" href="leads.html"><b>Leads</b><span class="d">My leads, Queue, Nurturing. Claim, Assign massal, tambah lead (cek duplikat), Import</span><span class="go" data-ic="right"></span></a></li>
+    <li><a class="item" href="lead.html"><b>Lead Detail</b><span class="d">Tiga keadaan: di Queue, In Progress, Lost. Convert, Activity, riwayat, panel AI</span><span class="go" data-ic="right"></span></a></li>
+    <li><a class="item" href="records.html?type=contacts"><b>Contacts &amp; Accounts</b><span class="d">Contact boleh tanpa Account (B2C)</span><span class="go" data-ic="right"></span></a></li>
+    <li><a class="item" href="pipeline.html"><b>Pipeline</b><span class="d">Board dan List. Pindah stage, mundur, Close Won/Lost. Tiga mode exit criteria</span><span class="go" data-ic="right"></span></a></li>
+    <li><a class="item" href="opportunity.html"><b>Opportunity Detail</b><span class="d">Stage Path, exit criteria, riwayat stage, AI insight</span><span class="go" data-ic="right"></span></a></li>
+    <li><a class="item" href="activities.html"><b>Activities</b><span class="d">Milik saya dan Tim. Overdue, hari ini, minggu ini</span><span class="go" data-ic="right"></span></a></li>
+  </ul>
+  <h2>Performance</h2>
+  <ul>
+    <li><a class="item" href="quota.html"><b>Quota</b><span class="d">Sales Manager menetapkan quota bulanan per Sales</span><span class="go" data-ic="right"></span></a></li>
+    <li><a class="item" href="performance.html"><b>Sales Performance</b><span class="d">Attainment terhadap ambang tenant; tampilan Sales dan Manager</span><span class="go" data-ic="right"></span></a></li>
+    <li><a class="item" href="reports.html"><b>Reports</b><span class="d">Revenue, Pipeline &amp; Forecast, Lost Reasons, Revenue per Source</span><span class="go" data-ic="right"></span></a></li>
+  </ul>
+  <h2>Administration (Tenant Admin)</h2>
+  <ul>
+    <li><a class="item" href="settings.html"><b>Tenant Settings</b><span class="d">Status lead, alasan, source, assignment, pipeline &amp; stage, quota, custom field, activity type</span><span class="go" data-ic="right"></span></a></li>
+    <li><a class="item" href="users.html"><b>Users &amp; Roles</b><span class="d">Undang user, matriks permission</span><span class="go" data-ic="right"></span></a></li>
+    <li><a class="item" href="webhooks.html"><b>Webhooks</b><span class="d">Subscription dengan fan-out, delivery log, retry, inbound</span><span class="go" data-ic="right"></span></a></li>
+  </ul>
+  <h2>Mobile</h2>
+  <ul>
+    <li><a class="item" href="mobile.html"><b>Mobile (Sales Rep)</b><span class="d">Leads, Lead Detail, Pipeline, Activities dan Quota</span><span class="go" data-ic="right"></span></a></li>
+  </ul>
+
+  <h2>Cara menjelajah</h2>
+  <p>Pada halaman web, pemilih peran di pojok kanan atas mengubah menu yang terlihat (Sales Rep, Sales Manager, Tenant Admin). Menu bertanda belum dibuat akan memberi tahu bila diklik.</p>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

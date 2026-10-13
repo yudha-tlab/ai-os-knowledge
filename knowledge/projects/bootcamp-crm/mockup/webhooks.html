@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Webhooks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="crm.css">
+<style>
+  .mono { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; }
+  .evts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 16px; }
+  .target { display: flex; gap: 8px; align-items: center; }
+  pre.json { margin: 0; background: var(--n900); color: #dfe6ff; border-radius: var(--r); padding: 12px; overflow: auto; font-size: 12px; line-height: 18px; max-height: 260px; }
+  .code { display: flex; gap: 8px; align-items: center; background: var(--n50); border: 1px solid var(--line); border-radius: var(--r); padding: 6px 8px; }
+</style>
+</head>
+<body data-active="webhooks">
+<div class="layout">
+  <aside class="sidenav"></aside>
+  <main class="main">
+    <div class="page-head"><div><div class="crumbs">Administration</div><h1>Webhooks</h1><div class="muted">CRM mengirim event ke sistem Anda. Semua pengiriman bersifat asynchronous.</div></div><div class="spacer"></div><button class="btn primary" id="bNew" data-ic="plus">Subscription</button></div>
+    <div class="tabs" role="tablist" id="tabs" style="margin-bottom:16px"></div>
+    <div id="body"></div>
+  </main>
+</div>
+
+<dialog id="subDlg" style="width:min(580px,calc(100vw - 32px))"><form method="dialog" id="subForm" novalidate>
+  <div class="dlg-h"><h2>Subscription baru</h2><div class="muted">Satu subscription dapat diteruskan ke beberapa target.</div></div>
+  <div class="dlg-b">
+    <div class="field"><label class="req" for="sName">Nama</label><input class="input" id="sName" placeholder="mis. Sinkron ke ERP"><div class="err" id="eName" hidden></div></div>
+    <div class="field"><div class="label req">Event</div><div class="evts" id="evts"></div><div class="err" id="eEv" hidden></div></div>
+    <div class="field"><div class="label req">Target</div><div id="targets" class="stack" style="gap:8px"></div><button type="button" class="btn sm" id="addT" style="align-self:flex-start">Tambah target</button><div class="err" id="eT" hidden></div></div>
+    <div class="field"><label>Secret penandatangan</label><div class="code"><span class="mono" id="sec" style="flex:1"></span><button type="button" class="btn sm" id="cp">Salin</button></div><div class="hint">Dipakai sistem Anda untuk memastikan event benar-benar dari CRM. Ditampilkan sekali; simpan sekarang.</div></div>
+  </div>
+  <div class="dlg-f"><button class="btn subtle" type="button" data-close>Batal</button><button class="btn primary" type="submit">Buat subscription</button></div></form></dialog>
+
+<dialog id="logDlg" style="width:min(640px,calc(100vw - 32px))"><div class="dlg-h"><h2 id="lT"></h2><div class="muted" id="lS"></div></div><div class="dlg-b" id="lB"></div><div class="dlg-f"><button class="btn subtle" data-close>Tutup</button><button class="btn" id="lRe" hidden>Kirim ulang</button></div></dialog>
+
+<script src="app.js"></script>
+<script>
+document.addEventListener("crm-ready", () => {
+  const C = window.CRM, $ = (s) => document.querySelector(s), body = $("#body");
+  document.querySelectorAll("[data-ic]").forEach((el) => { if (!el.querySelector(".ic")) el.insertAdjacentHTML("afterbegin", C.icon(el.dataset.ic)); });
+  if (C.role() !== "admin") {
+    $("#bNew").hidden = true;
+    body.innerHTML = '<div class="card empty">' + C.icon("lock", "lg") + "<h2>Halaman ini hanya untuk Tenant Admin</h2><p>Konfigurasi webhook dan delivery log dibatasi untuk Tenant Admin.</p><button class='btn primary' id='asAdmin'>Lihat sebagai Tenant Admin (demo)</button></div>";
+    $("#asAdmin").onclick = () => { try { localStorage.setItem("crm-role", "admin"); } catch (e) {} location.reload(); };
+    return;
+  }
+  const EVENTS = ["lead.created", "lead.assigned", "lead.status_changed", "lead.converted", "opportunity.created", "opportunity.stage_changed", "opportunity.closed_won", "opportunity.closed_lost"];
+  const S = [
+    { n: "Sinkron ke ERP", ev: ["opportunity.closed_won"], t: ["https://erp.arunika.id/hooks/crm"], on: true, ok: 98, last: "Hari ini 09:44" },
+    { n: "Antrian layanan klien", ev: ["lead.created", "lead.assigned"], t: ["https://queue.arunika.id/in", "https://notif.arunika.id/crm"], on: true, ok: 100, last: "Hari ini 09:48" },
+    { n: "Dashboard BI", ev: ["opportunity.stage_changed", "opportunity.closed_won", "opportunity.closed_lost"], t: ["https://bi.arunika.id/ingest"], on: false, ok: 0, last: "Dijeda" },
+  ];
+  const LOG = [
+    { id: "evt_8f2a", ev: "opportunity.closed_won", sub: "Sinkron ke ERP", t: "https://erp.arunika.id/hooks/crm", st: "ok", code: 200, tries: 1, when: "Hari ini 09:44:12", ms: 182 },
+    { id: "evt_8f29", ev: "lead.created", sub: "Antrian layanan klien", t: "https://queue.arunika.id/in", st: "ok", code: 200, tries: 1, when: "Hari ini 09:48:03", ms: 97 },
+    { id: "evt_8f29", ev: "lead.created", sub: "Antrian layanan klien", t: "https://notif.arunika.id/crm", st: "retry", code: 503, tries: 3, when: "Hari ini 09:48:03", ms: 0, next: "Percobaan ke-4 dalam 8 menit" },
+    { id: "evt_8f1c", ev: "opportunity.closed_won", sub: "Sinkron ke ERP", t: "https://erp.arunika.id/hooks/crm", st: "fail", code: 500, tries: 5, when: "Kemarin 16:20:41", ms: 0, err: "Habis percobaan. Endpoint mengembalikan 500 Internal Server Error." },
+    { id: "evt_8f10", ev: "lead.assigned", sub: "Antrian layanan klien", t: "https://queue.arunika.id/in", st: "ok", code: 200, tries: 1, when: "Kemarin 14:02:10", ms: 121 },
+  ];
+  let tab = "subs", evSel = new Set(), tCount = 1;
+  const stl = { ok: ["won", "Terkirim"], retry: ["warn", "Mencoba ulang"], fail: ["lost", "Gagal"] };
+  function render() {
+    $("#tabs").innerHTML = [["subs", "Subscriptions", S.length], ["log", "Delivery log", LOG.length], ["in", "Inbound"]].map(([id, l, c]) => '<button class="tab" role="tab" aria-selected="' + (id === tab) + '" data-v="' + id + '">' + l + (c ? ' <span class="count">' + c + "</span>" : "") + "</button>").join("");
+    $("#tabs").querySelectorAll(".tab").forEach((b) => (b.onclick = () => { tab = b.dataset.v; render(); }));
+    $("#bNew").hidden = tab !== "subs";
+    if (tab === "subs") {
+      body.innerHTML = '<div class="card" style="overflow:auto"><table class="table"><thead><tr><th>Subscription</th><th>Event</th><th>Target</th><th>Sukses 7 hari</th><th>Aktif</th></tr></thead><tbody>' + S.map((s, i) => '<tr><td><b>' + C.esc(s.n) + '</b><div class="muted" style="font-size:12px">Terakhir: ' + s.last + '</div></td><td>' + s.ev.map((e) => '<span class="lozenge mono" style="margin:1px">' + e + "</span>").join(" ") + "</td><td>" + s.t.map((t) => '<div class="mono">' + t + "</div>").join("") + '<span class="hint">' + s.t.length + " target (fan-out)</span></td><td class=\"num\">" + (s.on ? s.ok + "%" : "—") + '</td><td><label class="tgl" style="display:flex"><span class="switch" style="position:relative;width:32px;height:18px"><input type="checkbox" data-s="' + i + '"' + (s.on ? " checked" : "") + ' style="position:absolute;inset:0;opacity:0;margin:0;cursor:pointer" aria-label="Aktif: ' + C.esc(s.n) + '"><i class="sw"></i></span></label></td></tr>').join("") + "</tbody></table></div>" +
+        '<style>.sw{position:absolute;inset:0;border-radius:9px;background:var(--n300);pointer-events:none}.sw::after{content:"";position:absolute;width:14px;height:14px;left:2px;top:2px;background:#fff;border-radius:50%;transition:transform .12s}input:checked+.sw{background:var(--navy-700)}input:checked+.sw::after{transform:translateX(14px)}input:focus-visible+.sw{box-shadow:var(--focus)}</style>';
+      body.querySelectorAll("[data-s]").forEach((c) => (c.onchange = () => { S[+c.dataset.s].on = c.checked; render(); C.toast(c.checked ? "Subscription diaktifkan" : "Subscription dijeda. Event tidak dikirim, tidak antre"); }));
+    } else if (tab === "log") {
+      body.innerHTML = '<div class="stack"><div class="banner warn">' + C.icon("alert") + "<div><b>1 pengiriman gagal dan 1 sedang dicoba ulang.</b> Retry memakai backoff dan rate limit agar sistem Anda tidak dibanjiri.</div></div>" +
+        '<div class="card" style="overflow:auto"><table class="table"><thead><tr><th>Event</th><th>Subscription · target</th><th>Status</th><th class="r">Percobaan</th><th>Waktu</th><th></th></tr></thead><tbody>' + LOG.map((l, i) => '<tr><td><span class="mono">' + l.ev + '</span><div class="mono muted">' + l.id + "</div></td><td>" + C.esc(l.sub) + '<div class="mono muted">' + l.t + '</div></td><td><span class="lozenge ' + stl[l.st][0] + '">' + stl[l.st][1] + " · " + l.code + '</span></td><td class="r num">' + l.tries + '</td><td class="num muted">' + l.when + '</td><td class="r"><button class="btn sm" data-l="' + i + '">Detail</button></td></tr>').join("") + "</tbody></table></div></div>";
+      body.querySelectorAll("[data-l]").forEach((b) => (b.onclick = () => openLog(+b.dataset.l)));
+    } else {
+      body.innerHTML = '<div class="stack"><div class="banner info">' + C.icon("inbox") + "<div>Sistem Anda dapat mengirim lead ke CRM tanpa input manual. Lead masuk dengan Source yang Anda tentukan dan mengikuti aturan assignment tenant.</div></div>" +
+        '<section class="card"><div class="card-b stack"><div class="field"><label>Endpoint</label><div class="code"><span class="mono" style="flex:1">POST https://api.crm.example/v1/tenants/arunika/leads</span><button class="btn sm" data-cp>Salin</button></div></div><div class="field"><label>API key</label><div class="code"><span class="mono" style="flex:1">crm_live_••••••••••••••••3f9a</span><button class="btn sm" data-cp>Salin</button><button class="btn sm" id="rot">Putar ulang</button></div></div>' +
+        '<div class="field"><label>Contoh payload</label><pre class="json">{\n  "name": "Lestari Ningrum",\n  "email": "lestari@gramedika.co.id",\n  "organization": "PT Graha Medika",\n  "source": "Website form",\n  "custom": { "jumlah_karyawan": 240 }\n}</pre></div><div class="hint">Wajib: name, salah satu dari email atau phone, dan source. Source harus terdaftar di Tenant Settings.</div></div></section></div>';
+      body.querySelectorAll("[data-cp]").forEach((b) => (b.onclick = () => C.toast("Disalin")));
+      $("#rot").onclick = () => C.toast("API key lama berlaku 24 jam lagi, lalu dicabut (simulasi)");
+    }
+  }
+  function openLog(i) {
+    const l = LOG[i]; $("#lT").textContent = l.ev; $("#lS").textContent = l.sub + " → " + l.t;
+    $("#lB").innerHTML = (l.err ? '<div class="banner lost">' + C.icon("alert") + "<div>" + l.err + "</div></div>" : l.next ? '<div class="banner warn">' + C.icon("clock") + "<div>" + l.next + "</div></div>" : "") +
+      '<dl class="dl"><dt>Event ID</dt><dd class="mono">' + l.id + "</dd><dt>Status</dt><dd>" + stl[l.st][1] + " · HTTP " + l.code + "</dd><dt>Percobaan</dt><dd>" + l.tries + "</dd><dt>Waktu</dt><dd>" + l.when + '</dd></dl><div class="label">Payload</div><pre class="json">{\n  "id": "' + l.id + '",\n  "type": "' + l.ev + '",\n  "tenant": "arunika",\n  "data": { "opportunity": "Paket payroll 150 user", "value": 130000000, "owner": "raka" }\n}</pre>';
+    $("#lRe").hidden = l.st === "ok"; $("#lRe").onclick = () => { l.st = "retry"; l.tries++; $("#logDlg").close(); render(); C.toast("Dijadwalkan kirim ulang"); };
+    C.openDlg("logDlg");
+  }
+  const rs = () => "whsec_" + [...Array(24)].map(() => "abcdef0123456789"[Math.floor(Math.random() * 16)]).join("");
+  function tgt() { $("#targets").innerHTML = [...Array(tCount)].map((_, i) => '<div class="target"><input class="input mono" data-t placeholder="https://sistem-anda.id/webhook" aria-label="URL target ' + (i + 1) + '">' + (tCount > 1 ? '<button type="button" class="btn icon sm subtle" data-x aria-label="Hapus target">' + C.icon("x", "sm") + "</button>" : "") + "</div>").join(""); $("#targets").querySelectorAll("[data-x]").forEach((b) => (b.onclick = () => { tCount--; tgt(); })); }
+  $("#bNew").onclick = () => { evSel = new Set(); tCount = 1; $("#sName").value = ""; ["#eName", "#eEv", "#eT"].forEach((s) => ($(s).hidden = true)); $("#sec").textContent = rs(); $("#evts").innerHTML = EVENTS.map((e) => '<label class="check"><input type="checkbox" value="' + e + '"><span class="mono">' + e + "</span></label>").join(""); tgt(); C.openDlg("subDlg"); };
+  $("#addT").onclick = () => { tCount++; tgt(); };
+  $("#cp").onclick = () => C.toast("Secret disalin");
+  $("#subForm").onsubmit = (e) => {
+    const n = $("#sName").value.trim(), ev = [...document.querySelectorAll("#evts input:checked")].map((x) => x.value), ts = [...document.querySelectorAll("[data-t]")].map((x) => x.value.trim()).filter(Boolean); let bad = false;
+    $("#eName").hidden = !!n; $("#eEv").hidden = ev.length > 0; $("#eT").hidden = ts.length > 0;
+    if (!n) { $("#eName").innerHTML = C.icon("alert", "sm") + "Nama wajib diisi"; bad = true; }
+    if (!ev.length) { $("#eEv").innerHTML = C.icon("alert", "sm") + "Pilih minimal satu event"; bad = true; }
+    if (!ts.length) { $("#eT").innerHTML = C.icon("alert", "sm") + "Isi minimal satu URL target"; bad = true; } else if (ts.some((t) => !/^https:\/\//.test(t))) { $("#eT").hidden = false; $("#eT").innerHTML = C.icon("alert", "sm") + "URL target harus diawali https://"; bad = true; }
+    if (bad) { e.preventDefault(); return; }
+    S.unshift({ n, ev, t: ts, on: true, ok: 0, last: "Belum ada pengiriman" }); render(); C.toast("Subscription dibuat dengan " + ts.length + " target");
+  };
+  render();
+});
+</script>
+</body>
+</html>

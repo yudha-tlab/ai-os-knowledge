@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Komponen — CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="crm.css">
+<style>
+  .sec { margin-bottom: 28px; }
+  .sec > h2 { font-size: 16px; margin-bottom: 4px; }
+  .sec > p { margin: 0 0 12px; color: var(--muted); max-width: 70ch; }
+  .demo-box { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: 16px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .demo-box.vert { flex-direction: column; align-items: stretch; }
+  .sw { display: flex; gap: 8px; flex-wrap: wrap; }
+  .sw div { width: 112px; }
+  .sw i { display: block; height: 44px; border-radius: var(--r); border: 1px solid rgba(0,0,0,.08); }
+  .sw b { display: block; font-size: 12px; margin-top: 4px; }
+  .sw span { font-size: 11px; color: var(--muted); font-family: ui-monospace, Menlo, monospace; }
+  .toc { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; font-weight: 500; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 900px) { .two { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body data-active="">
+<div class="layout">
+  <aside class="sidenav"></aside>
+  <main class="main">
+    <div class="page-head"><div><div class="crumbs">Design system</div><h1>Komponen</h1><p class="muted" style="margin:4px 0 0;max-width:70ch">Pustaka yang dipakai semua layar. Salesforce dan Atlassian untuk struktur dan disiplin; navy dari logo TLab untuk identitas. Warna selain navy dan netral hanya muncul bila bermakna status.</p></div></div>
+    <nav class="toc" aria-label="Isi"><a href="#warna">Warna</a><a href="#tipe">Tipografi</a><a href="#tombol">Tombol &amp; field</a><a href="#status">Status</a><a href="#path">Stage Path</a><a href="#deal">Deal card</a><a href="#alasan">Dialog alasan wajib</a><a href="#ai">AI panel</a><a href="#kosong">Kosong, galat, banner</a></nav>
+
+    <section class="sec" id="warna"><h2>Warna</h2><p>Satu warna primer (navy), satu skala netral dingin. Hijau, merah, dan amber hanya untuk Won, Lost, dan perlu perhatian. Ungu hanya untuk AI, supaya fitur AI selalu dikenali.</p>
+      <div class="demo-box vert"><div class="sw">
+        <div><i style="background:var(--navy-700)"></i><b>Primary</b><span>#122E7C</span></div><div><i style="background:var(--navy-600)"></i><b>Primary hover</b><span>#1B3D96</span></div><div><i style="background:var(--navy-50)"></i><b>Selected</b><span>#EEF2FC</span></div><div><i style="background:var(--sky-500)"></i><b>Focus</b><span>#049CFB</span></div>
+        <div><i style="background:var(--n900)"></i><b>Text</b><span>#161F38</span></div><div><i style="background:var(--n500)"></i><b>Muted</b><span>#66728F</span></div><div><i style="background:var(--n200)"></i><b>Border</b><span>#D9DFEB</span></div><div><i style="background:var(--n50)"></i><b>Canvas</b><span>#F3F5FA</span></div></div>
+        <div class="sw"><div><i style="background:var(--won)"></i><b>Won</b><span>#0A7A54</span></div><div><i style="background:var(--lost)"></i><b>Lost</b><span>#B42318</span></div><div><i style="background:var(--warn-bg);"></i><b>Perlu perhatian</b><span>#FFF0D1 / #8A5300</span></div><div><i style="background:var(--ai)"></i><b>AI</b><span>#641EEE</span></div></div></div></section>
+
+    <section class="sec" id="tipe"><h2>Tipografi</h2><p>Inter, 14px untuk isi (padat seperti alat kerja), angka tabular agar nilai rupiah sejajar.</p>
+      <div class="demo-box vert"><div style="font-size:20px;font-weight:600;line-height:28px">Page title · 20/28 · 600</div><div style="font-size:16px;font-weight:600">Dialog title · 16/24 · 600</div><div>Isi teks · 14/20 · 400. Kontak pertama dilakukan 21 menit setelah lead masuk.</div><div class="muted" style="font-size:12px">Caption · 12/16 · 500 · warna muted</div>
+      <div class="num" style="display:flex;gap:32px"><span>Rp 1,35 M</span><span>Rp 185 jt</span><span>Rp 64 jt</span><span class="muted">tabular-nums</span></div></div></section>
+
+    <section class="sec" id="tombol"><h2>Tombol &amp; field</h2><p>Satu tombol primer per area. Won dan Lost memakai tombol berwarna hanya di dialog penutupan. Fokus keyboard selalu terlihat.</p>
+      <div class="demo-box"><button class="btn primary">Convert</button><button class="btn">Log activity</button><button class="btn subtle">Batal</button><button class="btn won">Close Won</button><button class="btn danger">Close Lost</button><button class="btn ai" data-ic="spark">Buat draf outreach</button><button class="btn" disabled>Disabled</button><button class="btn sm">Small</button></div>
+      <div class="demo-box" style="margin-top:12px;align-items:flex-start">
+        <div class="field" style="width:240px"><label for="c1">Nama</label><input class="input" id="c1" value="Andini Prameswari"></div>
+        <div class="field" style="width:240px"><label class="req" for="c2">Deal value (Rp)</label><input class="input" id="c2" aria-invalid="true"><div class="err" data-ic="alert">Isi deal value</div></div>
+        <div class="field" style="width:240px"><label for="c3">Stage</label><select class="select" id="c3"><option>Qualification</option></select><div class="hint">Teks bantu di bawah field</div></div>
+        <label class="check" style="width:240px"><input type="checkbox" checked><span>Pembeli mengonfirmasi ada kebutuhan nyata</span></label></div></section>
+
+    <section class="sec" id="status"><h2>Status &amp; lozenge</h2><p>Teks selalu menyertai warna. Kategori status Lead: New, In Progress, Lost, Converted. Label di bawahnya diatur tenant.</p>
+      <div class="demo-box"><span class="lozenge blue">New</span><span class="lozenge blue">In Progress › Connected</span><span class="lozenge won">Won</span><span class="lozenge lost">Lost</span><span class="lozenge warn">Stale 9 hari</span><span class="lozenge warn">Belum ada next step</span><span class="lozenge lost">Close date lewat</span><span class="lozenge ai">Draf AI</span><span class="lozenge">Website form</span><span class="lozenge blue">Tenant</span>
+      <span class="row">Avatar <span class="avatar a1">MK</span><span class="avatar a2">RP</span><span class="avatar a3">DA</span><span class="avatar a4">BS</span></span></div></section>
+
+    <section class="sec" id="path"><h2>Stage Path</h2><p>Elemen utama CRM ini. Dipakai untuk status Lead dan stage Opportunity. Langkah selesai berwarna lembut, langkah aktif navy, tujuan akhir Won atau Lost berwarna status. Jumlah stage mengikuti konfigurasi tenant.</p>
+      <div class="demo-box vert"><ol class="path" aria-label="Contoh Opportunity"><li class="done">{{ic:check}}Qualification</li><li class="done">{{ic:check}}Needs Analysis</li><li class="current" aria-current="step">Demo</li><li class="next">Proposal</li><li class="next">Negotiation</li><li class="next">Decision Pending</li></ol>
+        <ol class="path" aria-label="Contoh Lead" style="max-width:520px"><li class="done">{{ic:check}}New</li><li class="current">In Progress</li><li class="next">Converted</li></ol>
+        <ol class="path" aria-label="Contoh Lost" style="max-width:520px"><li class="done">{{ic:check}}New</li><li class="done">{{ic:check}}In Progress</li><li class="lost">Lost</li></ol>
+        <ol class="path compact" aria-label="Compact" style="max-width:520px"><li class="done">New</li><li class="current">In Progress</li><li class="next">Converted</li></ol></div></section>
+
+    <section class="sec" id="deal"><h2>Deal card</h2><p>Garis tipis di bawah kartu menunjukkan berapa lama deal diam di stage dibanding batas stale tenant. Oranye berarti sudah lewat. Penanda hanya muncul bila ada yang perlu ditindak.</p>
+      <div class="demo-box" style="background:var(--n100);align-items:flex-start">
+        <div style="width:272px"><button class="deal"><div class="t">Implementasi HRIS – 120 karyawan</div><div class="acc">PT Sinar Logistik Prima</div><div class="row"><span class="val num">Rp 185 jt</span><span class="spacer"></span><span class="avatar a2">RP</span></div><div class="meta" data-ic="cal"><span class="num">20 Nov</span><span>· Kirim form kebutuhan</span></div><div class="age"><i style="width:28%"></i></div></button></div>
+        <div style="width:272px"><button class="deal"><div class="t">Perpanjangan &amp; upgrade 250 user</div><div class="acc">PT Tirta Wangi</div><div class="row"><span class="val num">Rp 290 jt</span><span class="spacer"></span><span class="avatar a3">DA</span></div><div class="meta" data-ic="cal"><span class="num">9 Okt</span><span style="color:var(--lost)">· Tindak lanjut penawaran</span></div><div class="age over"><i style="width:100%"></i></div><div class="flags"><span class="lozenge warn">Stale 15 hari</span><span class="lozenge lost">Close date lewat</span></div></button></div></div></section>
+
+    <section class="sec" id="alasan"><h2>Dialog alasan wajib</h2><p>Dipakai di tiga tempat: Lead jadi Lost, Opportunity ditutup, dan Opportunity dimundurkan. Tombol selalu menyebut aksinya. Galat menjelaskan apa yang kurang.</p>
+      <div class="demo-box" style="background:var(--n100)"><div style="background:#fff;border-radius:8px;box-shadow:var(--shadow-pop);width:440px;max-width:100%">
+        <div class="dlg-h"><h2>Close sebagai Lost</h2><div class="muted">Payroll outsourcing · Rp 120 jt</div></div>
+        <div class="dlg-b"><div class="field"><label class="req">Alasan kalah</label><select class="select" aria-invalid="true"><option>Pilih alasan</option></select><div class="err" data-ic="alert">Alasan wajib diisi sebelum opportunity ditutup</div></div><div class="banner info" data-ic="target"><div>Alasan kalah dipakai untuk laporan Lost Reasons, bukan untuk menilai individu.</div></div></div>
+        <div class="dlg-f"><button class="btn subtle">Batal</button><button class="btn danger">Close Lost</button></div></div></div></section>
+
+    <section class="sec" id="ai"><h2>AI panel</h2><p>Ungu hanya untuk AI. Empat keadaan: awal, memuat, hasil yang bisa diedit, dan gagal. Kegagalan tidak memblokir pekerjaan lain.</p>
+      <div class="two">
+        <div class="ai-panel"><header data-ic="spark">AI Assistant</header><div class="ai-body"><div class="row"><span class="spin"></span><span class="muted">Menyusun draf dari konteks lead…</span></div><div class="skel"></div><div class="skel" style="width:90%"></div><div class="skel" style="width:60%"></div></div></div>
+        <div class="ai-panel"><header data-ic="spark">AI Assistant</header><div class="ai-body"><div class="banner lost" data-ic="alert"><div><b>Draf tidak dapat dibuat.</b> Layanan AI tidak merespons. Pekerjaan lain tidak terpengaruh.</div></div><div class="row"><button class="btn">Coba lagi</button><button class="btn subtle">Tulis sendiri</button></div></div></div></div></section>
+
+    <section class="sec" id="kosong"><h2>Kosong, galat, banner</h2><p>Setiap layar punya keadaan kosong yang menunjuk tindakan berikutnya.</p>
+      <div class="two"><div class="card empty" data-ic="board" style="display:block"><h2>Belum ada opportunity di pipeline ini</h2><p>Opportunity terbentuk saat Lead di-convert, atau tambahkan langsung.</p><button class="btn primary">Tambah Opportunity</button></div>
+      <div class="stack"><div class="banner info" data-ic="inbox"><div><b>Lead ini belum punya Owner.</b> Berada di Queue Inbound Web.</div></div><div class="banner warn" data-ic="alert"><div><b>Belum ada next step.</b> Jadwalkan activity agar lead tidak menggantung.</div></div><div class="banner lost" data-ic="flag"><div><b>Lead ini Lost.</b> Waktu belum sesuai.</div></div></div></div></section>
+  </main>
+</div>
+<script src="app.js"></script>
+<script>
+document.addEventListener("crm-ready", () => {
+  document.querySelectorAll("main").forEach((m) => { m.innerHTML = m.innerHTML.replace(/\{\{ic:(\w+)\}\}/g, (_, k) => CRM.icon(k, "sm")); });
+  document.querySelectorAll("[data-ic]").forEach((el) => { if (!el.querySelector(":scope > .ic")) el.insertAdjacentHTML("afterbegin", CRM.icon(el.dataset.ic)); });
+});
+</script>
+</body>
+</html>

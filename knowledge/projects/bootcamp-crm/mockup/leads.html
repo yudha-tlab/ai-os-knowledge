@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leads</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="crm.css">
+<style>
+  .bar { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
+  .bulk { display: flex; gap: 12px; align-items: center; padding: 8px 12px; background: var(--navy-50); border: 1px solid var(--navy-100); border-radius: var(--r); margin-bottom: 12px; }
+  .nm { display: flex; gap: 10px; align-items: center; min-width: 0; }
+  .nm a { font-weight: 600; color: var(--text); }
+  .nm a:hover { color: var(--navy-700); }
+  .nm .sub { font-size: 12px; color: var(--muted); }
+  .table td.chk, .table th.chk { width: 36px; padding-right: 0; }
+  .table input[type=checkbox] { accent-color: var(--navy-700); width: 14px; height: 14px; }
+  .tabs .tab .count.attn { background: var(--warn-bg); color: var(--warn); padding: 0 6px; border-radius: 8px; font-weight: 600; }
+  .dup { border: 1px solid #f2c97d; background: var(--warn-bg); border-radius: var(--r); padding: 10px 12px; }
+  .steps { display: flex; gap: 8px; font-size: 12px; font-weight: 600; color: var(--muted); }
+  .steps span[aria-current] { color: var(--navy-700); }
+</style>
+</head>
+<body data-active="leads">
+<div class="layout">
+  <aside class="sidenav"></aside>
+  <main class="main">
+    <div class="page-head"><div><div class="crumbs">Leads</div><h1>Leads</h1></div><div class="spacer"></div>
+      <div class="row"><button class="btn" id="bImport" data-ic="inbox">Import</button><button class="btn primary" id="bAdd" data-ic="plus">Lead</button></div></div>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="bar" style="margin-top:12px">
+      <label class="search light" data-ic="search"><span class="sr">Cari lead</span>
+        <input id="q" type="search" placeholder="Cari nama atau organisasi"></label>
+      <select class="select" id="fSrc" style="width:auto" aria-label="Source"><option value="">Semua source</option></select>
+      <select class="select" id="fCat" style="width:auto" aria-label="Status"><option value="">Semua status</option><option>New</option><option>In Progress</option><option>Lost</option><option>Converted</option></select>
+      <span class="spacer"></span><span class="muted" id="cnt"></span>
+    </div>
+    <div id="bulk"></div>
+    <div class="card" style="overflow:auto"><table class="table" id="tbl"></table></div>
+  </main>
+</div>
+
+<!-- Add lead -->
+<dialog id="addDlg" style="width:min(560px,calc(100vw - 32px))">
+  <form method="dialog" id="addForm" novalidate>
+    <div class="dlg-h"><h2>Tambah lead</h2><div class="muted" id="ownHint"></div></div>
+    <div class="dlg-b">
+      <div class="field"><label class="req" for="aName">Nama</label><input class="input" id="aName" autocomplete="off"><div class="err" id="eName" hidden></div></div>
+      <div class="row" style="align-items:flex-start;gap:12px">
+        <div class="field" style="flex:1"><label for="aMail">Email</label><input class="input" id="aMail" type="email" placeholder="nama@perusahaan.id"></div>
+        <div class="field" style="flex:1"><label for="aTel">Telepon</label><input class="input" id="aTel" inputmode="tel" placeholder="08xx"></div>
+      </div>
+      <div class="hint" style="margin-top:-8px">Isi salah satu: email atau telepon.</div><div class="err" id="eCon" hidden></div>
+      <div id="dup" class="dup" hidden></div>
+      <div class="row" style="align-items:flex-start;gap:12px">
+        <div class="field" style="flex:1"><label class="req" for="aSrc">Source</label><select class="select" id="aSrc"></select><div class="err" id="eSrc" hidden></div></div>
+        <div class="field" style="flex:1"><label for="aOrg">Organisasi</label><input class="input" id="aOrg"><div class="hint">Kosongkan untuk pelanggan B2C</div></div>
+      </div>
+      <div class="row" style="gap:12px"><div class="field" style="flex:1"><label for="aTitle">Jabatan</label><input class="input" id="aTitle"></div>
+        <div class="field" style="flex:1"><label for="aOwner">Owner</label><select class="select" id="aOwner"></select></div></div>
+      <div class="field"><label for="aNeed">Kebutuhan awal</label><textarea class="textarea" id="aNeed" style="min-height:56px"></textarea></div>
+      <div style="border-top:1px solid var(--line);padding-top:12px"><div class="row" style="margin-bottom:8px"><h3>Custom fields</h3><span class="lozenge blue">Tenant</span></div>
+        <div class="row" style="gap:12px"><div class="field" style="flex:1"><label for="cf1">Jumlah karyawan</label><input class="input num" id="cf1" inputmode="numeric"></div><div class="field" style="flex:1"><label for="cf2">Sistem saat ini</label><input class="input" id="cf2"></div></div></div>
+    </div>
+    <div class="dlg-f"><button class="btn subtle" type="button" data-close>Batal</button><button class="btn primary" type="submit">Simpan lead</button></div>
+  </form>
+</dialog>
+
+<!-- Import -->
+<dialog id="impDlg" style="width:min(640px,calc(100vw - 32px))">
+  <form method="dialog" id="impForm">
+    <div class="dlg-h"><h2>Import lead</h2><div class="steps" id="impSteps"></div></div>
+    <div class="dlg-b" id="impBody"></div>
+    <div class="dlg-f"><button class="btn subtle" type="button" data-close>Batal</button><button class="btn" type="button" id="impBack" hidden>Kembali</button><button class="btn primary" type="button" id="impNext">Lanjut</button></div>
+  </form>
+</dialog>
+
+<!-- Assign -->
+<dialog id="asgDlg">
+  <form method="dialog" id="asgForm">
+    <div class="dlg-h"><h2 id="asgT">Assign lead</h2><div class="muted">Dari Queue Inbound Web</div></div>
+    <div class="dlg-b"><div class="field"><label for="asgTo">Assign ke</label><select class="select" id="asgTo"><option value="raka">Raka Pratama · 14 lead aktif</option><option value="dewi">Dewi Anggraini · 9 lead aktif</option><option value="bagus">Bagus Santoso · 11 lead aktif</option></select></div></div>
+    <div class="dlg-f"><button class="btn subtle" type="button" data-close>Batal</button><button class="btn primary" type="submit">Assign</button></div>
+  </form>
+</dialog>
+
+<script src="app.js"></script>
+<script>
+document.addEventListener("crm-ready", () => {
+  const C = window.CRM, $ = (s) => document.querySelector(s), role = C.role(), me = role === "rep" ? "raka" : role === "manager" ? "maya" : "admin";
+  const L = C.leads.map((x) => ({ ...x })), sel = new Set();
+  let view = role === "rep" ? "mine" : "queue", impStep = 0;
+  const NOW = C.TODAY.getTime();
+  const SOURCES = [...new Set(L.map((l) => l.source))];
+  SOURCES.forEach((s) => ["#fSrc", "#aSrc"].forEach((id) => $(id).insertAdjacentHTML("beforeend", "<option>" + s + "</option>")));
+  $("#aSrc").insertAdjacentHTML("afterbegin", '<option value="">Pilih source</option>'); $("#aSrc").value = "";
+  document.querySelectorAll("[data-ic]").forEach((el) => { if (!el.querySelector(".ic")) el.insertAdjacentHTML("afterbegin", C.icon(el.dataset.ic)); });
+
+  const ago = (iso) => { const m = Math.round((NOW - new Date(iso + ":00+07:00").getTime()) / 6e4); return m < 60 ? m + " mnt" : m < 1440 ? Math.floor(m / 60) + " j " + (m % 60) + " m" : Math.floor(m / 1440) + " hari"; };
+  const mins = (m) => (m < 60 ? m + " menit" : Math.round(m / 60) + " jam");
+  const isQ = (l) => !l.owner && l.cat === "New";
+  const filt = () => {
+    const q = $("#q").value.toLowerCase(), s = $("#fSrc").value, c = $("#fCat").value;
+    return L.filter((l) => (view === "all" ? true : view === "queue" ? isQ(l) : view === "nurt" ? l.nurture : l.owner === "raka" && l.cat !== "Converted" && l.cat !== "Lost") &&
+      (!q || (l.name + " " + l.org).toLowerCase().includes(q)) && (!s || l.source === s) && (!c || l.cat === c));
+  };
+  function tabs() {
+    const n = { mine: L.filter((l) => l.owner === "raka" && l.cat !== "Converted" && l.cat !== "Lost").length, queue: L.filter(isQ).length, all: L.length, nurt: L.filter((l) => l.nurture).length };
+    const T = [["mine", "My leads", n.mine], ["queue", "Queue", n.queue, true], ...(role !== "rep" ? [["all", "All leads", n.all]] : []), ["nurt", "Nurturing", n.nurt]];
+    $("#tabs").innerHTML = T.map(([id, l, c, a]) => '<button class="tab" role="tab" aria-selected="' + (id === view) + '" data-v="' + id + '">' + l + ' <span class="count ' + (a && c ? "attn" : "") + '">' + c + "</span></button>").join("");
+    $("#tabs").querySelectorAll(".tab").forEach((b) => (b.onclick = () => { view = b.dataset.v; sel.clear(); render(); }));
+  }
+  function render() {
+    tabs(); const rows = filt(); $("#cnt").textContent = rows.length + " lead";
+    const q = view === "queue";
+    $("#bulk").innerHTML = sel.size ? '<div class="bulk"><b>' + sel.size + " dipilih</b>" + (role !== "rep" ? '<button class="btn sm" id="bAsg">' + C.icon("users", "sm") + "Assign ke…</button>" : "") + '<button class="btn sm subtle" id="bClr">Batal pilih</button></div>' : "";
+    $("#tbl").innerHTML = '<thead><tr>' + (q && role !== "rep" ? '<th class="chk"><input type="checkbox" id="all" aria-label="Pilih semua"></th>' : "") + "<th>Lead</th><th>Source</th><th>Status</th><th>Owner</th><th>Masuk</th><th>Kontak pertama</th><th>Rating</th>" + (q ? "<th></th>" : "") + "</tr></thead><tbody>" +
+      (rows.length ? rows.map((l) => {
+        const wait = !l.first && l.owner ? '<span class="lozenge warn">Belum · ' + ago(l.recv) + "</span>" : l.first ? '<span class="num">' + mins(l.first) + "</span>" : '<span class="muted">—</span>';
+        const st = l.cat === "Lost" ? '<span class="lozenge lost">Lost' + (l.nurture ? " · Nurturing" : "") + "</span>" : l.cat === "Converted" ? '<span class="lozenge won">Converted</span>' : '<span class="lozenge blue">' + (l.cat === "In Progress" ? "In Progress › " + l.status : l.status === "New" ? "New" : "New › " + l.status) + "</span>";
+        return "<tr>" + (q && role !== "rep" ? '<td class="chk"><input type="checkbox" data-id="' + l.id + '"' + (sel.has(l.id) ? " checked" : "") + ' aria-label="Pilih ' + C.esc(l.name) + '"></td>' : "") +
+          '<td><div class="nm"><span class="avatar a5">' + C.initials(l.name) + '</span><div><a href="lead.html' + (isQ(l) ? "?state=queue" : "") + '">' + C.esc(l.name) + '</a><div class="sub">' + (l.org ? C.esc(l.org) : "Individu (B2C)") + (l.title ? " · " + C.esc(l.title) : "") + "</div></div></div></td><td>" + C.esc(l.source) + "</td><td>" + st + "</td><td>" +
+          (l.owner ? '<span class="row">' + C.avatar(l.owner) + C.users[l.owner].name.split(" ")[0] + "</span>" : '<span class="lozenge warn">Queue</span>') + '</td><td class="num muted" title="' + l.recv + '">' + ago(l.recv) + " lalu</td><td>" + wait + "</td><td>" + (l.rating ? '<span class="lozenge ' + (l.rating === "Hot" ? "lost" : l.rating === "Warm" ? "warn" : "") + '">' + l.rating + "</span>" : '<span class="muted">—</span>') + "</td>" +
+          (q ? '<td class="r"><button class="btn sm primary" data-claim="' + l.id + '">Claim</button></td>' : "") + "</tr>";
+      }).join("") : '<tr><td colspan="9"><div class="empty"><h2>' + (q ? "Queue kosong" : "Tidak ada lead di tampilan ini") + "</h2><p>" + (q ? "Semua lead masuk sudah punya Owner." : "Ubah filter, atau tambahkan lead baru.") + "</p></div></td></tr>") + "</tbody>";
+    $("#tbl").querySelectorAll("[data-id]").forEach((c) => (c.onchange = () => { c.checked ? sel.add(+c.dataset.id) : sel.delete(+c.dataset.id); render(); }));
+    const all = $("#all"); if (all) all.onchange = () => { rows.forEach((l) => (all.checked ? sel.add(l.id) : sel.delete(l.id))); render(); };
+    $("#tbl").querySelectorAll("[data-claim]").forEach((b) => (b.onclick = () => { const l = L.find((x) => x.id === +b.dataset.claim); l.owner = role === "rep" ? "raka" : "raka"; C.toast("Lead " + l.name + " di-claim. Sekarang milik " + C.users[l.owner].name.split(" ")[0]); render(); }));
+    const a = $("#bAsg"); if (a) a.onclick = () => { $("#asgT").textContent = "Assign " + sel.size + " lead"; C.openDlg("asgDlg"); };
+    const c = $("#bClr"); if (c) c.onclick = () => { sel.clear(); render(); };
+  }
+  ["#q", "#fSrc", "#fCat"].forEach((s) => ($(s).oninput = render));
+  $("#asgForm").onsubmit = () => { const to = $("#asgTo").value; L.forEach((l) => { if (sel.has(l.id)) l.owner = to; }); C.toast(sel.size + " lead di-assign ke " + C.users[to].name); sel.clear(); render(); };
+
+  /* Tambah lead */
+  $("#bAdd").onclick = () => {
+    ["#aName", "#aMail", "#aTel", "#aOrg", "#aTitle", "#aNeed", "#cf1", "#cf2"].forEach((s) => ($(s).value = ""));
+    $("#aSrc").value = ""; ["#eName", "#eCon", "#eSrc", "#dup"].forEach((s) => ($(s).hidden = true));
+    const own = role === "rep" ? '<option value="raka">Raka Pratama (saya)</option>' : '<option value="">Queue (tanpa Owner)</option><option value="raka">Raka Pratama</option><option value="dewi">Dewi Anggraini</option><option value="bagus">Bagus Santoso</option>';
+    $("#aOwner").innerHTML = own; $("#aOwner").value = role === "rep" ? "raka" : "";
+    $("#ownHint").textContent = role === "rep" ? "Anda otomatis menjadi Owner (aturan tenant: input manual)." : "Kosongkan Owner untuk memasukkan lead ke Queue.";
+    C.openDlg("addDlg");
+  };
+  const dupCheck = () => { const m = $("#aMail").value.toLowerCase(), t = $("#aTel").value.replace(/\D/g, ""); const hit = m === "andini@skfarma.co.id" || t.endsWith("81290550148");
+    const d = $("#dup"); d.hidden = !hit; if (hit) d.innerHTML = '<div class="row" style="align-items:flex-start">' + C.icon("alert") + '<div><b>Kemungkinan duplikat.</b> Andini Prameswari · PT Surya Kencana Farma (Lead, Owner Raka) memakai ' + (m ? "email" : "telepon") + ' yang sama.<div class="row" style="margin-top:8px"><a class="btn sm" href="lead.html">Buka lead yang ada</a><span class="muted" style="font-size:12px">atau lanjut Simpan bila memang berbeda</span></div></div></div>'; };
+  $("#aMail").oninput = $("#aTel").oninput = dupCheck;
+  $("#addForm").onsubmit = (e) => {
+    const n = $("#aName").value.trim(), con = $("#aMail").value.trim() || $("#aTel").value.trim(), s = $("#aSrc").value; let bad = false;
+    $("#eName").hidden = !!n; $("#eCon").hidden = !!con; $("#eSrc").hidden = !!s;
+    if (!n) { $("#eName").innerHTML = C.icon("alert", "sm") + "Nama wajib diisi"; bad = true; }
+    if (!con) { $("#eCon").innerHTML = C.icon("alert", "sm") + "Isi email atau telepon agar lead bisa dihubungi"; bad = true; }
+    if (!s) { $("#eSrc").innerHTML = C.icon("alert", "sm") + "Source wajib diisi"; bad = true; }
+    if (bad) { e.preventDefault(); return; }
+    const o = $("#aOwner").value || null;
+    L.unshift({ id: Date.now(), name: n, org: $("#aOrg").value, title: $("#aTitle").value, source: s, cat: "New", status: "New", owner: o, recv: "2026-10-12T10:00", first: null, rating: "" });
+    view = o ? "mine" : "queue"; render(); C.toast(o ? "Lead disimpan. Owner: " + C.users[o].name : "Lead disimpan di Queue");
+  };
+
+  /* Import */
+  const IMP = [
+    () => '<div class="field"><label>File CSV atau Excel</label><div class="card empty" style="padding:24px"><h2>Pilih atau tarik file ke sini</h2><p>Kolom pertama berisi header. Maksimal 5.000 baris.</p><button type="button" class="btn" id="pick">Pilih file</button></div></div><div class="hint">Contoh: <b>lead-pameran-oktober.csv</b> · 128 baris (simulasi)</div>',
+    () => '<div class="banner info">' + C.icon("list") + "<div><b>lead-pameran-oktober.csv</b> · 128 baris. Cocokkan kolom file dengan field CRM.</div></div><table class='table'><thead><tr><th>Kolom di file</th><th>Field di CRM</th></tr></thead><tbody>" + [["Nama Lengkap", "Nama"], ["No HP", "Telepon"], ["Email Kantor", "Email"], ["Perusahaan", "Organisasi"], ["Jml Karyawan", "Jumlah karyawan (custom field)"]].map((r) => "<tr><td>" + r[0] + '</td><td><select class="select"><option>' + r[1] + "</option></select></td></tr>").join("") + "</tbody></table>",
+    () => '<div class="field"><label>Source untuk semua baris</label><select class="select"><option>Event: HR Expo</option></select></div><div class="stack" style="gap:8px"><label class="check opt" style="border:1px solid var(--line);border-radius:4px;padding:10px 12px"><input type="radio" name="io" checked><span><b>Saya menjadi Owner</b><br><span class="hint">Aturan tenant untuk import: Owner = yang meng-import.</span></span></label><label class="check opt" style="border:1px solid var(--line);border-radius:4px;padding:10px 12px"><input type="radio" name="io"><span><b>Jalankan aturan assignment</b><br><span class="hint">Baris yang tidak cocok aturan masuk Queue.</span></span></label></div>',
+    () => '<div class="banner info" style="background:var(--won-bg);color:var(--won)">' + C.icon("check") + '<div><b>Siap di-import: 120 dari 128 baris.</b></div></div><dl class="dl"><dt>Valid</dt><dd class="num">120</dd><dt>Duplikat</dt><dd class="num">5 <span class="muted">dilewati. Cocok dengan lead atau contact yang ada</span></dd><dt>Data tidak lengkap</dt><dd class="num">3 <span class="muted">tidak ada email maupun telepon</span></dd></dl><a href="#" onclick="CRM.toast(\'Berkas baris bermasalah diunduh (simulasi)\');return false">Unduh daftar baris yang dilewati</a>',
+  ];
+  const STEP = ["Pilih file", "Cocokkan kolom", "Pemilik", "Tinjau"];
+  function imp() { $("#impSteps").innerHTML = STEP.map((s, i) => '<span' + (i === impStep ? ' aria-current="step"' : "") + ">" + (i + 1) + ". " + s + "</span>").join(" · "); $("#impBody").innerHTML = IMP[impStep](); $("#impBack").hidden = impStep === 0; $("#impNext").textContent = impStep === 3 ? "Import 120 lead" : "Lanjut"; const p = $("#pick"); if (p) p.onclick = () => { impStep = 1; imp(); }; }
+  $("#bImport").onclick = () => { impStep = 0; imp(); C.openDlg("impDlg"); };
+  $("#impBack").onclick = () => { impStep--; imp(); };
+  $("#impNext").onclick = () => { if (impStep < 3) { impStep++; imp(); } else { $("#impDlg").close(); C.toast("120 lead di-import. 5 duplikat dilewati"); } };
+  render();
+});
+</script>
+</body>
+</html>

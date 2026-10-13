@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sales Performance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="crm.css">
+</head>
+<body data-active="performance">
+<div class="layout">
+  <aside class="sidenav"></aside>
+  <main class="main">
+    <div class="page-head"><div><div class="crumbs">Performance</div><h1 id="h1">Sales Performance</h1><div class="muted">Oktober 2026 · quota attainment = nilai Closed-Won ÷ quota</div></div><div class="spacer"></div>
+      <div class="row"><button class="btn" id="tv" aria-pressed="false" data-ic="list">Tampilan tabel</button></div></div>
+    <div id="body"></div>
+  </main>
+</div>
+<script src="app.js"></script><script src="charts.js"></script>
+<script>
+document.addEventListener("crm-ready", () => {
+  const C = window.CRM, $ = (s) => document.querySelector(s), body = $("#body"), mgr = C.role() !== "rep";
+  document.querySelectorAll("[data-ic]").forEach((el) => { if (!el.querySelector(".ic")) el.insertAdjacentHTML("afterbegin", C.icon(el.dataset.ic)); });
+  let table = false;
+  const rows = C.quota.map((q) => ({ id: q.id, a: Math.round((q.won / q.target) * 100), ...q })).sort((a, b) => b.a - a.a);
+  const mine = rows.find((r) => r.id === "raka");
+  const verdict = (a) => '<span class="lozenge ' + (a >= C.THRESH ? "won" : "warn") + '">' + (a >= C.THRESH ? "Mencapai target" : "Di bawah ambang") + "</span>";
+  function render() {
+    $("#tv").setAttribute("aria-pressed", table);
+    if (!mgr) {
+      $("#h1").textContent = "Performa saya";
+      const wins = C.opps.filter((o) => o.owner === "raka").slice(0, 0);
+      body.innerHTML = '<div class="stack"><section class="card"><div class="card-b stack"><div class="row"><h2 style="flex:1">Quota Oktober</h2>' + verdict(mine.a) + '</div><div class="row" style="align-items:baseline"><span class="num" style="font-size:28px;font-weight:700;line-height:36px">' + C.rp(mine.won) + '</span><span class="muted">dari ' + C.rp(mine.target) + '</span><span class="spacer"></span><b class="num" style="font-size:20px">' + mine.a + '%</b></div><div style="position:relative"><div class="progress" style="height:10px" role="progressbar" aria-valuenow="' + mine.a + '" aria-valuemin="0" aria-valuemax="100" aria-label="Quota attainment"><i style="width:' + mine.a + '%"></i></div><span style="position:absolute;left:' + C.THRESH + '%;top:-4px;bottom:-4px;width:2px;background:var(--n900)" title="Ambang ' + C.THRESH + '%"></span></div><div class="hint">Garis tegak = ambang tenant ' + C.THRESH + "%. Sisa " + C.rp(mine.target * C.THRESH / 100 - mine.won) + " untuk mencapai ambang. " + mine.wins + " deal Closed-Won bulan ini.</div></div></section>" +
+        '<section class="card"><div class="card-h"><h2>Closed-Won bulan ini</h2></div><table class="table"><thead><tr><th>Opportunity</th><th>Account</th><th>Ditutup</th><th>Alasan menang</th><th class="r">Value</th></tr></thead><tbody>' + [["Implementasi HRIS cabang Medan", "PT Delta Pangan", "03 Okt", "Kecocokan fitur", 210e6], ["Paket payroll 150 user", "CV Karya Sentosa", "07 Okt", "Harga kompetitif", 130e6], ["Modul absensi", "Klinik Sehat Bersama", "10 Okt", "Implementasi cepat", 80e6]].map((r) => "<tr><td><b>" + r[0] + "</b></td><td>" + r[1] + '</td><td class="num">' + r[2] + "</td><td>" + r[3] + '</td><td class="r num">' + C.rp(r[4]) + "</td></tr>").join("") + "</tbody></table></section></div>";
+      return;
+    }
+    const items = rows.map((r) => ({ label: C.users[r.id].name, html: '<span class="row">' + C.avatar(r.id) + C.users[r.id].name + "</span>", value: r.a, tone: r.a >= C.THRESH ? "won" : "warn", note: C.rp(r.won) + " dari " + C.rp(r.target) + " · " + r.wins + " deal Won" }));
+    const tot = rows.reduce((a, r) => [a[0] + r.won, a[1] + r.target], [0, 0]);
+    body.innerHTML = '<div class="stack"><section class="card"><div class="card-h"><h2>Quota attainment per Sales</h2><span class="spacer"></span><span class="muted">Tim: <b class="num">' + Math.round((tot[0] / tot[1]) * 100) + "%</b> · " + C.rp(tot[0]) + " dari " + C.rp(tot[1]) + '</span></div><div class="card-b" id="ch"></div></section>' +
+      '<section class="card" style="overflow:auto"><table class="table"><thead><tr><th>Sales</th><th class="r">Quota</th><th class="r">Closed-Won</th><th class="r">Attainment</th><th>Status</th><th class="r">Deal Won</th></tr></thead><tbody>' + rows.map((r) => '<tr><td><span class="row">' + C.avatar(r.id) + C.users[r.id].name + '</span></td><td class="r num">' + C.rp(r.target) + '</td><td class="r num">' + C.rp(r.won) + '</td><td class="r num"><b>' + r.a + "%</b></td><td>" + verdict(r.a) + '</td><td class="r num">' + r.wins + "</td></tr>").join("") + "</tbody></table></section>" +
+      '<div class="hint">Ambang performa tenant: ' + C.THRESH + "%. Urutan hanya menurut attainment bulan ini. Alasan Lost dan aktivitas tidak dipakai untuk menilai individu.</div></div>";
+    if (table) $("#ch").innerHTML = Charts.table(items.map((i) => ({ ...i, label: i.label })), ["Sales", "Attainment (%)"], (v) => v + "%"); else Charts.hbars($("#ch"), items, { max: 120, marker: C.THRESH, markerLabel: "ambang " + C.THRESH + "%", fmt: (v) => v + "%", labelW: 170 });
+  }
+  $("#tv").onclick = () => { table = !table; render(); };
+  render();
+});
+</script>
+</body>
+</html>

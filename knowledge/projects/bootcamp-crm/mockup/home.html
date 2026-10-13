@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="crm.css">
+<style>
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 1000px) { .grid { grid-template-columns: 1fr; } }
+  .item { display: flex; gap: 10px; align-items: center; padding: 10px 16px; border-bottom: 1px solid var(--line); color: inherit; text-decoration: none; }
+  .item:last-child { border-bottom: 0; }
+  .item:hover { background: var(--n25); text-decoration: none; }
+  .item .t { flex: 1; min-width: 0; }
+  .item .t b { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .item .t span { font-size: 12px; color: var(--muted); }
+</style>
+</head>
+<body data-active="home">
+<div class="layout">
+  <aside class="sidenav"></aside>
+  <main class="main">
+    <div class="page-head"><div><div class="crumbs">Dashboard</div><h1 id="h1"></h1><div class="muted" id="sub"></div></div></div>
+    <div class="grid" id="g"></div>
+  </main>
+</div>
+<script src="app.js"></script>
+<script>
+document.addEventListener("crm-ready", () => {
+  const C = window.CRM, $ = (s) => document.querySelector(s), r = C.role();
+  const card = (title, link, body, foot) => '<section class="card"><div class="card-h"><h2 style="flex:1">' + title + "</h2>" + (link ? '<a href="' + link[0] + '">' + link[1] + "</a>" : "") + "</div>" + body + (foot || "") + "</section>";
+  const stale = C.opps.filter((o) => o.age > C.stages.find((s) => s.id === o.stage).stale || !o.next).filter((o) => r === "rep" ? o.owner === "raka" : true);
+  const stOpp = (o) => '<a class="item" href="opportunity.html"><span>' + C.avatar(o.owner) + '</span><div class="t"><b>' + C.esc(o.name) + "</b><span>" + C.esc(o.acc) + " · " + C.stages.find((s) => s.id === o.stage).name + '</span></div><span class="lozenge warn">' + (o.next ? "Stale " + o.age + " hari" : "Tanpa next step") + "</span></a>";
+  const att = C.quota.map((q) => ({ ...q, a: Math.round((q.won / q.target) * 100) }));
+  let html = "";
+  if (r === "rep") {
+    $("#h1").textContent = "Selamat siang, Raka"; $("#sub").textContent = "Senin, 12 Oktober 2026 · hal yang perlu Anda tindak hari ini";
+    const mine = att.find((x) => x.id === "raka");
+    html += card("Perlu dihubungi", ["leads.html", "Semua lead"], '<a class="item" href="lead.html"><span class="avatar a5">BR</span><div class="t"><b>Budi Rahardjo</b><span>Toko Bangunan Jaya Abadi · Website form</span></div><span class="lozenge warn">Belum dihubungi 2 j 55 m</span></a><a class="item" href="lead.html"><span class="avatar a5">SN</span><div class="t"><b>Sari Nurhayati</b><span>Event: HR Expo · Attempted to Contact</span></div><span class="lozenge">Follow-up hari ini</span></a>');
+    html += card("Quota Oktober", ["performance.html", "Detail"], '<div class="card-b stack"><div class="row" style="align-items:baseline"><span class="num" style="font-size:24px;font-weight:700">' + C.rp(mine.won) + '</span><span class="muted">dari ' + C.rp(mine.target) + '</span><span class="spacer"></span><b class="num">' + mine.a + '%</b></div><div style="position:relative"><div class="progress" style="height:10px"><i style="width:' + mine.a + '%"></i></div><span style="position:absolute;left:' + C.THRESH + '%;top:-4px;bottom:-4px;width:2px;background:var(--n900)"></span></div><span class="lozenge warn" style="align-self:flex-start">Di bawah ambang ' + C.THRESH + "%</span></div>");
+    html += card("Activity hari ini", ["activities.html", "Semua activity"], '<a class="item" href="activities.html"><span class="ty" style="width:28px;height:28px;border-radius:50%;background:var(--n100);display:grid;place-items:center">' + C.icon("phone", "sm") + '</span><div class="t"><b>Call Sari Nurhayati</b><span>Lead</span></div><span class="muted">11:00</span></a><a class="item" href="activities.html"><span class="ty" style="width:28px;height:28px;border-radius:50%;background:var(--n100);display:grid;place-items:center">' + C.icon("phone", "sm") + '</span><div class="t"><b>Hubungi Budi Rahardjo</b><span>Lead</span></div><span class="muted">Hari ini</span></a>');
+    html += card("Opportunity perlu perhatian", ["pipeline.html", "Pipeline"], stale.map(stOpp).join("") || '<div class="empty"><h2>Tidak ada yang menggantung</h2><p>Semua opportunity Anda bergerak dan punya next step.</p></div>');
+  } else {
+    $("#h1").textContent = r === "admin" ? "Dashboard" : "Selamat siang, Maya"; $("#sub").textContent = "Senin, 12 Oktober 2026 · ringkasan tim";
+    const tot = att.reduce((a, x) => [a[0] + x.won, a[1] + x.target], [0, 0]);
+    html += card("Queue lead", ["leads.html", "Buka Queue"], '<div class="card-b stack"><div class="row" style="align-items:baseline"><span class="num" style="font-size:28px;font-weight:700">3</span><span class="muted">lead belum punya Owner</span></div><div class="banner warn">' + C.icon("clock") + "<div>Yang tertua menunggu <b>1 jam 45 menit</b>. Assign atau biarkan Sales meng-claim.</div></div></div>");
+    html += card("Attainment tim · Oktober", ["performance.html", "Detail"], '<div class="card-b stack"><div class="row" style="align-items:baseline"><span class="num" style="font-size:24px;font-weight:700">' + Math.round((tot[0] / tot[1]) * 100) + '%</span><span class="muted">' + C.rp(tot[0]) + " dari " + C.rp(tot[1]) + "</span></div>" + att.map((x) => '<div class="row">' + C.avatar(x.id) + '<span style="width:90px">' + C.users[x.id].name.split(" ")[0] + '</span><div class="progress" style="flex:1"><i style="width:' + Math.min(100, x.a) + '%"></i></div><b class="num" style="width:40px;text-align:right">' + x.a + '%</b><span class="lozenge ' + (x.a >= C.THRESH ? "won" : "warn") + '">' + (x.a >= C.THRESH ? "OK" : "Di bawah") + "</span></div>").join("") + "</div>");
+    html += card("Opportunity perlu perhatian", ["pipeline.html", "Pipeline"], stale.slice(0, 5).map(stOpp).join(""), '<div class="card-b muted" style="border-top:1px solid var(--line)">' + stale.length + " opportunity stale atau tanpa next step</div>");
+    html += card("Activity overdue", ["activities.html", "Team activities"], '<a class="item" href="activities.html"><span>' + C.avatar("dewi") + '</span><div class="t"><b>Tindak lanjut penawaran</b><span>PT Tirta Wangi</span></div><span class="lozenge lost">Lewat 4 hari</span></a><a class="item" href="activities.html"><span>' + C.avatar("dewi") + '</span><div class="t"><b>Jadwalkan ulang workshop</b><span>Grup Cahaya Pangan</span></div><span class="lozenge lost">Lewat 3 hari</span></a>');
+  }
+  $("#g").innerHTML = html;
+});
+</script>
+</body>
+</html>

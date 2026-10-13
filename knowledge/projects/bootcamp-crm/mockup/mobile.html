@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mobile — Sales Rep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="crm.css">
+<style>
+  body { background: #dfe4ee; }
+  .stage { display: flex; gap: 32px; padding: 32px; overflow-x: auto; align-items: flex-start; min-height: 100vh; }
+  .cap { font-size: 12px; font-weight: 600; color: var(--n700); margin: 0 0 8px 6px; }
+  .cap span { font-weight: 400; color: var(--muted); }
+  .phone { width: 390px; height: 800px; flex: none; background: var(--bg); border-radius: 36px; border: 10px solid #101828; overflow: hidden; position: relative; display: flex; flex-direction: column; box-shadow: 0 20px 50px rgba(11,30,84,.25); }
+  .sb { height: 28px; flex: none; display: flex; justify-content: space-between; align-items: center; padding: 6px 24px 0; font-size: 12px; font-weight: 600; background: var(--navy-700); color: #fff; }
+  .ph-top { background: var(--navy-700); color: #fff; padding: 6px 12px 12px; display: flex; align-items: center; gap: 8px; flex: none; }
+  .ph-top h1 { font-size: 17px; color: #fff; flex: 1; }
+  .ph-top .icon-btn { width: 36px; height: 36px; }
+  .scroll { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+  .tabbar { flex: none; display: grid; grid-template-columns: repeat(5, 1fr); background: #fff; border-top: 1px solid var(--line); padding-bottom: 8px; }
+  .tabbar a { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 0 4px; font-size: 11px; font-weight: 500; color: var(--muted); text-decoration: none; position: relative; min-height: 48px; }
+  .tabbar a[aria-current] { color: var(--navy-700); font-weight: 600; }
+  .tabbar .badge { position: absolute; top: 4px; left: 55%; background: #d97706; color: #fff; border-radius: 8px; font-size: 10px; padding: 0 5px; }
+  .big { height: 44px; font-size: 15px; }
+  .m-card { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+  .quick { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .quick button { all: unset; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 0; border: 1px solid var(--line); border-radius: 10px; background: #fff; font-size: 12px; font-weight: 500; cursor: pointer; min-height: 56px; color: var(--navy-700); }
+  .quick button:active { background: var(--navy-50); }
+  .chips { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; flex: none; }
+  .chip { flex: none; border: 1px solid var(--n300); background: #fff; border-radius: 16px; padding: 5px 12px; font-weight: 500; font-size: 13px; cursor: pointer; display: flex; gap: 6px; align-items: center; }
+  .chip[aria-pressed="true"] { background: var(--navy-700); border-color: var(--navy-700); color: #fff; }
+  .chip .n { font-size: 11px; opacity: .8; }
+  .m-deal { display: flex; flex-direction: column; gap: 6px; text-align: left; }
+  .sheet { position: absolute; inset: auto 0 0 0; background: #fff; border-radius: 16px 16px 0 0; box-shadow: 0 -8px 30px rgba(11,30,84,.25); padding: 8px 16px 20px; z-index: 5; display: flex; flex-direction: column; gap: 12px; }
+  .sheet::before { content: ""; width: 36px; height: 4px; border-radius: 2px; background: var(--n300); align-self: center; }
+  .scrim { position: absolute; inset: 0; background: rgba(11,30,84,.45); z-index: 4; }
+  .fab { position: absolute; right: 16px; bottom: 76px; width: 52px; height: 52px; border-radius: 50%; background: var(--navy-700); color: #fff; border: 0; display: grid; place-items: center; box-shadow: 0 6px 16px rgba(11,30,84,.35); z-index: 3; }
+  .qrow { display: flex; align-items: center; gap: 10px; padding: 10px 12px; }
+  .qrow + .qrow { border-top: 1px solid var(--line); }
+  .qa { display: flex; gap: 10px; }
+  .qa .btn { flex: 1; }
+  .hintbar { max-width: 360px; font-size: 13px; color: var(--n700); }
+</style>
+</head>
+<body data-shell="none">
+<div class="stage">
+
+  <!-- 1. Lead list -->
+  <div>
+    <p class="cap">1 · Leads <span>Queue + milik saya</span></p>
+    <div class="phone" id="p1">
+      <div class="sb"><span>10:00</span><span>5G ▮▮▮</span></div>
+      <div class="ph-top"><h1>Leads</h1><button class="icon-btn" aria-label="Cari" data-ic="search"></button></div>
+      <div class="scroll">
+        <div class="chips" role="group" aria-label="Filter">
+          <button class="chip" aria-pressed="true">Milik saya <span class="n">6</span></button>
+          <button class="chip" aria-pressed="false">Queue <span class="n">3</span></button>
+          <button class="chip" aria-pressed="false">Follow-up hari ini <span class="n">2</span></button>
+        </div>
+        <div class="m-card" style="padding:0">
+          <a class="qrow" href="#" style="color:inherit;text-decoration:none" onclick="document.getElementById('p2').scrollIntoView({behavior:'smooth',inline:'center'});return false">
+            <span class="avatar lg a5">AP</span><div style="flex:1;min-width:0"><div style="font-weight:600">Andini Prameswari</div><div class="muted" style="font-size:12px">PT Surya Kencana Farma</div><div class="row" style="margin-top:4px"><span class="lozenge blue">In Progress › Connected</span></div></div>
+            <div style="text-align:right;font-size:12px" class="muted">Next step<br><b style="color:var(--text)">14 Okt</b></div></a>
+          <div class="qrow"><span class="avatar lg a3">BR</span><div style="flex:1;min-width:0"><div style="font-weight:600">Budi Rahardjo</div><div class="muted" style="font-size:12px">Toko Bangunan Jaya Abadi</div><div class="row" style="margin-top:4px"><span class="lozenge blue">New</span><span class="lozenge warn">Belum dihubungi 3 jam</span></div></div></div>
+          <div class="qrow"><span class="avatar lg a4">SN</span><div style="flex:1;min-width:0"><div style="font-weight:600">Sari Nurhayati</div><div class="muted" style="font-size:12px">Pameran HR Expo · kartu nama</div><div class="row" style="margin-top:4px"><span class="lozenge blue">New › Attempted to Contact</span></div></div></div>
+          <div class="qrow"><span class="avatar lg a1">YW</span><div style="flex:1;min-width:0"><div style="font-weight:600">Yohanes Wibowo</div><div class="muted" style="font-size:12px">CV Mitra Tani Makmur</div><div class="row" style="margin-top:4px"><span class="lozenge blue">In Progress › Qualifying</span></div></div></div>
+        </div>
+      </div>
+      <button class="fab" aria-label="Tambah lead" id="fabAdd" data-ic="plus"></button>
+      <nav class="tabbar" aria-label="Menu">
+        <a href="#" aria-current="page">{{ic:inbox}}Leads</a><a href="#">{{ic:board}}Pipeline</a><a href="#">{{ic:check}}Activities<span class="badge">3</span></a><a href="#">{{ic:target}}Quota</a><a href="#">{{ic:more}}Lainnya</a>
+      </nav>
+      <div class="scrim" id="addScrim" hidden></div>
+      <div class="sheet" id="addSheet" hidden>
+        <h2 style="font-size:16px">Tambah lead cepat</h2>
+        <div class="field"><label class="req" for="mn">Nama</label><input class="input big" id="mn" placeholder="Nama lengkap"></div>
+        <div class="field"><label class="req" for="mc">Telepon atau email</label><input class="input big" id="mc" inputmode="tel" placeholder="08xx atau nama@perusahaan.id"></div>
+        <div class="field"><label class="req" for="ms">Source</label><select class="select big" id="ms"><option>Pameran / event</option><option>Referral</option><option>Kartu nama</option><option>Lainnya</option></select></div>
+        <div class="hint">Anda otomatis menjadi Owner. Organisasi dan detail lain bisa dilengkapi nanti.</div>
+        <div class="qa"><button class="btn big" id="addCancel">Batal</button><button class="btn primary big" id="addOk">Simpan lead</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Lead detail -->
+  <div>
+    <p class="cap">2 · Lead Detail <span>aksi satu ketuk</span></p>
+    <div class="phone" id="p2">
+      <div class="sb"><span>10:00</span><span>5G ▮▮▮</span></div>
+      <div class="ph-top"><button class="icon-btn" aria-label="Kembali" data-ic="left"></button><h1>Lead</h1><button class="icon-btn" aria-label="Menu lain" data-ic="more"></button></div>
+      <div class="scroll">
+        <div class="m-card">
+          <div class="row"><span class="avatar xl a5">AP</span><div style="flex:1"><div style="font-weight:600;font-size:16px">Andini Prameswari</div><div class="muted">Head of HR · PT Surya Kencana Farma</div></div></div>
+          <div class="row wrap" style="margin-top:10px"><span class="lozenge blue">In Progress › Connected</span><span class="lozenge warn">Warm</span><span class="lozenge">Website form</span></div>
+        </div>
+        <div class="quick">
+          <button data-ic="phone">Call</button><button data-ic="chat">WhatsApp</button><button data-ic="mail">Email</button><button data-ic="plus" id="logBtn">Log</button>
+        </div>
+        <div class="m-card"><ol class="path compact" aria-label="Status lead"><li class="done">{{ic:check}}New</li><li class="current" aria-current="step">In Progress</li><li class="next">Converted</li></ol>
+          <div class="path-sub">Status: <b>Connected</b> <a href="#">Ubah</a></div></div>
+        <div class="banner info">{{ic:cal}}<div><b>Next step:</b> Kirim penawaran awal dan jadwalkan demo · <b>14 Okt</b></div></div>
+        <div class="ai-panel"><header>{{ic:spark}} AI Assistant</header><div class="ai-body"><button class="btn ai big">{{ic:spark}}Buat draf outreach</button><div class="hint">Konteks dibatasi pada tenant Anda.</div></div></div>
+        <div class="m-card"><h3 style="margin-bottom:8px">Activity terbaru</h3>
+          <div class="row" style="align-items:flex-start;gap:10px">{{ic:phone}}<div><b>Call · Perkenalan</b><div class="muted" style="font-size:12px">Hari ini 09:02</div><div>Tersambung 6 menit. 4 pabrik, target sebelum Q1 2027.</div></div></div></div>
+      </div>
+      <div style="flex:none;background:#fff;border-top:1px solid var(--line);padding:10px 12px 18px" class="qa"><button class="btn big" id="mLost">Mark as Lost</button><button class="btn primary big" id="mConv">Convert</button></div>
+      <div class="scrim" id="lostScrim" hidden></div>
+      <div class="sheet" id="lostSheet" hidden>
+        <h2 style="font-size:16px">Mark as Lost</h2>
+        <div class="field"><label class="req" for="mlr">Alasan</label><select class="select big" id="mlr"><option value="">Pilih alasan</option><option>Tidak dapat dihubungi</option><option>Kebutuhan tidak cocok</option><option>Waktu belum sesuai</option><option>Duplikat</option></select><div class="err" id="mlErr" hidden></div></div>
+        <div class="qa"><button class="btn big" id="mlCancel">Batal</button><button class="btn danger big" id="mlOk">Mark as Lost</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Pipeline -->
+  <div>
+    <p class="cap">3 · Pipeline <span>daftar per stage, bukan kanban</span></p>
+    <div class="phone" id="p3">
+      <div class="sb"><span>10:00</span><span>5G ▮▮▮</span></div>
+      <div class="ph-top"><h1>Pipeline</h1><button class="icon-btn" aria-label="Filter" data-ic="filter"></button></div>
+      <div class="scroll" id="p3s">
+        <div class="chips" id="stageChips" role="group" aria-label="Stage"></div>
+        <div class="row" style="justify-content:space-between"><span class="muted" id="stSum"></span><span class="lozenge warn" id="stAttn" hidden></span></div>
+        <div id="dealList" class="stack" style="gap:8px"></div>
+      </div>
+      <nav class="tabbar" aria-label="Menu">
+        <a href="#">{{ic:inbox}}Leads</a><a href="#" aria-current="page">{{ic:board}}Pipeline</a><a href="#">{{ic:check}}Activities<span class="badge">3</span></a><a href="#">{{ic:target}}Quota</a><a href="#">{{ic:more}}Lainnya</a>
+      </nav>
+      <div class="scrim" id="mvScrim" hidden></div>
+      <div class="sheet" id="mvSheet" hidden></div>
+    </div>
+  </div>
+
+  <!-- 4. My Activities + Quota -->
+  <div>
+    <p class="cap">4 · Activities &amp; Quota saya</p>
+    <div class="phone" id="p4">
+      <div class="sb"><span>10:00</span><span>5G ▮▮▮</span></div>
+      <div class="ph-top"><h1>Activities</h1></div>
+      <div class="scroll">
+        <div class="m-card">
+          <div class="row"><b style="flex:1">Quota Oktober</b><span class="lozenge warn">Di bawah ambang</span></div>
+          <div class="row" style="margin:8px 0 6px;align-items:baseline"><span class="num" style="font-size:22px;font-weight:700">Rp 420 jt</span><span class="muted">dari Rp 800 jt</span><span class="spacer"></span><b class="num">52%</b></div>
+          <div class="progress" role="progressbar" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100" aria-label="Quota attainment"><i style="width:52%"></i></div>
+          <div class="hint" style="margin-top:6px">Ambang tenant: 80%. Closed-Won: 3 deal bulan ini.</div>
+        </div>
+        <h3 style="margin:4px 4px 0">Overdue</h3>
+        <div class="m-card" style="padding:0"><div class="qrow"><input type="checkbox" aria-label="Selesai" style="width:22px;height:22px;accent-color:var(--navy-700)"><div style="flex:1"><div style="font-weight:600">Tindak lanjut penawaran</div><div class="muted" style="font-size:12px">PT Tirta Wangi · Proposal</div></div><span class="lozenge lost">8 Okt</span></div></div>
+        <h3 style="margin:4px 4px 0">Hari ini</h3>
+        <div class="m-card" style="padding:0">
+          <div class="qrow"><input type="checkbox" aria-label="Selesai" style="width:22px;height:22px;accent-color:var(--navy-700)"><div style="flex:1"><div style="font-weight:600">Call Sari Nurhayati</div><div class="muted" style="font-size:12px">Lead · Attempted to Contact</div></div><span class="num muted">11:00</span></div>
+          <div class="qrow"><input type="checkbox" aria-label="Selesai" style="width:22px;height:22px;accent-color:var(--navy-700)"><div style="flex:1"><div style="font-weight:600">Kirim akun trial</div><div class="muted" style="font-size:12px">Universitas Nusa Bahari · Demo</div></div><span class="num muted">14:00</span></div>
+        </div>
+        <h3 style="margin:4px 4px 0">Minggu ini</h3>
+        <div class="m-card" style="padding:0"><div class="qrow"><input type="checkbox" aria-label="Selesai" style="width:22px;height:22px;accent-color:var(--navy-700)"><div style="flex:1"><div style="font-weight:600">Workshop kebutuhan</div><div class="muted" style="font-size:12px">PT Kharisma Tekstil · Needs Analysis</div></div><span class="num muted">15 Okt</span></div></div>
+      </div>
+      <nav class="tabbar" aria-label="Menu">
+        <a href="#">{{ic:inbox}}Leads</a><a href="#">{{ic:board}}Pipeline</a><a href="#" aria-current="page">{{ic:check}}Activities<span class="badge">3</span></a><a href="#">{{ic:target}}Quota</a><a href="#">{{ic:more}}Lainnya</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="hintbar">
+    <p class="cap">Catatan desain</p>
+    <p><b>Mobile bukan web yang dikecilkan.</b> Sales di lapangan butuh: lead yang perlu ditindaklanjuti, call atau WhatsApp satu ketuk, tambah lead cepat saat pameran, dan menggeser stage dengan sheet alih-alih drag.</p>
+    <p>Target sentuh minimal 44px. Dialog alasan wajib (Lost, mundur stage) tampil sebagai bottom sheet.</p>
+    <p class="muted">Ketuk: tombol <b>+</b> (Leads), <b>Mark as Lost</b> (Lead Detail), kartu deal di Pipeline.</p>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+document.addEventListener("crm-ready", () => {
+  const C = window.CRM, $ = (s) => document.querySelector(s);
+  const fix = (root) => root.querySelectorAll("[data-ic]").forEach((el) => { if (!el.querySelector(".ic")) el.insertAdjacentHTML("afterbegin", C.icon(el.dataset.ic)); });
+  document.querySelectorAll(".phone").forEach((p) => { p.innerHTML = p.innerHTML.replace(/\{\{ic:(\w+)\}\}/g, (_, k) => C.icon(k)); });
+  fix(document.body);
+
+  /* sheet helper */
+  const sheet = (sc, sh, show) => { $(sc).hidden = !show; $(sh).hidden = !show; };
+  $("#fabAdd").onclick = () => sheet("#addScrim", "#addSheet", true);
+  $("#addCancel").onclick = $("#addScrim").onclick = () => sheet("#addScrim", "#addSheet", false);
+  $("#addOk").onclick = () => { if (!$("#mn").value.trim() || !$("#mc").value.trim()) { C.toast("Nama dan telepon atau email wajib diisi"); return; } sheet("#addScrim", "#addSheet", false); C.toast("Lead disimpan. Anda menjadi Owner"); };
+  $("#mLost").onclick = () => { $("#mlErr").hidden = true; sheet("#lostScrim", "#lostSheet", true); };
+  $("#mlCancel").onclick = $("#lostScrim").onclick = () => sheet("#lostScrim", "#lostSheet", false);
+  $("#mlOk").onclick = () => { if (!$("#mlr").value) { $("#mlErr").hidden = false; $("#mlErr").innerHTML = C.icon("alert", "sm") + "Alasan wajib diisi"; return; } sheet("#lostScrim", "#lostSheet", false); C.toast("Lead ditandai Lost"); };
+  $("#mConv").onclick = () => C.toast("Convert: pilih Account yang cocok, isi value dan close date");
+  $("#logBtn").onclick = () => C.toast("Log activity: bottom sheet dibuat pada tahap berikutnya");
+
+  /* pipeline */
+  const mine = C.opps.filter((o) => o.owner === "raka");
+  let cur = "proposal";
+  const sIdx = (id) => C.stages.findIndex((s) => s.id === id);
+  function drawChips() {
+    $("#stageChips").innerHTML = C.stages.map((s) => '<button class="chip" aria-pressed="' + (s.id === cur) + '" data-s="' + s.id + '">' + s.name + ' <span class="n">' + mine.filter((o) => o.stage === s.id).length + "</span></button>").join("");
+    $("#stageChips").querySelectorAll(".chip").forEach((c) => { c.onclick = () => { cur = c.dataset.s; draw(); }; if (c.dataset.s === cur) $("#stageChips").scrollLeft = Math.max(0, c.offsetLeft - 12); });
+  }
+  function draw() {
+    drawChips();
+    const st = C.stages[sIdx(cur)], items = mine.filter((o) => o.stage === cur);
+    $("#stSum").textContent = items.length + " opportunity · " + C.rp(items.reduce((a, o) => a + o.value, 0));
+    const attn = items.filter((o) => o.age > st.stale).length; $("#stAttn").hidden = !attn; $("#stAttn").textContent = attn + " stale";
+    $("#dealList").innerHTML = items.length ? items.map((o) => '<button class="m-card m-deal" data-id="' + o.id + '" style="text-align:left;width:100%;cursor:pointer"><div class="row"><b style="flex:1">' + C.esc(o.name) + '</b><span class="num" style="font-weight:600">' + C.rp(o.value) + '</span></div><div class="muted">' + C.esc(o.acc) + '</div><div class="row wrap">' + C.icon("cal", "sm") + '<span class="num muted">' + C.d(o.close) + "</span>" + (o.next ? '<span class="muted">· ' + C.esc(o.next.t) + "</span>" : '<span class="lozenge warn">Belum ada next step</span>') + (o.age > st.stale ? '<span class="lozenge warn">Stale ' + o.age + " hari</span>" : "") + "</div></button>").join("") :
+      '<div class="empty"><h2>Tidak ada opportunity di stage ini</h2><p>Pilih stage lain, atau convert lead untuk membuat yang baru.</p></div>';
+    $("#dealList").querySelectorAll(".m-deal").forEach((b) => (b.onclick = () => openMove(+b.dataset.id)));
+  }
+  function openMove(id) {
+    const o = C.opps.find((x) => x.id === id), i = sIdx(o.stage), s = C.stages[i];
+    $("#mvSheet").innerHTML = '<div><b style="font-size:16px">' + C.esc(o.name) + '</b><div class="muted">' + C.esc(o.acc) + " · " + C.rp(o.value) + '</div></div>' +
+      '<ol class="path compact">' + C.stages.map((x, k) => '<li class="' + (k < i ? "done" : k === i ? "current" : "next") + '"></li>').join("") + '</ol><div class="hint">Stage saat ini: <b>' + s.name + '</b> · ' + o.age + ' hari</div>' +
+      '<div class="stack" style="gap:6px"><div class="row"><h2>Exit criteria</h2><span class="lozenge">' + C.gateLabel[s.gate] + '</span></div>' + s.criteria.map((c) => '<label class="check"><input type="checkbox"><span>' + C.esc(c) + "</span></label>").join("") + "</div>" +
+      '<div class="qa"><button class="btn big" id="mvBack"' + (i === 0 ? " disabled" : "") + ">Mundur</button><button class='btn primary big' id='mvNext'" + (i === C.stages.length - 1 ? " disabled" : "") + ">Maju ke " + (C.stages[i + 1] ? C.stages[i + 1].name : "—") + "</button></div>" +
+      '<div class="qa"><button class="btn won big" id="mvWon">Closed-Won</button><button class="btn danger big" id="mvLost">Closed-Lost</button></div>';
+    sheet("#mvScrim", "#mvSheet", true);
+    $("#mvScrim").onclick = () => sheet("#mvScrim", "#mvSheet", false);
+    $("#mvNext").onclick = () => { sheet("#mvScrim", "#mvSheet", false); C.toast("Dipindah ke " + C.stages[i + 1].name); };
+    $("#mvBack").onclick = () => C.toast("Mundur stage meminta alasan (bottom sheet)");
+    $("#mvWon").onclick = () => C.toast("Closed-Won meminta alasan menang"); $("#mvLost").onclick = () => C.toast("Closed-Lost meminta alasan kalah");
+  }
+  draw();
+});
+</script>
+</body>
+</html>

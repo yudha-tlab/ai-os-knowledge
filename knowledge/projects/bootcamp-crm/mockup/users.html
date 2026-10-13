@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Users &amp; Roles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="crm.css">
+<style> .perm { width: 118px; } .table td.grp { background: var(--n25); font-weight: 600; font-size: 12px; color: var(--muted); } </style>
+</head>
+<body data-active="users">
+<div class="layout">
+  <aside class="sidenav"></aside>
+  <main class="main">
+    <div class="page-head"><div><div class="crumbs">Administration</div><h1>Users &amp; Roles</h1><div class="muted">Arunika Teknologi · data setiap tenant terisolasi penuh</div></div><div class="spacer"></div><button class="btn primary" id="bInv" data-ic="plus">Undang user</button></div>
+    <div class="tabs" role="tablist" id="tabs" style="margin-bottom:16px"></div>
+    <div id="body"></div>
+  </main>
+</div>
+
+<dialog id="invDlg"><form method="dialog" id="invForm" novalidate>
+  <div class="dlg-h"><h2>Undang user</h2><div class="muted">Undangan dikirim lewat email dan berlaku 7 hari.</div></div>
+  <div class="dlg-b"><div class="field"><label class="req" for="iMail">Email</label><input class="input" id="iMail" type="email" placeholder="nama@perusahaan.id"><div class="err" id="iErr" hidden></div></div>
+  <div class="field"><label for="iRole">Role</label><select class="select" id="iRole"><option>Sales Rep</option><option>Sales Manager</option><option>Management</option><option>Tenant Admin</option></select></div>
+  <div class="field"><label for="iName">Nama <span class="muted" style="font-weight:400">(opsional)</span></label><input class="input" id="iName"></div></div>
+  <div class="dlg-f"><button class="btn subtle" type="button" data-close>Batal</button><button class="btn primary" type="submit">Kirim undangan</button></div></form></dialog>
+
+<script src="app.js"></script>
+<script>
+document.addEventListener("crm-ready", () => {
+  const C = window.CRM, $ = (s) => document.querySelector(s), body = $("#body");
+  document.querySelectorAll("[data-ic]").forEach((el) => { if (!el.querySelector(".ic")) el.insertAdjacentHTML("afterbegin", C.icon(el.dataset.ic)); });
+  if (C.role() !== "admin") {
+    $("#bInv").hidden = true;
+    body.innerHTML = '<div class="card empty">' + C.icon("lock", "lg") + "<h2>Halaman ini hanya untuk Tenant Admin</h2><p>Pengelolaan user, role, dan permission dibatasi untuk Tenant Admin.</p><button class='btn primary' id='asAdmin'>Lihat sebagai Tenant Admin (demo)</button></div>";
+    $("#asAdmin").onclick = () => { try { localStorage.setItem("crm-role", "admin"); } catch (e) {} location.reload(); };
+    return;
+  }
+  const U = [
+    { n: "Maya Kusuma", m: "maya@arunika.id", r: "Sales Manager", s: "Aktif", last: "Hari ini 09:12", av: "maya" },
+    { n: "Raka Pratama", m: "raka@arunika.id", r: "Sales Rep", s: "Aktif", last: "Hari ini 10:00", av: "raka" },
+    { n: "Dewi Anggraini", m: "dewi@arunika.id", r: "Sales Rep", s: "Aktif", last: "Kemarin 17:40", av: "dewi" },
+    { n: "Bagus Santoso", m: "bagus@arunika.id", r: "Sales Rep", s: "Aktif", last: "Hari ini 08:30", av: "bagus" },
+    { n: "Anindya Rahma", m: "anindya@arunika.id", r: "Management", s: "Aktif", last: "09 Okt 14:05" },
+    { n: "Fajar Nugroho", m: "fajar@arunika.id", r: "Tenant Admin", s: "Aktif", last: "Hari ini 07:55" },
+    { n: "Citra Lestari", m: "citra@arunika.id", r: "Sales Rep", s: "Diundang", last: "Belum masuk" },
+  ];
+  const ROLES = ["Sales Rep", "Sales Manager", "Management", "Tenant Admin"];
+  const P = [
+    ["Data sales", null],
+    ["Leads", ["manage", "manage*", "view", "none"]],
+    ["Contacts & Accounts", ["manage", "view*", "view*", "none"]],
+    ["Opportunities & stage", ["manage", "manage", "view*", "none"]],
+    ["Activities", ["manage", "manage*", "view*", "none"]],
+    ["Performa & laporan", null],
+    ["Menetapkan quota", ["none", "manage", "view", "none"]],
+    ["Sales Performance", ["view", "view", "view", "none"]],
+    ["Revenue & Pipeline reports", ["none", "view", "view", "none"]],
+    ["Administrasi", null],
+    ["Webhooks & delivery log", ["none", "none", "none", "manage"]],
+    ["Tenant Settings", ["none", "none", "none", "manage"]],
+    ["Users & Roles", ["none", "none", "none", "manage"]],
+  ];
+  const SCOPE = ["Milik sendiri + Queue", "Seluruh tim", "Seluruh tenant", "Konfigurasi saja"];
+  let tab = "users";
+  const lab = { none: "Tidak ada", view: "Lihat", manage: "Kelola" };
+  function render() {
+    $("#tabs").innerHTML = [["users", "Users", U.length], ["roles", "Roles & permission"]].map(([id, l, c]) => '<button class="tab" role="tab" aria-selected="' + (id === tab) + '" data-v="' + id + '">' + l + (c ? ' <span class="count">' + c + "</span>" : "") + "</button>").join("");
+    $("#tabs").querySelectorAll(".tab").forEach((b) => (b.onclick = () => { tab = b.dataset.v; render(); }));
+    $("#bInv").hidden = tab !== "users";
+    if (tab === "users") {
+      body.innerHTML = '<div class="card" style="overflow:auto"><table class="table"><thead><tr><th>User</th><th>Role</th><th>Status</th><th>Terakhir aktif</th><th></th></tr></thead><tbody>' + U.map((u, i) => '<tr><td><div class="row">' + (u.av ? C.avatar(u.av, "lg") : '<span class="avatar lg a5">' + C.initials(u.n) + "</span>") + '<div><b>' + C.esc(u.n) + '</b><div class="muted" style="font-size:12px">' + u.m + '</div></div></div></td><td><select class="select" data-r="' + i + '" style="width:auto" aria-label="Role ' + C.esc(u.n) + '">' + ROLES.map((r) => "<option" + (r === u.r ? " selected" : "") + ">" + r + "</option>").join("") + '</select></td><td><span class="lozenge ' + (u.s === "Aktif" ? "won" : u.s === "Diundang" ? "warn" : "") + '">' + u.s + '</span></td><td class="muted">' + u.last + '</td><td class="r">' + (u.s === "Diundang" ? '<button class="btn sm" data-re="' + i + '">Kirim ulang</button> ' : "") + '<button class="btn sm subtle" data-off="' + i + '">Nonaktifkan</button></td></tr>').join("") + "</tbody></table></div>";
+      body.querySelectorAll("[data-r]").forEach((s) => (s.onchange = () => { U[+s.dataset.r].r = s.value; C.toast("Role " + U[+s.dataset.r].n + " menjadi " + s.value); }));
+      body.querySelectorAll("[data-re]").forEach((b) => (b.onclick = () => C.toast("Undangan dikirim ulang")));
+      body.querySelectorAll("[data-off]").forEach((b) => (b.onclick = () => { const u = U[+b.dataset.off]; u.s = "Nonaktif"; render(); C.toast(u.n + " dinonaktifkan. Record miliknya tetap tersimpan dan bisa dialihkan"); }));
+    } else {
+      body.innerHTML = '<div class="stack"><div class="banner info">' + C.icon("users") + "<div>Default mengikuti Diagram 7 BRD. Baris bertanda <span class=\"lozenge warn\">Usulan</span> adalah penyesuaian dari keputusan baru (Manager meng-assign Lead dan melihat Activity tim) dan perlu disetujui PO.</div></div>" +
+        '<div class="card" style="overflow:auto"><table class="table"><thead><tr><th>Kemampuan</th>' + ROLES.map((r) => "<th>" + r + "</th>").join("") + "</tr></thead><tbody>" +
+        P.map(([n, v]) => v ? "<tr><td>" + n + (v.some((x) => x.endsWith("*")) ? ' <span class="lozenge warn">Usulan</span>' : "") + "</td>" + v.map((x, j) => { const k = x.replace("*", ""); return '<td><select class="select perm" aria-label="' + n + " untuk " + ROLES[j] + '">' + Object.entries(lab).map(([a, b]) => '<option value="' + a + '"' + (a === k ? " selected" : "") + ">" + b + "</option>").join("") + "</select></td>"; }).join("") + "</tr>" : '<tr><td class="grp" colspan="5">' + n + "</td></tr>").join("") +
+        '<tr><td class="grp" colspan="5">Cakupan data <span class="lozenge warn">Usulan</span></td></tr><tr><td>Record yang terlihat</td>' + SCOPE.map((s) => "<td>" + s + "</td>").join("") + "</tr></tbody></table></div>" +
+        '<div class="row"><button class="btn" id="newRole">Role baru</button><span class="hint">Role kustom dapat dibuat dari salinan role yang ada.</span></div></div>';
+      $("#newRole").onclick = () => C.toast("Role kustom: nama, salin dari role lain, lalu atur seperti di tabel");
+      body.querySelectorAll(".perm").forEach((s) => (s.onchange = () => C.toast("Permission diperbarui")));
+    }
+  }
+  $("#bInv").onclick = () => { $("#iMail").value = ""; $("#iName").value = ""; $("#iErr").hidden = true; C.openDlg("invDlg"); };
+  $("#invForm").onsubmit = (e) => {
+    const m = $("#iMail").value.trim(); let msg = "";
+    if (!m) msg = "Email wajib diisi"; else if (!/^\S+@\S+\.\S+$/.test(m)) msg = "Format email belum benar"; else if (U.some((u) => u.m === m)) msg = "Email ini sudah terdaftar di tenant";
+    if (msg) { e.preventDefault(); $("#iErr").hidden = false; $("#iErr").innerHTML = C.icon("alert", "sm") + msg; return; }
+    U.push({ n: $("#iName").value || m.split("@")[0], m, r: $("#iRole").value, s: "Diundang", last: "Belum masuk" }); render(); C.toast("Undangan dikirim ke " + m);
+  };
+  render();
+});
+</script>
+</body>
+</html>

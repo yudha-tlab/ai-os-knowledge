@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quota</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="crm.css">
+<style> .qin { text-align: right; width: 170px; } .tot td { font-weight: 700; background: var(--n25); } </style>
+</head>
+<body data-active="quota">
+<div class="layout">
+  <aside class="sidenav"></aside>
+  <main class="main">
+    <div class="page-head"><div><div class="crumbs">Performance</div><h1>Quota</h1><div class="muted">Target nilai Closed-Won per Sales per bulan</div></div><div class="spacer"></div>
+      <div class="row"><select class="select" id="mon" style="width:auto" aria-label="Bulan"><option value="sep">September 2026</option><option value="okt" selected>Oktober 2026</option><option value="nov">November 2026</option></select><button class="btn" id="copy">Salin dari bulan lalu</button><button class="btn primary" id="save">Simpan quota</button></div></div>
+    <div id="body"></div>
+  </main>
+</div>
+<script src="app.js"></script>
+<script>
+document.addEventListener("crm-ready", () => {
+  const C = window.CRM, $ = (s) => document.querySelector(s), body = $("#body");
+  if (C.role() === "rep") {
+    document.querySelector(".page-head .row").hidden = true;
+    body.innerHTML = '<div class="card empty">' + C.icon("lock", "lg") + "<h2>Hanya Sales Manager yang menetapkan quota</h2><p>Quota Anda ditetapkan oleh Sales Manager. Anda dapat melihat pencapaian di Sales Performance.</p><a class='btn primary' href='performance.html'>Buka Sales Performance</a></div>";
+    return;
+  }
+  const D = {
+    sep: { raka: [700e6, 735e6], dewi: [650e6, 520e6], bagus: [450e6, 410e6] },
+    okt: { raka: [800e6, 420e6], dewi: [700e6, 640e6], bagus: [500e6, 180e6] },
+    nov: { raka: [null, 0], dewi: [null, 0], bagus: [null, 0] },
+  };
+  const fmtN = (v) => (v == null || v === "" ? "" : Number(v).toLocaleString("id-ID"));
+  function render() {
+    const m = $("#mon").value, d = D[m], tot = Object.values(d).reduce((a, x) => [a[0] + (x[0] || 0), a[1] + x[1]], [0, 0]);
+    body.innerHTML = (m === "nov" ? '<div class="banner info" style="margin-bottom:12px">' + C.icon("cal") + "<div><b>Quota November belum ditetapkan.</b> Isi manual, atau salin dari bulan lalu lalu sesuaikan.</div></div>" : "") +
+      '<div class="card" style="overflow:auto"><table class="table"><thead><tr><th>Sales</th><th class="r">Quota (Rp)</th><th class="r">Closed-Won</th><th style="width:220px">Attainment</th><th>Status</th></tr></thead><tbody>' +
+      Object.entries(d).map(([u, [q, w]]) => { const a = q ? Math.round((w / q) * 100) : null; return '<tr><td><span class="row">' + C.avatar(u) + C.users[u].name + '</span></td><td class="r"><input class="input num qin" inputmode="numeric" data-u="' + u + '" value="' + fmtN(q) + '" placeholder="Belum diisi" aria-label="Quota ' + C.users[u].name + '"></td><td class="r num">' + (w ? C.rp(w) : "—") + "</td><td>" + (a == null ? '<span class="muted">—</span>' : '<div class="row"><div class="progress" style="flex:1"><i style="width:' + Math.min(100, a) + '%"></i></div><b class="num" style="width:44px;text-align:right">' + a + "%</b></div>") + "</td><td>" + (a == null ? "" : '<span class="lozenge ' + (a >= C.THRESH ? "won" : "warn") + '">' + (a >= C.THRESH ? "Mencapai target" : "Di bawah ambang") + "</span>") + "</td></tr>"; }).join("") +
+      '<tr class="tot"><td>Total tim</td><td class="r num">' + (tot[0] ? C.rp(tot[0]) : "—") + '</td><td class="r num">' + (tot[1] ? C.rp(tot[1]) : "—") + '</td><td colspan="2">' + (tot[0] ? '<span class="num">' + Math.round((tot[1] / tot[0]) * 100) + "%</span>" : "") + "</td></tr></tbody></table></div>" +
+      '<div class="hint" style="margin-top:8px">Ambang performa tenant: ' + C.THRESH + "%. Sales tidak dapat mengubah quotanya sendiri. Periode quota selalu bulanan.</div>";
+    body.querySelectorAll(".qin").forEach((i) => { i.oninput = () => { const v = i.value.replace(/\D/g, ""); D[m][i.dataset.u][0] = v ? +v : null; i.value = fmtN(v); }; i.onchange = render; });
+  }
+  $("#mon").onchange = render;
+  $("#copy").onclick = () => { const m = $("#mon").value, prev = m === "nov" ? "okt" : m === "okt" ? "sep" : null; if (!prev) { C.toast("Tidak ada bulan sebelumnya"); return; } Object.keys(D[m]).forEach((u) => (D[m][u][0] = D[prev][u][0])); render(); C.toast("Quota disalin dari bulan sebelumnya. Sesuaikan lalu simpan"); };
+  $("#save").onclick = () => { const empty = Object.values(D[$("#mon").value]).some((x) => x[0] == null); if (empty) { C.toast("Ada Sales yang quotanya belum diisi"); return; } C.toast("Quota disimpan"); };
+  render();
+});
+</script>
+</body>
+</html>

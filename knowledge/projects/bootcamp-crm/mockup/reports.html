@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reports</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="crm.css">
+<style> .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; } @media (max-width: 1000px) { .two { grid-template-columns: 1fr; } } .kpi b { font-size: 22px; line-height: 30px; display: block; } </style>
+</head>
+<body data-active="reports">
+<div class="layout">
+  <aside class="sidenav"></aside>
+  <main class="main">
+    <div class="page-head"><div><div class="crumbs">Performance</div><h1>Reports</h1></div><div class="spacer"></div><div class="row"><button class="btn" id="tv" aria-pressed="false" data-ic="list">Tampilan tabel</button><button class="btn" id="exp" data-ic="copy">Ekspor CSV</button></div></div>
+    <div class="tabs" role="tablist" id="tabs" style="margin-bottom:16px"></div>
+    <div id="body"></div>
+  </main>
+</div>
+<script src="app.js"></script><script src="charts.js"></script>
+<script>
+document.addEventListener("crm-ready", () => {
+  const C = window.CRM, $ = (s) => document.querySelector(s), body = $("#body");
+  document.querySelectorAll("[data-ic]").forEach((el) => { if (!el.querySelector(".ic")) el.insertAdjacentHTML("afterbegin", C.icon(el.dataset.ic)); });
+  if (C.role() === "rep") { body.innerHTML = '<div class="card empty">' + C.icon("lock", "lg") + "<h2>Laporan untuk Sales Manager dan manajemen</h2><p>Lihat pencapaian Anda di Sales Performance.</p><a class='btn primary' href='performance.html'>Buka Sales Performance</a></div>"; $("#tv").hidden = $("#exp").hidden = true; return; }
+  let tab = "rev", table = false;
+  const TABS = [["rev", "Revenue"], ["pipe", "Pipeline & Forecast"], ["lost", "Lost Reasons"], ["src", "Revenue per Source"]];
+  const MON = [["Mei", 880e6], ["Jun", 1.02e9], ["Jul", 760e6], ["Agu", 1.15e9], ["Sep", 1.665e9], ["Okt", 1.24e9]];
+  const pill = (t) => '<span class="lozenge blue">' + t + "</span>";
+  const chartBox = (title, sub, id) => '<section class="card"><div class="card-h"><h2>' + title + '</h2><span class="spacer"></span><span class="muted">' + sub + '</span></div><div class="card-b" id="' + id + '"></div></section>';
+  function draw(id, items, kind, head, fmt, o) { const h = $("#" + id); if (table) h.innerHTML = Charts.table(items, head, fmt); else (kind === "v" ? Charts.vcols : Charts.hbars)(h, items, { fmt, ...(o || {}) }); }
+  function render() {
+    $("#tv").setAttribute("aria-pressed", table);
+    $("#tabs").innerHTML = TABS.map(([id, l]) => '<button class="tab" role="tab" aria-selected="' + (id === tab) + '" data-v="' + id + '">' + l + "</button>").join("");
+    $("#tabs").querySelectorAll(".tab").forEach((b) => (b.onclick = () => { tab = b.dataset.v; render(); }));
+    if (tab === "rev") {
+      body.innerHTML = '<div class="stack"><div class="two"><div class="card card-b kpi"><span class="muted">Revenue Oktober (berjalan)</span><b class="num">' + C.rp(1.24e9) + '</b><span class="hint">Dari 9 deal Closed-Won. Revenue = nilai deal yang dimenangkan, bukan tagihan.</span></div><div class="card card-b kpi"><span class="muted">Revenue 6 bulan terakhir</span><b class="num">' + C.rp(MON.reduce((a, m) => a + m[1], 0)) + '</b><span class="hint">Mei sampai Oktober 2026</span></div></div>' + chartBox("Revenue per bulan", "Closed-Won, Rp", "c1") +
+        '<section class="card" style="overflow:auto"><div class="card-h"><h2>Per Sales · Oktober</h2></div><table class="table"><thead><tr><th>Sales</th><th class="r">Deal Won</th><th class="r">Revenue</th></tr></thead><tbody>' + C.quota.map((q) => '<tr><td><span class="row">' + C.avatar(q.id) + C.users[q.id].name + '</span></td><td class="r num">' + q.wins + '</td><td class="r num">' + C.rp(q.won) + "</td></tr>").join("") + "</tbody></table></section></div>";
+      draw("c1", MON.map(([l, v], i) => ({ label: l, value: v, muted: i === MON.length - 1, note: i === MON.length - 1 ? "Bulan berjalan" : "" })), "v", ["Bulan", "Revenue"], C.rp, { axis: (t) => (t >= 1e9 ? (t / 1e9).toFixed(1).replace(".", ",") + " M" : Math.round(t / 1e6) + " jt") });
+    }
+    if (tab === "pipe") {
+      const by = C.stages.map((s) => { const o = C.opps.filter((x) => x.stage === s.id); return { label: s.name, value: o.reduce((a, x) => a + x.value, 0), note: o.length + " opportunity" }; });
+      const open = C.opps.reduce((a, o) => a + o.value, 0), mon = {}; C.opps.forEach((o) => { const m = o.close.slice(0, 7); mon[m] = (mon[m] || 0) + o.value; });
+      const NAME = { "2026-10": "Oktober", "2026-11": "November", "2026-12": "Desember" };
+      body.innerHTML = '<div class="stack"><div class="banner info">' + C.icon("flag") + "<div><b>Weighted forecast nonaktif.</b> Tenant belum mengisi probability per stage, jadi nilai di bawah adalah total tanpa pembobotan. Aktifkan di Tenant Settings › Pipelines & stages.</div></div><div class=\"two\"><div class=\"card card-b kpi\"><span class=\"muted\">Open pipeline</span><b class=\"num\">" + C.rp(open) + '</b><span class="hint">' + C.opps.length + ' opportunity di B2B Sales</span></div><div class="card card-b kpi"><span class="muted">Perlu perhatian</span><b class="num">' + C.opps.filter((o) => o.age > C.stages.find((s) => s.id === o.stage).stale || !o.next).length + '</b><span class="hint">Stale, atau belum ada next step</span></div></div>' + chartBox("Nilai pipeline per stage", "Rp", "c1") +
+        '<section class="card" style="overflow:auto"><div class="card-h"><h2>Berdasarkan expected close</h2></div><table class="table"><thead><tr><th>Bulan</th><th class="r">Nilai</th></tr></thead><tbody>' + Object.entries(mon).map(([k, v]) => "<tr><td>" + NAME[k] + '</td><td class="r num">' + C.rp(v) + "</td></tr>").join("") + "</tbody></table></section></div>";
+      draw("c1", by, "h", ["Stage", "Nilai"], C.rp, { labelW: 140, max: Math.max(...by.map((b) => b.value)) });
+    }
+    if (tab === "lost") {
+      const L = [["Harga terlalu tinggi", 9], ["Memilih kompetitor", 7], ["Tidak ada respons", 5], ["Tidak ada keputusan / budget dibekukan", 4], ["Kebutuhan berubah", 2]].map(([l, v]) => ({ label: l, value: v, note: Math.round((v / 27) * 100) + "% dari 27 deal Lost" }));
+      body.innerHTML = '<div class="stack"><div class="banner info">' + C.icon("target") + "<div>Distribusi alasan pada Closed-Lost, 90 hari terakhir. Dipakai untuk memperbaiki penawaran dan pesan, bukan untuk menilai individu. " + pill("Usulan") + "</div></div>" + chartBox("Alasan Lost teratas", "Jumlah deal", "c1") + "</div>";
+      draw("c1", L, "h", ["Alasan", "Deal"], (v) => v, { labelW: 260 });
+    }
+    if (tab === "src") {
+      const S = [["Referral", 1.12e9, "6 deal"], ["Website form", 860e6, "5 deal"], ["Event: HR Expo", 540e6, "3 deal"], ["Import CSV", 210e6, "1 deal"], ["Instagram", 90e6, "1 deal"]].map(([l, v, n]) => ({ label: l, value: v, note: n }));
+      body.innerHTML = '<div class="stack"><div class="banner info">' + C.icon("chart") + "<div>Closed-Won per Source lead. Akurat bila Source diisi konsisten saat lead dibuat. " + pill("Usulan") + "</div></div>" + chartBox("Revenue per Source", "Closed-Won, Rp", "c1") + "</div>";
+      draw("c1", S, "h", ["Source", "Revenue"], C.rp, { labelW: 150 });
+    }
+  }
+  $("#tv").onclick = () => { table = !table; render(); };
+  $("#exp").onclick = () => C.toast("Ekspor CSV disiapkan (simulasi)");
+  render();
+});
+</script>
+</body>
+</html>

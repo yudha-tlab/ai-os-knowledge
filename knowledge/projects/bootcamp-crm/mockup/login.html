@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Masuk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="crm.css">
+<style>
+  body { min-height: 100vh; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); background: #fff; }
+  .l { padding: 48px; display: flex; flex-direction: column; justify-content: center; max-width: 440px; width: 100%; margin: 0 auto; gap: 16px; }
+  .r { background: var(--navy-700); color: #fff; padding: 48px; display: flex; flex-direction: column; justify-content: flex-end; gap: 12px; }
+  .r h2 { font-size: 24px; line-height: 32px; letter-spacing: -.01em; max-width: 20ch; }
+  .r p { margin: 0; max-width: 40ch; color: rgba(255,255,255,.8); }
+  .ws { display: flex; align-items: center; border: 1px solid var(--n300); border-radius: var(--r); overflow: hidden; background: #fff; }
+  .ws:focus-within { border-color: var(--sky-500); box-shadow: 0 0 0 1px var(--sky-500); }
+  .ws input { border: 0; outline: none; padding: 0 10px; height: 32px; flex: 1; min-width: 0; text-align: right; }
+  .ws span { padding: 0 10px; background: var(--n50); height: 32px; display: flex; align-items: center; color: var(--muted); border-left: 1px solid var(--n200); }
+  @media (max-width: 800px) { body { grid-template-columns: 1fr; } .r { display: none; } .l { padding: 24px; } }
+</style>
+</head>
+<body data-shell="none">
+  <main class="l">
+    <div class="row"><span class="brand-mark" style="width:28px;height:28px;font-size:14px;color:var(--navy-900)">C</span><b style="font-size:16px">CRM</b></div>
+    <div><h1 id="t">Masuk ke workspace</h1><div class="muted" id="s">Masukkan alamat workspace perusahaan Anda.</div></div>
+    <form id="f" class="stack" novalidate>
+      <div class="field" id="wsw"><label class="req" for="ws">Workspace</label><div class="ws"><input id="ws" autocomplete="organization" placeholder="arunika" inputmode="url"><span>.crm.example</span></div><div class="err" id="eW" hidden></div></div>
+      <div id="creds" hidden class="stack">
+        <div class="row"><span class="lozenge blue" id="wsTag"></span><button type="button" class="btn sm subtle" id="chg">Ganti workspace</button></div>
+        <div class="field"><label class="req" for="em">Email</label><input class="input" id="em" type="email" autocomplete="username"><div class="err" id="eE" hidden></div></div>
+        <div class="field"><label class="req" for="pw">Kata sandi</label><input class="input" id="pw" type="password" autocomplete="current-password"><div class="err" id="eP" hidden></div></div>
+        <a href="#" onclick="CRM.toast('Tautan atur ulang dikirim (simulasi)');return false">Lupa kata sandi?</a>
+      </div>
+      <button class="btn primary" style="height:40px" id="go" type="submit">Lanjut</button>
+    </form>
+    <div class="hint">Setiap workspace terpisah penuh. Anda hanya melihat data perusahaan Anda sendiri.</div>
+  </main>
+  <aside class="r"><h2>Satu tempat untuk seluruh proses sales Anda</h2><p>Lead sampai Closed-Won, dengan pipeline dan aturan yang disesuaikan untuk perusahaan Anda.</p></aside>
+<script src="app.js"></script>
+<script>
+document.addEventListener("crm-ready", () => {
+  const C = window.CRM, $ = (s) => document.querySelector(s); let step = 0;
+  $("#f").onsubmit = (e) => {
+    e.preventDefault();
+    if (step === 0) {
+      const w = $("#ws").value.trim().toLowerCase(); $("#eW").hidden = true;
+      if (!w) { $("#eW").hidden = false; $("#eW").innerHTML = C.icon("alert", "sm") + "Isi alamat workspace"; return; }
+      if (w !== "arunika") { $("#eW").hidden = false; $("#eW").innerHTML = C.icon("alert", "sm") + "Workspace “" + C.esc(w) + "” tidak ditemukan. Periksa ejaan, atau tanyakan alamatnya ke Tenant Admin."; return; }
+      step = 1; $("#wsw").hidden = true; $("#creds").hidden = false; $("#wsTag").textContent = "arunika.crm.example"; $("#t").textContent = "Masuk ke Arunika Teknologi"; $("#s").textContent = "Gunakan email kerja Anda."; $("#go").textContent = "Masuk"; $("#em").focus(); return;
+    }
+    const em = $("#em").value.trim(), pw = $("#pw").value; let bad = false;
+    $("#eE").hidden = !!em; $("#eP").hidden = !!pw;
+    if (!em) { $("#eE").innerHTML = C.icon("alert", "sm") + "Isi email"; bad = true; }
+    if (!pw) { $("#eP").innerHTML = C.icon("alert", "sm") + "Isi kata sandi"; bad = true; }
+    if (bad) return;
+    if (pw.length < 6) { $("#eP").hidden = false; $("#eP").innerHTML = C.icon("alert", "sm") + "Email atau kata sandi tidak cocok. Coba lagi."; return; }
+    C.toast("Berhasil masuk"); setTimeout(() => (location.href = "pipeline.html"), 500);
+  };
+  $("#chg").onclick = () => { step = 0; $("#wsw").hidden = false; $("#creds").hidden = true; $("#t").textContent = "Masuk ke workspace"; $("#s").textContent = "Masukkan alamat workspace perusahaan Anda."; $("#go").textContent = "Lanjut"; };
+});
+</script>
+</body>
+</html>

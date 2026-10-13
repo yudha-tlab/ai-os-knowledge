@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contacts &amp; Accounts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="crm.css">
+<style>
+  .bar { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
+  .nm { display: flex; gap: 10px; align-items: center; }
+  .nm a, .nm button.lnk { all: unset; cursor: pointer; font-weight: 600; color: var(--text); }
+  .nm a:hover, .nm button.lnk:hover { color: var(--navy-700); text-decoration: underline; }
+  .nm .sub { font-size: 12px; color: var(--muted); }
+  .rel { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: var(--r); }
+  .rel > div { display: flex; gap: 8px; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+  .rel > div:last-child { border-bottom: 0; }
+</style>
+</head>
+<body data-active="contacts">
+<script>document.body.dataset.active = new URLSearchParams(location.search).get("type") === "accounts" ? "accounts" : "contacts";</script>
+<div class="layout">
+  <aside class="sidenav"></aside>
+  <main class="main">
+    <div class="page-head"><div><div class="crumbs" id="crumb"></div><h1 id="h1"></h1></div><div class="spacer"></div><button class="btn primary" id="bAdd" data-ic="plus"></button></div>
+    <div class="tabs" role="tablist" id="tabs" style="margin-bottom:12px"></div>
+    <div class="bar"><label class="search light" data-ic="search"><span class="sr">Cari</span><input id="q" type="search" placeholder="Cari nama"></label><label class="check" id="b2cW"><input type="checkbox" id="b2c"><span>Hanya individu (B2C)</span></label><span class="spacer"></span><span class="muted" id="cnt"></span></div>
+    <div class="card" style="overflow:auto"><table class="table" id="tbl"></table></div>
+  </main>
+</div>
+
+<aside class="drawer" id="drawer" aria-label="Detail" aria-hidden="true"><div class="card-h"><h2 id="dT" style="flex:1"></h2><button class="btn icon subtle" id="dX" aria-label="Tutup" data-ic="x"></button></div><div class="drawer-b" id="dB"></div></aside>
+
+<dialog id="addDlg"><form method="dialog" id="addForm" novalidate>
+  <div class="dlg-h"><h2 id="aT"></h2></div>
+  <div class="dlg-b" id="aB"></div>
+  <div class="dlg-f"><button class="btn subtle" type="button" data-close>Batal</button><button class="btn primary" type="submit">Simpan</button></div></form></dialog>
+
+<script src="app.js"></script>
+<script>
+document.addEventListener("crm-ready", () => {
+  const C = window.CRM, $ = (s) => document.querySelector(s);
+  let type = new URLSearchParams(location.search).get("type") === "accounts" ? "accounts" : "contacts", drawerOpen = false;
+  const ACC = [
+    { n: "PT Mega Konstruksi", ind: "Konstruksi", size: "850 karyawan", reg: "Jakarta", own: "raka", won: 0, open: 535e6 },
+    { n: "PT Sinar Logistik Prima", ind: "Logistik", size: "120 karyawan", reg: "Surabaya", own: "raka", won: 0, open: 185e6 },
+    { n: "PT Bumi Energi Persada", ind: "Energi", size: "2.400 karyawan", reg: "Balikpapan", own: "dewi", won: 0, open: 1.35e9 },
+    { n: "PT Samudra Niaga", ind: "Perdagangan", size: "310 karyawan", reg: "Semarang", own: "dewi", won: 420e6, open: 0 },
+    { n: "RS Harapan Sehat", ind: "Kesehatan", size: "560 karyawan", reg: "Bandung", own: "raka", won: 0, open: 640e6 },
+    { n: "PT Surya Kencana Farma", ind: "Farmasi", size: "640 karyawan", reg: "Cikarang", own: "raka", won: 0, open: 0 },
+  ];
+  const CON = [
+    { n: "Teguh Santoso", t: "Finance Director", acc: "PT Mega Konstruksi", mail: "teguh@megakonstruksi.co.id", tel: "+62 811-2200-3141", own: "raka" },
+    { n: "Ratna Wulandari", t: "HR Manager", acc: "PT Mega Konstruksi", mail: "ratna@megakonstruksi.co.id", tel: "+62 813-1500-2209", own: "raka" },
+    { n: "Hendra Gunawan", t: "CEO", acc: "PT Samudra Niaga", mail: "hendra@samudraniaga.co.id", tel: "+62 812-3344-9020", own: "dewi" },
+    { n: "Hendra Wijaya", t: "Procurement", acc: "PT Surya Kencana Farma", mail: "hendra.w@skfarma.co.id", tel: "+62 817-0099-1180", own: "raka" },
+    { n: "Rina Marlina", t: "", acc: "", mail: "rina.marlina@gmail.com", tel: "+62 857-4400-7312", own: "bagus" },
+    { n: "Agus Prasetyo", t: "", acc: "", mail: "", tel: "+62 821-5566-0421", own: "bagus" },
+    { n: "Dr. Maria Kusumawati", t: "Direktur", acc: "RS Harapan Sehat", mail: "maria@harapansehat.id", tel: "+62 812-8800-3175", own: "raka" },
+  ];
+  document.querySelectorAll("[data-ic]").forEach((el) => { if (!el.querySelector(".ic")) el.insertAdjacentHTML("afterbegin", C.icon(el.dataset.ic)); });
+
+  const oppsOf = (acc) => C.opps.filter((o) => o.acc === acc);
+  function render() {
+    $("#h1").textContent = type === "accounts" ? "Accounts" : "Contacts"; $("#crumb").textContent = $("#h1").textContent;
+    $("#bAdd").innerHTML = C.icon("plus") + (type === "accounts" ? "Account" : "Contact"); $("#b2cW").hidden = type === "accounts";
+    $("#tabs").innerHTML = [["contacts", "Contacts", CON.length], ["accounts", "Accounts", ACC.length]].map(([id, l, c]) => '<button class="tab" role="tab" aria-selected="' + (id === type) + '" data-v="' + id + '">' + l + ' <span class="count">' + c + "</span></button>").join("");
+    $("#tabs").querySelectorAll(".tab").forEach((b) => (b.onclick = () => { location.search = "?type=" + b.dataset.v; }));
+    const q = $("#q").value.toLowerCase();
+    if (type === "contacts") {
+      const rows = CON.filter((c) => (!q || (c.n + c.acc).toLowerCase().includes(q)) && (!$("#b2c").checked || !c.acc)); $("#cnt").textContent = rows.length + " contact";
+      $("#tbl").innerHTML = "<thead><tr><th>Nama</th><th>Account</th><th>Email</th><th>Telepon</th><th>Owner</th></tr></thead><tbody>" + (rows.length ? rows.map((c, i) => '<tr><td><div class="nm"><span class="avatar a5">' + C.initials(c.n.replace("Dr. ", "")) + '</span><div><button class="lnk" data-c="' + CON.indexOf(c) + '">' + C.esc(c.n) + '</button><div class="sub">' + (c.t ? C.esc(c.t) : "") + "</div></div></div></td><td>" + (c.acc ? C.esc(c.acc) : '<span class="lozenge">Individu (B2C)</span>') + "</td><td>" + (c.mail ? C.esc(c.mail) : '<span class="muted">—</span>') + '</td><td class="num">' + c.tel + "</td><td>" + C.avatar(c.own) + "</td></tr>").join("") : '<tr><td colspan="5"><div class="empty"><h2>Tidak ada contact yang cocok</h2><p>Ubah kata kunci atau tambahkan contact baru.</p></div></td></tr>') + "</tbody>";
+      $("#tbl").querySelectorAll("[data-c]").forEach((b) => (b.onclick = () => openC(+b.dataset.c)));
+    } else {
+      const rows = ACC.filter((a) => !q || a.n.toLowerCase().includes(q)); $("#cnt").textContent = rows.length + " account";
+      $("#tbl").innerHTML = "<thead><tr><th>Account</th><th>Industri</th><th>Ukuran</th><th>Wilayah</th><th class='r'>Open pipeline</th><th class='r'>Won</th><th>Owner</th></tr></thead><tbody>" + rows.map((a) => '<tr><td><div class="nm"><span class="avatar a1">' + C.initials(a.n.replace("PT ", "")) + '</span><button class="lnk" data-a="' + ACC.indexOf(a) + '">' + C.esc(a.n) + "</button></div></td><td>" + a.ind + "</td><td>" + a.size + "</td><td>" + a.reg + '</td><td class="r num">' + (a.open ? C.rp(a.open) : '<span class="muted">—</span>') + '</td><td class="r num">' + (a.won ? C.rp(a.won) : '<span class="muted">—</span>') + "</td><td>" + C.avatar(a.own) + "</td></tr>").join("") + "</tbody>";
+      $("#tbl").querySelectorAll("[data-a]").forEach((b) => (b.onclick = () => openA(+b.dataset.a)));
+    }
+  }
+  const dl = (rows) => '<dl class="dl">' + rows.map(([k, v]) => "<dt>" + k + "</dt><dd>" + v + "</dd>").join("") + "</dl>";
+  const oppList = (list) => list.length ? '<div class="rel">' + list.map((o) => '<div><a href="opportunity.html" style="flex:1;font-weight:600">' + C.esc(o.name) + '</a><span class="lozenge blue">' + C.stages.find((s) => s.id === o.stage).name + '</span><span class="num">' + C.rp(o.value) + "</span></div>").join("") + "</div>" : '<div class="hint">Belum ada opportunity.</div>';
+  function showD(t, html) { $("#dT").textContent = t; $("#dB").innerHTML = html; $("#drawer").classList.add("open"); $("#drawer").setAttribute("aria-hidden", "false"); drawerOpen = true; }
+  function closeD() { $("#drawer").classList.remove("open"); $("#drawer").setAttribute("aria-hidden", "true"); drawerOpen = false; }
+  function openC(i) {
+    const c = CON[i];
+    showD(c.n, '<div class="row"><span class="avatar xl a5">' + C.initials(c.n.replace("Dr. ", "")) + '</span><div><div class="muted">' + (c.t ? C.esc(c.t) : "Tanpa jabatan") + "</div>" + (c.acc ? '<div>' + C.esc(c.acc) + "</div>" : '<span class="lozenge">Individu (B2C), tanpa Account</span>') + "</div></div>" +
+      dl([["Email", c.mail ? C.esc(c.mail) : '<span class="muted">Belum diisi</span>'], ["Telepon", '<span class="num">' + c.tel + "</span>"], ["Owner", '<span class="row">' + C.avatar(c.own) + C.users[c.own].name + "</span>"], ["Custom: Tanggal lahir", '<span class="muted">Belum diisi</span>']]) +
+      (c.acc ? '<div><h3 style="margin-bottom:6px">Opportunity di ' + C.esc(c.acc) + "</h3>" + oppList(oppsOf(c.acc)) + "</div>" : '<div class="banner info">' + C.icon("user") + "<div>Pelanggan B2C boleh berdiri sebagai Contact tanpa Account. Account bisa dikaitkan nanti bila perlu.</div></div><div><h3 style=\"margin-bottom:6px\">Opportunity</h3><div class=\"hint\">Belum ada opportunity.</div></div>"));
+  }
+  function openA(i) {
+    const a = ACC[i], cons = CON.filter((c) => c.acc === a.n);
+    showD(a.n, '<div class="row"><span class="avatar xl a1">' + C.initials(a.n.replace("PT ", "")) + '</span><div><div>' + a.ind + " · " + a.size + '</div><div class="muted">' + a.reg + "</div></div></div>" +
+      dl([["Owner", '<span class="row">' + C.avatar(a.own) + C.users[a.own].name + "</span>"], ["Open pipeline", '<span class="num">' + (a.open ? C.rp(a.open) : "—") + "</span>"], ["Closed-Won", '<span class="num">' + (a.won ? C.rp(a.won) : "—") + "</span>"], ["Custom: Segmen", "Enterprise"], ["Custom: NPWP", '<span class="muted">Belum diisi</span>']]) +
+      '<div><h3 style="margin-bottom:6px">Contact (' + cons.length + ")</h3>" + (cons.length ? '<div class="rel">' + cons.map((c) => '<div><span class="avatar a5">' + C.initials(c.n) + '</span><div style="flex:1"><b>' + C.esc(c.n) + '</b><div class="muted" style="font-size:12px">' + C.esc(c.t) + "</div></div></div>").join("") + "</div>" : '<div class="hint">Belum ada contact.</div>') + '</div><div><h3 style="margin-bottom:6px">Opportunity</h3>' + oppList(oppsOf(a.n)) + "</div>");
+  }
+  $("#dX").onclick = closeD; ["#q", "#b2c"].forEach((s) => ($(s).oninput = render));
+
+  $("#bAdd").onclick = () => {
+    const acc = type === "accounts";
+    $("#aT").textContent = acc ? "Tambah account" : "Tambah contact";
+    $("#aB").innerHTML = acc ? '<div class="field"><label class="req" for="fn">Nama organisasi</label><input class="input" id="fn"><div class="err" id="fe" hidden></div></div><div class="row" style="gap:12px"><div class="field" style="flex:1"><label for="fi">Industri</label><input class="input" id="fi"></div><div class="field" style="flex:1"><label for="fs">Ukuran</label><input class="input" id="fs" placeholder="mis. 120 karyawan"></div></div><div class="field"><label for="fr">Wilayah</label><input class="input" id="fr"></div>'
+      : '<div class="field"><label class="req" for="fn">Nama lengkap</label><input class="input" id="fn"><div class="err" id="fe" hidden></div></div><div class="row" style="gap:12px"><div class="field" style="flex:1"><label for="fm">Email</label><input class="input" id="fm" type="email"></div><div class="field" style="flex:1"><label for="ft">Telepon</label><input class="input" id="ft"></div></div><div class="field"><label for="fa">Account</label><select class="select" id="fa"><option value="">Tanpa account (B2C)</option>' + ACC.map((a) => "<option>" + a.n + "</option>").join("") + '</select><div class="hint">Kosongkan untuk pelanggan perorangan.</div></div><div class="field"><label for="fj">Jabatan</label><input class="input" id="fj"></div>';
+    C.openDlg("addDlg");
+  };
+  $("#addForm").onsubmit = (e) => {
+    const n = $("#fn").value.trim(); $("#fe").hidden = !!n; if (!n) { e.preventDefault(); $("#fe").innerHTML = C.icon("alert", "sm") + "Nama wajib diisi"; return; }
+    if (type === "accounts") ACC.unshift({ n, ind: $("#fi").value || "—", size: $("#fs").value || "—", reg: $("#fr").value || "—", own: "raka", won: 0, open: 0 });
+    else CON.unshift({ n, t: $("#fj").value, acc: $("#fa").value, mail: $("#fm").value, tel: $("#ft").value || "—", own: "raka" });
+    render(); C.toast((type === "accounts" ? "Account" : "Contact") + " disimpan");
+  };
+  render();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Opportunities — Pipeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="crm.css">
+</head>
+<body data-active="pipeline">
+<div class="layout">
+  <aside class="sidenav"></aside>
+  <main class="main" id="main">
+    <div class="page-head">
+      <div>
+        <div class="crumbs">Opportunities</div>
+        <div class="row">
+          <h1>Pipeline</h1>
+          <select class="select" id="pipeSel" aria-label="Pipeline" style="width:auto;font-weight:600">
+            <option value="b2b">B2B Sales (6 stage)</option>
+            <option value="b2c">B2C Fast Track (3 stage)</option>
+          </select>
+        </div>
+      </div>
+      <div class="spacer"></div>
+      <div class="row">
+        <div class="row" role="group" aria-label="Tampilan">
+          <button class="btn sm" id="vBoard" aria-pressed="true" data-ic="board">Board</button>
+          <button class="btn sm subtle" id="vList" aria-pressed="false" data-ic="list">List</button>
+        </div>
+        <button class="btn primary" id="addOpp" data-ic="plus">Opportunity</button>
+      </div>
+    </div>
+
+    <div class="row wrap" style="margin-bottom:12px;gap:12px">
+      <label class="row"><span class="label">Owner</span>
+        <select class="select" id="fOwner" style="width:auto"><option value="all">Semua Sales</option><option value="raka">Raka Pratama</option><option value="dewi">Dewi Anggraini</option><option value="bagus">Bagus Santoso</option></select>
+      </label>
+      <label class="check"><input type="checkbox" id="fAttn"><span>Perlu perhatian saja</span></label>
+      <div class="spacer"></div>
+      <div class="summary" id="summary" aria-live="polite"></div>
+    </div>
+
+    <div id="view"></div>
+    <div class="dropzones" id="dz">
+      <div class="dz won" data-out="won">Lepas di sini: Closed-Won</div>
+      <div class="dz lost" data-out="lost">Lepas di sini: Closed-Lost</div>
+    </div>
+  </main>
+</div>
+
+<aside class="drawer" id="drawer" aria-label="Detail opportunity" aria-hidden="true">
+  <div class="card-h"><h2 id="dTitle" style="flex:1"></h2><button class="btn icon subtle" id="dClose" aria-label="Tutup" data-ic="x"></button></div>
+  <div class="drawer-b" id="dBody"></div>
+</aside>
+
+<!-- Close Won / Lost -->
+<dialog id="closeDlg">
+  <form method="dialog" id="closeForm" novalidate>
+    <div class="dlg-h"><h2 id="cTitle"></h2><div class="muted" id="cSub"></div></div>
+    <div class="dlg-b">
+      <div class="field"><label class="req" for="cReason" id="cReasonL">Alasan</label>
+        <select class="select" id="cReason"></select>
+        <div class="err" id="cErr" hidden></div></div>
+      <div class="field"><label for="cNote">Catatan <span class="muted" style="font-weight:400">(opsional)</span></label><textarea class="textarea" id="cNote" placeholder="Konteks yang tidak muat di pilihan alasan"></textarea></div>
+      <div class="banner info" id="cInfo"></div>
+    </div>
+    <div class="dlg-f"><button class="btn subtle" type="button" data-close>Batal</button><button class="btn" id="cOk" type="submit"></button></div>
+  </form>
+</dialog>
+
+<!-- Move back -->
+<dialog id="backDlg">
+  <form method="dialog" id="backForm" novalidate>
+    <div class="dlg-h"><h2>Mundurkan stage?</h2><div class="muted" id="bSub"></div></div>
+    <div class="dlg-b">
+      <div class="banner warn">{{ic:alert}}<div>Pergerakan mundur dicatat di riwayat dan tidak dianggap kegagalan. Forecast jadi lebih jujur.</div></div>
+      <div class="field"><label class="req" for="bReason">Apa yang berubah?</label>
+        <select class="select" id="bReason"><option value="">Pilih alasan</option><option>Anggaran ternyata belum ada</option><option>Pengambil keputusan berganti</option><option>Cakupan berubah besar</option><option>Temuan baru membatalkan asumsi sebelumnya</option></select>
+        <div class="err" id="bErr" hidden></div></div>
+    </div>
+    <div class="dlg-f"><button class="btn subtle" type="button" data-close>Batal</button><button class="btn primary" type="submit">Mundurkan</button></div>
+  </form>
+</dialog>
+
+<!-- Exit criteria gate -->
+<dialog id="gateDlg">
+  <form method="dialog" id="gateForm">
+    <div class="dlg-h"><h2 id="gTitle"></h2><div class="muted" id="gSub"></div></div>
+    <div class="dlg-b">
+      <div id="gMode"></div>
+      <div class="stack" id="gList" style="gap:8px"></div>
+    </div>
+    <div class="dlg-f"><button class="btn subtle" type="button" data-close>Batal</button><button class="btn primary" id="gOk" type="submit"></button></div>
+  </form>
+</dialog>
+
+<script src="app.js"></script>
+<script>
+document.addEventListener("crm-ready", () => {
+  const C = window.CRM;
+  const pipelines = {
+    b2b: { policy: "jump", stages: C.stages, opps: C.opps.map((o) => ({ ...o })) },
+    b2c: { policy: "step", stages: [
+      { id: "qual", name: "Qualification", stale: 3, gate: "guide", criteria: ["Pembeli mengonfirmasi minat"] },
+      { id: "offer", name: "Offer", stale: 5, gate: "guide", criteria: ["Penawaran diterima pembeli"] },
+      { id: "decision", name: "Decision Pending", stale: 7, gate: "guide", criteria: ["Pembeli memutuskan"] }], opps: [
+      { id: 101, name: "Paket HRIS perorangan", acc: "Rina Marlina (B2C)", value: 12e6, stage: "qual", owner: "bagus", close: "2026-10-20", age: 1, next: { t: "Kirim brosur", d: "2026-10-13" } },
+      { id: 102, name: "Konsultasi payroll UMKM", acc: "Agus Prasetyo (B2C)", value: 8e6, stage: "offer", owner: "bagus", close: "2026-10-18", age: 2, next: { t: "Follow-up penawaran", d: "2026-10-14" } }] },
+  };
+  let cur = "b2b", view = "board", dragId = null, closed = { won: 0, lost: 0 };
+  const $ = (s) => document.querySelector(s);
+  const P = () => pipelines[cur];
+  document.querySelectorAll("[data-ic]").forEach((el) => { if (!el.querySelector(".ic")) el.insertAdjacentHTML("afterbegin", C.icon(el.dataset.ic)); });
+  document.querySelectorAll("dialog .banner").forEach((b) => { b.innerHTML = b.innerHTML.replace(/\{\{ic:(\w+)\}\}/g, (_, n) => C.icon(n)); });
+
+  const stageOf = (o) => P().stages.find((s) => s.id === o.stage);
+  const needsAttn = (o) => o.age > stageOf(o).stale || C.daysFrom(o.close) < 0 || !o.next || (o.next && C.daysFrom(o.next.d) < 0);
+  function filtered() {
+    const ow = $("#fOwner").value, at = $("#fAttn").checked;
+    return P().opps.filter((o) => (ow === "all" || o.owner === ow) && (!at || needsAttn(o)));
+  }
+
+  function flags(o) {
+    const s = stageOf(o), f = [];
+    if (o.age > s.stale) f.push('<span class="lozenge warn">' + C.icon("clock", "sm") + "Stale " + o.age + " hari</span>");
+    if (C.daysFrom(o.close) < 0) f.push('<span class="lozenge lost">Close date lewat</span>');
+    if (!o.next) f.push('<span class="lozenge warn">Belum ada next step</span>');
+    return f.join("");
+  }
+  function card(o) {
+    const s = stageOf(o), over = o.age > s.stale, pct = Math.min(100, Math.round((o.age / s.stale) * 100));
+    const nextLate = o.next && C.daysFrom(o.next.d) < 0;
+    return '<button class="deal" draggable="true" data-id="' + o.id + '" aria-label="' + C.esc(o.name) + '">' +
+      '<div class="t">' + C.esc(o.name) + '</div><div class="acc">' + C.esc(o.acc) + "</div>" +
+      '<div class="row"><span class="val num">' + C.rp(o.value) + '</span><span class="spacer"></span>' + C.avatar(o.owner) + "</div>" +
+      '<div class="meta">' + C.icon("cal", "sm") + '<span class="num">' + C.d(o.close) + "</span>" +
+      (o.next ? '<span class="nx" title="' + C.esc(o.next.t) + '" style="' + (nextLate ? "color:var(--lost)" : "") + '">· ' + C.esc(o.next.t) + "</span>" : "") + "</div>" +
+      '<div class="age' + (over ? " over" : "") + '" title="' + o.age + " dari " + s.stale + ' hari di stage ini"><i style="width:' + pct + '%"></i></div>' +
+      (flags(o) ? '<div class="flags">' + flags(o) + "</div>" : "") + "</button>";
+  }
+
+  function render() {
+    const list = filtered(), st = P().stages;
+    const open = list.reduce((a, o) => a + o.value, 0), attn = list.filter(needsAttn).length;
+    $("#summary").innerHTML =
+      '<span class="muted">Open</span> <b>' + C.rp(open) + '</b><span class="muted">' + list.length + ' opportunity</span>' +
+      '<span class="lozenge warn" ' + (attn ? "" : "hidden") + ">" + attn + " perlu perhatian</span>" +
+      (closed.won + closed.lost ? '<span class="muted">Ditutup hari ini</span> <span class="lozenge won">' + closed.won + ' Won</span> <span class="lozenge lost">' + closed.lost + " Lost</span>" : "") +
+      '<span class="muted" title="Probabilitas per stage belum diaktifkan untuk pipeline ini (Tenant Settings)">Weighted: nonaktif</span>';
+    const v = $("#view");
+    if (!P().opps.length) {
+      v.innerHTML = '<div class="card empty">' + C.icon("board", "lg") + "<h2>Belum ada opportunity di pipeline ini</h2><p>Opportunity terbentuk saat Lead di-convert, atau tambahkan langsung.</p><button class='btn primary' onclick=\"CRM.toast('Form Opportunity dibuat pada tahap berikutnya')\">Tambah Opportunity</button></div>";
+      return;
+    }
+    if (view === "board") {
+      v.innerHTML = '<div class="board-wrap"><div class="board">' + st.map((s) => {
+        const items = list.filter((o) => o.stage === s.id), sum = items.reduce((a, o) => a + o.value, 0);
+        return '<section class="col" data-stage="' + s.id + '" aria-label="' + s.name + '"><div class="col-h"><div class="name">' + s.name +
+          ' <span class="lozenge">' + items.length + '</span><span class="spacer"></span><span class="muted" style="font-weight:400;font-size:12px" title="Ditandai stale setelah ' + s.stale + ' hari tanpa pergerakan">stale ' + s.stale + ' hari</span></div><div class="sum num">' + C.rp(sum) + '</div></div><div class="col-b">' +
+          (items.length ? items.map(card).join("") : '<div class="empty" style="padding:20px 8px;font-size:13px">Kosong. Seret opportunity ke sini.</div>') + "</div></section>";
+      }).join("") + "</div></div>";
+      bindBoard();
+    } else {
+      v.innerHTML = '<div class="card" style="overflow:auto"><table class="table"><thead><tr><th>Opportunity</th><th>Account</th><th>Stage</th><th class="r">Value</th><th>Close date</th><th>Owner</th><th>Next step</th></tr></thead><tbody>' +
+        list.map((o) => '<tr><td><a href="#" data-id="' + o.id + '" class="rowlink"><b>' + C.esc(o.name) + "</b></a> " + flags(o) + "</td><td>" + C.esc(o.acc) + '</td><td><span class="lozenge blue">' + stageOf(o).name + '</span></td><td class="r num">' + C.rp(o.value) + '</td><td class="num">' + C.d(o.close, true) + "</td><td>" + C.avatar(o.owner) + "</td><td>" + (o.next ? C.esc(o.next.t) + ' <span class="muted num">' + C.d(o.next.d) + "</span>" : '<span class="muted">—</span>') + "</td></tr>").join("") + "</tbody></table></div>";
+      v.querySelectorAll(".rowlink").forEach((a) => a.addEventListener("click", (e) => { e.preventDefault(); openDrawer(+a.dataset.id); }));
+    }
+  }
+
+  function bindBoard() {
+    document.querySelectorAll(".deal").forEach((el) => {
+      el.addEventListener("click", () => openDrawer(+el.dataset.id));
+      el.addEventListener("dragstart", (e) => { dragId = +el.dataset.id; el.classList.add("dragging"); document.body.classList.add("dragging-deal"); e.dataTransfer.effectAllowed = "move"; e.dataTransfer.setData("text/plain", String(dragId)); });
+      el.addEventListener("dragend", () => { el.classList.remove("dragging"); document.body.classList.remove("dragging-deal"); document.querySelectorAll(".over").forEach((x) => x.classList.remove("over")); });
+    });
+    document.querySelectorAll(".col").forEach((c) => {
+      c.addEventListener("dragover", (e) => { e.preventDefault(); c.classList.add("over"); });
+      c.addEventListener("dragleave", (e) => { if (!c.contains(e.relatedTarget)) c.classList.remove("over"); });
+      c.addEventListener("drop", (e) => { e.preventDefault(); c.classList.remove("over"); if (dragId) move(dragId, c.dataset.stage); });
+    });
+  }
+  document.querySelectorAll(".dz").forEach((z) => {
+    z.addEventListener("dragover", (e) => { e.preventDefault(); z.classList.add("over"); });
+    z.addEventListener("dragleave", () => z.classList.remove("over"));
+    z.addEventListener("drop", (e) => { e.preventDefault(); z.classList.remove("over"); document.body.classList.remove("dragging-deal"); if (dragId) closeOpp(dragId, z.dataset.out); });
+  });
+
+  /* ---------- Move stage ---------- */
+  function move(id, to) {
+    const o = P().opps.find((x) => x.id === id), st = P().stages;
+    const fi = st.findIndex((s) => s.id === o.stage), ti = st.findIndex((s) => s.id === to);
+    if (fi === ti) return;
+    if (ti < fi) return askBack(o, st[ti]);
+    if (P().policy === "step" && ti - fi > 1) { C.toast("Pipeline ini hanya mengizinkan maju satu stage per langkah. Pindahkan ke " + st[fi + 1].name); return; }
+    const passed = st.slice(fi, ti), gated = passed.filter((s) => s.gate !== "guide");
+    if (!gated.length) return commit(o, to, "maju", null, passed.length - 1);
+    askGate(o, gated, passed, st[ti]);
+  }
+  function commit(o, to, how, reason, skipped) {
+    const name = P().stages.find((s) => s.id === to).name;
+    o.stage = to; o.age = 0; render();
+    C.toast(how === "mundur" ? "Dipindah mundur ke " + name + ". Alasan tercatat di riwayat." : "Dipindah ke " + name + (skipped ? ". " + skipped + " stage dilewati dan dicatat sebagai skipped." : ""));
+    if (drawerId === o.id) openDrawer(o.id);
+  }
+  function askBack(o, target) {
+    $("#bSub").textContent = o.name + ": " + stageOf(o).name + " → " + target.name;
+    $("#bReason").value = ""; $("#bErr").hidden = true; $("#bReason").removeAttribute("aria-invalid");
+    $("#backForm").onsubmit = (e) => {
+      if (!$("#bReason").value) { e.preventDefault(); $("#bErr").hidden = false; $("#bErr").innerHTML = C.icon("alert", "sm") + "Alasan wajib diisi untuk pergerakan mundur"; $("#bReason").setAttribute("aria-invalid", "true"); return; }
+      commit(o, target.id, "mundur", $("#bReason").value);
+    };
+    C.openDlg("backDlg");
+  }
+  function askGate(o, gated, passed, target) {
+    const hasBlock = gated.some((g) => g.gate === "block"), skipped = passed.length - 1;
+    $("#gTitle").textContent = skipped ? "Melewati " + passed.length + " stage" : "Exit criteria " + gated[0].name;
+    $("#gSub").textContent = o.name + " → " + target.name;
+    $("#gMode").innerHTML = '<div class="banner ' + (hasBlock ? "lost" : "warn") + '">' + C.icon("flag") + "<div>" + (skipped ? "<b>Syarat setiap stage yang dilewati tetap diperiksa.</b> Stage yang dilewati dicatat sebagai <i>skipped</i> di riwayat. " : "") + (hasBlock ? "Stage bermode <b>Blocking</b> harus terpenuhi sebelum maju." : "Kriteria belum lengkap boleh dilewati, tetapi tercatat.") + "</div></div>";
+    $("#gList").innerHTML = gated.map((g, gi) => '<div><div class="row" style="margin-bottom:6px"><b>' + C.esc(g.name) + '</b><span class="lozenge ' + (g.gate === "block" ? "lost" : "warn") + '">' + C.gateLabel[g.gate] + "</span></div><div class=\"stack\" style=\"gap:6px\">" + g.criteria.map((c) => '<label class="check"><input type="checkbox" data-b="' + (g.gate === "block" ? 1 : 0) + '"><span>' + C.esc(c) + "</span></label>").join("") + "</div></div>").join("");
+    const ok = $("#gOk");
+    const sync = () => { const ins = [...document.querySelectorAll("#gList input")], all = ins.every((x) => x.checked), blockOk = ins.filter((x) => x.dataset.b === "1").every((x) => x.checked); ok.textContent = all || hasBlock ? "Pindah ke " + target.name : "Pindah tetap"; ok.disabled = !blockOk; };
+    document.querySelectorAll("#gList input").forEach((x) => x.addEventListener("change", sync)); sync();
+    $("#gateForm").onsubmit = () => commit(o, target.id, "maju", null, skipped);
+    C.openDlg("gateDlg");
+  }
+
+  /* ---------- Close Won / Lost ---------- */
+  function closeOpp(id, out) {
+    const o = P().opps.find((x) => x.id === id), won = out === "won";
+    $("#cTitle").textContent = won ? "Close sebagai Won" : "Close sebagai Lost";
+    $("#cSub").textContent = o.name + " · " + C.rp(o.value);
+    $("#cReasonL").textContent = won ? "Alasan menang" : "Alasan kalah";
+    $("#cReason").innerHTML = '<option value="">Pilih alasan</option>' + (won ? C.wonReasons : C.lostReasons).map((r) => "<option>" + r + "</option>").join("");
+    $("#cNote").value = ""; $("#cErr").hidden = true; $("#cReason").removeAttribute("aria-invalid");
+    $("#cInfo").innerHTML = C.icon("target") + "<div>" + (won ? "Nilai " + C.rp(o.value) + " dihitung ke quota " + C.users[o.owner].name + " bulan Oktober." : "Alasan kalah dipakai untuk laporan Lost Reasons, bukan untuk menilai individu.") + "</div>";
+    const ok = $("#cOk"); ok.textContent = won ? "Close Won" : "Close Lost"; ok.className = "btn " + (won ? "won" : "danger");
+    $("#closeForm").onsubmit = (e) => {
+      if (!$("#cReason").value) { e.preventDefault(); $("#cErr").hidden = false; $("#cErr").innerHTML = C.icon("alert", "sm") + "Alasan wajib diisi sebelum opportunity ditutup"; $("#cReason").setAttribute("aria-invalid", "true"); return; }
+      P().opps = P().opps.filter((x) => x.id !== id); closed[out]++; closeDrawer(); render();
+      C.toast((won ? "Closed-Won" : "Closed-Lost") + ": " + o.name);
+    };
+    C.openDlg("closeDlg");
+  }
+
+  /* ---------- Drawer ---------- */
+  let drawerId = null;
+  function openDrawer(id) {
+    const o = P().opps.find((x) => x.id === id); if (!o) return; drawerId = id;
+    const st = P().stages, ci = st.findIndex((s) => s.id === o.stage), s = st[ci];
+    $("#dTitle").textContent = o.name;
+    $("#dBody").innerHTML =
+      '<div class="muted">' + C.esc(o.acc) + "</div>" +
+      '<ol class="path compact mini" aria-label="Stage ' + (ci + 1) + ' dari ' + st.length + '">' + st.map((x, i) => '<li title="' + x.name + '" class="' + (i < ci ? "done" : i === ci ? "current" : "next") + '"' + (i === ci ? ' aria-current="step"' : "") + ">" + (i < ci ? C.icon("check", "sm") : "") + x.name + "</li>").join("") + "</ol>" +
+      '<dl class="dl"><dt>Value</dt><dd class="num"><b>' + C.rp(o.value) + "</b></dd><dt>Close date</dt><dd class=\"num\">" + C.d(o.close, true) + (C.daysFrom(o.close) < 0 ? ' <span class="lozenge lost">Lewat ' + Math.abs(C.daysFrom(o.close)) + " hari</span>" : "") + "</dd><dt>Owner</dt><dd class=\"row\">" + C.avatar(o.owner) + C.users[o.owner].name + "</dd><dt>Di stage ini</dt><dd><span class=\"num\">" + o.age + " hari</span> <span class=\"muted\">(stale setelah " + s.stale + ")</span></dd><dt>Next step</dt><dd>" + (o.next ? C.esc(o.next.t) + ' <span class="muted num">· ' + C.d(o.next.d) + "</span>" : '<span class="lozenge warn">Belum ada. Jadwalkan activity</span>') + "</dd></dl>" +
+      '<div><div class="row" style="margin-bottom:8px"><h2>Exit criteria · ' + s.name + '</h2><span class="lozenge">' + C.gateLabel[s.gate] + '</span></div><div class="stack" style="gap:8px">' + s.criteria.map((c) => '<label class="check"><input type="checkbox"><span>' + C.esc(c) + "</span></label>").join("") + "</div></div>" +
+      '<div class="field"><label for="mv">Pindahkan ke stage</label><div class="row"><select class="select" id="mv">' + st.map((x) => '<option value="' + x.id + '"' + (x.id === o.stage ? " selected" : "") + ">" + x.name + "</option>").join("") + '</select><button class="btn" id="mvGo">Pindah</button></div></div>' +
+      '<div class="row" style="margin-top:auto;padding-top:8px;border-top:1px solid var(--line)"><button class="btn won" id="dWon">Close Won</button><button class="btn danger" id="dLost">Close Lost</button><span class="spacer"></span><a class="btn subtle" href="opportunity.html">Buka record</a></div>';
+    $("#mvGo").onclick = () => move(o.id, $("#mv").value);
+    $("#dWon").onclick = () => closeOpp(o.id, "won"); $("#dLost").onclick = () => closeOpp(o.id, "lost");
+    $("#drawer").classList.add("open"); $("#drawer").setAttribute("aria-hidden", "false");
+  }
+  function closeDrawer() { drawerId = null; $("#drawer").classList.remove("open"); $("#drawer").setAttribute("aria-hidden", "true"); }
+  $("#dClose").onclick = closeDrawer;
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && drawerId && !document.querySelector("dialog[open]")) closeDrawer(); });
+
+  /* ---------- Kontrol ---------- */
+  $("#vBoard").onclick = () => { view = "board"; $("#vBoard").className = "btn sm"; $("#vList").className = "btn sm subtle"; $("#vBoard").setAttribute("aria-pressed", "true"); $("#vList").setAttribute("aria-pressed", "false"); render(); };
+  $("#vList").onclick = () => { view = "list"; $("#vList").className = "btn sm"; $("#vBoard").className = "btn sm subtle"; $("#vList").setAttribute("aria-pressed", "true"); $("#vBoard").setAttribute("aria-pressed", "false"); render(); };
+  $("#fOwner").onchange = $("#fAttn").onchange = render;
+  $("#pipeSel").onchange = (e) => { cur = e.target.value; closeDrawer(); render(); };
+  $("#addOpp").onclick = () => C.toast("Form Opportunity dibuat pada tahap berikutnya");
+  if (C.role() === "rep") { $("#fOwner").value = "raka"; }
+  render();
+});
+</script>
+</body>
+</html>

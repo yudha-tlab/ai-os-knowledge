@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Activities</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="crm.css">
+<style>
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .stat { all: unset; box-sizing: border-box; cursor: pointer; padding: 8px 14px; border: 1px solid var(--line); border-radius: var(--r-lg); background: #fff; min-width: 120px; }
+  .stat:hover { border-color: var(--n300); }
+  .stat[aria-pressed="true"] { border-color: var(--navy-700); background: var(--navy-50); }
+  .stat:focus-visible { box-shadow: var(--focus); }
+  .stat b { font-size: 20px; display: block; line-height: 28px; }
+  .stat.warn b { color: var(--warn); }
+  .bar { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
+  .ty { width: 28px; height: 28px; border-radius: 50%; background: var(--n100); display: grid; place-items: center; color: var(--n700); flex: none; }
+  .table input[type=checkbox] { accent-color: var(--navy-700); width: 16px; height: 16px; }
+  .done-row td { color: var(--muted); }
+  .done-row .subj { text-decoration: line-through; }
+  .seg { display: inline-flex; border: 1px solid var(--n300); border-radius: var(--r); overflow: hidden; }
+  .seg label { padding: 5px 10px; cursor: pointer; font-weight: 500; border-right: 1px solid var(--n300); display: flex; gap: 6px; align-items: center; }
+  .seg label:last-child { border-right: 0; }
+  .seg input { position: absolute; opacity: 0; }
+  .seg label:has(input:checked) { background: var(--navy-50); color: var(--navy-700); }
+  .seg label:has(input:focus-visible) { box-shadow: inset 0 0 0 2px var(--sky-500); }
+</style>
+</head>
+<body data-active="activities">
+<div class="layout">
+  <aside class="sidenav"></aside>
+  <main class="main">
+    <div class="page-head"><div><div class="crumbs">Activities</div><h1 id="h1">Activities</h1></div><div class="spacer"></div><button class="btn primary" id="bLog" data-ic="plus">Log activity</button></div>
+    <div class="tabs" role="tablist" id="tabs" style="margin-bottom:12px"></div>
+    <div class="chips" id="stats"></div>
+    <div class="bar">
+      <select class="select" id="fOwner" style="width:auto" aria-label="Owner"></select>
+      <select class="select" id="fType" style="width:auto" aria-label="Type"><option value="">Semua type</option><option>Call</option><option>Meeting</option><option>Email</option><option>Task</option><option>Note</option></select>
+      <label class="check"><input type="checkbox" id="fDone"><span>Tampilkan yang selesai</span></label>
+      <span class="spacer"></span><span class="muted" id="cnt"></span>
+    </div>
+    <div class="card" style="overflow:auto"><table class="table" id="tbl"></table></div>
+  </main>
+</div>
+
+<dialog id="logDlg">
+  <form method="dialog" id="logForm" novalidate>
+    <div class="dlg-h"><h2>Log activity</h2></div>
+    <div class="dlg-b">
+      <div class="seg" role="radiogroup" aria-label="Jenis" id="lt">
+        <label>{{ic:phone}}<input type="radio" name="t" value="Call" checked>Call</label><label>{{ic:video}}<input type="radio" name="t" value="Meeting">Meeting</label><label>{{ic:mail}}<input type="radio" name="t" value="Email">Email</label><label>{{ic:check}}<input type="radio" name="t" value="Task">Task</label><label>{{ic:note}}<input type="radio" name="t" value="Note">Note</label>
+      </div>
+      <div class="seg" role="radiogroup" aria-label="Waktu" style="align-self:flex-start"><label><input type="radio" name="m" value="done">Sudah terjadi</label><label><input type="radio" name="m" value="plan" checked>Jadwalkan</label></div>
+      <div class="field"><label class="req" for="lSub">Subjek</label><input class="input" id="lSub" placeholder="mis. Follow-up penawaran"><div class="err" id="eSub" hidden></div></div>
+      <div class="field"><label class="req" for="lRel">Terkait dengan</label><select class="select" id="lRel"><option value="">Pilih lead atau opportunity</option></select><div class="err" id="eRel" hidden></div></div>
+      <div class="row" style="gap:12px"><div class="field" style="flex:1"><label for="lWhen">Tanggal</label><input class="input" id="lWhen" type="date" value="2026-10-13"></div><div class="field" style="flex:1"><label for="lOwn">Owner</label><select class="select" id="lOwn"></select></div></div>
+    </div>
+    <div class="dlg-f"><button class="btn subtle" type="button" data-close>Batal</button><button class="btn primary" type="submit">Simpan</button></div>
+  </form>
+</dialog>
+
+<script src="app.js"></script>
+<script>
+document.addEventListener("crm-ready", () => {
+  const C = window.CRM, $ = (s) => document.querySelector(s), role = C.role(), mgr = role !== "rep";
+  document.querySelectorAll("[data-ic]").forEach((el) => { if (!el.querySelector(".ic")) el.insertAdjacentHTML("afterbegin", C.icon(el.dataset.ic)); });
+  $("#logDlg").innerHTML = $("#logDlg").innerHTML.replace(/\{\{ic:(\w+)\}\}/g, (_, k) => C.icon(k, "sm"));
+  const IC = { Call: "phone", Meeting: "video", Email: "mail", Task: "check", Note: "note" };
+  const A = [
+    { t: "Task", s: "Tindak lanjut penawaran", rel: "PT Tirta Wangi", kind: "Opportunity", own: "dewi", due: "2026-10-08" },
+    { t: "Task", s: "Jadwalkan ulang workshop", rel: "Grup Cahaya Pangan", kind: "Opportunity", own: "dewi", due: "2026-10-09" },
+    { t: "Call", s: "Telepon Sari Nurhayati", rel: "Sari Nurhayati", kind: "Lead", own: "raka", due: "2026-10-12" },
+    { t: "Task", s: "Kirim akun trial", rel: "Universitas Nusa Bahari", kind: "Opportunity", own: "bagus", due: "2026-10-12" },
+    { t: "Call", s: "Hubungi Budi Rahardjo", rel: "Budi Rahardjo", kind: "Lead", own: "raka", due: "2026-10-12" },
+    { t: "Task", s: "Kirim penawaran awal dan jadwalkan demo", rel: "Andini Prameswari", kind: "Lead", own: "raka", due: "2026-10-14" },
+    { t: "Task", s: "Kirim form kebutuhan", rel: "PT Sinar Logistik Prima", kind: "Opportunity", own: "raka", due: "2026-10-14" },
+    { t: "Meeting", s: "Workshop kebutuhan", rel: "PT Kharisma Tekstil", kind: "Opportunity", own: "raka", due: "2026-10-15" },
+    { t: "Meeting", s: "Demo untuk tim finance", rel: "PT Mega Konstruksi", kind: "Opportunity", own: "raka", due: "2026-10-16" },
+    { t: "Meeting", s: "Ronde harga kedua", rel: "PT Bumi Energi Persada", kind: "Opportunity", own: "dewi", due: "2026-10-14" },
+    { t: "Email", s: "Kirim revisi kontrak", rel: "PT Lintas Media Nusantara", kind: "Opportunity", own: "bagus", due: "2026-10-13" },
+    { t: "Call", s: "Cek status persetujuan direksi", rel: "PT Rasa Mart Indonesia", kind: "Opportunity", own: "raka", due: "2026-10-20" },
+    { t: "Call", s: "Perkenalan dan gali kebutuhan", rel: "Andini Prameswari", kind: "Lead", own: "raka", due: "2026-10-12", done: true },
+    { t: "Note", s: "Catat hasil kunjungan toko", rel: "Klinik Pratama Medika", kind: "Opportunity", own: "bagus", due: "2026-10-11", done: true },
+  ].map((a, i) => ({ ...a, id: i }));
+  let tab = mgr ? "team" : "mine", quick = "";
+  const T = "2026-10-12";
+  const cls = (a) => (a.done ? "done" : a.due < T ? "overdue" : a.due === T ? "today" : a.due <= "2026-10-18" ? "week" : "later");
+  const scope = () => A.filter((a) => (tab === "mine" ? a.own === "raka" : true));
+  function render() {
+    $("#h1").textContent = tab === "mine" ? "My activities" : "Team activities";
+    $("#tabs").innerHTML = [["mine", "Milik saya"], ...(mgr ? [["team", "Tim"]] : [])].map(([id, l]) => '<button class="tab" role="tab" aria-selected="' + (id === tab) + '" data-v="' + id + '">' + l + "</button>").join("");
+    $("#tabs").querySelectorAll(".tab").forEach((b) => (b.onclick = () => { tab = b.dataset.v; $("#fOwner").value = ""; render(); }));
+    $("#fOwner").innerHTML = '<option value="">' + (tab === "mine" ? "Raka Pratama" : "Semua Sales") + "</option>" + (tab === "team" ? ["raka", "dewi", "bagus"].map((u) => '<option value="' + u + '">' + C.users[u].name + "</option>").join("") : ""); $("#fOwner").disabled = tab === "mine";
+    const base = scope().filter((a) => !$("#fOwner").value || a.own === $("#fOwner").value).filter((a) => !$("#fType").value || a.t === $("#fType").value);
+    const open = base.filter((a) => !a.done), n = (k) => open.filter((a) => cls(a) === k).length;
+    $("#stats").innerHTML = [["", "Open", open.length, ""], ["overdue", "Overdue", n("overdue"), "warn"], ["today", "Hari ini", n("today"), ""], ["week", "Minggu ini", n("week"), ""]].map(([k, l, c, w]) => '<button class="stat ' + w + '" data-k="' + k + '" aria-pressed="' + (quick === k) + '"><b class="num">' + c + '</b><span class="muted">' + l + "</span></button>").join("");
+    $("#stats").querySelectorAll(".stat").forEach((b) => (b.onclick = () => { quick = quick === b.dataset.k ? "" : b.dataset.k; render(); }));
+    const rows = base.filter((a) => (quick ? cls(a) === quick : $("#fDone").checked || !a.done)).sort((a, b) => a.done - b.done || a.due.localeCompare(b.due));
+    $("#cnt").textContent = rows.length + " activity";
+    $("#tbl").innerHTML = "<thead><tr><th style='width:36px'></th><th>Activity</th><th>Terkait</th>" + (tab === "team" ? "<th>Owner</th>" : "") + "<th>Jatuh tempo</th></tr></thead><tbody>" +
+      (rows.length ? rows.map((a) => { const c = cls(a); return '<tr class="' + (a.done ? "done-row" : "") + '"><td><input type="checkbox" data-id="' + a.id + '"' + (a.done ? " checked" : "") + ' aria-label="Tandai selesai: ' + C.esc(a.s) + '"></td><td><div class="row"><span class="ty">' + C.icon(IC[a.t], "sm") + '</span><div><div class="subj" style="font-weight:600">' + C.esc(a.s) + '</div><div class="muted" style="font-size:12px">' + a.t + "</div></div></div></td><td><a href=\"" + (a.kind === "Lead" ? "lead.html" : "pipeline.html") + '">' + C.esc(a.rel) + '</a> <span class="lozenge">' + a.kind + "</span></td>" + (tab === "team" ? "<td><span class='row'>" + C.avatar(a.own) + C.users[a.own].name.split(" ")[0] + "</span></td>" : "") + '<td class="num">' + (a.done ? "Selesai" : c === "overdue" ? '<span class="lozenge lost">Lewat ' + Math.abs(C.daysFrom(a.due)) + " hari · " + C.d(a.due) + "</span>" : c === "today" ? '<span class="lozenge blue">Hari ini</span>' : C.d(a.due)) + "</td></tr>"; }).join("")
+        : '<tr><td colspan="5"><div class="empty"><h2>' + (quick === "overdue" ? "Tidak ada activity yang terlewat" : "Belum ada activity di tampilan ini") + "</h2><p>Jadwalkan activity dari halaman lead atau opportunity, atau klik Log activity.</p></div></td></tr>") + "</tbody>";
+    $("#tbl").querySelectorAll("[data-id]").forEach((c) => (c.onchange = () => { const a = A[+c.dataset.id]; a.done = c.checked; render(); C.toast(c.checked ? "Activity selesai" : "Activity dibuka kembali"); }));
+  }
+  ["#fOwner", "#fType", "#fDone"].forEach((s) => ($(s).onchange = render));
+  const rels = [...C.leads.filter((l) => l.cat !== "Converted").map((l) => ["Lead · " + l.name, l.name, "Lead"]), ...C.opps.map((o) => ["Opportunity · " + o.name, o.acc, "Opportunity"])];
+  $("#lRel").insertAdjacentHTML("beforeend", rels.map((r, i) => '<option value="' + i + '">' + C.esc(r[0]) + "</option>").join(""));
+  $("#lOwn").innerHTML = ["raka", "dewi", "bagus"].map((u) => '<option value="' + u + '">' + C.users[u].name + "</option>").join("");
+  $("#bLog").onclick = () => { $("#lSub").value = ""; $("#lRel").value = ""; $("#eSub").hidden = $("#eRel").hidden = true; $("#lOwn").value = "raka"; $("#lOwn").disabled = !mgr; C.openDlg("logDlg"); };
+  $("#logForm").onsubmit = (e) => {
+    const s = $("#lSub").value.trim(), r = $("#lRel").value; $("#eSub").hidden = !!s; $("#eRel").hidden = !!r; let bad = false;
+    if (!s) { $("#eSub").innerHTML = C.icon("alert", "sm") + "Subjek wajib diisi"; bad = true; }
+    if (!r) { $("#eRel").innerHTML = C.icon("alert", "sm") + "Pilih lead atau opportunity terkait"; bad = true; }
+    if (bad) { e.preventDefault(); return; }
+    const rel = rels[+r], done = document.querySelector('input[name="m"]:checked').value === "done";
+    A.push({ id: A.length, t: document.querySelector('input[name="t"]:checked').value, s, rel: rel[1], kind: rel[2], own: $("#lOwn").value, due: done ? T : $("#lWhen").value, done });
+    render(); C.toast(done ? "Activity dicatat" : "Activity dijadwalkan");
+  };
+  render();
+});
+</script>
+</body>
+</html>

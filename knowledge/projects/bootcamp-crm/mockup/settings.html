@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tenant Settings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="crm.css">
+<style>
+  .set { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 24px; align-items: start; }
+  .subnav { position: sticky; top: calc(var(--top-h) + 16px); display: flex; flex-direction: column; gap: 2px; }
+  .subnav button { all: unset; box-sizing: border-box; padding: 7px 10px; border-radius: var(--r); cursor: pointer; font-weight: 500; color: var(--n700); display: flex; align-items: center; gap: 8px; }
+  .subnav button:hover { background: var(--n100); }
+  .subnav button[aria-current] { background: var(--navy-50); color: var(--navy-700); font-weight: 600; }
+  .subnav button:focus-visible { box-shadow: var(--focus); }
+  .subnav .grp { font-size: 12px; font-weight: 600; color: var(--muted); padding: 10px 10px 4px; }
+  .panel-h { margin-bottom: 16px; }
+  .panel-h p { margin: 4px 0 0; color: var(--muted); max-width: 70ch; }
+  .li { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+  .li:last-child { border-bottom: 0; }
+  .li .grip { color: var(--n300); cursor: grab; }
+  .li input.in { border: 1px solid transparent; background: transparent; padding: 4px 6px; border-radius: var(--r); flex: 1; min-width: 0; }
+  .li input.in:hover { border-color: var(--n300); }
+  .li input.in:focus { border-color: var(--sky-500); background: #fff; outline: none; box-shadow: 0 0 0 1px var(--sky-500); }
+  .addrow { display: flex; gap: 8px; padding: 10px 12px; background: var(--n25); border-top: 1px solid var(--line); border-radius: 0 0 var(--r-lg) var(--r-lg); }
+  .switch { position: relative; width: 32px; height: 18px; flex: none; }
+  .switch input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+  .switch i { position: absolute; inset: 0; border-radius: 9px; background: var(--n300); transition: background .12s; pointer-events: none; }
+  .switch i::after { content: ""; position: absolute; width: 14px; height: 14px; left: 2px; top: 2px; background: #fff; border-radius: 50%; transition: transform .12s; }
+  .switch input:checked + i { background: var(--navy-700); }
+  .switch input:checked + i::after { transform: translateX(14px); }
+  .switch input:focus-visible + i { box-shadow: var(--focus); }
+  .tgl { display: flex; align-items: center; gap: 8px; }
+  .catcard { border: 1px solid var(--line); border-radius: var(--r-lg); background: #fff; }
+  .catcard > header { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid var(--line); background: var(--n25); border-radius: var(--r-lg) var(--r-lg) 0 0; }
+  .catgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .opt { border: 1px solid var(--line); border-radius: var(--r); padding: 10px 12px; }
+  .opt:has(input:checked) { border-color: var(--navy-700); background: var(--navy-50); }
+  .tbl-in { width: 72px; text-align: right; }
+  .rule { display: flex; gap: 8px; align-items: center; padding: 10px 12px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .rule .n { width: 22px; height: 22px; border-radius: 50%; background: var(--navy-100); color: var(--navy-700); font-weight: 700; font-size: 12px; display: grid; place-items: center; }
+  .tabs.sm { margin-bottom: 12px; }
+  @media (max-width: 900px) { .set { grid-template-columns: 1fr; } .subnav { position: static; flex-direction: row; flex-wrap: wrap; } .catgrid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body data-active="settings">
+<div class="layout">
+  <aside class="sidenav"></aside>
+  <main class="main">
+    <div class="page-head"><div><div class="crumbs">Administration</div><h1>Tenant Settings</h1><div class="muted">Arunika Teknologi · setiap perusahaan punya proses sales sendiri; semuanya diatur di sini, bukan lewat kode</div></div><div class="spacer"></div><button class="btn primary" id="saveAll">Simpan perubahan</button></div>
+    <div id="body"></div>
+  </main>
+</div>
+
+<dialog id="critDlg">
+  <form method="dialog" id="critForm">
+    <div class="dlg-h"><h2 id="critTitle">Exit criteria</h2><div class="muted">Tulis dari sudut pandang pembeli: apa yang sudah dilakukan atau disetujui pembeli?</div></div>
+    <div class="dlg-b"><div id="critList" class="stack" style="gap:8px"></div><button type="button" class="btn sm" id="critAdd" style="align-self:flex-start">Tambah kriteria</button></div>
+    <div class="dlg-f"><button class="btn subtle" type="button" data-close>Batal</button><button class="btn primary" type="submit">Simpan kriteria</button></div>
+  </form>
+</dialog>
+
+<dialog id="fldDlg">
+  <form method="dialog" id="fldForm" novalidate>
+    <div class="dlg-h"><h2>Tambah custom field</h2><div class="muted" id="fldFor"></div></div>
+    <div class="dlg-b">
+      <div class="field"><label class="req" for="fLabel">Nama field</label><input class="input" id="fLabel" placeholder="mis. Jumlah cabang"><div class="err" id="fErr" hidden></div></div>
+      <div class="field"><label for="fType">Tipe</label><select class="select" id="fType"><option>Text</option><option>Number</option><option>Currency (Rp)</option><option>Date</option><option>Pick list</option><option>Checkbox</option><option>URL</option></select></div>
+      <div class="field" id="fOptsW" hidden><label for="fOpts">Pilihan <span class="muted" style="font-weight:400">(satu per baris)</span></label><textarea class="textarea" id="fOpts"></textarea></div>
+      <label class="check"><input type="checkbox" id="fReq"><span>Wajib diisi saat menyimpan</span></label>
+      <label class="check"><input type="checkbox" id="fList" checked><span>Tampilkan di daftar</span></label>
+    </div>
+    <div class="dlg-f"><button class="btn subtle" type="button" data-close>Batal</button><button class="btn primary" type="submit">Tambah field</button></div>
+  </form>
+</dialog>
+
+<dialog id="ruleDlg" style="width:min(620px,calc(100vw - 32px))">
+  <form method="dialog" id="ruleForm" novalidate>
+    <div class="dlg-h"><h2>Aturan penugasan baru</h2><div class="muted">Aturan dievaluasi berurutan; yang pertama cocok berlaku.</div></div>
+    <div class="dlg-b">
+      <div><div class="label" style="margin-bottom:6px">Jika <span class="muted" style="font-weight:400">(semua kondisi harus cocok)</span></div><div id="conds" class="stack" style="gap:8px"></div><button type="button" class="btn sm" id="addCond" style="margin-top:8px">Tambah kondisi</button><div class="err" id="eCond" hidden></div></div>
+      <div class="field"><label for="tType">Maka lead masuk ke</label>
+        <select class="select" id="tType"><option value="queue">Queue</option><option value="user">Sales tertentu</option><option value="rr">Round-robin (bergiliran)</option></select></div>
+      <div id="tVal"></div><div class="err" id="eTgt" hidden></div>
+      <div class="hint">Kondisi dapat memakai field bawaan maupun custom field yang Anda tambahkan.</div>
+    </div>
+    <div class="dlg-f"><button class="btn subtle" type="button" data-close>Batal</button><button class="btn primary" type="submit">Simpan aturan</button></div>
+  </form>
+</dialog>
+
+<script src="app.js"></script>
+<script>
+document.addEventListener("crm-ready", () => {
+  const C = window.CRM, $ = (s) => document.querySelector(s), body = $("#body");
+  if (C.role() !== "admin") {
+    $("#saveAll").hidden = true;
+    body.innerHTML = '<div class="card empty">' + C.icon("lock", "lg") + "<h2>Halaman ini hanya untuk Tenant Admin</h2><p>Peran Anda saat ini tidak punya akses ke pengaturan tenant. Hubungi Tenant Admin bila perlu perubahan.</p><button class='btn primary' id='asAdmin'>Lihat sebagai Tenant Admin (demo)</button></div>";
+    $("#asAdmin").onclick = () => { try { localStorage.setItem("crm-role", "admin"); } catch (e) {} location.reload(); };
+    return;
+  }
+
+  /* ---------- Model (contoh konfigurasi tenant) ---------- */
+  const M = {
+    statuses: { New: ["New", "Attempted to Contact"], "In Progress": ["Connected", "Qualifying"] },
+    leadLost: [["Tidak dapat dihubungi", false], ["Kebutuhan tidak cocok dengan produk", false], ["Waktu belum sesuai", true], ["Duplikat", false], ["Spam / data tidak valid", false]],
+    won: ["Kecocokan fitur", "Harga kompetitif", "Hubungan dengan pembeli", "Implementasi cepat"],
+    lost: ["Harga terlalu tinggi", "Memilih kompetitor", "Tidak ada keputusan / budget dibekukan", "Kebutuhan berubah", "Tidak ada respons"],
+    sources: [["Website form", "webhook"], ["Chatbot (webhook)", "webhook"], ["Import CSV", "import"], ["Event: HR Expo", ""], ["Referral", ""], ["Instagram", ""]],
+    pipes: {
+      b2b: { name: "B2B Sales", policy: "jump", stages: C.stages.map((s) => ({ ...s, prob: "", crit: [...s.criteria], req: s.id === "proposal" ? ["Deal value", "Close date"] : [] })) },
+      b2c: { name: "B2C Fast Track", policy: "step", stages: [{ id: "qual", name: "Qualification", stale: 3, gate: "guide", prob: "", crit: ["Pembeli mengonfirmasi minat"], req: [] }, { id: "offer", name: "Offer", stale: 5, gate: "guide", prob: "", crit: ["Penawaran diterima pembeli"], req: [] }, { id: "decision", name: "Decision Pending", stale: 7, gate: "guide", prob: "", crit: ["Pembeli memutuskan"], req: [] }] },
+    },
+    pipe: "b2b", probOn: false,
+    modes: { manager: true, claim: true, auto: true },
+    chan: { manual: "creator", import: "creator", hook: "rules" },
+    rules: [["Source = Website form", "Queue: Inbound Web"], ["Source = Chatbot (webhook)", "Queue: Inbound Web"], ["Region = Jawa Timur", "Round-robin: Dewi, Bagus"]],
+    thresh: 80,
+    entity: "Lead",
+    fields: {
+      Lead: [["Jumlah karyawan", "Number", false, true], ["Sistem saat ini", "Text", false, false], ["Lokasi pabrik", "Text", false, false]],
+      Contact: [["Tanggal lahir", "Date", false, false]],
+      Account: [["NPWP", "Text", false, false], ["Segmen", "Pick list", true, true]],
+      Opportunity: [["Kompetitor", "Pick list", false, true], ["Metode pembayaran", "Pick list", false, false]],
+      Activity: [],
+    },
+    actTypes: ["Call", "Meeting", "Email", "Task", "Note"],
+  };
+  let tab = "statuses", critCtx = null;
+
+  const TABS = [
+    ["Lead", [["statuses", "Lead statuses"], ["lostr", "Reasons"], ["sources", "Lead sources"], ["assign", "Lead assignment"]]],
+    ["Opportunity", [["pipes", "Pipelines & stages"]]],
+    ["Performance", [["quota", "Quota & performance"]]],
+    ["Data", [["fields", "Custom fields"], ["acttypes", "Activity types"]]],
+  ];
+  const sw = (id, on, label) => '<label class="tgl"><span class="switch"><input type="checkbox" id="' + id + '"' + (on ? " checked" : "") + '><i></i></span>' + (label ? "<span>" + label + "</span>" : "") + "</label>";
+  const head = (t, p) => '<div class="panel-h"><h2 style="font-size:16px;line-height:24px">' + t + "</h2><p>" + p + "</p></div>";
+  const rm = '<button class="btn icon sm subtle" data-rm aria-label="Hapus" title="Hapus">' + C.icon("x", "sm") + "</button>";
+  function listEditor(arr, key, opts) {
+    opts = opts || {};
+    return '<div class="card" data-list="' + key + '">' + arr.map((v, i) => '<div class="li" data-i="' + i + '"><span class="grip" title="Seret untuk mengurutkan">' + C.icon("list", "sm") + '</span><input class="in" value="' + C.esc(opts.get ? opts.get(v) : v) + '" aria-label="Nama">' + (opts.extra ? opts.extra(v, i) : "") + rm + "</div>").join("") +
+      '<div class="addrow"><input class="input" placeholder="' + (opts.ph || "Tambah baru") + '" data-add-in><button class="btn" data-add>Tambah</button></div></div>';
+  }
+
+  function render() {
+    $("#body").innerHTML = '<div class="set"><nav class="subnav" aria-label="Pengaturan">' + TABS.map(([g, items]) => '<div class="grp">' + g + "</div>" + items.map(([id, l]) => '<button data-t="' + id + '"' + (id === tab ? " aria-current=\"page\"" : "") + ">" + l + "</button>").join("")).join("") + '</nav><section id="panel" aria-live="polite"></section></div>';
+    document.querySelectorAll(".subnav button").forEach((b) => (b.onclick = () => { tab = b.dataset.t; render(); }));
+    PANELS[tab](); bindCommon();
+  }
+
+  const PANELS = {
+    statuses() {
+      const cat = (n, desc, body, tone) => '<div class="catcard"><header><span class="lozenge ' + tone + '">' + n + '</span><span class="lozenge" title="Laporan dan logika sistem membaca kategori ini">' + C.icon("lock", "sm") + 'Kategori sistem</span></header><div style="padding:12px"><p class="muted" style="margin:0 0 8px">' + desc + "</p>" + body + "</div></div>";
+      $("#panel").innerHTML = head("Lead statuses", "Empat kategori bersifat tetap supaya laporan dapat dibandingkan. Status di bawah New dan In Progress diatur bebas oleh tenant.") +
+        '<div class="catgrid">' + cat("New", "Lead tercatat, belum ada percakapan bermakna.", listEditor(M.statuses.New, "st-New", { ph: "Status baru di bawah New" }), "blue") +
+        cat("In Progress", "Percakapan terjadi, qualification berjalan.", listEditor(M.statuses["In Progress"], "st-In Progress", { ph: "Status baru di bawah In Progress" }), "blue") +
+        cat("Lost", "Tidak lanjut. Alasan wajib dicatat. Boleh dibuka kembali.", '<span class="hint">Alasan diatur di tab Reasons.</span>', "lost") +
+        cat("Converted", "Lead menjadi Contact, Account, dan Opportunity.", '<span class="hint">Tidak ada status turunan.</span>', "won") + "</div>" +
+        '<div class="card" style="margin-top:16px"><div class="card-h"><h2>Pratinjau status di Lead</h2></div><div class="card-b"><ol class="path" style="max-width:560px"><li class="done">' + C.icon("check", "sm") + 'New</li><li class="current">In Progress</li><li class="next">Converted</li></ol><div class="path-sub">Status: <b>' + C.esc(M.statuses["In Progress"][0] || "—") + "</b> (dipilih Sales dari daftar di atas)</div></div></div>";
+    },
+    lostr() {
+      $("#panel").innerHTML = head("Reasons", "Alasan wajib diisi hanya pada dua titik: Lead menjadi Lost dan Opportunity ditutup. Pilihannya diatur tenant agar laporan bermakna untuk bisnis Anda.") +
+        '<div class="stack" style="gap:20px"><div><h3 style="margin-bottom:6px">Lead Lost</h3>' + listEditor(M.leadLost, "leadLost", { get: (v) => v[0], extra: (v, i) => '<span class="tgl muted" style="font-size:12px">' + sw("nu" + i, v[1], "Boleh dihubungi lagi") + "</span>", ph: "Alasan baru" }) + "</div>" +
+        '<div class="catgrid"><div><h3 style="margin-bottom:6px">Opportunity Closed-Won</h3>' + listEditor(M.won, "won", { ph: "Alasan menang baru" }) + '</div><div><h3 style="margin-bottom:6px">Opportunity Closed-Lost</h3>' + listEditor(M.lost, "lost", { ph: "Alasan kalah baru" }) + "</div></div></div>";
+    },
+    sources() {
+      $("#panel").innerHTML = head("Lead sources", "Source wajib diisi pada setiap lead dan menjadi dasar laporan revenue per kanal. Source bertanda webhook atau import dipakai oleh integrasi.") +
+        listEditor(M.sources, "sources", { get: (v) => v[0], extra: (v) => (v[1] ? '<span class="lozenge ' + (v[1] === "webhook" ? "blue" : "") + '">' + v[1] + "</span>" : ""), ph: "Source baru" });
+    },
+    assign() {
+      const ch = (id, label, opts) => '<tr><td>' + label + '</td><td><select class="select" data-ch="' + id + '" style="max-width:340px">' + opts.map(([v, t]) => '<option value="' + v + '"' + (M.chan[id] === v ? " selected" : "") + ">" + t + "</option>").join("") + "</select></td></tr>";
+      $("#panel").innerHTML = head("Lead assignment", "Setiap lead harus punya Owner atau berada di Queue. Aktifkan cara yang dipakai tim Anda; ketiganya boleh dipakai bersamaan.") +
+        '<div class="stack"><div class="stack" style="gap:8px">' +
+        '<label class="opt check"><input type="checkbox" data-mode="manager"' + (M.modes.manager ? " checked" : "") + '><span><b>Manager meng-assign</b><br><span class="hint">Sales Manager memilih Owner dari Queue atau secara massal.</span></span></label>' +
+        '<label class="opt check"><input type="checkbox" data-mode="claim"' + (M.modes.claim ? " checked" : "") + '><span><b>Sales meng-claim dari Queue</b><br><span class="hint">Sales mengambil lead tanpa Owner. Yang pertama berhasil, lainnya melihat bahwa lead sudah diambil.</span></span></label>' +
+        '<label class="opt check"><input type="checkbox" data-mode="auto"' + (M.modes.auto ? " checked" : "") + '><span><b>Owner otomatis</b><br><span class="hint">Lead yang diinput atau di-import oleh seorang Sales langsung menjadi miliknya. Webhook, form, dan API tidak punya user login, jadi mengikuti aturan di bawah.</span></span></label></div>' +
+        '<div class="card"><div class="card-h"><h2>Default per cara lead masuk</h2></div><table class="table"><tbody>' +
+        ch("manual", "Input manual di CRM", [["creator", "Owner = yang menginput"], ["queue", "Masuk Queue"]]) + ch("import", "Import file", [["creator", "Owner = yang meng-import"], ["rules", "Jalankan aturan, lalu Queue"], ["queue", "Masuk Queue"]]) + ch("hook", "Webhook, form, API", [["rules", "Jalankan aturan, lalu Queue"], ["queue", "Langsung ke Queue"]]) + "</tbody></table></div>" +
+        '<div class="card"><div class="card-h"><h2>Aturan (dievaluasi berurutan, yang pertama cocok berlaku)</h2></div>' +
+        M.rules.map((r, i) => '<div class="rule" data-r="' + i + '"><span class="n">' + (i + 1) + "</span><span>Jika <b>" + C.esc(r[0]) + "</b></span>" + C.icon("right", "sm") + "<span>" + C.esc(r[1]) + '</span><span class="spacer"></span><button class="btn icon sm subtle" data-up aria-label="Naikkan" title="Naikkan prioritas"' + (i === 0 ? " disabled" : "") + ">" + C.icon("down", "sm").replace("<svg", '<svg style="transform:rotate(180deg)"') + '</button><button class="btn icon sm subtle" data-dn aria-label="Turunkan" title="Turunkan prioritas"' + (i === M.rules.length - 1 ? " disabled" : "") + ">" + C.icon("down", "sm") + "</button>" + rm + "</div>").join("") +
+        '<div class="rule"><span class="n">' + (M.rules.length + 1) + '</span><span>Jika tidak ada yang cocok</span>' + C.icon("right", "sm") + '<span><b>Queue: Inbound Web</b></span><span class="spacer"></span><span class="lozenge">Pemilik cadangan</span></div>' +
+        '<div class="addrow"><button class="btn" id="addRule">' + C.icon("plus", "sm") + 'Tambah aturan</button><span class="hint" style="align-self:center">Pola lain seperti round-robin dan territory tersedia sebagai tujuan aturan.</span></div></div></div>';
+    },
+    pipes() {
+      const P = M.pipes[M.pipe], st = P.stages;
+      $("#panel").innerHTML = head("Pipelines & stages", "Satu tenant boleh punya beberapa pipeline, masing-masing dengan stage sendiri. Won dan Lost selalu ada sebagai penutup.") +
+        '<div class="row wrap" style="margin-bottom:12px"><select class="select" id="pSel" style="width:auto;font-weight:600">' + Object.entries(M.pipes).map(([k, v]) => '<option value="' + k + '"' + (k === M.pipe ? " selected" : "") + ">" + v.name + " (" + v.stages.length + " stage)</option>").join("") + '</select><button class="btn" id="newPipe">' + C.icon("plus", "sm") + 'Pipeline baru</button><span class="spacer"></span>' + sw("probOn", M.probOn, "Aktifkan probability & weighted forecast") + "</div>" +
+        '<div class="card" style="overflow:auto"><table class="table"><thead><tr><th>Stage</th><th class="r">Stale setelah (hari)</th><th class="r">Probability (%)</th><th>Wajib diisi untuk masuk</th><th>Exit criteria</th><th>Mode</th><th></th></tr></thead><tbody>' +
+        st.map((s, i) => '<tr data-s="' + i + '"><td><div class="row"><span class="grip muted">' + C.icon("list", "sm") + '</span><input class="input" data-f="name" value="' + C.esc(s.name) + '" style="min-width:150px"></div></td>' +
+          '<td class="r"><input class="input tbl-in" data-f="stale" inputmode="numeric" value="' + (s.stale || "") + '" placeholder="off" aria-label="Stale setelah"></td>' +
+          '<td class="r"><input class="input tbl-in" data-f="prob" inputmode="numeric" value="' + (s.prob || "") + '" ' + (M.probOn ? 'placeholder="isi"' : 'disabled placeholder="—"') + ' aria-label="Probability"></td>' +
+          '<td>' + (s.req.length ? s.req.map((r) => '<span class="lozenge">' + r + "</span>").join(" ") : '<span class="muted">Tidak ada</span>') + '</td><td><button class="btn sm" data-crit>' + s.crit.length + " kriteria</button></td>" +
+          '<td><select class="select" data-f="gate" style="width:auto">' + ["guide", "warn", "block"].map((g) => '<option value="' + g + '"' + (s.gate === g ? " selected" : "") + ">" + C.gateLabel[g] + "</option>").join("") + "</select></td><td>" + rm + "</td></tr>").join("") +
+        '<tr style="background:var(--n25)"><td><span class="lozenge won">Closed-Won</span></td><td colspan="2" class="r muted">Revenue dihitung dari sini · 100%</td><td colspan="4"><span class="muted">Alasan wajib. Dikelola di tab Reasons.</span></td></tr>' +
+        '<tr style="background:var(--n25)"><td><span class="lozenge lost">Closed-Lost</span></td><td colspan="2" class="r muted">0%</td><td colspan="4"><span class="muted">Alasan wajib. Dikelola di tab Reasons.</span></td></tr></tbody></table>' +
+        '<div class="addrow"><button class="btn" id="addStage">' + C.icon("plus", "sm") + 'Tambah stage</button><span class="hint" style="align-self:center">Praktik umum 5–7 stage. Lebih dari 8 membuat Sales sibuk memperbarui status.</span></div></div>' +
+        '<div class="card" style="margin-top:12px"><div class="card-b row wrap"><div style="flex:1;min-width:240px"><b>Perpindahan stage ke depan</b><div class="hint">Mundur selalu diizinkan dengan alasan wajib. Menutup langsung ke Closed-Won atau Closed-Lost selalu diizinkan dengan alasan.</div></div><select class="select" id="polSel" style="width:auto"><option value="jump"' + (P.policy === "jump" ? " selected" : "") + '>Lompat diizinkan</option><option value="step"' + (P.policy === "step" ? " selected" : "") + '>Satu stage per langkah</option></select></div><div class="card-b hint" style="border-top:1px solid var(--line)">Saat melompat, syarat setiap stage yang dilewati tetap diperiksa (mode Warning dan Blocking), dan stage yang dilewati dicatat sebagai <i>skipped</i> di riwayat.</div></div>' +
+        '<div class="banner info" style="margin-top:12px">' + C.icon("flag") + "<div><b>Mode exit criteria.</b> Guidance: kriteria hanya ditampilkan. Warning: boleh dilewati, tercatat. Blocking: harus terpenuhi sebelum maju.</div></div>" +
+        (M.probOn ? "" : '<div class="hint" style="margin-top:8px">Probability nonaktif: Pipeline & Forecast menampilkan nilai total tanpa pembobotan. Angka tidak diisi otomatis; tenant menentukan sendiri.</div>');
+    },
+    quota() {
+      $("#panel").innerHTML = head("Quota & performance", "Quota ditetapkan Sales Manager per Sales per bulan. Attainment = nilai Closed-Won ÷ quota.") +
+        '<div class="card"><div class="card-b stack" style="gap:16px"><div class="field" style="max-width:360px"><label>Periode quota</label><div class="input row" style="background:var(--n50)">' + C.icon("lock", "sm") + 'Bulanan (tetap)</div></div>' +
+        '<div class="field" style="max-width:360px"><label for="th">Ambang performa (%)</label><input class="input num" id="th" inputmode="numeric" value="' + M.thresh + '"><div class="hint">Sales di bawah ambang ditandai <b>Di bawah ambang</b>. Nilai 80 dipakai bila tenant belum mengaturnya.</div></div>' +
+        '<div><div class="label" style="margin-bottom:8px">Pratinjau pada tim saat ini</div><div class="stack" style="gap:8px" id="thPrev"></div></div></div></div>';
+      const draw = () => { const t = +($("#th").value) || 0; $("#thPrev").innerHTML = C.quota.map((q) => { const a = Math.round((q.won / q.target) * 100); return '<div class="row">' + C.avatar(q.id) + '<span style="width:140px">' + C.users[q.id].name + '</span><span class="num" style="width:44px;text-align:right">' + a + '%</span><span class="lozenge ' + (a >= t ? "won" : "warn") + '">' + (a >= t ? "Mencapai target" : "Di bawah ambang") + "</span></div>"; }).join(""); };
+      $("#th").oninput = (e) => { M.thresh = e.target.value; draw(); }; draw();
+    },
+    fields() {
+      const ents = Object.keys(M.fields), rows = M.fields[M.entity];
+      $("#panel").innerHTML = head("Custom fields", "Tambahkan field sesuai kebutuhan perusahaan Anda tanpa mengubah core. Field baru langsung muncul di form, detail, dan daftar, serta ikut terkirim di event webhook.") +
+        '<div class="tabs sm" role="tablist">' + ents.map((e) => '<button class="tab" role="tab" aria-selected="' + (e === M.entity) + '" data-e="' + e + '">' + e + ' <span class="count">' + M.fields[e].length + "</span></button>").join("") + "</div>" +
+        '<div class="card">' + (rows.length ? '<table class="table"><thead><tr><th>Nama field</th><th>Tipe</th><th>Wajib</th><th>Di daftar</th><th></th></tr></thead><tbody>' + rows.map((r, i) => '<tr data-i="' + i + '"><td><b>' + C.esc(r[0]) + '</b></td><td><span class="lozenge">' + r[1] + '</span></td><td>' + (r[2] ? '<span class="lozenge warn">Wajib</span>' : '<span class="muted">Opsional</span>') + "</td><td>" + (r[3] ? C.icon("check", "sm") : '<span class="muted">—</span>') + "</td><td class=\"r\">" + rm + "</td></tr>").join("") + "</tbody></table>"
+          : '<div class="empty"><h2>Belum ada custom field untuk ' + M.entity + "</h2><p>Tambahkan field pertama bila ada data yang tidak tertampung field bawaan.</p></div>") +
+        '<div class="addrow"><button class="btn primary" id="addField">' + C.icon("plus", "sm") + "Tambah field</button></div></div>" +
+        (rows.length ? '<div class="card" style="margin-top:16px"><div class="card-h"><h2>Pratinjau di form ' + M.entity + '</h2></div><div class="card-b catgrid"><div class="field"><label>Nama</label><input class="input" disabled placeholder="Field bawaan"></div>' + rows.map((r) => '<div class="field"><label class="' + (r[2] ? "req" : "") + '">' + C.esc(r[0]) + '</label>' + (r[1] === "Pick list" ? '<select class="select" disabled><option>Pilih</option></select>' : r[1] === "Checkbox" ? '<label class="check"><input type="checkbox" disabled><span>Ya</span></label>' : '<input class="input" disabled placeholder="' + r[1] + '">') + "</div>").join("") + "</div></div>" : "");
+    },
+    acttypes() {
+      $("#panel").innerHTML = head("Activity types", "Jenis activity yang dapat dicatat Sales pada Lead, Opportunity, Contact, dan Account.") + listEditor(M.actTypes, "act", { ph: "Jenis activity baru" });
+    },
+  };
+
+  /* ---------- Interaksi bersama ---------- */
+  function listArr(key) {
+    if (key.startsWith("st-")) return M.statuses[key.slice(3)];
+    return { leadLost: M.leadLost, won: M.won, lost: M.lost, sources: M.sources, act: M.actTypes }[key];
+  }
+  function bindCommon() {
+    document.querySelectorAll("[data-list]").forEach((el) => {
+      const key = el.dataset.list, arr = listArr(key), isPair = Array.isArray(arr[0]);
+      el.querySelectorAll(".li").forEach((li) => {
+        const i = +li.dataset.i;
+        li.querySelector("input.in").onchange = (e) => { if (isPair) arr[i][0] = e.target.value; else arr[i] = e.target.value; };
+        li.querySelector("[data-rm]").onclick = () => { arr.splice(i, 1); render(); C.toast("Dihapus. Data lama yang memakainya tetap tersimpan"); };
+        const nu = li.querySelector('input[id^="nu"]'); if (nu) nu.onchange = () => { arr[i][1] = nu.checked; };
+      });
+      const add = () => { const inp = el.querySelector("[data-add-in]"), v = inp.value.trim(); if (!v) { inp.focus(); return; } arr.push(isPair ? [v, key === "leadLost" ? false : ""] : v); render(); };
+      el.querySelector("[data-add]").onclick = add;
+      el.querySelector("[data-add-in]").onkeydown = (e) => { if (e.key === "Enter") { e.preventDefault(); add(); } };
+    });
+    document.querySelectorAll("[data-mode]").forEach((c) => (c.onchange = () => { M.modes[c.dataset.mode] = c.checked; }));
+    document.querySelectorAll("[data-ch]").forEach((s) => (s.onchange = () => { M.chan[s.dataset.ch] = s.value; }));
+    document.querySelectorAll(".rule [data-rm]").forEach((b) => (b.onclick = () => { M.rules.splice(+b.closest(".rule").dataset.r, 1); render(); }));
+    const ar = $("#addRule"); if (ar) ar.onclick = openRule;
+    document.querySelectorAll(".rule [data-up]").forEach((b) => (b.onclick = () => { const i = +b.closest(".rule").dataset.r; [M.rules[i - 1], M.rules[i]] = [M.rules[i], M.rules[i - 1]]; render(); }));
+    document.querySelectorAll(".rule [data-dn]").forEach((b) => (b.onclick = () => { const i = +b.closest(".rule").dataset.r; [M.rules[i + 1], M.rules[i]] = [M.rules[i], M.rules[i + 1]]; render(); }));
+    const pr = $("#probOn"); if (pr) pr.onchange = () => { M.probOn = pr.checked; render(); };
+    const pol = $("#polSel"); if (pol) pol.onchange = () => { M.pipes[M.pipe].policy = pol.value; C.toast(pol.value === "jump" ? "Lompat stage diizinkan" : "Maju satu stage per langkah"); };
+    const ps = $("#pSel"); if (ps) ps.onchange = () => { M.pipe = ps.value; render(); };
+    const np = $("#newPipe"); if (np) np.onclick = () => C.toast("Pipeline baru: nama, templat stage, lalu atur seperti di sini");
+    const as = $("#addStage"); if (as) as.onclick = () => { M.pipes[M.pipe].stages.push({ id: "s" + Date.now(), name: "Stage baru", stale: "", gate: "guide", prob: "", crit: [], req: [] }); render(); };
+    document.querySelectorAll("tr[data-s]").forEach((tr) => {
+      const s = M.pipes[M.pipe].stages[+tr.dataset.s];
+      tr.querySelectorAll("[data-f]").forEach((f) => (f.onchange = () => { s[f.dataset.f] = f.value; }));
+      const rb = tr.querySelector("[data-rm]"); if (rb) rb.onclick = () => { M.pipes[M.pipe].stages.splice(+tr.dataset.s, 1); render(); C.toast("Stage dihapus. Opportunity di stage ini harus dipindahkan lebih dulu"); };
+      tr.querySelector("[data-crit]").onclick = () => openCrit(s);
+    });
+    document.querySelectorAll("[data-e]").forEach((b) => (b.onclick = () => { M.entity = b.dataset.e; render(); }));
+    const af = $("#addField"); if (af) af.onclick = () => { $("#fFor") && 0; $("#fldFor").textContent = "Untuk: " + M.entity; $("#fLabel").value = ""; $("#fOpts").value = ""; $("#fErr").hidden = true; $("#fOptsW").hidden = true; $("#fType").value = "Text"; C.openDlg("fldDlg"); };
+    document.querySelectorAll("[data-i] [data-rm]").forEach((b) => { const tr = b.closest("tr"); if (tr && tab === "fields") b.onclick = () => { M.fields[M.entity].splice(+tr.dataset.i, 1); render(); C.toast("Field dihapus dari tampilan. Data lama tetap tersimpan"); }; });
+  }
+  function openCrit(s) {
+    critCtx = s; $("#critTitle").textContent = "Exit criteria · " + s.name;
+    const draw = () => { $("#critList").innerHTML = s._c.map((c, i) => '<div class="row"><input class="input" value="' + C.esc(c) + '" data-ci="' + i + '" aria-label="Kriteria ' + (i + 1) + '"><button type="button" class="btn icon sm subtle" data-cx="' + i + '" aria-label="Hapus kriteria">' + C.icon("x", "sm") + "</button></div>").join("") || '<div class="hint">Belum ada kriteria.</div>';
+      $("#critList").querySelectorAll("[data-ci]").forEach((x) => (x.oninput = () => { s._c[+x.dataset.ci] = x.value; }));
+      $("#critList").querySelectorAll("[data-cx]").forEach((x) => (x.onclick = () => { s._c.splice(+x.dataset.cx, 1); draw(); })); };
+    s._c = [...s.crit]; draw(); $("#critAdd").onclick = () => { s._c.push(""); draw(); $("#critList").querySelector("[data-ci]:last-of-type") ; };
+    C.openDlg("critDlg");
+  }
+  $("#critForm").onsubmit = () => { critCtx.crit = critCtx._c.filter((x) => x.trim()); render(); C.toast("Kriteria disimpan"); };
+  $("#fType").onchange = (e) => { $("#fOptsW").hidden = e.target.value !== "Pick list"; };
+  $("#fldForm").onsubmit = (e) => {
+    const l = $("#fLabel").value.trim(); if (!l) { e.preventDefault(); $("#fErr").hidden = false; $("#fErr").innerHTML = C.icon("alert", "sm") + "Nama field wajib diisi"; return; }
+    M.fields[M.entity].push([l, $("#fType").value, $("#fReq").checked, $("#fList").checked]); render(); C.toast("Field ditambahkan ke " + M.entity);
+  };
+
+  /* ---------- Pembuat aturan penugasan ---------- */
+  const BASE_F = () => [
+    { l: "Source", t: "pick", o: () => M.sources.map((x) => x[0]) },
+    { l: "Wilayah", t: "text" }, { l: "Industri", t: "text" },
+    { l: "Ukuran organisasi (karyawan)", t: "num" },
+    { l: "Tipe pelanggan", t: "pick", o: () => ["B2B (ada organisasi)", "B2C (individu)"] },
+    { l: "Rating", t: "pick", o: () => ["Hot", "Warm", "Cold"] },
+    ...M.fields.Lead.map((f) => ({ l: "Custom: " + f[0], t: f[1] === "Number" ? "num" : f[1] === "Pick list" ? "text" : "text", custom: true })),
+  ];
+  const OPS = { pick: ["adalah", "bukan"], text: ["adalah", "mengandung"], num: ["=", ">", "<"] };
+  let conds = [];
+  function drawConds() {
+    const F = BASE_F();
+    $("#conds").innerHTML = conds.map((c, i) => {
+      const f = F[c.f] || F[0];
+      const val = f.t === "pick" ? '<select class="select" data-v="' + i + '" aria-label="Nilai">' + f.o().map((x) => "<option" + (x === c.v ? " selected" : "") + ">" + C.esc(x) + "</option>").join("") + "</select>" : '<input class="input" data-v="' + i + '" value="' + C.esc(c.v) + '" ' + (f.t === "num" ? 'inputmode="numeric"' : "") + ' placeholder="Nilai" aria-label="Nilai">';
+      return '<div class="row"><select class="select" data-f="' + i + '" style="flex:1.3" aria-label="Field">' + F.map((x, k) => '<option value="' + k + '"' + (k === c.f ? " selected" : "") + ">" + C.esc(x.l) + "</option>").join("") + '</select><select class="select" data-o="' + i + '" style="flex:.7" aria-label="Operator">' + OPS[f.t].map((x) => "<option" + (x === c.o ? " selected" : "") + ">" + x + "</option>").join("") + '</select><div style="flex:1">' + val + "</div>" + (conds.length > 1 ? '<button type="button" class="btn icon sm subtle" data-cx="' + i + '" aria-label="Hapus kondisi">' + C.icon("x", "sm") + "</button>" : "") + "</div>";
+    }).join("");
+    $("#conds").querySelectorAll("[data-f]").forEach((e) => (e.onchange = () => { const i = +e.dataset.f, f = BASE_F()[+e.value]; conds[i] = { f: +e.value, o: OPS[f.t][0], v: f.t === "pick" ? f.o()[0] : "" }; drawConds(); }));
+    $("#conds").querySelectorAll("[data-o]").forEach((e) => (e.onchange = () => { conds[+e.dataset.o].o = e.value; }));
+    $("#conds").querySelectorAll("[data-v]").forEach((e) => { e.onchange = e.oninput = () => { conds[+e.dataset.v].v = e.value; }; });
+    $("#conds").querySelectorAll("[data-cx]").forEach((e) => (e.onclick = () => { conds.splice(+e.dataset.cx, 1); drawConds(); }));
+  }
+  function drawTgt() {
+    const t = $("#tType").value;
+    $("#tVal").innerHTML = t === "queue" ? '<div class="field"><label for="tq">Queue</label><select class="select" id="tq"><option>Inbound Web</option><option>Event & Pameran</option><option>Referral</option></select></div>'
+      : t === "user" ? '<div class="field"><label for="tu">Sales</label><select class="select" id="tu">' + ["raka", "dewi", "bagus"].map((u) => '<option value="' + u + '">' + C.users[u].name + "</option>").join("") + "</select></div>"
+      : '<div class="field"><div class="label">Bergiliran di antara</div><div class="stack" style="gap:6px">' + ["raka", "dewi", "bagus"].map((u) => '<label class="check"><input type="checkbox" data-rr value="' + u + '"><span>' + C.users[u].name + "</span></label>").join("") + "</div></div>";
+  }
+  function openRule() { conds = [{ f: 0, o: "adalah", v: M.sources[0][0] }]; $("#tType").value = "queue"; $("#eCond").hidden = $("#eTgt").hidden = true; drawConds(); drawTgt(); C.openDlg("ruleDlg"); }
+  $("#addCond").onclick = () => { conds.push({ f: 0, o: "adalah", v: M.sources[0][0] }); drawConds(); };
+  $("#tType").onchange = drawTgt;
+  $("#ruleForm").onsubmit = (e) => {
+    const F = BASE_F(); let bad = false;
+    const okC = conds.length && conds.every((c) => String(c.v).trim() !== ""); $("#eCond").hidden = okC;
+    if (!okC) { $("#eCond").innerHTML = C.icon("alert", "sm") + "Isi nilai pada setiap kondisi"; bad = true; }
+    const t = $("#tType").value; let tgt = "";
+    if (t === "queue") tgt = "Queue: " + $("#tq").value; else if (t === "user") tgt = "Owner: " + C.users[$("#tu").value].name;
+    else { const us = [...document.querySelectorAll("[data-rr]:checked")].map((x) => C.users[x.value].name.split(" ")[0]); if (us.length < 2) { $("#eTgt").hidden = false; $("#eTgt").innerHTML = C.icon("alert", "sm") + "Pilih minimal dua Sales untuk round-robin"; bad = true; } else tgt = "Round-robin: " + us.join(", "); }
+    if (bad) { e.preventDefault(); return; }
+    M.rules.push([conds.map((c) => F[c.f].l + " " + c.o + " " + c.v).join(" dan "), tgt]); render(); C.toast("Aturan ditambahkan di urutan terakhir");
+  };
+  $("#saveAll").onclick = () => C.toast("Pengaturan disimpan. Berlaku untuk seluruh user di tenant ini");
+  render();
+});
+</script>
+</body>
+</html>

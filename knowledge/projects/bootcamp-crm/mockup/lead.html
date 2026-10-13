@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lead — Andini Prameswari</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="crm.css">
+<style>
+  .grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; }
+  .hl { padding: 16px; display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap; }
+  .facts { display: flex; gap: 28px; flex-wrap: wrap; margin-top: 12px; }
+  .fact .k { font-size: 12px; color: var(--muted); }
+  .fact .v { font-weight: 500; }
+  .demo { display: flex; gap: 8px; align-items: center; font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+  .demo a { padding: 2px 8px; border-radius: 10px; background: var(--n100); color: var(--n700); font-weight: 500; }
+  .demo a[aria-current] { background: var(--navy-700); color: #fff; }
+  .seg { display: inline-flex; border: 1px solid var(--n300); border-radius: var(--r); overflow: hidden; }
+  .seg label { padding: 5px 10px; cursor: pointer; font-weight: 500; border-right: 1px solid var(--n300); display: flex; gap: 6px; align-items: center; }
+  .seg label:last-child { border-right: 0; }
+  .seg input { position: absolute; opacity: 0; }
+  .seg label:has(input:checked) { background: var(--navy-50); color: var(--navy-700); }
+  .seg label:has(input:focus-visible) { box-shadow: inset 0 0 0 2px var(--sky-500); }
+  .opt { border: 1px solid var(--line); border-radius: var(--r); padding: 10px 12px; }
+  .opt:has(input:checked) { border-color: var(--navy-700); background: var(--navy-50); }
+  .res li { display: flex; gap: 8px; align-items: center; padding: 3px 0; }
+  .res { list-style: none; margin: 0; padding: 0; }
+  textarea.draft { min-height: 170px; }
+  @media (max-width: 1100px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body data-active="leads">
+<div class="layout">
+  <aside class="sidenav"></aside>
+  <main class="main">
+    <div class="demo">Demo state:
+      <a href="?state=queue" data-s="queue">Di Queue (belum ada Owner)</a>
+      <a href="?state=working" data-s="working">In Progress</a>
+      <a href="?state=lost" data-s="lost">Lost</a>
+    </div>
+
+    <div class="page-head">
+      <div>
+        <div class="crumbs"><a href="leads.html">Leads</a> / Andini Prameswari</div>
+        <h1>Andini Prameswari</h1>
+        <div class="muted">Head of HR · PT Surya Kencana Farma</div>
+      </div>
+      <div class="spacer"></div>
+      <div class="row wrap" id="actions"></div>
+    </div>
+
+    <div id="banner" style="margin-bottom:12px"></div>
+
+    <section class="card" aria-label="Ringkasan lead">
+      <div class="hl">
+        <span class="avatar xl a5">AP</span>
+        <div style="flex:1;min-width:260px">
+          <div class="row wrap"><span id="statusLoz"></span><span class="lozenge warn" title="Penilaian manual Sales">Rating: Warm</span><span class="lozenge">Website form</span></div>
+          <div class="facts">
+            <div class="fact"><div class="k">Owner</div><div class="v row" id="ownerV"></div></div>
+            <div class="fact"><div class="k">Lead masuk</div><div class="v num">12 Okt, 08:41</div></div>
+            <div class="fact"><div class="k">Telepon</div><div class="v num">+62 812-9055-0148</div></div>
+            <div class="fact"><div class="k">Email</div><div class="v">andini@skfarma.co.id</div></div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:4px 16px 16px">
+        <ol class="path" id="path" aria-label="Status lead"></ol>
+        <div class="row path-sub" id="pathSub"></div>
+      </div>
+    </section>
+
+    <div class="grid" style="margin-top:16px">
+      <div>
+        <div class="tabs" role="tablist" id="tabs">
+          <button class="tab" role="tab" aria-selected="false" data-t="details">Details</button>
+          <button class="tab" role="tab" aria-selected="true" data-t="activity">Activity <span class="count" id="actCount"></span></button>
+          <button class="tab" role="tab" aria-selected="false" data-t="history">History</button>
+        </div>
+        <div id="pane" style="margin-top:16px"></div>
+      </div>
+
+      <div class="stack">
+        <section class="ai-panel" aria-label="Asisten AI">
+          <header>{{ic:spark}} AI Assistant <span class="lozenge ai" style="margin-left:auto;background:#fff">Draf</span></header>
+          <div class="ai-body" id="aiBody"></div>
+        </section>
+        <section class="card">
+          <div class="card-h"><h2>Kecepatan respons</h2></div>
+          <div class="card-b stack" style="gap:8px">
+            <div class="row"><span class="muted" style="flex:1">Masuk → kontak pertama</span><b class="num" id="rt">21 menit</b></div>
+            <div class="hint">Target waktu respons belum ditetapkan tenant. Angka ini hanya diukur.</div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Convert -->
+<dialog id="convDlg">
+  <form method="dialog" id="convForm" novalidate>
+    <div class="dlg-h"><h2>Convert lead</h2><div class="muted">Satu aksi membentuk Contact, Account, dan Opportunity.</div></div>
+    <div class="dlg-b">
+      <div class="stack" style="gap:8px">
+        <div class="label">Account</div>
+        <label class="opt check"><input type="radio" name="acc" value="existing" checked><span><b>Gunakan PT Surya Kencana Farma</b><br><span class="hint">Cocok: domain email skfarma.co.id · 1 Contact tercatat (Hendra Wijaya, Procurement)</span></span></label>
+        <label class="opt check"><input type="radio" name="acc" value="new"><span><b>Buat Account baru</b><br><span class="hint">Pilih bila ini entitas berbeda. Cek duplikat akan tetap dijalankan.</span></span></label>
+        <label class="opt check"><input type="radio" name="acc" value="none"><span><b>Tanpa Account (pelanggan B2C)</b><br><span class="hint">Contact berdiri sendiri.</span></span></label>
+      </div>
+      <div class="field"><label>Contact</label><div class="row"><span class="lozenge won">Baru</span>Andini Prameswari · tidak ada Contact yang cocok</div></div>
+      <div class="field"><label class="req" for="oName">Nama opportunity</label><input class="input" id="oName" value="PT Surya Kencana Farma – HRIS 4 pabrik"></div>
+      <div class="row" style="align-items:flex-start;gap:12px">
+        <div class="field" style="flex:1"><label class="req" for="oVal">Deal value (Rp)</label><input class="input num" id="oVal" inputmode="numeric" placeholder="mis. 350.000.000"><div class="hint">Budget yang disebut: Rp 300–400 jt</div><div class="err" id="vErr" hidden></div></div>
+        <div class="field" style="flex:1"><label class="req" for="oClose">Expected close date</label><input class="input" id="oClose" type="date"><div class="err" id="dErr" hidden></div></div>
+      </div>
+      <div class="row">
+        <div class="field" style="flex:1"><label for="oPipe">Pipeline</label><select class="select" id="oPipe"><option>B2B Sales</option><option>B2C Fast Track</option></select></div>
+        <div class="field" style="flex:1"><label>Stage awal</label><div class="input row" style="background:var(--n50)">{{ic:lock}} Qualification</div></div>
+      </div>
+      <div class="banner info" id="convPrev"></div>
+    </div>
+    <div class="dlg-f"><button class="btn subtle" type="button" data-close>Batal</button><button class="btn primary" type="submit">Convert</button></div>
+  </form>
+</dialog>
+
+<!-- Mark as Lost -->
+<dialog id="lostDlg">
+  <form method="dialog" id="lostForm" novalidate>
+    <div class="dlg-h"><h2>Mark as Lost</h2><div class="muted">Lead tetap tersimpan dan bisa dibuka kembali.</div></div>
+    <div class="dlg-b">
+      <div class="field"><label class="req" for="lReason">Alasan</label>
+        <select class="select" id="lReason"><option value="">Pilih alasan</option>
+          <option value="unreach">Tidak dapat dihubungi</option><option value="fit">Kebutuhan tidak cocok dengan produk</option><option value="time" data-nurture="1">Waktu belum sesuai</option><option value="dup">Duplikat</option><option value="spam">Spam / data tidak valid</option></select>
+        <div class="err" id="lErr" hidden></div></div>
+      <div class="banner info" id="nurt" hidden>{{ic:refresh}}<div>Alasan ini ditandai <b>boleh dihubungi lagi</b>. Lead akan muncul di daftar Nurturing.</div></div>
+      <div class="field"><label for="lNote">Catatan <span class="muted" style="font-weight:400">(opsional)</span></label><textarea class="textarea" id="lNote"></textarea></div>
+      <div class="hint">Alasan dipakai untuk menganalisis kanal dan pesan, bukan untuk menilai individu.</div>
+    </div>
+    <div class="dlg-f"><button class="btn subtle" type="button" data-close>Batal</button><button class="btn danger" type="submit">Mark as Lost</button></div>
+  </form>
+</dialog>
+
+<!-- Reopen -->
+<dialog id="reopenDlg">
+  <form method="dialog" id="reopenForm" novalidate>
+    <div class="dlg-h"><h2>Buka kembali lead</h2></div>
+    <div class="dlg-b">
+      <div class="field"><label for="rStatus">Kembali ke status</label><select class="select" id="rStatus"><option>Attempted to Contact</option><option selected>Connected</option><option>Qualifying</option></select></div>
+      <div class="field"><label class="req" for="rNote">Mengapa dibuka kembali?</label><textarea class="textarea" id="rNote" placeholder="mis. Pembeli menghubungi kembali, anggaran sudah cair"></textarea><div class="err" id="rErr" hidden></div></div>
+    </div>
+    <div class="dlg-f"><button class="btn subtle" type="button" data-close>Batal</button><button class="btn primary" type="submit">Buka kembali</button></div>
+  </form>
+</dialog>
+
+<!-- Assign (Queue) -->
+<dialog id="assignDlg">
+  <form method="dialog" id="assignForm">
+    <div class="dlg-h"><h2>Assign lead</h2><div class="muted">Queue: Inbound Web</div></div>
+    <div class="dlg-b"><div class="field"><label for="aTo">Assign ke</label><select class="select" id="aTo"><option value="raka">Raka Pratama · 14 lead aktif</option><option value="dewi">Dewi Anggraini · 9 lead aktif</option><option value="bagus">Bagus Santoso · 11 lead aktif</option></select></div></div>
+    <div class="dlg-f"><button class="btn subtle" type="button" data-close>Batal</button><button class="btn primary" type="submit">Assign</button></div>
+  </form>
+</dialog>
+
+<!-- Log activity -->
+<dialog id="actDlg">
+  <form method="dialog" id="actForm" novalidate>
+    <div class="dlg-h"><h2>Log activity</h2></div>
+    <div class="dlg-b">
+      <div class="seg" role="radiogroup" aria-label="Jenis activity" id="aType">
+        <label>{{ic:phone}}<input type="radio" name="at" value="Call" checked>Call</label>
+        <label>{{ic:video}}<input type="radio" name="at" value="Meeting">Meeting</label>
+        <label>{{ic:mail}}<input type="radio" name="at" value="Email">Email</label>
+        <label>{{ic:check}}<input type="radio" name="at" value="Task">Task</label>
+        <label>{{ic:note}}<input type="radio" name="at" value="Note">Note</label>
+      </div>
+      <div class="seg" role="radiogroup" aria-label="Waktu" style="align-self:flex-start">
+        <label><input type="radio" name="am" value="done" checked>Sudah terjadi</label>
+        <label><input type="radio" name="am" value="plan">Jadwalkan</label>
+      </div>
+      <div class="field"><label class="req" for="aSub">Subjek</label><input class="input" id="aSub" placeholder="mis. Follow-up penawaran"><div class="err" id="sErr" hidden></div></div>
+      <div class="field"><label for="aWhen" id="aWhenL">Waktu</label><input class="input" id="aWhen" type="datetime-local" value="2026-10-12T10:00"></div>
+      <div class="field"><label for="aNote">Hasil / catatan</label><textarea class="textarea" id="aNote"></textarea></div>
+    </div>
+    <div class="dlg-f"><button class="btn subtle" type="button" data-close>Batal</button><button class="btn primary" type="submit">Simpan</button></div>
+  </form>
+</dialog>
+
+<script src="app.js"></script>
+<script>
+document.addEventListener("crm-ready", () => {
+  const C = window.CRM, $ = (s) => document.querySelector(s);
+  const state0 = new URLSearchParams(location.search).get("state") || "working";
+  document.querySelectorAll(".demo a").forEach((a) => { if (a.dataset.s === state0) a.setAttribute("aria-current", "true"); });
+  document.querySelectorAll("[data-ic]").forEach((el) => { if (!el.querySelector(".ic")) el.insertAdjacentHTML("afterbegin", C.icon(el.dataset.ic)); });
+  document.querySelectorAll("dialog .banner, dialog .input, dialog label, .ai-panel header").forEach((b) => { if (b.innerHTML.includes("{{ic:")) b.innerHTML = b.innerHTML.replace(/\{\{ic:(\w+)\}\}/g, (_, n) => C.icon(n, "sm")); });
+
+  const STATUSES = [
+    { n: "New", cat: "New" }, { n: "Attempted to Contact", cat: "New" },
+    { n: "Connected", cat: "In Progress" }, { n: "Qualifying", cat: "In Progress" },
+  ];
+  const S = { cat: "In Progress", status: "Connected", owner: "raka", lost: null, converted: false, tab: "activity" };
+  let acts = [], hist = [];
+  if (state0 === "queue") { S.cat = "New"; S.status = "New"; S.owner = null; }
+  if (state0 === "lost") { S.cat = "Lost"; S.status = "Lost"; S.lost = { reason: "Waktu belum sesuai", nurture: true, note: "Anggaran baru dibuka Q1 2027. Hubungi kembali Januari." }; }
+
+  function seed() {
+    acts = [{ k: "sys", ic: "inbox", t: "Lead masuk lewat webhook inbound", w: "12 Okt, 08:41", n: "Form “Request a demo”. Aturan: Source = Website → Queue Inbound Web." }];
+    hist = [{ w: "12 Okt 08:41", by: "Sistem", ch: "— → New", note: "Webhook inbound (Website form)" }];
+    if (state0 !== "queue") {
+      acts.unshift({ k: "sys", ic: "user", t: "Di-claim dari Queue oleh Raka Pratama", w: "12 Okt, 08:55" });
+      acts.unshift({ k: "sys", ic: "flag", t: "Status: New → Connected", w: "12 Okt, 09:02", n: "Raka Pratama" });
+      acts.unshift({ k: "done", ic: "phone", t: "Call · Perkenalan dan gali kebutuhan", w: "12 Okt, 09:02", n: "Tersambung 6 menit. Bu Andini: 4 pabrik, absensi masih manual, ingin berjalan sebelum Q1 2027. Direktur Operasional ikut memutuskan.", by: "raka" });
+      hist.unshift({ w: "12 Okt 08:55", by: "Raka Pratama", ch: "Owner: — → Raka", note: "Claim dari Queue" });
+      hist.unshift({ w: "12 Okt 09:02", by: "Raka Pratama", ch: "New → Connected", note: "" });
+    }
+    if (state0 === "working") acts.unshift({ k: "open", ic: "check", t: "Task · Kirim penawaran awal dan jadwalkan demo", w: "Jatuh tempo 14 Okt", due: "2026-10-14", by: "raka" });
+    if (state0 === "lost") {
+      acts.unshift({ k: "sys", ic: "flag", t: "Status: Connected → Lost", w: "12 Okt, 11:20", n: "Waktu belum sesuai. Anggaran baru dibuka Q1 2027." });
+      hist.unshift({ w: "12 Okt 11:20", by: "Raka Pratama", ch: "Connected → Lost", note: "Waktu belum sesuai" });
+    }
+  }
+  seed();
+
+  /* ---------- Render ---------- */
+  function renderTop() {
+    const q = !S.owner && S.cat === "New", lost = S.cat === "Lost", conv = S.converted, r = C.role();
+    $("#statusLoz").innerHTML = '<span class="lozenge ' + (lost ? "lost" : conv ? "won" : "blue") + '">' + (conv ? "Converted" : S.cat === "In Progress" ? "In Progress › " + S.status : S.status === "New" ? "New" : "New › " + S.status) + "</span>";
+    $("#ownerV").innerHTML = S.owner ? C.avatar(S.owner) + C.users[S.owner].name : '<span class="lozenge warn">Belum ada Owner · Queue Inbound Web</span>';
+
+    const cats = [["New"], ["In Progress"], [conv ? "Converted" : lost ? "Lost" : "Converted"]];
+    const ci = conv ? 2 : { New: 0, "In Progress": 1, Lost: 2 }[S.cat];
+    $("#path").innerHTML = cats.map(([n], i) => '<li class="' + (conv && i === 2 ? "won" : lost && i === 2 ? "lost" : i < ci ? "done" : i === ci ? "current" : "next") + '"' + (i === ci ? ' aria-current="step"' : "") + ">" + (i < ci || conv ? C.icon("check", "sm") : "") + n + "</li>").join("");
+    $("#pathSub").innerHTML = lost
+      ? C.icon("flag", "sm") + "Lost: " + C.esc(S.lost.reason) + (S.lost.nurture ? ' · <span class="lozenge ai" style="background:var(--sky-100);color:var(--sky-600)">Boleh dihubungi lagi</span>' : "")
+      : conv ? C.icon("check", "sm") + "Lead ini sudah menjadi Contact, Account, dan Opportunity."
+      : '<label for="stSel" style="font-weight:600">Status</label><select class="select" id="stSel" style="width:auto;height:26px" ' + (q ? "disabled" : "") + ">" + STATUSES.map((s) => "<option" + (s.n === S.status ? " selected" : "") + ">" + s.n + "</option>").join("") + '</select><span class="hint">Daftar status ini diatur di Tenant Settings</span>';
+    const sel = $("#stSel");
+    if (sel) sel.onchange = () => { const s = STATUSES.find((x) => x.n === sel.value); hist.unshift({ w: "12 Okt 10:00", by: "Raka Pratama", ch: S.status + " → " + s.n, note: "" }); acts.unshift({ k: "sys", ic: "flag", t: "Status: " + S.status + " → " + s.n, w: "Baru saja", n: "Raka Pratama" }); S.status = s.n; S.cat = s.cat; renderAll(); C.toast("Status diubah ke " + s.n); };
+
+    $("#banner").innerHTML = q
+      ? '<div class="banner info">' + C.icon("inbox") + "<div><b>Lead ini belum punya Owner.</b> Berada di Queue Inbound Web sejak 08:41 (1 jam 19 menit). " + (r === "manager" || r === "admin" ? "Assign ke Sales, atau biarkan Sales meng-claim." : "Claim bila ingin menanganinya.") + "</div></div>"
+      : lost ? '<div class="banner lost">' + C.icon("flag") + "<div><b>Lead ini Lost.</b> " + C.esc(S.lost.reason) + (S.lost.note ? ": " + C.esc(S.lost.note) : "") + "</div></div>"
+      : conv ? '<div class="banner info" style="background:var(--won-bg);color:var(--won)">' + C.icon("check") + '<div><b>Converted.</b> Opportunity <a href="pipeline.html">PT Surya Kencana Farma – HRIS 4 pabrik</a> dibuat di stage Qualification.</div></div>' : "";
+
+    let a = "";
+    if (q) a = (r === "rep" ? "" : '<button class="btn" id="bAssign" data-ic="users">Assign</button>') + '<button class="btn primary" id="bClaim" data-ic="user">Claim lead</button>';
+    else if (lost) a = '<button class="btn primary" id="bReopen" data-ic="refresh">Buka kembali</button>';
+    else if (!conv) a = '<button class="btn" id="bLog" data-ic="plus">Log activity</button><button class="btn" id="bLost" data-ic="flag">Mark as Lost</button><button class="btn primary" id="bConv" data-ic="right">Convert</button>';
+    else a = '<a class="btn primary" href="pipeline.html">Lihat Opportunity</a>';
+    $("#actions").innerHTML = a;
+    document.querySelectorAll("#actions [data-ic]").forEach((el) => el.insertAdjacentHTML("afterbegin", C.icon(el.dataset.ic)));
+    const on = (id, f) => { const e = $(id); if (e) e.onclick = f; };
+    on("#bClaim", () => { S.owner = "raka"; S.cat = "New"; S.status = "New"; acts.unshift({ k: "sys", ic: "user", t: "Di-claim dari Queue oleh Raka Pratama", w: "Baru saja" }); hist.unshift({ w: "12 Okt 10:00", by: "Raka Pratama", ch: "Owner: — → Raka", note: "Claim dari Queue" }); renderAll(); C.toast("Lead ini sekarang milik Anda"); });
+    on("#bAssign", () => C.openDlg("assignDlg"));
+    on("#bLog", () => openAct()); on("#bLost", () => { $("#lReason").value = ""; $("#nurt").hidden = true; $("#lErr").hidden = true; C.openDlg("lostDlg"); });
+    on("#bConv", () => { $("#oVal").value = ""; $("#vErr").hidden = $("#dErr").hidden = true; updPrev(); C.openDlg("convDlg"); });
+    on("#bReopen", () => { $("#rNote").value = ""; $("#rErr").hidden = true; C.openDlg("reopenDlg"); });
+    $("#rt").textContent = S.owner || S.cat === "Lost" ? "21 menit" : "Belum ada kontak";
+  }
+
+  function item(a) {
+    const dot = a.k === "open" ? "open" : a.k === "sys" ? "sys" : "";
+    return '<li><span class="dot ' + dot + '">' + C.icon(a.ic, "sm") + '</span><div><div class="what">' + C.esc(a.t) + (a.k === "open" ? ' <span class="lozenge blue">Open</span>' : "") + (a.ai ? ' <span class="lozenge ai">Draf AI</span>' : "") + '</div><div class="when">' + a.w + (a.by ? " · " + C.users[a.by].name : "") + "</div>" +
+      (a.n ? '<div class="note">' + C.esc(a.n).replace(/\n/g, "<br>") + "</div>" : "") + (a.k === "open" ? '<div style="margin-top:6px"><button class="btn sm" data-done="1">Tandai selesai</button></div>' : "") + "</div></li>";
+  }
+  function renderPane() {
+    const p = $("#pane"), t = S.tab;
+    document.querySelectorAll(".tab").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.t === t)));
+    const open = acts.filter((a) => a.k === "open"), past = acts.filter((a) => a.k !== "open");
+    $("#actCount").textContent = open.length ? open.length + " open" : "";
+    if (t === "activity") {
+      const nx = open[0];
+      p.innerHTML =
+        (nx ? '<div class="banner info" style="margin-bottom:16px">' + C.icon("cal") + "<div><b>Next step:</b> " + C.esc(nx.t.replace(/^Task · /, "")) + ' <span class="num">· ' + C.d(nx.due || "2026-10-14") + "</span></div></div>"
+          : S.owner && S.cat !== "Lost" && !S.converted ? '<div class="banner warn" style="margin-bottom:16px">' + C.icon("alert") + "<div><b>Belum ada next step.</b> Jadwalkan activity agar lead ini tidak menggantung.</div></div>" : "") +
+        '<div class="card"><ol class="tl" style="padding:16px 16px 0">' +
+        (open.length ? '<li style="display:block;padding-bottom:6px"><div class="sub">Terjadwal</div></li>' + open.map(item).join("") : "") +
+        '<li style="display:block;padding-bottom:6px"><div class="sub">Riwayat</div></li>' + past.map(item).join("") + "</ol></div>";
+      p.querySelectorAll("[data-done]").forEach((b) => (b.onclick = () => { const a = open[0]; a.k = "done"; a.w = "12 Okt, 10:00"; a.t = a.t.replace("Task", "Task selesai"); renderAll(); C.toast("Activity ditandai selesai"); }));
+    } else if (t === "details") {
+      const f = (k, v) => "<dt>" + k + "</dt><dd>" + v + "</dd>";
+      p.innerHTML = '<div class="stack">' +
+        '<section class="card"><div class="card-h"><h2>Kontak</h2></div><div class="card-b"><dl class="dl">' + f("Nama", "Andini Prameswari") + f("Jabatan", "Head of HR") + f("Organisasi", "PT Surya Kencana Farma") + f("Email", "andini@skfarma.co.id") + f("Telepon", '<span class="num">+62 812-9055-0148</span>') + "</dl></div></section>" +
+        '<section class="card"><div class="card-h"><h2>Qualification</h2><span class="hint">Diisi saat percakapan, tidak menahan pergerakan status</span></div><div class="card-b"><dl class="dl">' + f("Kebutuhan", "Menyatukan absensi 4 pabrik dan payroll") + f("Budget", "Rp 300–400 jt (disebut lisan)") + f("Authority", "Direktur Operasional ikut memutuskan") + f("Timing", "Sebelum Q1 2027") + "</dl></div></section>" +
+        '<section class="card"><div class="card-h"><h2>Source &amp; ownership</h2></div><div class="card-b"><dl class="dl">' + f("Source", "Website form · Request a demo") + f("Assigned via", S.owner ? "Claim dari Queue" : "Belum di-assign") + f("Waktu masuk", '<span class="num">12 Okt 2026, 08:41</span>') + f("Kontak pertama", '<span class="num">' + (S.owner ? "12 Okt 2026, 09:02" : "—") + "</span>") + "</dl></div></section>" +
+        '<section class="card"><div class="card-h"><h2>Custom fields</h2><span class="lozenge blue">Tenant</span></div><div class="card-b"><dl class="dl">' + f("Jumlah karyawan", '<span class="num">640</span>') + f("Sistem saat ini", "Excel + aplikasi absensi lokal") + f("Lokasi pabrik", "Cikarang, Karawang") + "</dl></div></section></div>";
+    } else {
+      p.innerHTML = '<div class="card" style="overflow:auto"><table class="table"><thead><tr><th>Waktu</th><th>Oleh</th><th>Perubahan</th><th>Catatan</th></tr></thead><tbody>' + hist.map((h) => '<tr><td class="num">' + h.w + "</td><td>" + h.by + "</td><td><b>" + h.ch + "</b></td><td>" + (h.note || '<span class="muted">—</span>') + "</td></tr>").join("") + "</tbody></table></div>";
+    }
+  }
+  function renderAll() { renderTop(); renderPane(); }
+  $("#tabs").addEventListener("click", (e) => { const b = e.target.closest(".tab"); if (b) { S.tab = b.dataset.t; renderPane(); } });
+
+  /* ---------- Dialog logic ---------- */
+  function updPrev() {
+    const v = document.querySelector('input[name="acc"]:checked').value;
+    $("#convPrev").innerHTML = C.icon("target") + '<ul class="res" style="flex:1"><li>' + C.icon("check", "sm") + "Contact baru: Andini Prameswari</li><li>" + C.icon("check", "sm") + (v === "existing" ? "Account dipakai: PT Surya Kencana Farma" : v === "new" ? "Account baru: PT Surya Kencana Farma" : "Tanpa Account") + "</li><li>" + C.icon("check", "sm") + "Opportunity di stage Qualification</li></ul>";
+  }
+  document.querySelectorAll('input[name="acc"]').forEach((r) => r.addEventListener("change", updPrev));
+  $("#convForm").onsubmit = (e) => {
+    const v = $("#oVal").value.replace(/\D/g, ""), d = $("#oClose").value; let bad = false;
+    $("#vErr").hidden = !!v; $("#dErr").hidden = !!d;
+    if (!v) { $("#vErr").innerHTML = C.icon("alert", "sm") + "Isi deal value"; bad = true; }
+    if (!d) { $("#dErr").innerHTML = C.icon("alert", "sm") + "Isi expected close date"; bad = true; }
+    if (bad) { e.preventDefault(); return; }
+    S.converted = true; S.cat = "Converted"; S.status = "Converted";
+    acts.unshift({ k: "sys", ic: "right", t: "Converted menjadi Contact, Account, dan Opportunity", w: "Baru saja", n: "Opportunity: " + $("#oName").value });
+    hist.unshift({ w: "12 Okt 10:00", by: "Raka Pratama", ch: "Connected → Converted", note: "" });
+    renderAll(); C.toast("Lead di-convert. Opportunity dibuat di Qualification");
+  };
+  $("#lReason").onchange = (e) => { $("#nurt").hidden = !e.target.selectedOptions[0].dataset.nurture; };
+  $("#lostForm").onsubmit = (e) => {
+    const o = $("#lReason").selectedOptions[0];
+    if (!o.value) { e.preventDefault(); $("#lErr").hidden = false; $("#lErr").innerHTML = C.icon("alert", "sm") + "Alasan wajib diisi sebelum lead ditandai Lost"; return; }
+    S.lost = { reason: o.textContent, nurture: !!o.dataset.nurture, note: $("#lNote").value }; S.cat = "Lost"; S.status = "Lost";
+    acts.unshift({ k: "sys", ic: "flag", t: "Status: " + "→ Lost", w: "Baru saja", n: o.textContent }); hist.unshift({ w: "12 Okt 10:00", by: "Raka Pratama", ch: "→ Lost", note: o.textContent });
+    renderAll(); C.toast("Lead ditandai Lost");
+  };
+  $("#reopenForm").onsubmit = (e) => {
+    if (!$("#rNote").value.trim()) { e.preventDefault(); $("#rErr").hidden = false; $("#rErr").innerHTML = C.icon("alert", "sm") + "Catatan wajib diisi"; return; }
+    const s = STATUSES.find((x) => x.n === $("#rStatus").value); S.status = s.n; S.cat = s.cat; S.lost = null;
+    acts.unshift({ k: "sys", ic: "refresh", t: "Dibuka kembali → " + s.n, w: "Baru saja", n: $("#rNote").value }); hist.unshift({ w: "12 Okt 10:00", by: "Raka Pratama", ch: "Lost → " + s.n, note: $("#rNote").value });
+    renderAll(); C.toast("Lead dibuka kembali");
+  };
+  $("#assignForm").onsubmit = () => { const to = $("#aTo").value; S.owner = to; acts.unshift({ k: "sys", ic: "users", t: "Di-assign ke " + C.users[to].name + " oleh Maya Kusuma", w: "Baru saja" }); hist.unshift({ w: "12 Okt 10:00", by: "Maya Kusuma", ch: "Owner: — → " + C.users[to].name.split(" ")[0], note: "Assign manual" }); renderAll(); C.toast("Di-assign ke " + C.users[to].name); };
+  function openAct() { $("#aSub").value = ""; $("#sErr").hidden = true; C.openDlg("actDlg"); }
+  $("#actForm").onsubmit = (e) => {
+    const sub = $("#aSub").value.trim(); if (!sub) { e.preventDefault(); $("#sErr").hidden = false; $("#sErr").innerHTML = C.icon("alert", "sm") + "Subjek wajib diisi"; return; }
+    const type = document.querySelector('input[name="at"]:checked').value, plan = document.querySelector('input[name="am"]:checked').value === "plan";
+    const icn = { Call: "phone", Meeting: "video", Email: "mail", Task: "check", Note: "note" }[type];
+    acts.unshift({ k: plan ? "open" : "done", ic: icn, t: type + " · " + sub, w: plan ? "Jatuh tempo " + C.d($("#aWhen").value.slice(0, 10)) : "Baru saja", due: $("#aWhen").value.slice(0, 10), n: $("#aNote").value, by: "raka" });
+    S.tab = "activity"; renderAll(); C.toast(plan ? "Activity dijadwalkan" : "Activity dicatat");
+  };
+
+  /* ---------- AI panel ---------- */
+  let ai = { st: "idle", ch: "WhatsApp", text: "", fail: false };
+  const DRAFT = {
+    WhatsApp: "Selamat siang Bu Andini, saya Raka dari Arunika Teknologi. Terima kasih atas obrolan tadi pagi soal penyatuan absensi di 4 pabrik dan payroll. Sebagai langkah berikutnya saya siapkan gambaran penawaran awal dan usulan jadwal demo. Apakah Kamis, 15 Oktober, pukul 10.00 cocok untuk Ibu dan Direktur Operasional? Bila ada waktu lain, kabari saja ya.",
+    Email: "Subjek: Tindak lanjut pembicaraan: absensi dan payroll 4 pabrik\n\nYth. Ibu Andini,\n\nTerima kasih atas waktu Ibu pagi ini. Dari pembicaraan kita, kebutuhan utamanya adalah menyatukan absensi di 4 pabrik dengan payroll, dengan target berjalan sebelum Q1 2027.\n\nSaya akan menyiapkan gambaran penawaran awal dan mengusulkan sesi demo bersama Direktur Operasional. Apakah Kamis, 15 Oktober pukul 10.00 sesuai?\n\nSalam,\nRaka Pratama\nArunika Teknologi",
+  };
+  function renderAI() {
+    const b = $("#aiBody"), foot = '<div class="hint row" style="gap:6px">' + C.icon("lock", "sm") + 'Konteks dibatasi pada tenant Arunika Teknologi · TLab LLM</div>';
+    if (!S.owner) { b.innerHTML = '<div class="hint">Draf outreach tersedia setelah lead punya Owner.</div>' + foot; return; }
+    if (ai.st === "idle") b.innerHTML = '<div class="field"><label for="aiCh">Saluran</label><select class="select" id="aiCh"><option' + (ai.ch === "WhatsApp" ? " selected" : "") + '>WhatsApp</option><option' + (ai.ch === "Email" ? " selected" : "") + ">Email</option></select></div>" +
+      '<button class="btn ai" id="aiGo">' + C.icon("spark") + 'Buat draf outreach</button><div class="hint">AI memakai data lead, catatan kualifikasi, dan riwayat activity. Anda yang memutuskan apakah draf dikirim.</div>' + foot;
+    if (ai.st === "loading") b.innerHTML = '<div class="row"><span class="spin"></span><span class="muted">Menyusun draf dari konteks lead…</span></div><div class="skel" style="width:100%"></div><div class="skel" style="width:92%"></div><div class="skel" style="width:96%"></div><div class="skel" style="width:60%"></div>' + foot;
+    if (ai.st === "error") b.innerHTML = '<div class="banner lost">' + C.icon("alert") + '<div><b>Draf tidak dapat dibuat.</b> Layanan AI tidak merespons. Pekerjaan lain pada lead ini tidak terpengaruh.</div></div><div class="row"><button class="btn" id="aiGo">Coba lagi</button><button class="btn subtle" id="aiBack">Tulis sendiri</button></div>' + foot;
+    if (ai.st === "done") b.innerHTML = '<div class="row"><span class="lozenge ai">' + ai.ch + '</span><span class="hint">Draf. Periksa sebelum dikirim.</span></div><textarea class="textarea draft" id="aiText" aria-label="Draf outreach">' + C.esc(ai.text) + '</textarea>' +
+      '<div class="row wrap"><button class="btn primary sm" id="aiSave">Simpan sebagai activity</button><button class="btn sm" id="aiCopy">' + C.icon("copy", "sm") + 'Salin</button><button class="btn sm subtle" id="aiGo">' + C.icon("refresh", "sm") + 'Buat ulang</button></div>' + foot;
+    const g = $("#aiGo"); if (g) g.onclick = () => { const s = $("#aiCh"); if (s) ai.ch = s.value; ai.st = "loading"; renderAI(); setTimeout(() => { if (ai.fail) { ai.fail = false; ai.st = "error"; } else { ai.text = DRAFT[ai.ch]; ai.st = "done"; } renderAI(); }, 1400); };
+    const bk = $("#aiBack"); if (bk) bk.onclick = () => { ai.st = "idle"; renderAI(); };
+    const sv = $("#aiSave"); if (sv) sv.onclick = () => { acts.unshift({ k: "done", ic: ai.ch === "Email" ? "mail" : "chat", t: ai.ch + " · Draf outreach", w: "Baru saja", n: $("#aiText").value, by: "raka", ai: true }); hist; ai.st = "idle"; S.tab = "activity"; renderAll(); renderAI(); C.toast("Draf disimpan di Activity"); };
+    const cp = $("#aiCopy"); if (cp) cp.onclick = () => { try { navigator.clipboard.writeText($("#aiText").value); } catch (e) {} C.toast("Draf disalin"); };
+  }
+  window.simulateAIFail = () => { ai.fail = true; C.toast("AI akan gagal pada permintaan berikutnya"); };
+
+  document.querySelectorAll(".ai-panel header").forEach((h) => { if (!h.querySelector("button")) h.insertAdjacentHTML("beforeend", ""); });
+  renderAll(); renderAI();
+  const demo = document.querySelector(".demo"); demo.insertAdjacentHTML("beforeend", '<span class="spacer" style="flex:1"></span><a href="#" id="fail">Simulasikan AI gagal</a>');
+  $("#fail").onclick = (e) => { e.preventDefault(); window.simulateAIFail(); };
+});
+</script>
+</body>
+</html>
