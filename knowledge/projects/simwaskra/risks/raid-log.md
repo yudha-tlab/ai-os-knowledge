@@ -41,14 +41,16 @@ Log gabungan Risks, Assumptions, Issues, dan Dependencies.
 
 | ID | Deskripsi | Dampak | Owner | Tanggal Muncul | Status |
 |---|---|---|---|---|---|
-| I-001 | Belum ada akses source code SIMWASKRA | Blocker — seluruh pekerjaan implementasi tertahan | Yudha Pratama | 2026-10-20 | Open |
-| I-002 | Lingkup penyesuaian belum terdefinisi | Perencanaan & estimasi tidak dapat dilakukan | Yudha Pratama | 2026-10-20 | Open |
+| I-001 | ~~Belum ada akses source code SIMWASKRA~~ — **RESOLVED 2026-10-20**: repo tersedia (Laravel 12 + Filament 4, 52 migrasi, 25 model). Lihat [[technical-analysis-codebase]] | Blocker teratasi — pekerjaan dapat dimulai | Yudha Pratama | 2026-10-20 | **Closed** |
+| I-002 | Lingkup penyesuaian belum terdefinisi | Perencanaan & estimasi tidak dapat dilakukan | Yudha Pratama | 2026-10-20 | **Closed** — 7 REQ terdefinisi (D-004) |
+| I-003 | ~~Tidak ada environment berjalan~~ — **RESOLVED 2026-10-20**: aplikasi berjalan (FrankenPHP + PostgreSQL 16 + Redis 7), `/up` HTTP 200, `/admin/login` HTTP 200, 52/52 migrasi, seeder OK. Lihat [[runbook-environment-lokal]] | Blocker teratasi — sistem dapat didemokan | Yudha Pratama | 2026-10-20 | **Closed** |
+| I-004 | **Definisi "realtime" (REQ-005) belum jelas** — `composer.json` tidak memuat dependency broadcasting (Reverb/Pusher). Jika klien minta push tanpa refresh, perlu infrastruktur baru | Selisih estimasi harian, bukan jam | Yudha Pratama | 2026-10-20 | Open |
 
 ## Dependencies (Ketergantungan)
 
 | ID | Deskripsi | Bergantung Pada | Owner | Due Date | Status |
 |---|---|---|---|---|---|
-| D-001 | Akses repository source code SIMWASKRA | Inspektorat / PIC teknis klien | Yudha Pratama | 2026-10-20 | Open |
+| D-001 | Akses repository source code SIMWASKRA | Inspektorat / PIC teknis klien | Yudha Pratama | 2026-10-20 | **Closed** — repo tersedia di `/home/debian/Projects/upstream-tlab/simwasda/simwasda-fi4` |
 | D-002 | Daftar penyesuaian final yang disetujui klien | Product Owner klien | Yudha Pratama | 2026-10-21 | Open |
 | D-003 | Environment demo yang dapat diakses | PIC teknis klien / infra TLab | Yudha Pratama | 2026-10-22 | Open |
 | D-004 | Konfirmasi cakupan demo (11 alur penuh atau sebagian) | Product Owner klien | Yudha Pratama | 2026-10-21 | Open |
