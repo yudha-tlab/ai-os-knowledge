@@ -45,6 +45,7 @@ Log gabungan Risks, Assumptions, Issues, dan Dependencies.
 | I-002 | Lingkup penyesuaian belum terdefinisi | Perencanaan & estimasi tidak dapat dilakukan | Yudha Pratama | 2026-10-20 | **Closed** — 7 REQ terdefinisi (D-004) |
 | I-003 | ~~Tidak ada environment berjalan~~ — **RESOLVED 2026-10-20**: aplikasi berjalan (FrankenPHP + PostgreSQL 16 + Redis 7), `/up` HTTP 200, `/admin/login` HTTP 200, 52/52 migrasi, seeder OK. Lihat [[runbook-environment-lokal]] | Blocker teratasi — sistem dapat didemokan | Yudha Pratama | 2026-10-20 | **Closed** |
 | I-004 | **Definisi "realtime" (REQ-005) belum jelas** — `composer.json` tidak memuat dependency broadcasting (Reverb/Pusher). Jika klien minta push tanpa refresh, perlu infrastruktur baru | Selisih estimasi harian, bukan jam | Yudha Pratama | 2026-10-20 | Open |
+| I-005 | **Skema DB terkonfirmasi tidak mendukung REQ-001** — `work_units` tanpa `parent_id` (tanpa self-FK, tanpa `code`), `audit_teams` tanpa `work_unit_id`. Diverifikasi via `\d` di PostgreSQL berjalan. Seeder membuat "Tim Irban 1" 7 anggota, tapi hirarki Irban→Sub Irban tidak dapat direpresentasikan | REQ-001 bukan "tambah field" — perlu 2 migration baru + penyesuaian 3 SQL VIEW + dampak ke 4 tabel yang referensi `audit_teams`. Estimasi 1 hari untuk REQ-001+003+006 tidak realistis | Wahyu | H-2 | Open |
 
 ## Dependencies (Ketergantungan)
 

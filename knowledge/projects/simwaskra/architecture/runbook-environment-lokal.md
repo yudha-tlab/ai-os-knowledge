@@ -159,6 +159,26 @@ sudo docker compose start app
 | 6 | `tinker` gagal `/config/psysh` | HOME tidak writable | Tambahkan `-e HOME=/tmp -e XDG_CONFIG_HOME=/tmp` |
 | 7 | DB connection refused | `.env.example` = MySQL, compose = PostgreSQL | Set `DB_CONNECTION=pgsql`, `DB_HOST=postgres` |
 
+### 4.1 Catatan npm audit (bukan blocker, tapi tercatat)
+
+`npm install` melaporkan **11 kerentanan (8 high, 2 critical)**. Seluruhnya ada di
+**`devDependencies`** — `package.json` hanya punya `devDependencies`, tidak ada
+`dependencies` runtime. Artinya paket ini dipakai saat build Vite, **tidak
+dikirim ke browser pengguna**.
+
+Paket terdampak: `axios`, `concurrently` (critical), `vite`, `rollup`,
+`postcss`, `form-data`, `nanoid`, `picomatch`, `shell-quote` (critical),
+`source-map-js`, `follow-redirects`.
+
+**Rekomendasi:** jangan `npm audit fix --force` saat sprint 5 hari — berisiko
+merusak `laravel-vite-plugin` / Tailwind 4. Jadwalkan setelah demo.
+
+**Catatan aset:** `vite build` menghasilkan 3 entri di manifest —
+`app.css` (60 kB), `theme.css` (534 kB, tema Filament admin), `app.js` (36 kB).
+Pastikan ketiganya ada di `public/build/assets/`; bila `theme.css` hilang,
+tampilan panel admin akan rusak tanpa error yang jelas.
+
+
 ## 5. Perintah Harian
 
 ```bash
