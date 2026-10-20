@@ -209,7 +209,7 @@ skema database dan 3 view SQL.** Tidak realistis jika dikerjakan penuh.
 |---|---|---|
 | PHP CLI di host | Tidak ada | **Tidak diperlukan** — semua di container |
 | Composer | Tidak ada | **Tidak diperlukan** |
-| `vendor/` | Kosong | **Ter-install** (86 paket, `autoload.php` ada) |
+| `vendor/` | Kosong | **Ter-install** — 205 paket composer (194 ter-install + dev), `autoload.php` ada |
 | `.env` | Tidak ada | **Dibuat & disesuaikan** (lihat §9.1) |
 | Container `app` (FrankenPHP) | — | **Up (healthy)** — `localhost:8081` |
 | Container `postgres` | — | **Up (healthy)** — port 5432 |

@@ -88,7 +88,8 @@ Build pertama lama (±10–15 menit) karena meng-compile ekstensi PHP
 ### 3.4 Install dependensi PHP
 
 Bind mount `.:/app` **menimpa** `vendor/` yang ada di dalam image, sehingga
-`vendor/autoload.php` hilang. Harus di-install ke host:
+`vendor/autoload.php` hilang. Harus di-install ke host — menghasilkan **205
+paket** composer (`vendor/` berisi 86 direktori):
 
 ```bash
 mkdir -p vendor
