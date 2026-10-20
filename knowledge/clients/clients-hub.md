@@ -19,6 +19,7 @@ Daftar klien dan konteks bisnis masing-masing yang ditangani melalui Main Works.
 | **DPAD DIY** | Pemerintahan | AI Knowledge Center — Chatbot | [[dpad-diy/client-profile]] |
 | **BPD Sumut** | Perbankan | Pentest VMWare | [[bpd-sumut/client-profile]] |
 | **PT Ocelli Indonesia** | Agritech / Pertanian | OCELLI Mobile | [[ocelli/client-profile]] |
+| **Inspektorat Kabupaten Karanganyar** | Pemerintahan (APIP) | SIMWASKRA — Maintenance & Penyesuaian | [[inspektorat-karanganyar/client-profile]] |
 
 ## Cara Menambah Klien Baru
 

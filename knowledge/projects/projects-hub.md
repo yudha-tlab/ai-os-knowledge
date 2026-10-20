@@ -22,6 +22,7 @@ project tersebut.
 | **AI Knowledge Center DPAD** | DPAD DIY | Belum Mulai | [[dpad-chatbot/project-profile]] |
 | **Pentest VMWare BPD Sumut** | BPD Sumut | Aktif | [[bpd-sumut/project-profile]] |
 | **OCELLI Mobile — Sistem Insect Trap** | PT Ocelli Indonesia | Aktif (Presales) | [[ocelli-mobile/project-profile]] |
+| **SIMWASKRA — Maintenance & Penyesuaian** | Inspektorat Kabupaten Karanganyar | At Risk — demo end-to-end target 2026-10-25 (5 hari); 2 blocker terbuka: akses source code & lingkup penyesuaian | [[simwaskra/project-profile]] |
 
 ## Internal TLab (bukan project klien)
 
