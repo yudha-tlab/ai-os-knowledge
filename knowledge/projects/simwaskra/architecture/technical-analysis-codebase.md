@@ -236,6 +236,34 @@ Sebelum `shield:generate`, **seluruh Resource mengembalikan 403 termasuk untuk
 super_admin**. Tim yang pull repo dan menjalankan sendiri akan mengira ini bug
 aplikasi — padahal langkah generate permission belum dijalankan.
 
+### 9.0.1 Konfirmasi skema DB live (bukti langsung `\d`, bukan hanya baca file migrasi)
+
+Diverifikasi 2026-10-20 terhadap PostgreSQL yang berjalan + data seeder:
+
+**`work_units`** — kolom: `id`, `name`, `status`, `created_by`, `updated_by`,
+`deleted_by`, `created_at`, `updated_at`, `deleted_at`.
+→ **TIDAK ADA `parent_id`.** Tidak ada kolom `code`. Tidak ada self-FK.
+
+**`audit_teams`** — kolom: `id`, `name`, `status`, `created_by`, `updated_by`,
+`deleted_by`, `created_at`, `updated_at`, `deleted_at`.
+→ **TIDAK ADA `work_unit_id`.** Relasi hanya lewat pivot
+`audit_team_employee` (audit_team_id ↔ employee_id).
+
+**`employees.work_unit_id`** — single FK ke `work_units`, `ON DELETE SET NULL`.
+Tidak ada tabel riwayat perpindahan.
+
+**Konsekuensi langsung untuk REQ-001 (Sub Irban):**
+Seeder membuat "Tim Irban 1" dengan 7 anggota, tetapi hirarki Irban → Sub Irban
+(1 → 1A/1B) **tidak dapat direpresentasikan** dengan skema sekarang. Diperlukan:
+1. Migration `add_parent_id_to_work_units_table` (self-FK, nullable).
+2. Migration `add_work_unit_id_to_audit_teams_table` (FK nullable, agar tim
+   terikat ke Irban/Sub Irban).
+3. Penyesuaian query dashboard view yang mengasumsikan `work_units` flat.
+
+Ini bukan "tambah field" — ini perubahan skema dengan dampak ke 3 SQL VIEW dan
+4 tabel yang mereferensikan `audit_teams`.
+
+
 
 ### 9.1 Penyesuaian `.env` yang dilakukan
 
