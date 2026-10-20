@@ -24,6 +24,11 @@ dependency, lihat [[raid-log]].
 | R-005 | Environment demo belum terverifikasi | Teknis / Infra | Med | High | High | Yudha Pratama | Tetapkan environment sejak hari-1, siapkan fallback lokal | Open |
 | R-006 | Cakupan demo berpotensi melebar ke 11 alur penuh | Scope | Med | Med | Medium | Yudha Pratama | Klarifikasi Q-008 sebelum hari ke-3 | Open |
 | R-007 | Ketergantungan pada satu PIC teknis klien — jika tidak responsif, seluruh pekerjaan tertahan | Dependency | Med | High | High | Yudha Pratama | Minta 2 kontak teknis; siapkan jalur komunikasi cadangan | Open |
+| R-008 | Kapasitas implementasi tidak memadai — 7 REQ (3 kompleksitas Tinggi) dalam 1 hari kerja | Schedule / Capacity | High | High | Critical | Yudha Pratama | Triase ke Opsi B: REQ-001/002/003/004 untuk demo, sisanya iterasi 2 | Open |
+| R-009 | UAT jatuh Sabtu 2026-10-24, instansi pemerintah kemungkinan tidak beroperasi | Schedule | High | Med | High | Yudha Pratama | Konfirmasi klien hari ini; alternatif Senin 2026-10-26 | Open |
+| R-010 | H-1 bukan hari penuh — desain mulai ±16.40 WIB, sisa ±3–4 jam | Schedule | High | Med | High | Yudha Pratama | Persempit lingkup desain | Open |
+| R-011 | Nol buffer dalam workflow 5 hari | Schedule | High | High | Critical | Yudha Pratama | Status harian; eskalasi deviasi >4 jam | Open |
+| R-012 | Urutan pengerjaan salah membongkar pekerjaan (REQ-001 fondasi REQ-003 & 006) | Teknis / Scope | Med | High | High | Yudha Pratama | Kunci urutan ketergantungan di delivery-plan §5 | Open |
 
 ## Aturan Eskalasi
 

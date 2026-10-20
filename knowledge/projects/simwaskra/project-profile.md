@@ -34,7 +34,10 @@ diidentifikasi dan akan digali pada sesi requirement berikutnya.
 | Nama | Peran | Kontak |
 |---|---|---|
 | Yudha Pratama | Project Manager | — |
-| Belum ditentukan | Tim developer / maintenance | — |
+| Ardy | Desain (1 hari — H-1, 2026-10-20) | — |
+| Wahyu | Implementasi (1 hari — H-2, 2026-10-21) | — |
+| Sifa | Testing (2 hari — H-3 & H-4, 2026-10-22 s/d 2026-10-23) | — |
+| Yudha Pratama + tim | UAT dengan klien (1 hari — H-5, 2026-10-24) | — |
 
 ## Dokumen Kunci
 
@@ -52,10 +55,15 @@ diidentifikasi dan akan digali pada sesi requirement berikutnya.
 
 | Milestone | Target Tanggal | Status |
 |---|---|---|
-| Identifikasi & konfirmasi lingkup penyesuaian | Belum ditentukan | Belum Mulai |
-| Akses source code & environment maintenance | Belum ditentukan | Belum Mulai |
-| Implementasi penyesuaian | Belum ditentukan | Belum Mulai |
-| Demo end-to-end aplikasi web ke klien | 2026-10-25 | Belum Mulai |
+| Akses source code & environment maintenance | 2026-10-20 | At Risk |
+| **H-1 Desain (Ardy)** | 2026-10-20 | Berjalan |
+| **H-2 Implementasi (Wahyu)** | 2026-10-21 | Belum Mulai |
+| **H-3 Testing hari 1 (Sifa)** | 2026-10-22 | Belum Mulai |
+| **H-4 Testing hari 2 (Sifa)** | 2026-10-23 | Belum Mulai |
+| **H-5 UAT dengan klien** | 2026-10-24 (Sabtu) | At Risk — perlu konfirmasi klien |
+| Demo end-to-end (batas) | 2026-10-25 (Minggu) | At Risk |
+
+Rencana lengkap: [[delivery-plan]]
 
 ## Related
 

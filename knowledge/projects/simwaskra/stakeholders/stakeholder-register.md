@@ -17,8 +17,13 @@ created: "2026-10-20"
 | Belum ditentukan | Product Owner / pemberi keputusan lingkup | Inspektorat Karanganyar | High | High | Belum diketahui | Belum ditentukan |
 | Belum ditentukan | PIC teknis (akses sistem & infrastruktur) | Inspektorat Karanganyar | High | High | Belum diketahui | Belum ditentukan |
 | Belum ditentukan | Inspektur (pengguna level persetujuan) | Inspektorat Karanganyar | Med | Med | Belum diketahui | Belum ditentukan |
+| Belum ditentukan | Pimpinan (pengguna dashboard realtime — REQ-005) | Inspektorat Karanganyar | High | High | Belum diketahui | Belum ditentukan |
+| Belum ditentukan | Ketua Obrik (penanda tangan berita acara — REQ-007) | Inspektorat Karanganyar | Med | Med | Belum diketahui | Belum ditentukan |
+| Belum ditentukan | Ketua Tim Pembahas (penanda tangan berita acara — REQ-007) | Inspektorat Karanganyar | Med | Med | Belum diketahui | Belum ditentukan |
 | Yudha Pratama | Project Manager | TLab | High | High | Champion | — |
-| Belum ditentukan | Developer / tim maintenance | TLab | High | High | Champion | — |
+| Ardy | Desain | TLab | High | High | Champion | — |
+| Wahyu | Implementasi | TLab | High | High | Champion | — |
+| Sifa | Testing / QA | TLab | High | High | Champion | — |
 
 ## Peran Sistem sebagai Konteks Organisasi
 

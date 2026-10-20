@@ -21,7 +21,12 @@ Log gabungan Risks, Assumptions, Issues, dan Dependencies.
 | R-003 | Kapasitas 5 hari kalender tidak cukup jika jumlah penyesuaian banyak atau arsitektur belum dipahami | High | High | Critical | Yudha Pratama | Triase penyesuaian: pisahkan wajib-demo vs tunda; siapkan opsi negosiasi tanggal | Open |
 | R-004 | Tidak ada dokumentasi teknis sistem — waktu pemahaman kode membengkak | Med | High | High | Yudha Pratama | Minta dokumentasi + akses PIC teknis klien untuk Q&A | Open |
 | R-005 | Environment demo belum tersedia/terverifikasi — demo bisa gagal di menit akhir | Med | High | High | Yudha Pratama | Tetapkan environment demo sejak hari-1, siapkan fallback lokal | Open |
-| R-006 | Demo end-to-end berpotensi diminta mencakup seluruh 11 alur proses, bukan hanya area penyesuaian | Med | Med | Medium | Yudha Pratama | Klarifikasi cakupan demo ke klien (Q-008) sebelum hari ke-3 | Open |
+| R-006 | Demo end-to-end berpotensi diminta mencakup seluruh 11 alur proses, bukan hanya area penyesuaian | Med | Med | Medium | Yudha Pratama | Klarifikasi cakupan demo ke klien sebelum hari ke-3 | Open |
+| R-008 | **Kapasitas implementasi tidak memadai**: 7 requirement (3 di antaranya kompleksitas Tinggi) harus selesai dalam 1 hari kerja implementasi | High | High | Critical | Yudha Pratama | Triase lingkup — rekomendasi Opsi B (REQ-001/002/003/004); sisanya iterasi 2. Lihat [[delivery-plan]] §6 | Open |
+| R-009 | **UAT jatuh hari Sabtu 2026-10-24** — instansi pemerintah umumnya tidak beroperasi akhir pekan | High | Med | High | Yudha Pratama | Konfirmasi kesediaan klien hari ini; alternatif geser UAT ke Senin 2026-10-26 | Open |
+| R-010 | **H-1 bukan hari penuh** — desain dimulai pukul ±16.40 WIB, sisa ±3–4 jam dari 1 hari yang dialokasikan | High | Med | High | Yudha Pratama | Persempit lingkup desain ke item yang pasti diimplementasi; jangan mengejar seluruh 7 REQ | Open |
+| R-011 | **Nol buffer** — workflow 5 hari menghabiskan seluruh jatah; keterlambatan 1 hari langsung menggeser demo | High | High | Critical | Yudha Pratama | Laporkan status harian; eskalasi setiap deviasi >4 jam | Open |
+| R-012 | Urutan pengerjaan salah berisiko membongkar pekerjaan — REQ-001 (Sub Irban) adalah fondasi REQ-003 & REQ-006 | Med | High | High | Yudha Pratama | Kunci urutan: REQ-001 → REQ-002 → REQ-003 → REQ-006; lihat [[delivery-plan]] §5 | Open |
 
 ## Assumptions (Asumsi)
 
