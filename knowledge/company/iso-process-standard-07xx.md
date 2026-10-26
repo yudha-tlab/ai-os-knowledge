@@ -103,6 +103,18 @@ python3 $S <folder-name> --slug <slug> --title "<Judul>" --client "<Klien>" --gi
 python3 $S <folder-name> --dry-run   # pratinjau, tidak menulis apa pun
 ```
 
+> **Root harus ada lebih dulu.** Script menolak jika `~/Projects/documentation`
+> belum ada (`ERROR: root tidak ada`). Buat dengan `mkdir -p ~/Projects/documentation`.
+>
+> **Branch `main`, bukan `master`.** Remote GitLab TLab memakai `main`. Jika repo
+> ter-scaffold dengan `master`, push pertama gagal:
+> `error: src refspec main does not match any`. Perbaiki:
+> `git branch -m master main && git push -u origin main`.
+>
+> **Remote tidak bisa dibuat lewat git.** `git push` ke project yang belum ada
+> memberi *"project could not be found"*. Buat project kosong dulu di web GitLab,
+> baru tambahkan remote dan push.
+
 ## Status Coverage Framework (audit 13 Agu 2026)
 
 | Proses | Status | Catatan |
