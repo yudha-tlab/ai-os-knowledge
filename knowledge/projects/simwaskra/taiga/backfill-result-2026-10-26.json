@@ -1,0 +1,210 @@
+{
+  "project": 128,
+  "date": "2026-10-26",
+  "log": [
+    {
+      "type": "epic",
+      "id": 789,
+      "subject": "EPIC-01 Penyesuaian SIMWASKRA (Maintenance)"
+    },
+    {
+      "type": "us",
+      "key": "REQ-001",
+      "id": 4783,
+      "subject": "REQ-001 Struktur tim Irban dipecah menjadi Sub Irban",
+      "mandays": 3
+    },
+    {
+      "type": "us",
+      "key": "REQ-002",
+      "id": 4784,
+      "subject": "REQ-002 Perhitungan mandays dari SPT, bukan templating",
+      "mandays": 2.0
+    },
+    {
+      "type": "task",
+      "us": "REQ-002",
+      "subject": "REQ-002 Desain",
+      "mandays": 0.5,
+      "assignee": "ardy"
+    },
+    {
+      "type": "task",
+      "us": "REQ-002",
+      "subject": "REQ-002 Implementasi",
+      "mandays": 1,
+      "assignee": "primayasa"
+    },
+    {
+      "type": "task",
+      "us": "REQ-002",
+      "subject": "REQ-002 Testing",
+      "mandays": 0.5,
+      "assignee": "sifa"
+    },
+    {
+      "type": "us",
+      "key": "REQ-003",
+      "id": 4785,
+      "subject": "REQ-003 Dashboard Pengawasan fine-grained per Irban/Sub Irban/Anggota",
+      "mandays": 3
+    },
+    {
+      "type": "task",
+      "us": "REQ-003",
+      "subject": "REQ-003 Desain",
+      "mandays": 1,
+      "assignee": "ardy"
+    },
+    {
+      "type": "task",
+      "us": "REQ-003",
+      "subject": "REQ-003 Implementasi",
+      "mandays": 1,
+      "assignee": "primayasa"
+    },
+    {
+      "type": "task",
+      "us": "REQ-003",
+      "subject": "REQ-003 Testing",
+      "mandays": 1,
+      "assignee": "sifa"
+    },
+    {
+      "type": "us",
+      "key": "REQ-004",
+      "id": 4786,
+      "subject": "REQ-004 Periode default BULAN, dengan opsi TAHUNAN dan QUARTER",
+      "mandays": 1.0
+    },
+    {
+      "type": "task",
+      "us": "REQ-004",
+      "subject": "REQ-004 Desain",
+      "mandays": 0.25,
+      "assignee": "ardy"
+    },
+    {
+      "type": "task",
+      "us": "REQ-004",
+      "subject": "REQ-004 Implementasi",
+      "mandays": 0.5,
+      "assignee": "primayasa"
+    },
+    {
+      "type": "task",
+      "us": "REQ-004",
+      "subject": "REQ-004 Testing",
+      "mandays": 0.25,
+      "assignee": "sifa"
+    },
+    {
+      "type": "us",
+      "key": "REQ-005",
+      "id": 4787,
+      "subject": "REQ-005 Pimpinan dapat melihat kondisi tiap unit secara realtime",
+      "mandays": 2.0
+    },
+    {
+      "type": "task",
+      "us": "REQ-005",
+      "subject": "REQ-005 Desain",
+      "mandays": 0.5,
+      "assignee": "ardy"
+    },
+    {
+      "type": "task",
+      "us": "REQ-005",
+      "subject": "REQ-005 Implementasi",
+      "mandays": 1,
+      "assignee": "primayasa"
+    },
+    {
+      "type": "task",
+      "us": "REQ-005",
+      "subject": "REQ-005 Testing",
+      "mandays": 0.5,
+      "assignee": "sifa"
+    },
+    {
+      "type": "us",
+      "key": "REQ-006",
+      "id": 4788,
+      "subject": "REQ-006 Skenario perubahan Irban pegawai di tengah pengawasan",
+      "mandays": 3
+    },
+    {
+      "type": "task",
+      "us": "REQ-006",
+      "subject": "REQ-006 Desain",
+      "mandays": 1,
+      "assignee": "ardy"
+    },
+    {
+      "type": "task",
+      "us": "REQ-006",
+      "subject": "REQ-006 Implementasi",
+      "mandays": 1,
+      "assignee": "primayasa"
+    },
+    {
+      "type": "task",
+      "us": "REQ-006",
+      "subject": "REQ-006 Testing",
+      "mandays": 1,
+      "assignee": "sifa"
+    },
+    {
+      "type": "us",
+      "key": "REQ-007",
+      "id": 4789,
+      "subject": "REQ-007 Berita acara + tanda tangan manual Ketua Obrik & Ketua Tim Pembahas",
+      "mandays": 3
+    },
+    {
+      "type": "task",
+      "us": "REQ-007",
+      "subject": "REQ-007 Desain",
+      "mandays": 1,
+      "assignee": "ardy"
+    },
+    {
+      "type": "task",
+      "us": "REQ-007",
+      "subject": "REQ-007 Implementasi",
+      "mandays": 1,
+      "assignee": "primayasa"
+    },
+    {
+      "type": "task",
+      "us": "REQ-007",
+      "subject": "REQ-007 Testing",
+      "mandays": 1,
+      "assignee": "sifa"
+    },
+    {
+      "type": "issue",
+      "subject": "Dropdown jabatan saat menambah anggota belum sama dengan Perencanaan (Pengelolaan Kegiatan)",
+      "issue_type": "Change Request",
+      "mandays": 0.5
+    },
+    {
+      "type": "issue",
+      "subject": "Gagal upload dokumen PNG/JPG/JPEG (PDF berhasil)",
+      "issue_type": "Bug",
+      "mandays": 1
+    },
+    {
+      "type": "issue",
+      "subject": "Data Top 10 Auditor tidak muncul di Laporan Kinerja Auditor",
+      "issue_type": "Bug",
+      "mandays": 1
+    },
+    {
+      "type": "issue",
+      "subject": "Subtitle pada Laporan Kinerja Auditor perlu dihilangkan",
+      "issue_type": "Change Request",
+      "mandays": 0.25
+    }
+  ]
+}

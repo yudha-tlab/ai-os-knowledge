@@ -27,28 +27,32 @@ modified: "2026-10-26"
 | Dibuat | 2026-10-20 10:05:14 |
 | Modified | 2026-10-20 10:05:15 |
 
-## 2. Status Isi Project (per 2026-10-26)
+## 2. Status Isi Project (per 2026-10-26, SETELAH BACKFILL)
 
-| Artefak | Jumlah |
-|---|---|
-| Members | **1** (hanya `yudha`) |
-| Milestones | **0** |
-| Epics | **0** |
-| User Stories | **0** |
-| Tasks | **0** |
-| Issues | **0** |
+| Artefak | Jumlah | Keterangan |
+|---|---|---|
+| Members | **4** | yudha 96, ardy 52, primayasa 20, sifa 79 |
+| Milestones | **0** | belum dibuat |
+| Epics | **1** | EPIC-01 Penyesuaian SIMWASKRA (Maintenance) — id 789 |
+| User Stories | **7** | REQ-001..REQ-007, semua `Done` |
+| Tasks | **21** | 3 fase × 7 US, semua `Closed` |
+| Issues | **4** | Laporan PM 26 Okt 2026, semua `New` |
+| Total mandays Task | **17.0** | terverifikasi via API |
+| Total mandays Issue | **2.75** | terverifikasi via API |
 
-> **Project kosong.** Dibuat 20 Okt tetapi belum diisi apa pun. Tidak ada
-> pekerjaan yang tercatat di Taiga selama 20–26 Okt.
+> **Backfill dieksekusi 2026-10-26.** Sebelum backfill, project benar-benar kosong
+> (0 semua artefak, 1 member). Detail lengkap: `backfill-result-2026-10-26.md`.
+> Sebelum backfill, project kosong sejak dibuat 20 Okt — tidak ada pekerjaan
+> yang tercatat di Taiga selama 20–26 Okt.
 
 ## 3. Anggota Tim — Teridentifikasi di Instance Taiga
 
 | Peran (sesuai diskusi) | Nama | Username | User ID | Status di project |
 |---|---|---|---|---|
 | PM | Yudha Pratama | `yudha` | **96** | **Member** |
-| Desain | Ardy Widyantoro | `ardy` | **52** | **Belum member** |
-| Implementasi | Wahyu Primayasa | `primayasa` | **20** | **Belum member** |
-| QA / Testing | Sifa | `sifa` | **79** | **Belum member** |
+| Desain | Ardy Widyantoro | `ardy` | **52** | **Member** |
+| Implementasi | Wahyu Primayasa | `primayasa` | **20** | **Member** |
+| QA / Testing | Sifa | `sifa` | **79** | **Member** |
 
 ### Koreksi terhadap catatan sebelumnya
 
