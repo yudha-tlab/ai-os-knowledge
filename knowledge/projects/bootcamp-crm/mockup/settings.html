@@ -41,6 +41,16 @@
   .rule { display: flex; gap: 8px; align-items: center; padding: 10px 12px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
   .rule .n { width: 22px; height: 22px; border-radius: 50%; background: var(--navy-100); color: var(--navy-700); font-weight: 700; font-size: 12px; display: grid; place-items: center; }
   .tabs.sm { margin-bottom: 12px; }
+  .chico { width: 32px; height: 32px; border-radius: var(--r); background: var(--navy-100); color: var(--navy-700); display: grid; place-items: center; flex: none; }
+  .chico.off { background: var(--n100); color: var(--muted); }
+  .kv { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 4px 12px; margin: 0 0 12px; font-size: 13px; }
+  .kv dt { color: var(--muted); } .kv dd { margin: 0; overflow-wrap: anywhere; }
+  .vars { display: flex; flex-wrap: wrap; gap: 4px; }
+  .vars button { font-family: ui-monospace, Menlo, monospace; font-size: 12px; padding: 2px 6px; border: 1px solid var(--line); border-radius: var(--r); background: var(--n25); cursor: pointer; }
+  .vars button:hover { background: var(--navy-50); border-color: var(--navy-700); }
+  .prev { border: 1px dashed var(--n300); border-radius: var(--r); padding: 10px 12px; background: var(--n25); white-space: pre-wrap; font-size: 13px; }
+  .tpl td:nth-child(-n+2), .tpl td:last-child { white-space: nowrap; }
+  .clip { max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   @media (max-width: 900px) { .set { grid-template-columns: 1fr; } .subnav { position: static; flex-direction: row; flex-wrap: wrap; } .catgrid { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -89,6 +99,35 @@
   </form>
 </dialog>
 
+<dialog id="chDlg">
+  <form method="dialog" id="chForm" novalidate>
+    <div class="dlg-h"><h2 id="chTitle">Hubungkan channel</h2><div class="muted" id="chNote"></div></div>
+    <div class="dlg-b"><div id="chFields" class="stack" style="gap:12px"></div><div class="err" id="chErr" hidden></div><div class="hint">Kredensial disimpan terenkripsi dan tidak pernah ditampilkan utuh setelah disimpan.</div></div>
+    <div class="dlg-f"><button class="btn subtle" type="button" id="chOff" style="margin-right:auto">Putuskan</button><button class="btn subtle" type="button" data-close>Batal</button><button class="btn primary" type="submit">Simpan &amp; hubungkan</button></div>
+  </form>
+</dialog>
+
+<dialog id="tplDlg" style="width:min(640px,calc(100vw - 32px))">
+  <form method="dialog" id="tplForm" novalidate>
+    <div class="dlg-h"><h2 id="tplTitle">Template baru</h2><div class="muted" id="tplFor"></div></div>
+    <div class="dlg-b">
+      <div class="field"><label class="req" for="tName">Nama template</label><input class="input" id="tName" placeholder="mis. Follow-up setelah demo"><div class="err" id="tErr" hidden></div></div>
+      <div class="field"><label for="tUse">Dipakai untuk</label><select class="select" id="tUse"></select></div>
+      <div class="field"><div class="label" style="margin-bottom:6px">Cara membuat isi</div>
+        <label class="opt check" style="margin-bottom:6px"><input type="radio" name="tMode" value="fixed" checked><span><b>Template tetap</b><br><span class="hint">Isi pesan sama setiap kali, hanya variabel yang berubah.</span></span></label>
+        <label class="opt check"><input type="radio" name="tMode" value="ai"><span><b>Dibuat AI</b><br><span class="hint">AI menyusun isi dari konteks lead dan instruksi di bawah. Sales meninjau sebelum mengirim.</span></span></label></div>
+      <div class="field" id="tSubW" hidden><label for="tSub">Subjek email</label><input class="input" id="tSub"></div>
+      <div class="field" id="tAiW" hidden><label for="tAi">Instruksi untuk AI</label><textarea class="textarea" id="tAi" placeholder="mis. Tulis follow-up singkat, sebut kebutuhan yang dibahas saat demo, tutup dengan satu ajakan jadwal."></textarea>
+        <label class="check" style="margin-top:6px"><input type="checkbox" id="tRev" checked><span>Wajib ditinjau Sales sebelum dikirim</span></label></div>
+      <div class="field"><label for="tBody" id="tBodyL">Isi pesan</label><textarea class="textarea" id="tBody" style="min-height:120px"></textarea>
+        <div class="vars" id="tVars" style="margin-top:6px"></div></div>
+      <div id="tWaW" class="banner info" hidden></div>
+      <div><div class="label" style="margin-bottom:6px">Pratinjau dengan data contoh</div><div class="prev" id="tPrev"></div></div>
+    </div>
+    <div class="dlg-f"><button class="btn subtle" type="button" data-close>Batal</button><button class="btn primary" type="submit">Simpan template</button></div>
+  </form>
+</dialog>
+
 <script src="app.js"></script>
 <script>
 document.addEventListener("crm-ready", () => {
@@ -125,7 +164,36 @@ document.addEventListener("crm-ready", () => {
       Activity: [],
     },
     actTypes: ["Call", "Meeting", "Email", "Task", "Note"],
+    /* Omnichannel: akun channel (kredensial) dan template pesan per channel */
+    ch: {
+      whatsapp: { on: true, state: "ok", tested: "12 Okt 2026, 09.14", vals: ["1029384756102", "204857361920", "EAAG-sample-token", "arunika-verify"] },
+      telegram: { on: true, state: "ok", tested: "11 Okt 2026, 16.40", vals: ["7301-sample-bot-token", "@arunika_sales_bot"] },
+      email: { on: true, state: "error", tested: "12 Okt 2026, 08.02", err: "Autentikasi SMTP ditolak (535). Periksa username atau password.", vals: ["smtp.arunika.id", "587", "sales@arunika.id", "salah-password", "Tim Sales Arunika", "sales@arunika.id"] },
+      call: { on: false, state: "none", vals: [] },
+      sms: { on: false, state: "none", vals: [] },
+    },
+    tch: "whatsapp",
+    tpls: [
+      { ch: "whatsapp", name: "Follow-up pertama", use: "Follow-up pertama", mode: "fixed", body: "Halo {{lead_name}}, saya {{owner_name}} dari Arunika. Terima kasih sudah menghubungi kami soal {{product}}. Boleh kami jadwalkan demo singkat minggu ini?", wa: "approved" },
+      { ch: "whatsapp", name: "Pengingat meeting", use: "Pengingat meeting", mode: "fixed", body: "Halo {{lead_name}}, pengingat bahwa meeting kita dijadwalkan {{meeting_date}}. Sampai bertemu!", wa: "approved" },
+      { ch: "whatsapp", name: "Re-engage lead dingin", use: "Re-engage lead dingin", mode: "fixed", body: "Halo {{lead_name}}, apa kabar {{company}}? Kami punya pembaruan {{product}} yang mungkin relevan.", wa: "pending" },
+      { ch: "telegram", name: "Follow-up setelah demo", use: "Follow-up setelah demo", mode: "ai", ai: "Ringkas poin yang dibahas saat demo, sebut satu manfaat utama untuk {{company}}, tutup dengan ajakan jadwal. Maksimal 4 kalimat.", body: "", rev: true },
+      { ch: "email", name: "Proposal terkirim", use: "Proposal terkirim", mode: "fixed", sub: "Proposal {{product}} untuk {{company}}", body: "Yth. {{lead_name}},\n\nTerlampir proposal {{product}} sesuai diskusi kita. Mohon kabari bila ada yang perlu disesuaikan.\n\nSalam,\n{{owner_name}}" },
+      { ch: "email", name: "Follow-up pertama (AI)", use: "Follow-up pertama", mode: "ai", sub: "Tindak lanjut {{product}}", ai: "Tulis email follow-up yang sopan dan ringkas berdasarkan riwayat activity lead. Jangan menjanjikan diskon.", body: "", rev: true },
+      { ch: "call", name: "Skrip call pertama", use: "Follow-up pertama", mode: "fixed", body: "1. Perkenalkan diri dan Arunika.\n2. Konfirmasi kebutuhan {{lead_name}} soal {{product}}.\n3. Tanyakan jumlah karyawan dan sistem saat ini.\n4. Tutup dengan jadwal demo." },
+    ],
   };
+  const CH = {
+    whatsapp: { name: "WhatsApp Business", ic: "chat", desc: "WhatsApp Business Cloud API. Pesan pertama ke lead wajib memakai template yang disetujui Meta.", f: [["Phone number ID", "t"], ["WhatsApp Business Account ID", "t"], ["Access token", "s"], ["Webhook verify token", "s"]], show: [0] },
+    telegram: { name: "Telegram", ic: "spark", desc: "Bot Telegram. Lead harus memulai chat dengan bot terlebih dahulu sebelum bisa dikirimi pesan.", f: [["Bot token", "s"], ["Bot username", "t"]], show: [1] },
+    email: { name: "Email", ic: "mail", desc: "Kirim lewat SMTP tenant. Email terkirim dicatat otomatis sebagai activity.", f: [["SMTP host", "t"], ["Port", "t"], ["Username", "t"], ["Password", "s"], ["Nama pengirim", "t"], ["Alamat pengirim", "t"]], show: [5] },
+    call: { name: "Call", ic: "phone", desc: "Click-to-call lewat provider telepon. Durasi dan hasil call dicatat sebagai activity.", f: [["Provider", ["Twilio", "Zenvia", "Vonage"]], ["Account SID", "t"], ["Auth token", "s"], ["Nomor caller ID", "t"]], show: [0, 3] },
+    sms: { name: "SMS", ic: "note", desc: "SMS lewat gateway. Cocok untuk pengingat singkat ke lead yang tidak memakai aplikasi chat.", f: [["Provider", ["Twilio", "Zenvia", "Vonage"]], ["API key", "s"], ["Sender ID", "t"]], show: [0, 2] },
+  };
+  const VARS = [["lead_name", "Budi Hartono"], ["company", "PT Maju Jaya"], ["owner_name", "Raka Pratama"], ["stage", "Proposal"], ["product", "Arunika HRIS"], ["meeting_date", "Kamis, 15 Okt 14.00"]];
+  const USES = ["Follow-up pertama", "Follow-up setelah demo", "Pengingat meeting", "Proposal terkirim", "Re-engage lead dingin"];
+  const fill = (t) => VARS.reduce((a, [k, v]) => a.split("{{" + k + "}}").join(v), t || "");
+  let chCtx = null, tplCtx = null;
   let tab = "statuses", critCtx = null;
 
   const TABS = [
@@ -133,6 +201,7 @@ document.addEventListener("crm-ready", () => {
     ["Opportunity", [["pipes", "Pipelines & stages"]]],
     ["Performance", [["quota", "Quota & performance"]]],
     ["Data", [["fields", "Custom fields"], ["acttypes", "Activity types"]]],
+    ["Omnichannel", [["chacc", "Channel accounts"], ["chtpl", "Message templates"]]],
   ];
   const sw = (id, on, label) => '<label class="tgl"><span class="switch"><input type="checkbox" id="' + id + '"' + (on ? " checked" : "") + '><i></i></span>' + (label ? "<span>" + label + "</span>" : "") + "</label>";
   const head = (t, p) => '<div class="panel-h"><h2 style="font-size:16px;line-height:24px">' + t + "</h2><p>" + p + "</p></div>";
@@ -146,7 +215,7 @@ document.addEventListener("crm-ready", () => {
   function render() {
     $("#body").innerHTML = '<div class="set"><nav class="subnav" aria-label="Pengaturan">' + TABS.map(([g, items]) => '<div class="grp">' + g + "</div>" + items.map(([id, l]) => '<button data-t="' + id + '"' + (id === tab ? " aria-current=\"page\"" : "") + ">" + l + "</button>").join("")).join("") + '</nav><section id="panel" aria-live="polite"></section></div>';
     document.querySelectorAll(".subnav button").forEach((b) => (b.onclick = () => { tab = b.dataset.t; render(); }));
-    PANELS[tab](); bindCommon();
+    PANELS[tab](); bindCommon(); bindOmni();
   }
 
   const PANELS = {
@@ -216,6 +285,31 @@ document.addEventListener("crm-ready", () => {
         '<div class="addrow"><button class="btn primary" id="addField">' + C.icon("plus", "sm") + "Tambah field</button></div></div>" +
         (rows.length ? '<div class="card" style="margin-top:16px"><div class="card-h"><h2>Pratinjau di form ' + M.entity + '</h2></div><div class="card-b catgrid"><div class="field"><label>Nama</label><input class="input" disabled placeholder="Field bawaan"></div>' + rows.map((r) => '<div class="field"><label class="' + (r[2] ? "req" : "") + '">' + C.esc(r[0]) + '</label>' + (r[1] === "Pick list" ? '<select class="select" disabled><option>Pilih</option></select>' : r[1] === "Checkbox" ? '<label class="check"><input type="checkbox" disabled><span>Ya</span></label>' : '<input class="input" disabled placeholder="' + r[1] + '">') + "</div>").join("") + "</div></div>" : "");
     },
+    chacc() {
+      const lz = { ok: ["won", "Terhubung"], error: ["lost", "Gagal terhubung"], none: ["", "Belum terhubung"] };
+      $("#panel").innerHTML = head("Channel accounts", "Hubungkan akun channel milik perusahaan. Setelah terhubung dan diaktifkan, Sales dapat memicu follow-up ke lead lewat channel itu dari halaman Lead dan Opportunity.") +
+        '<div class="catgrid">' + Object.entries(CH).map(([k, c]) => { const m = M.ch[k], z = lz[m.state];
+          return '<div class="catcard"><header><span class="chico' + (m.state === "ok" ? "" : " off") + '">' + C.icon(c.ic) + "</span><b>" + c.name + '</b><span class="lozenge ' + z[0] + '">' + z[1] + '</span><span class="spacer"></span>' + sw("chon-" + k, m.on && m.state === "ok", "") + "</header>" +
+            '<div style="padding:12px"><p class="muted" style="margin:0 0 8px">' + c.desc + "</p>" +
+            (m.state === "none" ? "" : '<dl class="kv">' + c.show.map((i) => "<dt>" + c.f[i][0] + "</dt><dd>" + C.esc(m.vals[i] || "—") + "</dd>").join("") + "<dt>Terakhir dites</dt><dd>" + m.tested + "</dd></dl>") +
+            (m.state === "error" ? '<div class="banner lost" style="margin-bottom:12px">' + C.icon("alert", "sm") + "<div>" + m.err + "</div></div>" : "") +
+            '<div class="row"><button class="btn' + (m.state === "none" ? " primary" : "") + '" data-chcfg="' + k + '">' + (m.state === "none" ? "Hubungkan" : "Ubah konfigurasi") + "</button>" + (m.state === "none" ? "" : '<button class="btn subtle" data-chtest="' + k + '">' + C.icon("refresh", "sm") + "Tes koneksi</button>") + "</div></div></div>"; }).join("") + "</div>" +
+        '<div class="hint" style="margin-top:12px">Satu akun per channel untuk seluruh tenant. Channel yang dimatikan tidak muncul di pilihan follow-up Sales.</div>';
+    },
+    chtpl() {
+      const k = M.tch, c = CH[k], rows = M.tpls.map((t, i) => [t, i]).filter(([t]) => t.ch === k), isCall = k === "call";
+      const wa = { approved: ["won", "Disetujui Meta"], pending: ["warn", "Menunggu Meta"], rejected: ["lost", "Ditolak Meta"] };
+      $("#panel").innerHTML = head("Message templates", "Atur template pesan atau konten yang dibuat AI untuk tiap channel. Sales memilih template saat memicu follow-up; variabel diisi otomatis dari data lead.") +
+        '<div class="tabs sm" role="tablist">' + Object.entries(CH).map(([id, x]) => '<button class="tab" role="tab" aria-selected="' + (id === k) + '" data-tc="' + id + '">' + x.name + ' <span class="count">' + M.tpls.filter((t) => t.ch === id).length + "</span></button>").join("") + "</div>" +
+        (M.ch[k].state === "ok" ? "" : '<div class="banner warn" style="margin-bottom:12px">' + C.icon("alert", "sm") + "<div>Channel " + c.name + " belum terhubung. Template tetap bisa disiapkan, tetapi baru dapat dipakai Sales setelah akun dihubungkan di <b>Channel accounts</b>.</div></div>") +
+        '<div class="card" style="overflow:auto">' + (rows.length ? '<table class="table tpl"><thead><tr><th>Nama</th><th>Dipakai untuk</th><th>Isi</th><th>Mode</th>' + (k === "whatsapp" ? "<th>Status</th>" : "") + "<th></th></tr></thead><tbody>" +
+          rows.map(([t, i]) => '<tr data-ti="' + i + '"><td><b>' + C.esc(t.name) + "</b></td><td>" + C.esc(t.use) + '</td><td><div class="clip muted">' + C.esc(t.mode === "ai" ? "AI: " + t.ai : t.body) + '</div></td><td><span class="lozenge ' + (t.mode === "ai" ? "ai" : "") + '">' + (t.mode === "ai" ? C.icon("spark", "sm") + "Dibuat AI" : isCall ? "Skrip" : "Template tetap") + "</span></td>" +
+            (k === "whatsapp" ? '<td><span class="lozenge ' + wa[t.wa || "pending"][0] + '">' + wa[t.wa || "pending"][1] + "</span></td>" : "") +
+            '<td class="r"><button class="btn sm" data-tedit>Ubah</button> <button class="btn icon sm subtle" data-trm aria-label="Hapus" title="Hapus">' + C.icon("x", "sm") + "</button></td></tr>").join("") + "</tbody></table>"
+          : '<div class="empty"><h2>Belum ada template untuk ' + c.name + "</h2><p>Buat template pertama agar Sales punya pilihan saat follow-up.</p></div>") +
+        '<div class="addrow"><button class="btn primary" id="addTpl">' + C.icon("plus", "sm") + "Template baru</button></div></div>" +
+        '<div class="card" style="margin-top:16px"><div class="card-h"><h2>Variabel yang tersedia</h2></div><div class="card-b"><div class="vars">' + VARS.map(([v]) => "<span class=\"lozenge\" style=\"font-family:ui-monospace,Menlo,monospace\">{{" + v + "}}</span>").join("") + '</div><div class="hint" style="margin-top:8px">Custom field Lead juga dapat dipakai sebagai variabel. Bila datanya kosong, Sales diminta melengkapi sebelum mengirim.</div></div></div>';
+    },
     acttypes() {
       $("#panel").innerHTML = head("Activity types", "Jenis activity yang dapat dicatat Sales pada Lead, Opportunity, Contact, dan Account.") + listEditor(M.actTypes, "act", { ph: "Jenis activity baru" });
     },
@@ -260,6 +354,57 @@ document.addEventListener("crm-ready", () => {
     const af = $("#addField"); if (af) af.onclick = () => { $("#fFor") && 0; $("#fldFor").textContent = "Untuk: " + M.entity; $("#fLabel").value = ""; $("#fOpts").value = ""; $("#fErr").hidden = true; $("#fOptsW").hidden = true; $("#fType").value = "Text"; C.openDlg("fldDlg"); };
     document.querySelectorAll("[data-i] [data-rm]").forEach((b) => { const tr = b.closest("tr"); if (tr && tab === "fields") b.onclick = () => { M.fields[M.entity].splice(+tr.dataset.i, 1); render(); C.toast("Field dihapus dari tampilan. Data lama tetap tersimpan"); }; });
   }
+  function bindOmni() {
+    document.querySelectorAll("[data-chcfg]").forEach((b) => (b.onclick = () => openCh(b.dataset.chcfg)));
+    document.querySelectorAll("[data-chtest]").forEach((b) => (b.onclick = () => { const k = b.dataset.chtest; M.ch[k].tested = "13 Okt 2026, 10.00"; if (M.ch[k].state === "error") C.toast("Tes gagal. Periksa kembali kredensial"); else C.toast("Koneksi " + CH[k].name + " berhasil"); render(); }));
+    document.querySelectorAll('input[id^="chon-"]').forEach((c) => { const k = c.id.slice(5); c.disabled = M.ch[k].state !== "ok"; c.title = c.disabled ? "Hubungkan channel terlebih dahulu" : ""; c.onchange = () => { M.ch[k].on = c.checked; C.toast(CH[k].name + (c.checked ? " diaktifkan untuk Sales" : " dinonaktifkan")); }; });
+    document.querySelectorAll("[data-tc]").forEach((b) => (b.onclick = () => { M.tch = b.dataset.tc; render(); }));
+    const at = $("#addTpl"); if (at) at.onclick = () => openTpl(null);
+    document.querySelectorAll("[data-tedit]").forEach((b) => (b.onclick = () => openTpl(+b.closest("tr").dataset.ti)));
+    document.querySelectorAll("[data-trm]").forEach((b) => (b.onclick = () => { M.tpls.splice(+b.closest("tr").dataset.ti, 1); render(); C.toast("Template dihapus"); }));
+  }
+  function openCh(k) {
+    chCtx = k; const c = CH[k], m = M.ch[k];
+    $("#chTitle").textContent = (m.state === "none" ? "Hubungkan " : "Konfigurasi ") + c.name; $("#chNote").textContent = c.desc; $("#chErr").hidden = true; $("#chOff").hidden = m.state === "none";
+    $("#chFields").innerHTML = c.f.map(([l, t], i) => '<div class="field"><label class="req" for="chf' + i + '">' + l + "</label>" + (Array.isArray(t) ? '<select class="select" id="chf' + i + '">' + t.map((o) => "<option" + (m.vals[i] === o ? " selected" : "") + ">" + o + "</option>").join("") + "</select>" : '<input class="input" id="chf' + i + '" type="' + (t === "s" ? "password" : "text") + '" autocomplete="off" value="' + C.esc(m.vals[i] || "") + '">') + "</div>").join("");
+    C.openDlg("chDlg");
+  }
+  $("#chForm").onsubmit = (e) => {
+    const c = CH[chCtx], vals = c.f.map((_, i) => $("#chf" + i).value.trim());
+    if (vals.some((v) => !v)) { e.preventDefault(); $("#chErr").hidden = false; $("#chErr").innerHTML = C.icon("alert", "sm") + "Semua kolom wajib diisi"; return; }
+    Object.assign(M.ch[chCtx], { vals, state: "ok", on: true, tested: "13 Okt 2026, 10.00" }); render(); C.toast(c.name + " terhubung");
+  };
+  $("#chOff").onclick = () => { Object.assign(M.ch[chCtx], { vals: [], state: "none", on: false }); $("#chDlg").close(); render(); C.toast(CH[chCtx].name + " diputuskan. Template tetap tersimpan"); };
+
+  function tplMode() { return document.querySelector('input[name="tMode"]:checked').value; }
+  function tplUi() {
+    const ai = tplMode() === "ai", k = tplCtx.ch, call = k === "call";
+    $("#tAiW").hidden = !ai; $("#tSubW").hidden = k !== "email";
+    $("#tBodyL").textContent = ai ? "Kerangka atau contoh isi (opsional)" : call ? "Skrip dan poin pembicaraan" : "Isi pesan";
+    $("#tWaW").hidden = k !== "whatsapp";
+    $("#tWaW").innerHTML = C.icon("flag") + "<div>Template WhatsApp harus disetujui Meta sebelum dipakai untuk pesan pertama. Setelah disimpan, statusnya menjadi <b>Menunggu Meta</b>.</div>";
+    $("#tPrev").textContent = ai ? "Isi dibuat AI saat Sales memicu follow-up, berdasarkan instruksi dan riwayat lead. Sales dapat meninjau dan mengubahnya sebelum dikirim." : (k === "email" && $("#tSub").value ? "Subjek: " + fill($("#tSub").value) + "\n\n" : "") + (fill($("#tBody").value) || "Isi pesan akan tampil di sini.");
+  }
+  function openTpl(i) {
+    const t = i === null ? { ch: M.tch, name: "", use: USES[0], mode: "fixed", body: "", ai: "", sub: "", rev: true } : M.tpls[i];
+    tplCtx = { i, ch: t.ch }; $("#tplTitle").textContent = i === null ? "Template baru" : "Ubah template"; $("#tplFor").textContent = "Channel: " + CH[t.ch].name;
+    $("#tUse").innerHTML = USES.map((u) => "<option" + (u === t.use ? " selected" : "") + ">" + u + "</option>").join("");
+    $("#tName").value = t.name; $("#tBody").value = t.body || ""; $("#tAi").value = t.ai || ""; $("#tSub").value = t.sub || ""; $("#tRev").checked = t.rev !== false; $("#tErr").hidden = true;
+    document.querySelector('input[name="tMode"][value="' + t.mode + '"]').checked = true;
+    $("#tVars").innerHTML = '<span class="hint" style="align-self:center">Sisipkan variabel:</span>' + VARS.map(([v]) => '<button type="button" data-v="' + v + '">{{' + v + "}}</button>").join("");
+    $("#tVars").querySelectorAll("button").forEach((b) => (b.onclick = () => { const ta = tplMode() === "ai" ? $("#tBody") : $("#tBody"), a = ta.selectionStart, z = ta.selectionEnd, v = "{{" + b.dataset.v + "}}"; ta.value = ta.value.slice(0, a) + v + ta.value.slice(z); ta.focus(); ta.selectionStart = ta.selectionEnd = a + v.length; tplUi(); }));
+    tplUi(); C.openDlg("tplDlg");
+  }
+  document.querySelectorAll('input[name="tMode"]').forEach((r) => (r.onchange = tplUi));
+  ["#tBody", "#tSub"].forEach((q) => ($(q).oninput = tplUi));
+  $("#tplForm").onsubmit = (e) => {
+    const name = $("#tName").value.trim(), ai = tplMode() === "ai", err = !name ? "Nama template wajib diisi" : ai && !$("#tAi").value.trim() ? "Instruksi untuk AI wajib diisi" : !ai && !$("#tBody").value.trim() ? "Isi pesan wajib diisi" : "";
+    if (err) { e.preventDefault(); $("#tErr").hidden = false; $("#tErr").innerHTML = C.icon("alert", "sm") + err; return; }
+    const t = { ch: tplCtx.ch, name, use: $("#tUse").value, mode: ai ? "ai" : "fixed", body: $("#tBody").value.trim(), ai: $("#tAi").value.trim(), sub: $("#tSub").value.trim(), rev: $("#tRev").checked };
+    if (tplCtx.ch === "whatsapp") t.wa = tplCtx.i === null ? "pending" : "pending";
+    if (tplCtx.i === null) M.tpls.push(t); else M.tpls[tplCtx.i] = t;
+    render(); C.toast("Template disimpan");
+  };
   function openCrit(s) {
     critCtx = s; $("#critTitle").textContent = "Exit criteria · " + s.name;
     const draw = () => { $("#critList").innerHTML = s._c.map((c, i) => '<div class="row"><input class="input" value="' + C.esc(c) + '" data-ci="' + i + '" aria-label="Kriteria ' + (i + 1) + '"><button type="button" class="btn icon sm subtle" data-cx="' + i + '" aria-label="Hapus kriteria">' + C.icon("x", "sm") + "</button></div>").join("") || '<div class="hint">Belum ada kriteria.</div>';

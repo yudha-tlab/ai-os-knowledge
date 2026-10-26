@@ -22,3 +22,11 @@
 | 20241216.TAPERA.FSD-Follow Up | Tersedia | [20241216.TAPERA.FSD-Follow_Up.md](./20241216.TAPERA.FSD-Follow_Up.md) |
 | 20241009.TAPERA.FSD-SP3K | Tersedia | [20241009.TAPERA.FSD-SP3K.md](./20241009.TAPERA.FSD-SP3K.md) |
 | 20241009.TAPERA.FSD-Pengelolaan Pengembang | Tersedia | [20241009.TAPERA.FSD-Pengelolaan_Pengembang.md](./20241009.TAPERA.FSD-Pengelolaan_Pengembang.md) |
+
+---
+
+## FSD Delta / CR (generate PM-agent)
+
+| Nama FSD | Status | Path File | Basis |
+| :--- | :--- | :--- | :--- |
+| 20261013.TAPERA.FSD-CR-FINAL-01 — CR Consolidated v2.1 (3 CR aktif) | Final v1.0 | [final/07_FSD_FINAL_CR-Consolidated-v2.1.md](./final/07_FSD_FINAL_CR-Consolidated-v2.1.md) | CR-20260729-001 + CR-20260908-001 + CR-20260908-002 (CR-CONSOLIDATED v2.1); 14 UC; 3.218 baris; diverifikasi ke code-repo 2026-10-13 |

@@ -23,3 +23,8 @@ Thumbs.db
 # Runtime
 gateway.pid
 pi_knowledge/
+
+# Backup transien hasil edit dokumen (snapshot sementara, bukan deliverable)
+backup_*.docx
+backup_*.pdf
+backup_*.xlsx
