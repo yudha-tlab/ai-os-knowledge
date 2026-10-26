@@ -49,7 +49,23 @@ diidentifikasi dan akan digali pada sesi requirement berikutnya.
 - **RAID Log:** [[raid-log]]
 - **Decision Log:** [[decision-log]]
 - **Status Terbaru:** [[project-status]]
+- **Taiga Project Map:** [[taiga/taiga-project-map]]
+- **Backfill Taiga 26-Okt-2026:** [[taiga/backfill-result-2026-10-26]]
 - **Dokumen Sumber Klien:** `source-docs/2026-10-20-simwaskra-overview-klien.pptx`
+
+## Lokasi Repositori & Tracker
+
+| Jenis | Lokasi |
+|---|---|
+| Knowledge base (dokumen kerja PM) | `~/Projects/internal/ai-os/ai-os-knowledge/knowledge/projects/simwaskra/` |
+| **Dokumentasi resmi ISO 07.x** | `~/Projects/documentation/simwaskra-project-documentation/` (repo git lokal, remote GitLab belum dibuat) |
+| Source code | `git@gitlab-tlab:simwasda/simwasda-fi4.git` → `/home/debian/Projects/upstream-tlab/simwasda/simwasda-fi4` |
+| Project tracker | Taiga project **128** — https://taiga.tlab.co.id/project/simwasda |
+
+> **Struktur ISO dibuat 26-Okt-2026** — 10 folder fase 07.01.01 s/d 07.08.02,
+> masing-masing dengan `source-docs/`, `generated-docs/`, `mom/`, `final-output/`
+> (+ `test-cases/` & `user-guide/` di 07.04.01). Standar: MSM-TLab-03 Rev 002.
+> Semua folder masih **kosong** — pengarsipan dokumen belum dilakukan.
 
 ## Milestone Utama
 
