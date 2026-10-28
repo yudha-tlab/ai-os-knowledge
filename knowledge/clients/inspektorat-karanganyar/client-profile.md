@@ -22,7 +22,9 @@ created: "2026-10-20"
 
 | Peran | Nama | Kontak | Keterangan |
 |-------|------|--------|------------|
-| Belum ditentukan | Belum ditentukan | Belum ditentukan | Perlu diisi dari hasil kickoff |
+| Penerima demo / pengambil keputusan | Pak Agung | `budiyarto01@gmail.com` | Hadir pada Demo & UAT 27 Okt 2026 |
+| Perwakilan Inspektorat | Pak Fauzy | `zihendr@gmail.com` | Alamat email untuk penyampaian notulen |
+| Perwakilan Inspektorat | Pak Wahyu | `wahyukristiyanto24@gmail.com` | Alamat email untuk penyampaian notulen |
 
 ## Project Portfolio
 
