@@ -2,11 +2,14 @@
 title: "Project Charter — Bootcamp Internal CRM"
 type: project-charter
 project: bootcamp-crm
-status: Draft
-version: "8.3"
+status: Active
+version: "9.0"
 created: 2026-10-02
-modified: 2026-10-08
+modified: 2026-10-29
 changelog:
+  - version: "9.0"
+    date: 2026-10-29
+    purpose: "Transisi ke era produk (DEC-065) — bootcamp selesai 22 Okt 2026, disetujui 28 Okt 2026 oleh Head of Product & Project (DEC-063/DEC-064); sasaran berubah dari core backend menjadi produk komersial matang; kriteria keberhasilan bootcamp diarsipkan; ruang lingkup era produk ditetapkan ulang; keputusan blocking arsitektur ditambahkan"
   - version: "8.3"
     date: 2026-10-08
     purpose: "DEC-048 — penyedia model AI M10 = TLab LLM; asumsi ketersediaan LLM terkonfirmasi; use case AI minimum = AI-01"
@@ -50,7 +53,27 @@ changelog:
 **Tanggal Dibuat:** 2026-10-02
 **Project Manager:** Yudha Pratama
 **Client/Divisi:** TLab Internal
-**Status:** Draft v7.0 — menunggu persetujuan sponsor internal. Seluruh keputusan PM/PO sudah diterapkan (DEC-021 s/d DEC-043); tidak ada keputusan PM/PO yang tersisa.
+**Status:** **Active v9.0** — fase bootcamp selesai dan disetujui; project berjalan sebagai pengembangan produk.
+
+## 0. Perubahan Status — Fase Bootcamp Selesai (2026-10-29)
+
+Charter ini semula ditulis untuk **pelaksanaan bootcamp**. Bootcamp telah selesai
+**22 Oktober 2026** (DEC-063) dan hasilnya disetujui **28 Oktober 2026** oleh
+**Head of Product & Project** (DEC-064). Manajemen memutuskan produk dilanjutkan
+sebagai **produk matang yang dapat dijual**, bukan MVP (DEC-065).
+
+| Aspek | Semula (charter v8.3) | Berlaku sekarang |
+|---|---|---|
+| Objek project | Pelaksanaan bootcamp 3 hari + prototype | **Pengembangan produk komersial** |
+| Sasaran output | Core backend; frontend bukan penghambat (DEC-041) | **Produk utuh** — UI bagian dari penilaian |
+| Kriteria kelulusan | Kapabilitas backend (DEC-042) | **Kesesuaian dengan kebutuhan pasar**, peta rilis |
+| Timeline | 13–22 Oktober 2026 | **Belum ditentukan** — menunggu baseline produk |
+| Approval | Menunggu sponsor (Draft) | **Disetujui** 2026-10-28 (DEC-064) |
+
+**Bagian §1–§8 di bawah dipertahankan sebagai catatan fase bootcamp.** Bagian
+yang sudah tidak berlaku ditandai; ruang lingkup dan kriteria baru ada di §2A dan
+§3A. Alasan: charter lama memuat kompromi yang dibuat untuk jendela 2 hari, dan
+kompromi itu tidak sah sebagai dasar produk.
 
 ## 1. Latar Belakang & Tujuan
 
@@ -66,15 +89,21 @@ menyelesaikan seluruh fitur mandatory** yang ditargetkan. **Kesiapan frontend
 bukan penghambat kelulusan**; UI boleh belum selesai selama core backend terbukti
 melayani semua fitur mandatory.
 
+> **Tidak berlaku sejak 2026-10-29 (DEC-065).** Di era produk, frontend adalah
+> bagian dari penilaian. Paragraf ini dipertahankan sebagai catatan fase bootcamp.
+
 Inisiatif ini memiliki tiga sasaran yang diukur bersamaan:
 
-1. **Sasaran produk — core platform (DEC-041):** desain core backend CRM
+1. ~~**Sasaran produk — core platform (DEC-041):** desain core backend CRM
    multi-tenant mampu menyelesaikan seluruh fitur mandatory. Frontend tidak
-   menjadi ukuran kelulusan.
+   menjadi ukuran kelulusan.~~ **Tercapai & berakhir** — lihat §3A.
 2. **Sasaran produk — kelanjutan:** core platform yang dihasilkan dapat
-   dikembangkan menjadi produk komersial multi-tenant.
+   dikembangkan menjadi produk komersial multi-tenant. **Ini sasaran yang berlaku
+   sekarang** (DEC-065).
 3. **Sasaran proses** — mengukur seberapa cepat dan seefektif apa penggunaan AI
    (AI OS) membantu proses development, sebagai dasar keputusan adopsi ke depan.
+   Jendela bootcamp telah berakhir; pengukuran efektivitas tidak pernah ditetapkan
+   sebelum bootcamp (R-002) sehingga hasil fase bootcamp tidak dapat disimpulkan.
 
 PM diposisikan sebagai **Product Owner yang berperan sebagai klien** pemilik
 kebutuhan CRM, sehingga alur permintaan requirement berjalan seperti project
@@ -134,7 +163,65 @@ terpisah. Prinsip ini mengikat seluruh rancangan produk.
 - ~~Cakupan & ownership "assessment tim sales (HR)"~~ — **dikeluarkan dari
   lingkup** 2026-10-02 (DEC-031).
 
-## 3. Tujuan & Kriteria Keberhasilan
+## 2A. Ruang Lingkup Era Produk (berlaku — DEC-065)
+
+Ruang lingkup produk **belum ditetapkan sebagai baseline**. Yang sudah ditetapkan
+secara eksplisit oleh PO hanya dua hal: **peta modul** (di bawah) dan **lima
+keputusan fitur 2026-10-29**. Sisanya menunggu baseline produk.
+
+### Peta modul produk
+
+| Modul | Status di era produk | Dasar |
+|---|---|---|
+| M1 Tenancy & Kendali Akses | Fondasi wajib | DEC-004, DEC-029 |
+| M2 Contact & Account | Wajib | DEC-015, DEC-020, DEC-024 |
+| M3 Lead Management | Wajib | DEC-015 |
+| M4 Sales Pipeline / Opportunity | Wajib | DEC-015 |
+| M5 Activity Management | Wajib (versi minimal → board view) | DEC-049, DEC-071 |
+| M6 Ticketing | **Modul lanjutan roadmap** | DEC-043, DEC-044 |
+| M7 Reporting & Analytics | Wajib | DEC-015 |
+| M8 Webhook / Event Layer | Wajib — kini termasuk keamanan (signing/retry) | DEC-012, DEC-021, R-022 |
+| M9 Platform Administration | **Bagian rencana produk** (naik dari roadmap) | DEC-045, DEC-065 |
+| M10 AI Assistance Layer | **Roadmap AI dibuka penuh** | DEC-046, DEC-048, DEC-065 |
+| **Katalog Produk (baru)** | **Wajib** — kategori + produk + price book + line item | DEC-067..070 |
+
+### Fitur yang ditetapkan 2026-10-29
+
+| Fitur | Isi | Keputusan |
+|---|---|---|
+| **Katalog produk** | Dua tingkat: Product Category → Product. Kategori dikelola tenant. Skema harus siap untuk atribut/bundle/hierarki >2 tingkat (roadmap) | DEC-067 |
+| **Price book** | Direct + Partner sekarang; tenant dapat menambah kanal. Line item menyimpan harga snapshot | DEC-068 |
+| **Komisi** | Dari nilai deal, di Opportunity. Entitas Partner tersendiri. Tidak mengurangi revenue/quota | DEC-069 |
+| **Nilai deal** | Line item atau manual — manual menang; `amount_source` mencatat; laporan pakai nilai deal | DEC-070 |
+| **Board Activity** | Toggle Board/List, kolom Overdue/Hari ini/Minggu ini/Nanti/Selesai, field priority | DEC-071 |
+
+### Di luar lingkup produk (dinyatakan eksplisit — jangan diam-diam dijanjikan)
+
+- **Atribut produk** (tenor, suku bunga, plafon, agunan) — roadmap; skema disiapkan
+  tetapi tidak diimplementasikan di rilis pertama (DEC-067).
+- **Bundle / nested product** dan **hierarki kategori >2 tingkat** — roadmap.
+- **Billing / Invoice** — revenue tetap dari deal closed-won (DEC-016).
+- **Sinkronisasi kalender/email, activity berulang, notifikasi** (DEC-049).
+- **Custom case klien dengan validasi *blocking* di dalam core** (DEC-014).
+- **Assessment tim sales (HR)** (DEC-031).
+
+## 3A. Kriteria Keberhasilan Era Produk (berlaku)
+
+Kriteria fase bootcamp (§3) **tidak berlaku**. Yang menggantikan — dan perlu
+disadari bahwa ini **belum terisi angka targetnya**:
+
+| Tujuan | Indikator | Status data |
+|---|---|---|
+| Produk layak dijual | Kriteria kelayakan komersial (fungsional + non-fungsional) | **Belum ditentukan** — bagian dari baseline produk |
+| Modul produk lengkap | Seluruh modul pada peta §2A tersedia dan teruji | **Belum ditentukan** targetnya |
+| Keamanan & isolasi tenant | Keputusan arsitektur R-020/R-021/R-022 tertutup dan terverifikasi | **Belum ditentukan** |
+| Kesiapan rilis | Peta rilis dengan tanggal | **Belum ditentukan** |
+
+**Tidak ada angka yang diisikan** untuk tabel di atas. Target yang belum
+ditetapkan dicatat sebagai belum ada data, bukan dikarang agar dokumen tampak
+lengkap.
+
+## 3. Tujuan & Kriteria Keberhasilan (arsip — fase bootcamp, tidak berlaku)
 
 | Tujuan | Indikator Keberhasilan (KPI) |
 |---|---|
@@ -165,24 +252,30 @@ Daftar lengkap ada di [[stakeholder-register]].
 
 ## 5. Timeline Tingkat Tinggi
 
-| Fase | Target Mulai | Target Selesai |
-|---|---|---|
-| Penyusunan requirement produk CRM | 2026-10-02 | Sebelum bootcamp (sisa: BRD) |
-| **Bootcamp — Hari 1: workshop finalisasi requirement** | **2026-10-13** (DEC-037) | 2026-10-13 |
-| **Bootcamp — Hari 2-3: pengembangan core (backend)** | Mengikuti hari 1 | **Tanggal akhir tidak ditetapkan** (DEC-040) — yang mengikat adalah **durasi 3 hari**, bukan rentang start-end |
-| Pengukuran & pelaporan hasil | Mengikuti pelaksanaan | Belum ditentukan |
+### Berlaku (era produk)
 
-**Struktur bootcamp (DEC-037):** durasi tetap **3 hari** (DEC-003), tetapi **hari
-1 dipakai penuh untuk workshop memfinalkan requirement** — pengembangan hanya
-berjalan pada hari 2-3. Konsekuensinya, **jendela pengembangan efektif = 2 hari**,
-bukan 3 hari. Ini memperkuat R-001 secara signifikan.
+| Fase | Target Mulai | Target Selesai | Status |
+|---|---|---|---|
+| Penutupan governance fase bootcamp | 2026-10-29 | 2026-10-29 | **Selesai** |
+| Baseline produk (visi, modul, arsitektur, peta rilis) | Belum ditentukan | Belum ditentukan | Belum Mulai |
+| Keputusan arsitektur (R-020..R-022) | Belum ditentukan | Belum ditentukan | Belum Mulai — Head of Engineer |
+| CR katalog produk + pricing + komisi + Partner | Belum ditentukan | Belum ditentukan | Belum Mulai — butuh mandays |
+| Peta rilis produk | Belum ditentukan | Belum ditentukan | Belum Mulai |
 
-**Tanggal akhir tidak ditetapkan (DEC-040):** PO menegaskan yang mengikat adalah
-**durasi** (3 hari), bukan rentang start-end. Tanggal kalender dianggap tidak
-material untuk perencanaan — yang material adalah **komposisi hari** (1 hari
-workshop + 2 hari pengembangan, DEC-037). Q-030 ditutup tanpa tanggal, sebagai
-keputusan sadar. Tanggal mulai 13 Oktober tetap berlaku karena ia titik jangkar
-workshop hari 1 (DEC-037), bukan sebagai batas rentang.
+### Arsip (fase bootcamp — selesai)
+
+| Fase | Target Mulai | Target Selesai | Status |
+|---|---|---|---|
+| Penyusunan requirement produk CRM | 2026-10-02 | 2026-10-02 | **Selesai** |
+| Bootcamp — Hari 1: workshop requirement | 2026-10-13 | 2026-10-13 | **Selesai** |
+| Bootcamp — Hari 2-3: pengembangan core | 2026-10-14 | **2026-10-22** | **Selesai** (DEC-063) |
+| Persetujuan hasil oleh manajemen | — | **2026-10-28** | **Selesai** (DEC-064) |
+
+> **Catatan atas DEC-040 (tidak berlaku):** selama fase bootcamp, tanggal akhir
+> sengaja diabaikan karena PO menegaskan yang mengikat adalah durasi. Tanggal akhir
+> kini diketahui sebagai fakta — **22 Oktober 2026** (DEC-063) — sehingga DEC-040
+> tidak lagi berlaku. Jendela pengembangan efektif tetap 2 hari (hari 1 = workshop,
+> DEC-037) sebagai catatan pelaksanaan.
 
 ## 6. Anggaran (jika relevan)
 
@@ -191,75 +284,90 @@ terpisah atau dihitung sebagai alokasi waktu internal tim.
 
 ## 7. Asumsi & Batasan
 
-### Asumsi
+### Asumsi era produk (berlaku)
 
-- Durasi bootcamp dianggap cukup untuk menghasilkan **core backend** yang mampu
-  menyelesaikan seluruh fitur mandatory — belum divalidasi; **jendela pengembangan
-  efektif hanya 2 hari** (DEC-037) memperkuat keraguan ini (R-001/A-001).
-- **Kesiapan frontend tidak menahan kelulusan** (DEC-041) — dianggap dapat
-  ditinggalkan sebagai UI minimal tanpa membatalkan sasaran core platform.
-- **Hari 1 workshop dianggap cukup untuk memfinalkan seluruh requirement** —
-  belum divalidasi (R-015).
-- Peserta sudah memiliki kompetensi dasar development.
-- AI OS tersedia dan dapat dipakai selama sesi bootcamp.
-- Tech Lead dapat menetapkan peserta sebelum tanggal bootcamp.
-- Kustomisasi klien cukup dilayani secara asynchronous (webhook).
+- **Kustomisasi klien cukup dilayani secara asynchronous (webhook)** — belum
+  divalidasi bahwa tidak ada klien sasaran dengan kebutuhan validasi blocking (A-006).
+- **Penyedia LLM TLab tersedia dan dapat dipakai produk** — terkonfirmasi untuk M10
+  (DEC-048, A-012); detail endpoint/kuota operasional belum ditetapkan.
+- **Penegakan batas paket (M9) dapat dipisahkan dari tenant model** — cukup status
+  langganan yang disimpan (A-010); **perlu validasi**, kini lebih penting karena M9
+  masuk rencana produk.
 
-### Batasan
+### Batasan era produk (berlaku)
 
-- Durasi bootcamp tetap: **3 hari** — namun **hanya hari 2-3 yang dipakai untuk
-  pengembangan**; hari 1 adalah workshop finalisasi requirement (DEC-037).
-- **Ukuran kelulusan adalah kapabilitas core backend**, bukan kelengkapan
-  frontend (DEC-041).
-- Peran PM sebagai Product Owner yang berperan sebagai klien bersifat mengikat
-  untuk project ini — requirement berasal dari sisi PM/PO, bukan dari klien
-  eksternal.
-- Core CRM tidak dimodifikasi per klien (DEC-012).
+- **Core CRM tidak dimodifikasi per klien (DEC-012)** — variasi diserap lewat
+  webhook + service eksternal.
+- **Revenue = deal closed-won (DEC-016)** — billing/invoice di luar produk.
+- **Komisi tidak mengurangi revenue maupun quota attainment (DEC-069)**.
+- **Peran PM sebagai Product Owner yang berperan sebagai klien** tetap mengikat
+  selama belum ada pemilik produk terpisah.
+- **"Optiva" adalah codename internal (DEC-066)** — tidak boleh dipakai pada materi
+  eksternal sebelum uji merek.
 
-## 8. Risiko Awal
+### Arsip — asumsi & batasan fase bootcamp (tidak berlaku)
 
-- **Durasi 3 hari berisiko tidak cukup** untuk mencapai seluruh modul mandatory
-  — lingkup sudah dibatasi (DEC-015), kecukupan durasi belum terbukti.
-- **Metrik efektivitas AI belum didefinisikan** — risiko utama: pengukuran tidak
-  menghasilkan kesimpulan yang dapat dipakai jika baseline tidak ditetapkan
-  sebelum bootcamp dimulai. Tidak dapat dipulihkan setelah bootcamp berjalan.
-- **Peserta belum ditetapkan** oleh Tech Lead — menghambat perencanaan sesi dan
-  pembagian peran.
-- **Jendela pengembangan efektif hanya 2 hari** (hari 1 = workshop requirement,
-  DEC-037) sementara modul mandatory kini mencakup 7 modul (M5 naik, CR-20261013-001) — risiko R-001
-  tetap High/High.
-- **Ketergantungan pada hasil hari 1**: bila requirement belum tuntas di hari 1,
-  jendela pengembangan berkurang lagi (R-015).
-- ~~Kriteria selesai belum konsisten~~ — **diselesaikan**: DEC-042 menyatukan DEC-028 (end-to-end) dengan DEC-041 (core backend) — "end-to-end" diukur pada kapabilitas backend/R-016 ditutup.
-- **Metrik efektivitas AI dan baseline pembanding belum ada** — hanya metrik
-  kecepatan yang ditetapkan (DEC-032); efektivitas & baseline diteruskan ke
-  Head of Engineer (TD-03/TD-04). Ini risiko yang tidak dapat dipulihkan.
-- ~~Status M8 Webhook bertentangan dengan prinsip produk~~ — **terselesaikan**:
-  M8 masuk MVP minimal (DEC-021).
-- Lihat detail lengkap di [[risk-register]] dan [[raid-log]].
+- ~~Durasi bootcamp dianggap cukup untuk core backend~~ — ditutup, bootcamp selesai.
+- ~~Kesiapan frontend tidak menahan kelulusan (DEC-041)~~ — berhenti berlaku (DEC-065).
+- ~~Hari 1 workshop dianggap cukup memfinalkan requirement~~ — ditutup (R-015).
+- ~~Durasi bootcamp tetap 3 hari / jendela pengembangan 2 hari~~ — pelaksanaan selesai.
+- ~~Ukuran kelulusan adalah kapabilitas core backend~~ — berhenti berlaku.
+
+## 8. Risiko Awal (diperbarui 2026-10-29)
+
+### Risiko yang berlaku (era produk)
+
+| Kode | Risiko | Severity | Owner |
+|---|---|---|---|
+| R-020 | Isolasi teknis multi-tenant belum ditetapkan — prasyarat rilis | **Tinggi** | Head of Engineer |
+| R-021 | State machine & event belum berversi — riwayat/forecast/replay berisiko rusak | **Tinggi** | Head of Engineer |
+| R-022 | Keamanan webhook belum ditutup (signing/retry/dead-letter) | **Tinggi** | Head of Engineer |
+| R-023 | Nama "Optiva" berpotensi bentrok merek terdaftar | **Tinggi** | PM/PO + Legal |
+| R-024 | Model data katalog produk berisiko menutup kebutuhan masa depan | Sedang | PM/PO + Head of Engineer |
+| R-017 | Kontrol plane SaaS belum dirancang — tenant model tanpa status langganan | Sedang | PM/PO + Head of Engineer |
+| R-002 | Metrik efektivitas AI + baseline belum ditetapkan | Tinggi | Head of Engineer |
+
+Tiga risiko pertama bersifat **blocking terhadap rilis** dan bukan ketidakpastian
+yang menunggu kejadian — ketiganya adalah keputusan yang belum diambil.
+
+### Arsip — risiko fase bootcamp (ditutup)
+
+R-001 (durasi bootcamp), R-015 (hari 1 workshop), R-018 (beban AI dalam 2 hari),
+R-019 (mesin konfigurasi) — seluruhnya **ditutup 2026-10-29** karena objeknya
+berakhir, bukan karena dimitigasi. R-004 diangkat menjadi R-020.
+
+Detail lengkap di [[risk-register]] dan [[raid-log]].
 
 ## 9. Persetujuan
 
-| Nama | Peran | Tanggal Approve |
-|---|---|---|
-| Belum ditentukan | Sponsor internal | — |
-| Belum ditentukan | Head of Product & Project | — |
-| Belum ditentukan | Head of Engineer | — |
+| Nama | Peran | Tanggal Approve | Keputusan |
+|---|---|---|---|
+| Belum ditentukan | Sponsor internal | — | — |
+| **Head of Product & Project** | Approver hasil bootcamp | **2026-10-28** | **Setuju** (DEC-064) |
+| Head of Engineer | Approver teknis | — | Belum ada data |
+
+Persetujuan 2026-10-28 mencakup **hasil bootcamp** dan **transisi ke produk**
+(DEC-064/DEC-065). Approval untuk **baseline produk** belum ada — dokumen baseline
+belum disusun.
 
 ## Kebutuhan Keputusan (Blocking)
 
-**Tidak ada lagi keputusan PM/PO yang terbuka** per 2026-10-02 (DEC-039 s/d DEC-041
-sudah diterapkan). Tersisa keputusan milik **Head of Engineer**:
+**Keputusan fitur PM/PO tidak ada yang terbuka** — lima keputusan 2026-10-29 sudah
+ditetapkan (DEC-067..071). Keputusan yang tersisa adalah **arsitektur**, milik
+Head of Engineer, dan kini **blocking terhadap rilis** (bukan lagi catatan yang
+bisa ditunda):
 
 | # | Keputusan yang dibutuhkan | Pemilik | Dampak jika tertunda |
 |---|---|---|---|
-| 1 | **Strategi isolasi teknis multi-tenant** (TD-01) | Head of Engineer | Rancangan arsitektur & data tidak dapat dikunci |
-| 2 | **Metrik efektivitas AI + baseline pembanding** (TD-03/TD-04) | Head of Engineer | Tujuan kedua project tidak dapat diukur — **tidak dapat dipulihkan** |
-| 3 | **Stack teknologi** (TD-05) | Head of Engineer | Materi sesi & scaffolding tidak dapat disiapkan |
-| 4 | **Rancangan teknis webhook** (TD-02) | Head of Engineer | EP-011 tidak dapat diimplementasikan |
+| 1 | **Strategi isolasi teknis multi-tenant** (TD-01 / R-020) | Head of Engineer | Tenant pertama tidak dapat dijalankan di produksi |
+| 2 | **Versi state machine & idempotensi event** (R-021) | Head of Engineer | Riwayat & forecast tenant berisiko rusak saat stage diubah |
+| 3 | **Keamanan webhook: signing, retry, dead-letter** (TD-02 / R-022) | Head of Engineer | Endpoint penerima tidak dapat memverifikasi asal event |
+| 4 | **Metrik efektivitas AI + baseline** (TD-03/TD-04 / R-002) | Head of Engineer | Hasil penggunaan AI tidak dapat disimpulkan |
+| 5 | **Stack teknologi** (TD-05) | Head of Engineer | Baseline arsitektur produk belum dapat disusun |
+| 6 | **Estimasi mandays katalog produk, price book, komisi, Partner** | Head of Engineer | CR tidak dapat ditulis lengkap; pekerjaan tidak dapat dijadwalkan |
 
-**Q-031 sudah ditutup (DEC-042)** — kriteria kelulusan kini satu definisi:
-"end-to-end" diukur pada kapabilitas backend, bukan kelengkapan UI.
+**Di luar wewenang Head of Engineer:** **uji merek "Optiva"** (DJKI kelas 9 & 42) —
+PM/PO + Legal; R-023.
 
 ### Terjawab pada 2026-10-02
 

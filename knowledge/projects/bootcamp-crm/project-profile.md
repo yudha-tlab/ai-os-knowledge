@@ -4,10 +4,13 @@ type: project-profile
 project: bootcamp-crm
 client: tlab-internal
 status: active
-version: "1.14"
+version: "2.0"
 created: 2026-10-02
-modified: 2026-10-13
+modified: 2026-10-29
 changelog:
+  - version: "2.0"
+    date: 2026-10-29
+    purpose: "Transisi ke era produk (DEC-065) — bootcamp selesai 22 Okt 2026, disetujui 28 Okt 2026 (DEC-063/DEC-064); status project menjadi Pengembangan Produk; 'Optiva' codename internal (DEC-066); milestone fase produk menggantikan milestone bootcamp"
   - version: "1.14"
     date: 2026-10-13
     purpose: "CR-20261013-001 — M5 Activity naik ke mandatory minimal (modul mandatory 7); model konfigurasi tenant dan custom field masuk MVP; BRD v5.0; mockup dibuat (mockup/)"
@@ -58,10 +61,13 @@ changelog:
 # Project Profile — Bootcamp Internal CRM
 
 **Slug:** `bootcamp-crm`
+**Nama kerja:** Optiva CRM (**codename internal** — bukan nama produk final, DEC-066)
 **Client/Divisi:** TLab Internal — tanpa klien eksternal
 **Project Manager / Product Owner:** Yudha Pratama
 **Tanggal Mulai:** 2026-10-13 (pelaksanaan bootcamp — DEC-037)
-**Status:** Perencanaan
+**Bootcamp Selesai:** 2026-10-22 (DEC-063)
+**Disetujui Manajemen:** 2026-10-28 oleh Head of Product & Project (DEC-064)
+**Status:** Pengembangan Produk — *mature product* (DEC-065)
 
 ## Ringkasan Project
 
@@ -70,6 +76,15 @@ multi-tenant milik sendiri, dengan **bootcamp internal 3 hari** sebagai mekanism
 pelaksanaannya. Bootcamp bukan program pelatihan yang berdiri sendiri — ia adalah
 cara tim membangun prototype produk: peserta mengerjakan pengembangan CRM
 multi-tenant yang nantinya dapat dikembangkan lebih lanjut dan dijual.
+
+**Status per 2026-10-29 — fase bootcamp telah selesai.** Bootcamp dilaksanakan
+13–22 Oktober 2026 dan dinyatakan selesai **22 Oktober 2026** (DEC-063); hasilnya
+disetujui manajemen pada **28 Oktober 2026** oleh Head of Product & Project
+(DEC-064). Manajemen memutuskan produk dilanjutkan sebagai **produk matang yang
+dapat dijual**, bukan lagi MVP/prototype (DEC-065). Semua bagian dokumen ini yang
+membahas "MVP", "kriteria kelulusan bootcamp", atau "jendela 2 hari" adalah
+**catatan sejarah fase bootcamp** dan tidak berlaku sebagai aturan kerja saat ini
+— lihat §Era Produk.
 
 Ada dua tujuan yang diukur bersamaan. Pertama, **hasil produk**: prototype CRM
 multi-tenant yang berjalan. Kedua, **hasil proses**: mengukur seberapa cepat dan
@@ -81,6 +96,29 @@ Posisi peran disengaja dibalik untuk mensimulasikan kondisi nyata: Yudha Pratama
 berperan sebagai **Product Owner yang bertindak layaknya klien** yang membutuhkan
 sistem CRM, sehingga tim engineering menghadapi alur permintaan requirement nyata.
 
+## Era Produk (mulai 2026-10-29 — DEC-065)
+
+| Aspek | Fase bootcamp (selesai) | Era produk (berlaku) |
+|---|---|---|
+| Sasaran | Prototype / MVP, core backend | **Produk komersial matang** |
+| Ukuran keberhasilan | DEC-041/DEC-042: kapabilitas backend, UI bukan penghambat | **Pengalaman pengguna dan kelengkapan modul** — UI bagian dari penilaian |
+| M9 Platform Administration | Fase roadmap di luar MVP | **Bagian rencana produk** |
+| M10 AI Assistance | MVP minimal, 1–2 use case generatif | **Roadmap AI dibuka penuh** (prediktif termasuk) |
+| Baseline dokumen | BRD v5.3 | **BRD v5.3 tetap baseline fase bootcamp**; baseline produk disusun sebagai dokumen baru — bukan BRD v6 |
+| Nama produk | — | **"Optiva" = codename internal** (DEC-066); uji merek DJKI belum dilakukan |
+
+**Konsekuensi yang harus dipahami:** BRD v5.3 tidak dinaikkan versinya menjadi BRD
+produk. Banyak keputusan di dalamnya adalah kompromi karena jendela bootcamp 2 hari
+(mis. BR-016 leading indicator di luar lingkup, M10 dibatasi satu use case). Di era
+produk, kompromi itu perlu diputuskan ulang terhadap kebutuhan produk — dan itu
+pekerjaan baseline produk, bukan revisi BRD.
+
+**Yang tidak berubah** karena dasarnya bukan kompromi jadwal: DEC-012 (core stabil,
+kustomisasi via webhook), DEC-016 (revenue = closed-won), DEC-029 (definisi
+fungsional multi-tenant), DEC-051 (model konfigurasi tenant).
+
+Lihat [[raid-log]] R-020..R-024 untuk risiko era produk.
+
 ## Prinsip Produk (Mengikat — DEC-012)
 
 Core CRM bersifat **stabil dan tidak dimodifikasi per klien**. Variasi proses
@@ -88,7 +126,10 @@ bisnis klien diserap melalui **webhook + service eksternal terpisah**. Karena
 itu, lingkup MVP wajib memuat model tenancy yang benar sejak awal dan mekanisme
 event sebagai permukaan ekstensi.
 
-## Lingkup MVP (DEC-015)
+## Lingkup MVP Fase Bootcamp (DEC-015) — *selesai, catatan sejarah*
+
+Bagian ini mencatat lingkup **saat bootcamp**. Di era produk, daftar modul dan
+prioritas ditetapkan ulang melalui baseline produk (DEC-065).
 
 | Modul | Nama | Status MVP |
 |---|---|---|
@@ -119,7 +160,8 @@ event sebagai permukaan ekstensi.
 - **Stakeholder Register:** [[stakeholder-register]]
 - **Communication Plan:** [[communication-plan]]
 - **Requirement Analysis (bahan baku BRD):** [[requirement-analysis]]
-- **BRD:** [[bootcamp-crm-brd-v1]] (requirements/brd/)
+- **Baseline Produk:** [[baseline-produk-v1]] (requirements/) — visi produk, peta modul, batas lingkup, kesiapan arsitektur, kerangka peta rilis. **Draft** — bukan pengganti BRD
+- **BRD:** [[bootcamp-crm-brd-v1]] (requirements/brd/) — **baseline fase bootcamp** (13–22 Okt 2026), disetujui 2026-10-28
 - **Spesifikasi Proses Sales (pendamping BRD):** [[bootcamp-crm-sales-process-specification-v1]] (requirements/brd/) — inbound, field, laporan, workflow & pipeline, status lead
 - **Requirement Backlog:** [[requirement-backlog]]
 - **Risk Register:** [[risk-register]]
@@ -130,15 +172,30 @@ event sebagai permukaan ekstensi.
 
 ## Milestone Utama
 
+### Fase Bootcamp (selesai)
+
 | Milestone | Target Tanggal | Status |
 |-----------|---------------|--------|
 | Requirement produk CRM tersusun (bahan baku BRD) | 2026-10-02 | **Selesai** |
-| BRD CRM disusun | 2026-10-02 | **Selesai (v3.1)** — menunggu review PO & approval Head of Product |
-| Bootcamp — Hari 1: workshop finalisasi requirement | **2026-10-13** (DEC-037) | Belum Mulai |
-| Bootcamp — Hari 2-3: pengembangan core backend | Mengikuti hari 1 | Belum Mulai — tanggal akhir tidak ditetapkan (DEC-040) |
-| **Core backend CRM menyelesaikan seluruh fitur mandatory** (DEC-041) | Belum ditentukan | Belum Mulai |
-| **Integrasi AI terbukti** — minimal 1 use case generatif end-to-end (CR-20261008-002) | Mengikuti hari 2-3 | Belum Mulai |
-| Laporan pengukuran kecepatan & efektivitas AI | Belum ditentukan | Belum Mulai |
+| BRD CRM disusun | 2026-10-02 | **Selesai (v5.3)** — disetujui 2026-10-28 |
+| Bootcamp — Hari 1: workshop finalisasi requirement | 2026-10-13 | **Selesai** |
+| Bootcamp — Hari 2-3: pengembangan core backend | 2026-10-14 s/d 2026-10-22 | **Selesai** |
+| **Bootcamp selesai** | **2026-10-22** | **Selesai** (DEC-063) |
+| **Hasil bootcamp disetujui manajemen** | **2026-10-28** | **Selesai** — Head of Product & Project (DEC-064) |
+
+### Era Produk (berjalan — DEC-065)
+
+| Milestone | Target Tanggal | Status |
+|-----------|---------------|--------|
+| Penutupan governance fase bootcamp (status, RAID, decision log) | 2026-10-29 | **Selesai** |
+| Baseline produk — visi, modul, arsitektur, peta rilis | Belum ditentukan | Belum Mulai |
+| Keputusan arsitektur: isolasi tenant, signing webhook, versi state machine (R-020..R-022) | Belum ditentukan | Belum Mulai — Head of Engineer |
+| CR katalog produk + price book + komisi + Partner (DEC-067..070) | Belum ditentukan | Belum Mulai |
+| CR tampilan Board Activity (DEC-071) | Belum ditentukan | Belum Mulai |
+| Uji merek "Optiva" (DJKI kelas 9 & 42) sebelum penggunaan eksternal (R-023) | Belum ditentukan | Belum Mulai |
+
+Tanggal milestone era produk **belum ditentukan** — tidak diisi dengan asumsi.
+Penetapan tanggal adalah bagian dari penyusunan baseline produk.
 
 ## Kebutuhan Keputusan (Belum Ada Data)
 
@@ -146,11 +203,13 @@ Field berikut belum tersedia dan **tidak boleh diasumsikan** — menunggu input:
 
 | Field | Status | Perlu Keputusan Dari |
 |-------|--------|----------------------|
-| Strategi isolasi teknis multi-tenant | Belum ditentukan (TD-01) | Head of Engineer |
+| Strategi isolasi teknis multi-tenant | Belum ditentukan (TD-01) — **prasyarat rilis produk**, R-020 | Head of Engineer |
 | Metrik efektivitas AI + baseline pembanding | Belum ditentukan (TD-03/TD-04) | Head of Engineer |
 | Stack teknologi CRM | Belum ditentukan (TD-05) | Head of Engineer |
-| Rancangan teknis webhook | Belum ditentukan (TD-02) | Head of Engineer |
-| Target tanggal selesai prototype | Belum ditentukan | PM/PO + Head of Engineer |
+| Rancangan teknis webhook (signing, retry, dead-letter) | Belum ditentukan (TD-02) — **prasyarat rilis produk**, R-022 | Head of Engineer |
+| Versi state machine & idempotensi event | Belum ditentukan — R-021 | Head of Engineer |
+| Target tanggal baseline produk & peta rilis | Belum ditentukan | PM/PO + Head of Product |
+| Uji merek "Optiva" (DJKI kelas 9 & 42) | Belum dilakukan — R-023 | PM/PO + Legal |
 | Titik simpan output AI pada model core | Belum ditentukan (TD-07) | Head of Engineer |
 | Penyedia model LLM + kredensial | **TLab LLM** — akses sudah tersedia (DEC-048); detail endpoint/kuota operasional | Head of Engineer |
 
@@ -185,6 +244,11 @@ Catatan tambahan (DEC-037): bootcamp 3 hari tetapi **hari 1 habis untuk workshop
 finalisasi requirement** — jendela pengembangan efektif hanya 2 hari. Asumsi
 lama "durasi 3 hari cukup" tidak lagi menggambarkan kondisi sebenarnya; lihat
 R-001 dan R-015 di [[raid-log]].
+
+> **Status 2026-10-29:** kedua asumsi di atas **tidak lagi relevan** — bootcamp
+> telah selesai 22 Oktober 2026 dan hasilnya disetujui 28 Oktober 2026
+> (DEC-063/DEC-064). R-001 dan R-015 sudah ditutup di [[raid-log]]. Asumsi yang
+> masih berlaku untuk era produk dicatat di RAID Log.
 
 Daftar lengkap ada di [[raid-log]].
 

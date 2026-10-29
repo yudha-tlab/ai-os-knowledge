@@ -5,7 +5,7 @@ project: bootcamp-crm
 status: active
 document: "../../requirements/brd/bootcamp-crm-brd-v1.md"
 created: 2026-10-08
-modified: 2026-10-13
+modified: 2026-10-29
 ---
 
 # Riwayat Perubahan BRD — CRM Multi-Tenant TLab
@@ -19,6 +19,7 @@ disimpan di sini agar traceability tidak hilang.
 
 | Versi | Tanggal | Perubahan |
 |---|---|---|
+| — | 2026-10-29 | **Fase bootcamp ditutup; BRD v5.3 ditetapkan sebagai baseline fase bootcamp, bukan baseline produk** (DEC-063/DEC-065). Hasil bootcamp disetujui manajemen 2026-10-28 (DEC-064). **Isi BRD tidak diubah** — v5.3 tetap versi terakhir. Baseline produk disusun terpisah di `requirements/baseline-produk-v1.md` (draft); keputusan fitur era produk dicatat di decision-log sebagai DEC-066..072. Alasan pemisahan: kriteria BRD (kapabilitas backend, DEC-041/042) berhenti berlaku, sehingga BRD tidak lagi dapat menjadi ukuran keberhasilan produk |
 | **5.3** | 2026-10-13 | Usulan awal urutan potong lingkup ditambahkan (§9.4); agenda hari 1 butir 7 merujuk ke sana |
 | **5.2** | 2026-10-13 | Kriteria aturan penugasan lead dinamis (BR-048) dan alur login workspace lalu email dan kata sandi (BR-058) ditetapkan; agenda hari 1 menyusut dari 8 menjadi 7 item; §9.2 butir L dan M |
 | **5.1** | 2026-10-13 | **Aturan perpindahan stage.** BR-054 diperluas: mundur selalu boleh dengan alasan; maju boleh melompat sesuai pengaturan pipeline; syarat stage yang dilewati diperiksa kumulatif; stage dilewati dicatat *skipped*. BR-050 memuat kebijakan perpindahan maju. Cakupan data per peran (BR-057) dan templat exit criteria dikonfirmasi PO |

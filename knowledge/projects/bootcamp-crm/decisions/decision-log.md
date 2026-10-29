@@ -3,10 +3,13 @@ title: "Decision Log — Bootcamp Internal CRM"
 type: decision-log
 project: bootcamp-crm
 status: active
-version: "13.2"
+version: "14.0"
 created: 2026-10-02
-modified: 2026-10-13
+modified: 2026-10-29
 changelog:
+  - version: "14.0"
+    date: 2026-10-29
+    purpose: "DEC-063..071 — penutupan bootcamp (22 Okt 2026), persetujuan manajemen (28 Okt 2026, Head of Product & Project), transisi ke produk matang; Optiva sebagai codename internal; katalog produk dua tingkat + price book Direct/Partner; komisi dari nilai deal + entitas Partner; nilai deal manual menang; board task pada Activities; urutan kerja era produk; BRD v5.3 tetap baseline fase bootcamp"
   - version: "13.2"
     date: 2026-10-13
     purpose: "DEC-061 — kriteria aturan penugasan lead dinamis (field bawaan + custom field), Q-044 ditutup; DEC-062 — alur login: alamat workspace lalu email dan kata sandi, Q-046 terjawab untuk alur"
@@ -56,7 +59,7 @@ changelog:
 
 # Decision Log — Bootcamp Internal CRM
 
-**Terakhir Diperbarui:** 2026-10-13
+**Terakhir Diperbarui:** 2026-10-29
 
 ## Keputusan
 
@@ -124,6 +127,16 @@ changelog:
 | DEC-060 | 2026-10-13 | **Perpindahan stage.** (1) **Mundur** diizinkan di semua stage, alasan wajib, tercatat (DEC-054). (2) **Maju boleh melompat** sebagai default; tenant memilih per pipeline: *Lompat diizinkan* atau *Satu stage per langkah*. (3) **Syarat dievaluasi kumulatif**: melompat memeriksa semua stage yang dilewati (mode warning/blocking), bukan hanya stage asal. (4) **Stage yang dilewati dicatat sebagai *skipped*** di riwayat. (5) **Menutup langsung** ke Closed-Won/Closed-Lost dari stage mana pun diizinkan dengan alasan wajib. Juga dikonfirmasi: cakupan data per peran (BR-057) dan **templat exit criteria** spesifikasi §6.2 diterima sebagai isi bawaan (menutup BUKA-04 dan Q-048) | Arahan PO 2026-10-13 (*"setuju dengan usulanmu"*). Dasar: praktik HubSpot/Salesforce memperbolehkan lompat tetapi syarat stage tidak kumulatif dan stage yang dilewati tidak tercatat, sehingga funnel bolong; rancangan kumulatif + *skipped* adalah usulan PM | Yudha Pratama | Active |
 | DEC-061 | 2026-10-13 | **Kriteria aturan penugasan lead bersifat dinamis:** kondisi dapat memakai **field Lead mana pun**, bawaan maupun **custom field** tenant, sehingga tenant menambah kriteria sendiri sesuai bisnisnya. Semua kondisi dalam satu aturan harus cocok (dan); kondisi *atau* dibuat dengan aturan terpisah. Operator menurut tipe field. Field bawaan yang disarankan: Source, wilayah, industri, ukuran organisasi, tipe pelanggan (B2B/B2C), Rating. Tujuan aturan: Queue, Sales tertentu, atau round-robin. Menutup Q-044 dan BUKA-10 | Arahan PO 2026-10-13: setuju dengan usulan source, industri, dan sejenisnya, dan menegaskan tenant dapat menambah sendiri | Yudha Pratama | Active |
 | DEC-062 | 2026-10-13 | **Alur login:** pengguna memasukkan **alamat workspace**, lalu **email dan kata sandi**. Alur mengikuti mockup. Bentuk alamat teknis (subdomain atau path) tetap bagian keputusan isolasi tenant Head of Engineer. Menjawab Q-046 untuk sisi alur | Arahan PO 2026-10-13: *"masih setuju dengan mekanisme mockup sekarang, ada workspace, lalu email dan password"* | Yudha Pratama | Active |
+| DEC-063 | 2026-10-29 | **Bootcamp dinyatakan SELESAI pada 22 Oktober 2026.** Rentang pelaksanaan 13–22 Oktober 2026. Dengan ini DEC-040 (tanggal akhir sengaja tidak ditetapkan) **tidak lagi berlaku** — tanggal akhir kini diketahui sebagai fakta, bukan diabaikan | Konfirmasi PO 2026-10-29. Menutup kesenjangan pencatatan 16 hari (commit terakhir 2026-10-13). Bootcamp 3 hari (DEC-003/DEC-037) tetap berlaku sebagai durasi; tanggal pelaksanaan 13–22 Oktober adalah fakta pelaksanaan | Yudha Pratama | Active — merevisi DEC-040 |
+| DEC-064 | 2026-10-29 | **Hasil bootcamp disetujui manajemen pada 28 Oktober 2026 oleh Head of Product & Project.** Approval ini menutup D-005 (persetujuan lingkup) dan D-009 (persetujuan BRD) sebagai dependency fase bootcamp | Konfirmasi PO 2026-10-29. Approval diberikan setelah bootcamp selesai, atas hasil kerja, bukan atas dokumen pra-bootcamp | Yudha Pratama | Active — menutup D-005 & D-009 |
+| DEC-065 | 2026-10-29 | **Status project berubah dari pelaksanaan bootcamp menjadi PENGEMBANGAN PRODUK MATANG.** Sasaran bukan lagi MVP/prototype, melainkan produk komersial multi-tenant yang dapat dijual. Konsekuensi: (1) kriteria keberhasilan DEC-041/DEC-042 (core backend, frontend bukan penghambat) **berakhir bersama fase bootcamp**; (2) modul M9 Platform Administration dan M10 AI Assistance Layer naik dari "fase roadmap" menjadi bagian rencana produk; (3) BRD v5.3 tetap sah sebagai **baseline fase bootcamp** dan tidak dinaikkan versinya menjadi BRD produk — baseline produk disusun sebagai dokumen baru | Arahan PO 2026-10-29: *"karena konteks untuk bootcamp sudah selesai dan manajemen suka dengan CRM kita, maka mulai sekarang akan kita kembangkan sebagai produk, bukan lagi mengincar MVP, tapi mature product"*. DEC-041/DEC-042 tidak dicabut sebagai sejarah — keduanya berhenti berlaku sebagai kriteria penilaian | Yudha Pratama | Active — mengakhiri masa berlaku DEC-041/DEC-042 sebagai kriteria |
+| DEC-066 | 2026-10-29 | **"Optiva" ditetapkan sebagai CODENAME INTERNAL, bukan nama produk final.** Penggunaan dibatasi pada komunikasi internal. Nama tidak boleh dipakai pada materi presentasi eksternal, kontrak, atau domain sebelum uji merek terdaftar dilaksanakan. Catatan risiko: **Optiva Inc.** (Kanada) memiliki merek terdaftar untuk perangkat lunak/SaaS dan produk CRM telekomunikasi — uji merek DJKI kelas 9 & 42 belum dilakukan | Arahan PO 2026-10-29: *"Optiva ini masih sebatas codename internal"*. Temuan merek dari riset PM 2026-10-29; status pendaftaran di Indonesia **[Belum ada data]** | Yudha Pratama | Active — menutup pertanyaan penamaan; uji merek menjadi prasyarat penggunaan eksternal |
+| DEC-067 | 2026-10-29 | **Katalog produk dua tingkat: Product Category → Product.** Kategori dikelola tenant (nama, urutan, aktif), sejalan model konfigurasi DEC-051. Field Product: nama, kode/SKU, kategori, tipe (barang/jasa), unit, harga dasar, aktif, deskripsi. **Ditetapkan pula: backend dan platform harus disiapkan sejak awal untuk mendukung varian produk lengkap di kemudian hari** — varian lengkap (atribut produk: tenor, suku bunga, plafon, agunan; bundle/nested; hierarki lebih dari 2 tingkat) masuk roadmap, tetapi skema data tidak boleh menutup kemungkinan itu | Arahan PO 2026-10-29 (poin 4.1): *"setuju untuk produk varian yang lengkap akan masuk ke roadmap, namun backend dan platform nya harus sudah disiapkan untuk mendukung hal itu"*. Contoh acuan yang diberikan PO: Simpanan (Tabungan Masa Depan, Tabungan Anak), Kredit (KPR, Kepemilikan Kendaraan Bermotor), Investasi, Asuransi. Katalog produk **belum ada sama sekali** di knowledge sebelum keputusan ini | Yudha Pratama | Active — lingkup baru |
+| DEC-068 | 2026-10-29 | **Harga per kanal memakai Price Book.** Untuk saat ini dua price book: **Direct (langsung)** dan **Partner**. Tenant dapat menambah price book lain di kemudian hari — model harus mendukung jumlah kanal yang tidak terbatas per tenant, bukan dua nilai tetap di kode. Model: `Product → PricebookEntry → LineItem`; Opportunity menyimpan rujukan price book. **Line item wajib menyimpan harga saat transaksi (snapshot)**, tidak hanya menunjuk entri harga, agar perubahan harga tidak mengubah nilai deal historis | Arahan PO 2026-10-29 (poin 4.2) | Yudha Pratama | Active — lingkup baru |
+| DEC-069 | 2026-10-29 | **Komisi dihitung dari NILAI DEAL, menempel pada Opportunity — bukan pada line item.** Field: `partner` (rujukan entitas), `commission_pct`, `commission_amount` (terhitung). **Entitas Partner ditambahkan sebagai objek tersendiri** (nama, kontak, price book bawaan, persentase komisi bawaan). Batas tegas: komisi adalah **biaya**, **tidak mengurangi revenue** (DEC-016: revenue = closed-won) dan **tidak mengurangi quota attainment**; komisi hanya muncul pada analisis margin/kanal | Arahan PO 2026-10-29 (poin 4.3): *"dari nilai deal dong"* dan *"setuju untuk menambahkan entitas partner"* | Yudha Pratama | Active — lingkup baru |
+| DEC-070 | 2026-10-29 | **Nilai deal boleh berasal dari line item ATAU diisi manual — bila manual diisi, nilai manual yang berlaku.** Line item tetap tersimpan meski nilai manual dipakai. Field `amount_source` (`manual`/`line_item`) mencatat sumber yang berlaku; bila berbeda, keduanya ditampilkan agar selisih terlihat. **Seluruh laporan memakai nilai deal, tidak pernah menjumlah line item secara langsung.** Jejak pengisian manual (siapa, kapan) dicatat | Arahan PO 2026-10-29 (poin 4.4): *"deal bisa keduanya, jika diketik manual maka yang diketik manual ini yang menang"*. Aturan jejak dan larangan penjumlahan line item adalah usulan PM yang disetujui | Yudha Pratama | Active — lingkup baru |
+| DEC-071 | 2026-10-29 | **Tampilan Board untuk Activity ditambahkan — menyamakan pola dengan Pipeline.** Menu **Activities sudah ada** di mockup; yang belum ada adalah tampilan Board. Bentuk: toggle **Board/List** di halaman Activities, kolom **Overdue · Hari ini · Minggu ini · Nanti · Selesai**, kartu memuat judul, jatuh tempo, **priority**, tautan Lead/Opportunity, dan aksi selesai. Tampilan kedua untuk Manager: dikelompokkan per Owner. Requirement ditambah: **field priority** dan daftar status task. Aturan wajib: saat convert lead, **seluruh Activity terbuka ikut pindah** ke Opportunity | Arahan PO 2026-10-29 (poin 4.5). Ini **bukan modul baru** — Activity sudah mandatory sejak DEC-049; penambahan bersifat tampilan + dua atribut | Yudha Pratama | Active — perluasan BR-033 |
+| DEC-072 | 2026-10-29 | **Urutan kerja era produk ditetapkan: (1) tutup governance → (2) perbarui RAID → (3) susun baseline produk → (4) baru CR fitur.** Tiga pekerjaan yang tidak boleh berjalan bersamaan: penggantian nama, perubahan baseline, dan penambahan fitur | Persetujuan PO 2026-10-29 (poin 5) atas rekomendasi PM. Alasan: tanpa fakta penutupan tercatat, dokumen berikutnya berdiri di atas dasar yang tidak tercatat; tanpa baseline, CR tidak punya dasar menilai dampak | Yudha Pratama | Active |
 
 ### Catatan atas DEC-015 (keberatan teknis PM — SELESAI)
 
@@ -189,6 +202,32 @@ finalisasi requirement). Konsekuensi ini tidak terlihat sampai komposisi hari
 dijelaskan PO — **durasi total menyesatkan bila komposisinya tidak ditanyakan**.
 Dampak: R-001 naik ke High/High; R-015 dibuka (bila hari 1 tidak tuntas, jendela
 pengembangan berkurang lagi). Lihat [[raid-log]].
+
+## Era Produk (2026-10-29) — Keputusan yang Berhenti Berlaku
+
+DEC-065 memindahkan project dari fase bootcamp ke **pengembangan produk matang**.
+Beberapa keputusan yang sah di fase bootcamp **tidak lagi berlaku sebagai aturan**,
+dan dicatat di sini agar tidak dikutip sebagai dasar di era produk:
+
+| Keputusan | Isi semula | Status di era produk |
+|---|---|---|
+| DEC-040 | Tanggal akhir bootcamp sengaja tidak ditetapkan | **Tidak berlaku** — bootcamp selesai 22 Oktober 2026 (DEC-063) |
+| DEC-041 | Sasaran output = core backend; **frontend bukan penghambat kelulusan** | **Berhenti sebagai kriteria** — produk dinilai dari pengalaman pengguna; keputusan ini tetap sah sebagai catatan sejarah fase bootcamp |
+| DEC-042 | "End-to-end" diukur pada kapabilitas backend, bukan kelengkapan UI | **Berhenti sebagai kriteria** — alasan sama dengan DEC-041 |
+| DEC-043 | M6 Ticketing dikeluarkan dari MVP | **Tetap berlaku** — keputusan domain (sales vs service), bukan kompromi jadwal |
+| DEC-015 | M5 Activity *nice to have* | **Sudah direvisi** DEC-049 (mandatory minimal) — tetap berlaku |
+| DEC-045 | M9 Platform Administration = fase roadmap di luar MVP | **Naik** — menjadi bagian rencana produk (DEC-065) |
+| DEC-046 | M10 AI = MVP minimal, 1–2 use case generatif | **Naik** — roadmap AI penuh dibuka (DEC-065) |
+
+**Yang tidak berubah** karena dasarnya bukan kompromi jadwal:
+DEC-012 (core stabil, kustomisasi via webhook), DEC-016 (revenue = closed-won),
+DEC-029 (definisi fungsional multi-tenant), DEC-051 (model konfigurasi tenant).
+
+Item teknis yang **tidak lagi boleh ditunda** di era produk (semula diteruskan
+sebagai catatan ke Head of Engineer): **isolasi teknis multi-tenant** (DEC-029),
+**signing & retry webhook** (DEC-030), dan **rancangan tenant model yang menyimpan
+status langganan** (DEC-045). Ketiganya kini keputusan arsitektur produk, bukan
+urusan prototipe.
 
 ## Keputusan yang Masih Tertunda (Blocking)
 
