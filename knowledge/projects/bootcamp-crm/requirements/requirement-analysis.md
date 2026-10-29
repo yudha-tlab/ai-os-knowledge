@@ -144,16 +144,15 @@ Konsekuensi yang harus dipahami bersama:
 | M2 | Contact & Account Management | **Mandatory** | Mendukung B2B dan B2C |
 | M3 | Lead Management | **Mandatory** | Termasuk perubahan status lead |
 | M4 | Sales Pipeline / Opportunity | **Mandatory** | Sumber data revenue & performa sales |
-| M5 | Activity Management | **Mandatory — versi minimal** (DEC-049) | Call/meeting/email/task/note; Next step; overdue; activity tim. Tanpa sinkronisasi kalender/email, activity berulang, notifikasi |
+| M5 | Activity Management | **Mandatory — versi minimal** (DEC-049) **+ tampilan Board** (DEC-071, DEC-077) | Call/meeting/email/task/note; Next step; overdue; activity tim. **Era produk:** toggle Board/List, lima kolom, priority P0–P3. Tanpa sinkronisasi kalender/email, activity berulang, notifikasi |
 | ~~M6~~ | ~~Ticketing (internal + eksternal)~~ | **DIKELUARKAN** | **CR-20261008-001 / DEC-043** — domain *service*, bukan core CRM untuk sales tracking |
 | M7 | Reporting & Analytics | **Mandatory** | Revenue, pipeline, performa sales |
 | M8 | Webhook / Event Layer | **MVP minimal** (DEC-021) | Merevisi DEC-015 — event outbound inti + 1 endpoint inbound |
 | **M11** | **Katalog Produk & Pricing** *(era produk)* | **Wajib** (DEC-067..070, DEC-079/080) | Kategori → produk, price book per kanal, line item harga snapshot, nilai deal, mitra & komisi, **atribut produk**. Nomor modul masih [Usulan] |
-| **M5+** | **Board Activity** *(era produk)* | **Wajib** — perluasan M5 (DEC-071) | Toggle Board/List, lima kolom, priority P0–P3. Bukan modul baru |
 
 > **Catatan:** tabel di atas semula bernama "Ruang Lingkup MVP" fase bootcamp. Baris
-> M11 dan M5+ ditambahkan untuk **era produk** (DEC-065); keduanya tidak mengubah
-> status modul M1–M8 yang sudah ditetapkan.
+> **M11** ditambahkan untuk era produk (DEC-065); **M5 diperluas** dengan tampilan
+> Board tanpa menjadi modul baru. Status modul M1–M8 yang lain tidak berubah.
 
 **DIPUTUSKAN 2026-10-02 (DEC-021):** keberatan PM diterima PO — M8 masuk MVP
 secara **minimal** (event outbound inti + 1 endpoint inbound), merevisi penetapan
