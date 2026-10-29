@@ -3,11 +3,14 @@ title: "Requirement Analysis — CRM Multi-Tenant TLab"
 type: requirement-analysis
 project: bootcamp-crm
 status: draft
-version: "3.8"
+version: "3.9"
 created: 2026-10-02
 modified: 2026-10-29
 sumber: "Arahan Product Owner (Yudha Pratama) via sesi brainstorm 2026-10-02"
 changelog:
+  - version: "3.9"
+    date: 2026-10-29
+    purpose: "Q-049 terjawab (Sabtu dihitung, DEC-074); +Q-050..Q-055 dari penulisan FRD katalog produk & Board Activity — dua di antaranya menghambat (Q-050 daftar priority, Q-052 batas Minggu ini)"
   - version: "3.8"
     date: 2026-10-29
     purpose: "Era produk (DEC-065) — daftarkan katalog produk & pricing: proses 16, objek OB-037..043, EP-019..022, US-069..078 (termasuk Board Activity DEC-071); epic REQ-063..068 kini terdaftar"
@@ -730,9 +733,13 @@ teknologi).
 seluruhnya menyangkut **fase roadmap SaaS Platform Administration**. Tidak
 menghambat pelaksanaan bootcamp.
 
-**Per 2026-10-29 (DEC-073):** terbuka **satu pertanyaan baru** — **Q-049**
-(Sabtu 31 Oktober 2026 dihitung hari kerja?) — menentukan apakah jendela 3 hari
-efektif 3 hari atau 2 hari.
+**Per 2026-10-29 (DEC-073/DEC-074):** **Q-049 terjawab** — Sabtu 31 Oktober 2026
+**dihitung hari kerja**, jendela efektif 3 hari.
+
+**Per 2026-10-29 (penulisan FRD katalog produk & Board Activity):** terbuka **enam
+pertanyaan baru** — **Q-050..Q-055**. Dua menghambat langsung: **Q-050** (daftar
+nilai priority) dan **Q-052** (batas "Minggu ini"); empat dapat dikerjakan dengan
+nilai sementara bertanda.
 
 **Per 2026-10-13 (CR-20261013-001):** terbuka **lima pertanyaan baru** — Q-044 s/d Q-048. **Q-044, Q-046 (alur), Q-047, dan Q-048 terjawab pada hari yang sama**; tersisa Q-045 (urutan potong lingkup) dan bentuk alamat teknis workspace.
 
@@ -789,7 +796,13 @@ Q-040 s/d Q-043, menyangkut **integrasi AI (EP-015/M10)**. **Q-041 dan Q-040 sud
 | Q-046 | **Mekanisme login lewat alamat workspace**: subdomain atau path | US-066; DEC-059 | Head of Engineer | **Terjawab untuk alur 2026-10-13 (DEC-062)** — workspace, lalu email dan kata sandi. Bentuk alamat teknis (subdomain atau path) tetap bagian keputusan isolasi tenant (agenda hari 1 butir 4) |
 | Q-047 | **Cakupan data per peran** (Sales: milik + Queue; Manager: tim; Manajemen: tenant) | BR-057; DEC-056 | PM/PO | **Terjawab 2026-10-13 (DEC-056/060)** — dikonfirmasi PO |
 | Q-048 | **Isi bawaan exit criteria** untuk 6 stage templat | BUKA-04; DEC-051 | PM/PO + peserta | **Terjawab 2026-10-13 (DEC-060)** — templat spesifikasi §6.2 diterima PO sebagai isi bawaan; peserta menyesuaikan hari 1 |
-| Q-049 | **Apakah Sabtu 31 Oktober 2026 dihitung hari kerja** dalam jendela 3 hari (DEC-073)? | Rencana rilis; R-025 | PM/PO | **Terbuka 2026-10-29** — menentukan apakah jendela efektif 3 hari atau 2 hari (29–30 Okt); tanpa jawaban ini kapasitas tidak dapat dihitung |
+| Q-049 | **Apakah Sabtu 31 Oktober 2026 dihitung hari kerja** dalam jendela 3 hari (DEC-073)? | Rencana rilis; R-025 | PM/PO | **Terjawab 2026-10-29 (DEC-074)** — **dihitung**; jendela efektif 3 hari (29–31 Okt 2026) |
+| Q-050 | **Daftar nilai priority** pada Activity — berapa tingkat, apa labelnya, tetap atau dapat diatur tenant? | FR-BA-01; DEC-071 | PM/PO | **Terbuka 2026-10-29** — kolom priority pada Board tidak dapat dibangun tanpa daftar nilai |
+| Q-051 | **Kolom Board untuk Activity tanpa tanggal jatuh tempo** — "Nanti" (usulan PM) atau kolom tersendiri? | FR-BA-11; DEC-071 | PM/PO | **Terbuka 2026-10-29** — usulan PM, belum ditetapkan |
+| Q-052 | **Batas "Minggu ini"** — Senin–Minggu atau 7 hari bergulir; mengikuti zona waktu tenant? | FR-BA-05; DEC-071 | PM/PO | **Terbuka 2026-10-29** — penempatan kartu tidak dapat dihitung |
+| Q-053 | **Mata uang harga produk** — satu per tenant atau per price book? | FR-CP-13; DEC-068 | PM/PO | **Terbuka 2026-10-29** — bentuk entri harga dan pembulatan. Q-035 membahas paket langganan SaaS, bukan harga produk |
+| Q-054 | **Bentuk diskon line item** — persen, nominal, atau keduanya? | FR-CP-19; DEC-068 | PM/PO | **Terbuka 2026-10-29** — DEC-068 hanya menyebut "diskon" |
+| Q-055 | **`commission_pct`** terisi dari mitra dan dapat diubah per Opportunity, atau selalu mengikuti mitra? | FR-CP-29; DEC-069 | PM/PO | **Terbuka 2026-10-29** — DEC-069 tidak menetapkan ada tidaknya override per deal |
 
 ---
 

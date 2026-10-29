@@ -3,10 +3,13 @@ title: "Requirement Backlog — Bootcamp Internal CRM"
 type: requirement-backlog
 project: bootcamp-crm
 status: active
-version: "3.14"
+version: "3.15"
 created: 2026-10-02
 modified: 2026-10-29
 changelog:
+  - version: "3.15"
+    date: 2026-10-29
+    purpose: "Q-049 terjawab (Sabtu dihitung, DEC-074); +Q-050..Q-055 dari FRD katalog produk & Board Activity; FRD v1.0 dan CR-20261029-001/002 dicatat di Related"
   - version: "3.14"
     date: 2026-10-29
     purpose: "Epic katalog produk terdaftar — REQ-063..068 kini memetakan ke EP-019..EP-022 (requirement-analysis v3.8); catatan 'epic belum ditetapkan' dihapus"
@@ -271,8 +274,11 @@ TD-02, TD-06, TD-08, TD-09.
 Penomoran Q-xxx identik dengan `requirement-analysis.md` section 7 agar
 `traceable` antar dokumen.
 
-**Status per 2026-10-29:** satu pertanyaan terbuka milik **PM/PO** — **Q-049**,
-apakah Sabtu 31 Oktober 2026 dihitung hari kerja dalam jendela 3 hari (DEC-073).
+**Status per 2026-10-29:** **enam pertanyaan terbuka milik PM/PO** — **Q-050..Q-055**,
+timbul dari penulisan FRD katalog produk & Board Activity. Dua di antaranya
+menghambat langsung: **Q-050** (daftar nilai priority) dan **Q-052** (batas "Minggu
+ini"). Q-049 **terjawab** 2026-10-29 (DEC-074 — Sabtu dihitung hari kerja).
+
 Yang terbuka lainnya: tiga milik **Head of Engineer** (Q-007, Q-008, Q-011), empat
 milik **PM/PO untuk M9** (Q-033..Q-039) yang berada di fase roadmap, dua milik
 **Head of Engineer untuk AI prediktif** (Q-042, Q-043), dan **Q-045** (urutan potong
@@ -333,10 +339,19 @@ melainkan keputusan pemilik lain:
 | Q-041 | Use case AI minimum M10 (AI-01 vs AI-02) | PM/PO + peserta | **Terjawab 2026-10-08 (DEC-047)** — AI-01 draf pesan outreach |
 | Q-042 | Strategi prediktif (model per tenant vs global) | Head of Engineer | **Terbuka 2026-10-08** — roadmap |
 | Q-043 | Batas isolasi tenant pada prompt AI | Head of Engineer | **Terbuka 2026-10-08** |
-| Q-049 | Sabtu 31 Oktober 2026 dihitung hari kerja? (jendela 3 hari, DEC-073) | PM/PO | **Terbuka 2026-10-29** — menentukan jendela efektif 3 hari atau 2 hari |
+| Q-049 | Sabtu 31 Oktober 2026 dihitung hari kerja? (jendela 3 hari, DEC-073) | PM/PO | **Terjawab 2026-10-29 (DEC-074)** — **dihitung**; jendela efektif 3 hari (29–31 Okt) |
+| Q-050 | Daftar nilai **priority** pada Activity — berapa tingkat dan apa labelnya? Tetap (sistem) atau dapat diatur tenant? | PM/PO | **Terbuka 2026-10-29** — menghambat FR-BA-01; kolom priority pada Board tidak dapat dibangun |
+| Q-051 | Kolom Board untuk Activity **tanpa tanggal jatuh tempo** — "Nanti" (usulan PM) atau kolom tersendiri? | PM/PO | **Terbuka 2026-10-29** — FR-BA-11 masih usulan |
+| Q-052 | Batas **"Minggu ini"** — Senin–Minggu atau 7 hari bergulir? Mengikuti zona waktu tenant? | PM/PO | **Terbuka 2026-10-29** — menghambat FR-BA-05; penempatan kartu tidak dapat dihitung |
+| Q-053 | **Mata uang harga produk** — satu per tenant atau per price book? | PM/PO | **Terbuka 2026-10-29** — bentuk `PricebookEntry` dan pembulatan. Q-035 membahas paket langganan SaaS, bukan harga produk |
+| Q-054 | **Bentuk diskon line item** — persen, nominal, atau keduanya? | PM/PO | **Terbuka 2026-10-29** — FR-CP-19; DEC-068 hanya menyebut "diskon" |
+| Q-055 | **`commission_pct`** terisi dari mitra dan dapat diubah per Opportunity, atau selalu mengikuti mitra? | PM/PO | **Terbuka 2026-10-29** — FR-CP-29; DEC-069 tidak menetapkan |
 ## Related
 
 - **Requirement Analysis (bahan baku BRD):** [[requirement-analysis]]
+- **FRD Katalog Produk & Board Activity (era produk):** [[bootcamp-crm-frd-katalog-produk-dan-board-activity-v1]] (requirements/frd/) — rincian FR-CP-01..37, FR-BA-01..15
+- **CR Katalog Produk:** [[CR-20261029-001-katalog-produk-harga-nilai-deal-mitra-komisi]] (decisions/CR/)
+- **CR Board Activity:** [[CR-20261029-002-board-activity]] (decisions/CR/)
 - **Baseline Produk (era produk, draft):** [[baseline-produk-v1]]
 - **Project Profile:** [[project-profile]]
 - **Decision Log:** [[decision-log]]

@@ -3,10 +3,13 @@ title: "RAID Log — Bootcamp Internal CRM"
 type: raid-log
 project: bootcamp-crm
 status: active
-version: "12.1"
+version: "12.2"
 created: 2026-10-02
 modified: 2026-10-29
 changelog:
+  - version: "12.2"
+    date: 2026-10-29
+    purpose: "DEC-074..076 — D-020 ditunda PO (CR ditulis tanpa estimasi); +A-013 (urutan potong disusun dari ketergantungan teknis, bukan angka); R-025 diperbarui (Sabtu dihitung, jendela efektif 3 hari)"
   - version: "12.1"
     date: 2026-10-29
     purpose: "DEC-073 — buka R-025: jendela 3 hari (demo Senin 2 Nov) terlalu pendek untuk lima kluster DEC-067..071; hari ketiga jatuh Sabtu; estimasi per kluster belum ada; D-020 dicatat (estimasi mandays per kluster)"
@@ -78,7 +81,7 @@ Ringkasan risiko teratas. Detail lengkap, termasuk skala penilaian, ada di
 | R-022 | **Keamanan webhook belum ditutup** — signing, retry, dead-letter masih berupa catatan teknis (TD-02). Webhook adalah permukaan integrasi utama produk (DEC-012/DEC-030); tanpa signing, endpoint penerima tidak dapat memverifikasi asal event | Med | High | **Tinggi** | Head of Engineer | Tutup TD-02 sebagai keputusan arsitektur produk: signing (HMAC + rotasi secret per endpoint), retry dengan backoff, dead-letter queue, rate limit, fan-out. Tidak lagi dapat ditunda | Open — **baru 2026-10-29** |
 | R-023 | **Nama "Optiva" berpotensi bertabrakan dengan merek terdaftar** — Optiva Inc. (Kanada) memiliki merek untuk perangkat lunak/SaaS dan produk CRM telekomunikasi. Status pendaftaran di Indonesia **[Belum ada data]** | Med | High | **Tinggi** | PM/PO + Legal | Nama dipakai **hanya sebagai codename internal** (DEC-066). Uji merek DJKI kelas 9 & 42 sebelum nama masuk materi eksternal, kontrak, atau domain. Biaya mengganti nama naik tajam setelah materi klien dan mockup tersebar | Open — **baru 2026-10-29** |
 | R-024 | **Model data katalog produk berisiko menutup kebutuhan masa depan** — keputusan DEC-067 menuntut skema disiapkan untuk atribut produk, bundle, dan hierarki lebih dari 2 tingkat, padahal implementasinya baru di roadmap. Skema yang terlalu sempit memaksa migrasi; skema yang terlalu luas memperlambat rilis pertama | Med | Med | **Sedang** | PM/PO + Head of Engineer | Rancang `Product` dengan ruang untuk atribut terpisah (`ProductAttribute` sebagai tabel, bukan kolom tetap) dan kategori bertingkat; **jangan** implementasikan bundle/atribut di rilis pertama. Uji dengan kasus bank (Simpanan/Kredit/Investasi/Asuransi) sebelum rilis | Open — **baru 2026-10-29** |
-| R-025 | **Jendela 3 hari terlalu pendek untuk lima kluster DEC-067..071** — kategori+produk, price book, line item+nilai deal, mitra+komisi, dan Board Activity harus selesai sebelum demo Senin 2 November 2026 (DEC-073), padahal (a) hari ketiga jatuh **Sabtu 31 Okt** sehingga jendela efektif bisa hanya 2 hari, (b) **estimasi mandays per kluster belum ada** (Head of Engineer), dan (c) TD-09 (model data katalog) belum diputuskan. Demo yang gagal mengurangi kepercayaan pada keputusan lanjut ke produk matang | High | High | **Tinggi** | PM/PO + Head of Engineer | Usulan mitigasi: (1) tetapkan tegas apakah Sabtu dihitung hari kerja — tanpa ini kapasitas tidak dapat dihitung; (2) minta estimasi per kluster hari ini, lalu **potong urutan**: kategori+produk → line item+nilai deal → price book → mitra+komisi → Board Activity (paling akhir, karena paling ringan dan berdiri sendiri); (3) Board Activity dipisah agar tidak menahan kluster lain bila waktu habis; (4) demo menyampaikan apa yang **selesai**, bukan seluruh lingkup; (5) kluster yang tidak selesai dipindahkan, bukan dipaksakan setengah jadi | Open — **baru 2026-10-29 (DEC-073)** |
+| R-025 | **Jendela 3 hari terlalu pendek untuk lima kluster DEC-067..071** — kategori+produk, price book, line item+nilai deal, mitra+komisi, dan Board Activity harus selesai sebelum demo Senin 2 November 2026 (DEC-073), padahal (a) **Sabtu 31 Okt dihitung hari kerja (DEC-074)** sehingga jendela efektif 3 hari, (b) **estimasi mandays per kluster ditunda PO** (DEC-074) sehingga urutan potong disusun dari ketergantungan teknis — bukan angka (A-013), dan (c) TD-09 (model data katalog) belum diputuskan. Demo yang gagal mengurangi kepercayaan pada keputusan lanjut ke produk matang | High | High | **Tinggi** | PM/PO + Head of Engineer | Usulan mitigasi: (1) ~~tetapkan apakah Sabtu dihitung hari kerja~~ — **selesai, DEC-074**; (2) **potong urutan**: kategori+produk → line item+nilai deal → price book → mitra+komisi → Board Activity (paling akhir, karena paling ringan dan berdiri sendiri); (3) Board Activity dipisah agar tidak menahan kluster lain bila waktu habis; (4) demo menyampaikan apa yang **selesai**, bukan seluruh lingkup; (5) kluster yang tidak selesai dipindahkan, bukan dipaksakan setengah jadi | Open — **baru 2026-10-29 (DEC-073)** |
 
 ## Assumptions (Asumsi)
 
@@ -96,6 +99,7 @@ Ringkasan risiko teratas. Detail lengkap, termasuk skala penilaian, ada di
 | A-010 | **Penegakan batas paket (M9) dapat dipisahkan dari tenant model M1** — cukup status langganan yang disimpan, mekanisme penegakannya menyusul | Bila tidak, sebagian M9 harus masuk MVP dan beban 2 hari bertambah | PM/PO + Head of Engineer | Perlu Validasi — **baru 2026-10-08 (DEC-045)** |
 | A-011 | **Integrasi AI (M10) dapat dibangun dalam sisa jendela 2 hari** tanpa mengorbankan 6 modul mandatory | Bila terlalu besar, M10 harus dipotong ke satu use case atau keluar dari MVP — R-018 | PM/PO + Tech Lead | **Perlu Validasi — kritis** (CR-20261008-002) |
 | A-012 | **Penyedia model LLM beserta kredensial tersedia** selama bootcamp | M10 tidak dapat didemonstrasikan; alur integrasi hanya terbukti lewat *stub* | Head of Engineer | **Terkonfirmasi 2026-10-08 (DEC-048)** — TLab LLM, akses sudah tersedia |
+| A-013 | **Tanpa estimasi effort, urutan potong lingkup tetap dapat disusun dari ketergantungan teknis** — kategori mendahului produk, produk mendahului entri harga, entri harga mendahului baris produk; Board Activity berdiri sendiri | Bila salah, potongan dilakukan pada kluster yang salah dan demo kehilangan bagian yang paling bernilai | PM/PO | **Perlu Validasi** — asumsi PM, bukan hasil estimasi (DEC-074) |
 
 Sebagian besar asumsi fase bootcamp kini **tidak lagi relevan** karena bootcamp
 telah selesai 22 Oktober 2026 (DEC-063). Yang masih berlaku untuk fase produk:
@@ -135,7 +139,7 @@ DEC-064), A-006 (kustomisasi async), A-010 (penegakan batas paket M9), dan A-012
 | D-017 | Keputusan paket pricing & mekanisme pembayaran (Q-033..Q-037) | PM/PO + Head of Product | Yudha Pratama | Fase roadmap (setelah bootcamp) | Open — tidak menghambat bootcamp |
 | D-018 | **Titik simpan output AI pada model core** (rancangan, bukan implementasi penuh) | Head of Engineer | Head of Engineer | **Selama bootcamp (M1)** — TD-07 | Open — **baru 2026-10-08 (CR-20261008-002)**; jangan tunda (migrasi data) |
 | D-019 | **Penetapan use case AI minimum (AI-01 vs AI-02)** — penyedia sudah ditetapkan | PM/PO | Yudha Pratama | **Terjawab:** use case = AI-01 (DEC-047); penyedia = TLab LLM (DEC-048) | **Closed 2026-10-08** — tidak lagi menghambat M10 |
-| D-020 | **Estimasi mandays per kluster DEC-067..071** (kategori+produk, price book, line item+nilai deal, mitra+komisi, Board Activity) | Head of Engineer | Head of Engineer | **Sebelum hari pertama jendela (29 Okt 2026)** | Open — **baru 2026-10-29 (DEC-073)**; alokasi 3 hari sudah ditetapkan PO, tetapi rincian per kluster belum ada sehingga urutan potong lingkup tidak dapat disusun berbasis angka |
+| D-020 | **Estimasi mandays per kluster DEC-067..071** (kategori+produk, price book, line item+nilai deal, mitra+komisi, Board Activity) | Head of Engineer | Head of Engineer | **Ditunda oleh PO (DEC-074)** — CR tetap ditulis tanpa angka; diminta kembali sebelum perencanaan rilis berikutnya | Open — **baru 2026-10-29 (DEC-073)**; PO memerintahkan CR ditulis lebih dulu dan estimasi ditunda (DEC-074). Bagian Estimasi Effort pada CR-20261029-001/002 diisi "Menunggu konfirmasi Head of Engineer" |
 
 ## Aturan Eskalasi
 
