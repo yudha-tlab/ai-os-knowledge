@@ -3,11 +3,14 @@ title: "Baseline Produk — Optiva CRM"
 type: product-baseline
 project: bootcamp-crm
 status: draft
-version: "1.1"
+version: "1.2"
 created: 2026-10-29
 modified: 2026-10-29
 owner: Yudha Pratama
 changelog:
+  - version: "1.2"
+    date: 2026-10-29
+    purpose: "DEC-077..081 — atribut produk NAIK ke rilis ini (membalik sebagian DEC-067); §2.1 +ProductAttributeDef/Value, +3 aturan; §2.2 dipersempit ke bundle/hierarki/rumus saja; §5 batas lingkup diperbarui; §6 peta rilis memuat atribut produk"
   - version: "1.1"
     date: 2026-10-29
     purpose: "DEC-073 — catat penyimpangan urutan (CR mendahului baseline) dan jendela 3 hari + demo Senin 2 Nov; butir 5 (estimasi mandays) menjadi mendesak"
@@ -90,13 +93,13 @@ hanya penambahan katalog produk dan perubahan status M9/M10.
 | M2 | Contact & Account (B2B & B2C) | Wajib | DEC-015, DEC-020, DEC-024 |
 | M3 | Lead Management | Wajib | DEC-015 |
 | M4 | Sales Pipeline / Opportunity | Wajib | DEC-015 |
-| M5 | Activity Management | Wajib — versi minimal **+ tampilan Board** | DEC-049, DEC-071 |
+| M5 | Activity Management | Wajib — versi minimal **+ tampilan Board + priority P0–P3** | DEC-049, DEC-071, DEC-077 |
 | M6 | Ticketing | **Modul lanjutan** (di luar rilis awal) | DEC-043, DEC-044 |
 | M7 | Reporting & Analytics | Wajib | DEC-015 |
 | M8 | Webhook / Event Layer | Wajib — termasuk keamanan (signing/retry) | DEC-012, DEC-021, R-022 |
 | M9 | Platform Administration (kontrol plane SaaS) | **Masuk rencana produk** (naik dari roadmap) | DEC-045, DEC-065 |
 | M10 | AI Assistance Layer | **Roadmap AI dibuka penuh** (prediktif termasuk) | DEC-046, DEC-048, DEC-065 |
-| M11 | **Katalog Produk & Pricing** *(baru)* | Wajib | DEC-067..070 |
+| M11 | **Katalog Produk & Pricing** *(baru)* | Wajib — **termasuk atribut produk** | DEC-067..070, DEC-079, DEC-080 |
 
 Penomoran M11 adalah **[Usulan]** penomoran agar katalog produk punya rujukan
 stabil; PO belum menetapkan nomor modul.
@@ -111,6 +114,8 @@ stabil; PO belum menetapkan nomor modul.
 | **PricebookEntry** | produk, price book, harga, mata uang, berlaku mulai/sampai | Satu produk dapat punya banyak harga |
 | **LineItem** | opportunity, produk, qty, **harga snapshot**, diskon, subtotal, `commission_pct` | Harga disimpan, bukan hanya dirujuk |
 | **Partner** | nama, kontak, price book bawaan, persentase komisi bawaan | Entitas tersendiri (DEC-069) |
+| **ProductAttributeDef** | nama, tipe, wajib, urutan, daftar pilihan, aktif | **Dibangun** (DEC-079/080) — definisi per tenant, berlaku untuk semua produk |
+| **ProductAttributeValue** | produk, definisi, nilai | **Dibangun** (DEC-079/080) — disalin ke baris penawaran saat baris disimpan |
 
 Aturan yang mengikat:
 
@@ -123,27 +128,40 @@ Aturan yang mengikat:
    (DEC-070).
 4. **Komisi adalah biaya**, tidak mengurangi revenue (DEC-016) maupun quota
    attainment (DEC-069).
+5. **Atribut produk bersifat deskriptif** (DEC-079). Atribut menjelaskan produk;
+   ia tidak mengubah harga, tidak mengubah nilai deal, dan tidak menggantikan
+   price book. Enam tipe: teks, angka, mata uang, tanggal, pilihan tunggal,
+   centang. Tanpa rumus, tanpa validasi kondisional.
+6. **Priority Activity = P0–P3**, tetapan sistem, tidak dapat diatur tenant
+   (DEC-077).
+7. **Board Activity mengikuti kalender mingguan** Senin–Minggu pada zona waktu
+   tenant; Activity tanpa jatuh tempo masuk kolom *Nanti* (DEC-078).
 
-### 2.2 Yang sengaja belum diambil — tetapi skemanya disiapkan
+### 2.2 Yang tetap belum diambil — tetapi skemanya disiapkan
 
-**[Ditetapkan]** DEC-067 menuntut backend **siap** untuk varian lengkap, meski
-implementasinya di roadmap. Perbedaan "siap" dan "dibangun" ini yang harus dijaga:
+**[Diperbarui DEC-079]** DEC-067 semula menaruh **atribut produk** di tabel ini.
+PO menaikkannya ke rilis ini (DEC-079), sehingga isi tabel berubah: yang tersisa
+hanya bagian yang benar-benar belum diambil.
 
 | Kebutuhan | Disiapkan di rilis pertama | Dibangun di rilis pertama |
 |---|---|---|
-| Atribut produk (tenor, suku bunga, plafon, agunan) | **Ya** — tabel `ProductAttribute` terpisah, bukan kolom tetap | **Tidak** |
 | Bundle / nested product | **Ya** — ruang pada skema (relasi komponen) | **Tidak** |
 | Hierarki kategori > 2 tingkat | **Ya** — `parent_id` pada kategori | **Tidak** |
-| Mesin konfigurasi atribut & validasi | Tidak | Tidak |
+| Mesin validasi atribut kondisional | Tidak | Tidak — atribut deskriptif saja |
+| Atribut turunan / rumus (angsuran dari tenor × plafon) | Tidak | Tidak — enam tipe tetap saja (DEC-080) |
 
-Alasan memisahkan keduanya: tabel atribut terpisah berbiaya hampir nol saat
-rancangan, tetapi **sangat mahal** ditambahkan setelah ada data. Sebaliknya,
-membangun mesin atribut sebelum tahu atribut apa yang dibutuhkan adalah biaya
-nyata tanpa manfaat nyata.
+Atribut produk yang **dibangun** — definisi per tenant, nilai per produk, enam tipe,
+penegakan wajib, filter, dan salin ke baris penawaran — ada di §2.1. Memisahkan
+keduanya penting: tabel di atas adalah janji yang **tidak** dibuat, bukan pekerjaan
+yang tertunda tanpa batas.
 
-Konsekuensi yang harus disadari: **tanpa atribut produk, produk ini belum
-menjawab kebutuhan bank secara utuh.** KPR tanpa tenor dan suku bunga bukan
-representasi produk KPR. Untuk demo ke bank, atribut akan diminta. Ini dinyatakan
+Alasan tetap menyiapkan skema bundle dan hierarki: menambahkannya setelah ada data
+jauh lebih mahal daripada merancang sekarang. Sebaliknya, membangun mesin validasi
+sebelum tahu aturan apa yang dibutuhkan adalah biaya nyata tanpa manfaat nyata.
+
+Konsekuensi yang harus disadari: **atribut deskriptif belum menjawab seluruh
+kebutuhan bank.** KPR dengan tenor dan suku bunga sudah terbaca sebagai KPR, tetapi
+angsuran, simulasi, dan syarat kelayakan **tidak** dihitung sistem. Ini dinyatakan
 terbuka agar tidak dijanjikan diam-diam.
 
 ---
@@ -198,11 +216,13 @@ baseline (TD-03/TD-04 — tenggat bootcamp sudah terlewat), titik simpan output 
 | Di luar lingkup | Dasar |
 |---|---|
 | Billing / invoice / payment gateway | Revenue = deal closed-won (DEC-016) |
-| Atribut produk di rilis pertama | DEC-067 — roadmap |
+| Atribut turunan / rumus, validasi kondisional | DEC-079, DEC-080 — atribut hanya deskriptif |
 | Bundle/nested, hierarki >2 tingkat | DEC-067 — roadmap |
 | Sinkronisasi kalender/email, activity berulang, notifikasi | DEC-049 |
 | AI prediktif (lead scoring, win probability, forecast) | DEC-046 — roadmap |
 | M6 Ticketing | DEC-043, DEC-044 |
+| Multi-mata uang | DEC-078 — satu mata uang per tenant |
+| Diskon nominal pada line item | DEC-078 — diskon dalam persen |
 | Custom case dengan validasi *blocking* di dalam core | DEC-014 |
 | Assessment tim sales (HR) | DEC-031 |
 | Workflow/flow designer bebas (L3–L4) | Belum pernah diputuskan; **jangan dijanjikan** |
@@ -236,10 +256,11 @@ Yang dapat ditetapkan sekarang adalah **urutan ketergantungan**, bukan tanggal:
 Keputusan arsitektur (TD-01, TD-08, TD-02, TD-06)
         │  tanpa ini, tidak ada fondasi rilis
         ▼
-CR katalog produk + pricing + komisi + Partner (DEC-067..070)
+CR katalog produk + pricing + komisi + Partner + ATRIBUT PRODUK
+(DEC-067..070, DEC-079, DEC-080)
         │  butuh TD-09 (model data) & TD-01 (isolasi)
         ▼
-CR Board Activity (DEC-071)
+CR Board Activity (DEC-071, DEC-077, DEC-078)
         │  lebih ringan, dapat berjalan paralel
         ▼
 M9 Platform Administration
@@ -253,8 +274,8 @@ M10 AI diperluas + AI prediktif
 baseline → CR fitur — dan itu sudah dijalankan sampai titik ini.
 
 **Penyimpangan yang disengaja (DEC-073):** PO menetapkan jendela pengembangan
-**3 hari, 29–31 Oktober 2026, dengan demo Senin 2 November 2026** untuk kelima
-kluster DEC-067..071. Konsekuensinya CR fitur harus ditulis **sebelum** baseline
+**3 hari, 29–31 Oktober 2026, dengan demo Senin 2 November 2026** untuk kluster
+DEC-067..071 **ditambah atribut produk (DEC-079)**. Konsekuensinya CR fitur harus ditulis **sebelum** baseline
 produk selesai — kebalikan urutan DEC-072. Penyimpangan dicatat, bukan
 disembunyikan; alasannya pengembangan tidak dapat menunggu baseline.
 

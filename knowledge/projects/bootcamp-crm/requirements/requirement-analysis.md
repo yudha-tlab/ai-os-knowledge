@@ -3,11 +3,14 @@ title: "Requirement Analysis — CRM Multi-Tenant TLab"
 type: requirement-analysis
 project: bootcamp-crm
 status: draft
-version: "3.9"
+version: "4.0"
 created: 2026-10-02
 modified: 2026-10-29
 sumber: "Arahan Product Owner (Yudha Pratama) via sesi brainstorm 2026-10-02"
 changelog:
+  - version: "4.0"
+    date: 2026-10-29
+    purpose: "Q-050 dijawab PO (priority P0-P3, DEC-077); Q-051..Q-055 ditutup PM di bawah delegasi PO (DEC-078); ATRIBUT PRODUK NAIK KE RILIS INI (DEC-079/080) — +EP-023, +OB-043/044 (OB-043 diubah dari roadmap menjadi era produk), +US-080/081, +proses 16.07/16.08"
   - version: "3.9"
     date: 2026-10-29
     purpose: "Q-049 terjawab (Sabtu dihitung, DEC-074); +Q-050..Q-055 dari penulisan FRD katalog produk & Board Activity — dua di antaranya menghambat (Q-050 daftar priority, Q-052 batas Minggu ini)"
@@ -221,7 +224,10 @@ rekonsiliasi dengan DEC-028 ada di Q-031.
 | Pelaksanaan | 16. Katalog Produk & Pricing | 16.04 Line item Opportunity | 16.04.01 Penambahan produk ke Opportunity (qty, diskon, **harga snapshot**) (DEC-068) |
 | Pelaksanaan | 16. Katalog Produk & Pricing | 16.05 Nilai deal | 16.05.01 Nilai deal dari line item **atau** manual; **manual menang**; `amount_source` mencatat sumber berlaku (DEC-070) |
 | Pelaksanaan | 16. Katalog Produk & Pricing | 16.06 Mitra & komisi | 16.06.01 Entitas Partner (nama, kontak, price book bawaan, komisi bawaan); komisi dari **nilai deal**, tercatat sebagai biaya (DEC-069) |
-| Pelaksanaan | 16. Katalog Produk & Pricing | 16.07 Atribut & hierarki *(roadmap)* | 16.07.01 Atribut produk, bundle/nested, hierarki >2 tingkat — **skema disiapkan, tidak dibangun** (DEC-067) |
+| Pelaksanaan | 16. Katalog Produk & Pricing | 16.07 Atribut produk | 16.07.01 Definisi atribut per tenant: nama, tipe (teks/angka/mata uang/tanggal/pilihan tunggal/centang), wajib, urutan, daftar pilihan (DEC-079/080) |
+| Pelaksanaan | 16. Katalog Produk & Pricing | 16.07 Atribut produk | 16.07.02 Nilai atribut per produk; atribut **wajib** ditegakkan pada produk aktif; tipe tidak dapat diubah setelah ada nilai (DEC-079/080) |
+| Pelaksanaan | 16. Katalog Produk & Pricing | 16.07 Atribut produk | 16.07.03 Atribut tampil & tersaring pada daftar produk; nilai **disalin** ke baris penawaran saat baris disimpan (DEC-079/080) |
+| **Roadmap** | 16. Katalog Produk & Pricing | 16.08 Bundle & hierarki *(roadmap)* | 16.08.01 Bundle/nested product, hierarki kategori >2 tingkat, atribut turunan/rumus — **skema disiapkan, tidak dibangun** (DEC-067, DEC-079) |
 | **Roadmap** | **13. SaaS Platform Administration (Platform Owner / TLab)** — **fase roadmap terpisah (DEC-045)**, di luar MVP | 13.01 Pengelolaan paket pricing | 13.01.01 CRUD paket pricing (dimensi: seat, batas data, modul, kuota webhook, SLA/dukungan) |
 | **Roadmap** | 13. SaaS Platform Administration | 13.01 Pengelolaan paket pricing | 13.01.02 Penetapan kuota & batas per paket (nilai terukur, mis. jumlah seat / jumlah record) |
 | **Roadmap** | 13. SaaS Platform Administration | 13.02 Pengelolaan akun tenant | 13.02.01 Pembuatan akun tenant oleh Platform Owner |
@@ -312,31 +318,31 @@ inisiatif internal terpisah.
 
 ## 3. Objek
 
-| Kode | Nama | Deskripsi |
-|------|------|-----------|
-| OB-001 | Lead | Calon pelanggan beserta kategori status, status turunan, source, dan Owner (atau berada di Queue) |
-| OB-002 | Contact | Data orang (individu) yang terkait dengan pelanggan |
-| OB-003 | Account | Data organisasi/perusahaan pelanggan (mendukung B2B dan B2C) |
-| OB-004 | Opportunity | Deal berjalan (nilai, stage, tanggal tutup, pemilik) |
-| OB-005 | Pipeline & Stage | Definisi tahapan pipeline dan posisi Opportunity di dalamnya — **default 6 stage + 2 outcome (DEC-047)**; tenant boleh punya lebih dari satu pipeline; kriteria keluar, mode penegakan, batas stale, probability diatur tenant (DEC-051) |
-| OB-006 | Activity | Catatan call / meeting / email / task / note yang terhubung ke Lead, Opportunity, Contact, atau Account; dicatat atau dijadwalkan; owner, jatuh tempo, status — **M5 minimal (DEC-049)** |
-| OB-007 | Tiket | Tiket dengan jalur internal atau eksternal, beserta status dan assignee | **← DIHAPUS (CR-20261008-001)**
-| OB-008 | Eskalasi Tiket | Rekaman eskalasi tiket ke tim internal | **← DIHAPUS (CR-20261008-001)**
-| OB-009 | Riwayat Tiket | Komentar dan jejak perubahan status tiket | **← DIHAPUS (CR-20261008-001)**
-| OB-010 | Quota / Target Sales | Target won per sales per periode |
-| OB-011 | Skor Performa Sales | Hasil perhitungan quota attainment dan status performa per sales |
-| OB-012 | Laporan Revenue | Rekap revenue dari Opportunity closed-won per periode |
-| OB-013 | Laporan Pipeline | Rekap pipeline dan forecast |
-| OB-014 | Laporan Performa Sales | Rekap quota attainment per sales |
-| OB-015 | Laporan Tiket | Rekap volume dan status tiket | **← DIHAPUS (CR-20261008-001)**
-| OB-016 | Tenant | Entitas tenant beserta isolasi datanya |
-| OB-017 | Pengguna & Role | User, role, dan permission di dalam tenant |
-| OB-018 | Webhook Subscription | Konfigurasi langganan event per tenant (endpoint, secret, event yang di-subscribe) |
-| OB-019 | Event Payload | Muatan event yang dikirim/diterima (outbound dan inbound) |
-| OB-020 | Delivery Log | Log pengiriman event, retry, dan kegagalan |
-| OB-021 | Komentar Tiket | Komentar/percakapan pada tiket (DEC-028) | **← DIHAPUS (CR-20261008-001)**
-| OB-022 | Riwayat Pergerakan Tiket | Jejak perubahan status, assignee, dan eskalasi tiket (DEC-028) | **← DIHAPUS (CR-20261008-001)**
-| OB-023 | SLA Tiket | Target waktu penyelesaian tiket per prioritas beserta status pelanggaran (DEC-025) | **← DIHAPUS (CR-20261008-001)**
+| Kode | Nama | Deskripsi | Status |
+|------|------|-----------|--------|
+| OB-001 | Lead | Calon pelanggan beserta kategori status, status turunan, source, dan Owner (atau berada di Queue) | — |
+| OB-002 | Contact | Data orang (individu) yang terkait dengan pelanggan | — |
+| OB-003 | Account | Data organisasi/perusahaan pelanggan (mendukung B2B dan B2C) | — |
+| OB-004 | Opportunity | Deal berjalan (nilai, stage, tanggal tutup, pemilik) | — |
+| OB-005 | Pipeline & Stage | Definisi tahapan pipeline dan posisi Opportunity di dalamnya — **default 6 stage + 2 outcome (DEC-047)**; tenant boleh punya lebih dari satu pipeline; kriteria keluar, mode penegakan, batas stale, probability diatur tenant (DEC-051) | — |
+| OB-006 | Activity | Catatan call / meeting / email / task / note yang terhubung ke Lead, Opportunity, Contact, atau Account; dicatat atau dijadwalkan; owner, jatuh tempo, status — **M5 minimal (DEC-049)** | — |
+| OB-007 | Tiket | Tiket dengan jalur internal atau eksternal, beserta status dan assignee | **← DIHAPUS (CR-20261008-001)** — |
+| OB-008 | Eskalasi Tiket | Rekaman eskalasi tiket ke tim internal | **← DIHAPUS (CR-20261008-001)** — |
+| OB-009 | Riwayat Tiket | Komentar dan jejak perubahan status tiket | **← DIHAPUS (CR-20261008-001)** — |
+| OB-010 | Quota / Target Sales | Target won per sales per periode | — |
+| OB-011 | Skor Performa Sales | Hasil perhitungan quota attainment dan status performa per sales | — |
+| OB-012 | Laporan Revenue | Rekap revenue dari Opportunity closed-won per periode | — |
+| OB-013 | Laporan Pipeline | Rekap pipeline dan forecast | — |
+| OB-014 | Laporan Performa Sales | Rekap quota attainment per sales | — |
+| OB-015 | Laporan Tiket | Rekap volume dan status tiket | **← DIHAPUS (CR-20261008-001)** — |
+| OB-016 | Tenant | Entitas tenant beserta isolasi datanya | — |
+| OB-017 | Pengguna & Role | User, role, dan permission di dalam tenant | — |
+| OB-018 | Webhook Subscription | Konfigurasi langganan event per tenant (endpoint, secret, event yang di-subscribe) | — |
+| OB-019 | Event Payload | Muatan event yang dikirim/diterima (outbound dan inbound) | — |
+| OB-020 | Delivery Log | Log pengiriman event, retry, dan kegagalan | — |
+| OB-021 | Komentar Tiket | Komentar/percakapan pada tiket (DEC-028) | **← DIHAPUS (CR-20261008-001)** — |
+| OB-022 | Riwayat Pergerakan Tiket | Jejak perubahan status, assignee, dan eskalasi tiket (DEC-028) | **← DIHAPUS (CR-20261008-001)** — |
+| OB-023 | SLA Tiket | Target waktu penyelesaian tiket per prioritas beserta status pelanggaran (DEC-025) | **← DIHAPUS (CR-20261008-001)** — |
 | OB-024 | **Paket Pricing (Plan)** | Definisi paket langganan beserta dimensi harga & kuota (seat, batas data, modul aktif, kuota webhook, SLA/dukungan) — DEC-045, fase roadmap | **Roadmap (M9)** |
 | OB-025 | **Kuota & Batas Paket** | Nilai terukur per paket (mis. maksimum seat, maksimum record) sebagai dasar penegakan otomatis | **Roadmap (M9)** |
 | OB-026 | **Akun Tenant (Langganan)** | Akun tenant sebagai entitas komersial: pemilik, paket aktif, status langganan — memperluas OB-016 untuk konteks SaaS | **Roadmap (M9)** |
@@ -356,7 +362,8 @@ inisiatif internal terpisah.
 | OB-040 | **Entri Harga (Pricebook Entry)** | Harga satu produk pada satu price book: harga, mata uang, berlaku mulai/sampai — DEC-068 | **Era produk** |
 | OB-041 | **Line Item Opportunity** | Baris produk pada Opportunity: produk, qty, **harga snapshot**, diskon, subtotal, `commission_pct` — DEC-068 | **Era produk** |
 | OB-042 | **Mitra (Partner)** | Entitas mitra penjualan: nama, kontak, price book bawaan, persentase komisi bawaan — DEC-069 | **Era produk** |
-| OB-043 | **Atribut Produk** | Atribut tambahan produk (tenor, suku bunga, plafon, agunan) sebagai **tabel terpisah** — skema disiapkan, **tidak diimplementasikan** di rilis pertama — DEC-067 | **Roadmap** — skema saja |
+| OB-043 | **Definisi Atribut Produk** | Definisi atribut milik tenant: nama, tipe, wajib, urutan, daftar pilihan, aktif. Tabel terpisah, bukan kolom tetap — DEC-079, DEC-080 | **Era produk** |
+| OB-044 | **Nilai Atribut Produk** | Nilai atribut per produk per definisi; disalin ke baris penawaran saat baris disimpan — DEC-079, DEC-080 | **Era produk** |
 
 ---
 
@@ -388,6 +395,8 @@ inisiatif internal terpisah.
 | 16.05 Nilai deal | SH001 - Sales Rep | Menetapkan | OB-004-Opportunity | Nilai dari line item atau manual; manual menang (DEC-070) |
 | 16.06 Mitra & komisi | SH005 - Tenant Admin | Mengelola | OB-042-Mitra (Partner) | Entitas mitra + komisi bawaan (DEC-069) |
 | 16.06 Mitra & komisi | Sistem CRM | Menghitung | OB-004-Opportunity | `commission_amount` dari nilai deal; biaya, bukan pengurang revenue |
+| 16.07 Atribut produk | SH005 - Tenant Admin | Mengelola | OB-043-Definisi Atribut Produk / OB-044-Nilai Atribut | Definisi atribut per tenant + nilai per produk (DEC-079/080) |
+| 16.07 Atribut produk | SH001 - Sales Rep | Melihat | OB-044-Nilai Atribut | Atribut tampil saat memilih produk pada baris penawaran |
 | 05.01 Pencatatan aktivitas | SH001 - Sales Rep | Mencatat | OB-006-Aktivitas | Call / meeting / task / note |
 | 07.01 Perhitungan pencapaian | Sistem CRM | Menghitung | OB-011-Skor Performa Sales | Nilai won aktual dibanding kuota |
 | 07.02 Penilaian performa | SH002 - Sales Manager | Melihat | OB-011-Skor Performa Sales | Status performa per sales |
@@ -644,6 +653,7 @@ bukan mengarang pipeline dari nol.
 | EP-020 | **Harga per Kanal (Price Book)** | *nomor modul belum ditetapkan* | **Era produk** — Direct & Partner bawaan, jumlah kanal tidak dibatasi (DEC-068) |
 | EP-021 | **Penawaran Produk & Nilai Deal** | *nomor modul belum ditetapkan* — memperluas M4 | **Era produk** — line item harga snapshot; nilai manual menang (DEC-068/070) |
 | EP-022 | **Mitra & Komisi** | *nomor modul belum ditetapkan* | **Era produk** — entitas Partner; komisi dari nilai deal, dicatat sebagai biaya (DEC-069) |
+| EP-023 | **Atribut Produk** | *nomor modul belum ditetapkan* | **Era produk** — definisi-lalu-nilai; enam tipe; deskriptif, tanpa rumus (DEC-079, DEC-080) |
 
 ### User Story (dari SPOK)
 
@@ -716,6 +726,8 @@ bukan mengarang pipeline dari nol.
 | US-077 | Sebagai Sales Manager, saya ingin menetapkan mitra pada Opportunity dan melihat komisi yang dihitung dari nilai deal, sehingga biaya kanal mitra terlihat terpisah dari revenue dan tidak mengacaukan pencapaian target. | EP-022 |
 | US-078 | Sebagai Sales Rep, saya ingin melihat Activity saya dalam tampilan Board yang dikelompokkan menurut waktu jatuh tempo dan prioritas, sehingga saya tahu apa yang harus dikerjakan hari ini tanpa membuka satu per satu. | EP-005 |
 | US-079 | Sebagai Sales Manager, saya ingin melihat Board Activity seluruh tim dikelompokkan per Owner, sehingga saya dapat menilai beban dan tindak lanjut setiap sales. | EP-005 |
+| US-080 | Sebagai Tenant Admin, saya ingin mendefinisikan atribut produk milik perusahaan saya (tenor, suku bunga, plafon, agunan) beserta tipenya, sehingga produk bank yang kami jual dapat dijelaskan lengkap tanpa mengubah struktur sistem. | EP-023 |
+| US-081 | Sebagai Sales Rep, saya ingin mengisi dan melihat atribut produk pada produk maupun pada baris penawaran, sehingga saya dapat menjelaskan spesifikasi yang disepakati kepada pelanggan tanpa membuka dokumen lain. | EP-023 |
 
 Task didekomposisi saat sprint planning (Taiga), bukan di tahap requirement ini.
 
@@ -736,10 +748,15 @@ menghambat pelaksanaan bootcamp.
 **Per 2026-10-29 (DEC-073/DEC-074):** **Q-049 terjawab** — Sabtu 31 Oktober 2026
 **dihitung hari kerja**, jendela efektif 3 hari.
 
-**Per 2026-10-29 (penulisan FRD katalog produk & Board Activity):** terbuka **enam
-pertanyaan baru** — **Q-050..Q-055**. Dua menghambat langsung: **Q-050** (daftar
-nilai priority) dan **Q-052** (batas "Minggu ini"); empat dapat dikerjakan dengan
-nilai sementara bertanda.
+**Per 2026-10-29 (jawaban PO & delegasi):** **Q-050..Q-055 tertutup seluruhnya.**
+Q-050 dijawab PO — priority **P0–P3** (DEC-077). Q-051..Q-055 ditutup **PM di bawah
+delegasi PO** (DEC-078): kolom *Nanti* untuk Activity tanpa jatuh tempo, batas
+*Minggu ini* = Senin–Minggu pada zona waktu tenant, satu mata uang per tenant,
+diskon dalam persen, dan override komisi per Opportunity.
+
+**Per 2026-10-29 (DEC-079):** **atribut produk dinaikkan ke rilis ini** — membalik
+sebagian DEC-067. Menambah EP-023 (Atribut Produk), OB-043/OB-044, US-080/US-081,
+dan REQ-070/REQ-071.
 
 **Per 2026-10-13 (CR-20261013-001):** terbuka **lima pertanyaan baru** — Q-044 s/d Q-048. **Q-044, Q-046 (alur), Q-047, dan Q-048 terjawab pada hari yang sama**; tersisa Q-045 (urutan potong lingkup) dan bentuk alamat teknis workspace.
 
@@ -797,12 +814,12 @@ Q-040 s/d Q-043, menyangkut **integrasi AI (EP-015/M10)**. **Q-041 dan Q-040 sud
 | Q-047 | **Cakupan data per peran** (Sales: milik + Queue; Manager: tim; Manajemen: tenant) | BR-057; DEC-056 | PM/PO | **Terjawab 2026-10-13 (DEC-056/060)** — dikonfirmasi PO |
 | Q-048 | **Isi bawaan exit criteria** untuk 6 stage templat | BUKA-04; DEC-051 | PM/PO + peserta | **Terjawab 2026-10-13 (DEC-060)** — templat spesifikasi §6.2 diterima PO sebagai isi bawaan; peserta menyesuaikan hari 1 |
 | Q-049 | **Apakah Sabtu 31 Oktober 2026 dihitung hari kerja** dalam jendela 3 hari (DEC-073)? | Rencana rilis; R-025 | PM/PO | **Terjawab 2026-10-29 (DEC-074)** — **dihitung**; jendela efektif 3 hari (29–31 Okt 2026) |
-| Q-050 | **Daftar nilai priority** pada Activity — berapa tingkat, apa labelnya, tetap atau dapat diatur tenant? | FR-BA-01; DEC-071 | PM/PO | **Terbuka 2026-10-29** — kolom priority pada Board tidak dapat dibangun tanpa daftar nilai |
-| Q-051 | **Kolom Board untuk Activity tanpa tanggal jatuh tempo** — "Nanti" (usulan PM) atau kolom tersendiri? | FR-BA-11; DEC-071 | PM/PO | **Terbuka 2026-10-29** — usulan PM, belum ditetapkan |
-| Q-052 | **Batas "Minggu ini"** — Senin–Minggu atau 7 hari bergulir; mengikuti zona waktu tenant? | FR-BA-05; DEC-071 | PM/PO | **Terbuka 2026-10-29** — penempatan kartu tidak dapat dihitung |
-| Q-053 | **Mata uang harga produk** — satu per tenant atau per price book? | FR-CP-13; DEC-068 | PM/PO | **Terbuka 2026-10-29** — bentuk entri harga dan pembulatan. Q-035 membahas paket langganan SaaS, bukan harga produk |
-| Q-054 | **Bentuk diskon line item** — persen, nominal, atau keduanya? | FR-CP-19; DEC-068 | PM/PO | **Terbuka 2026-10-29** — DEC-068 hanya menyebut "diskon" |
-| Q-055 | **`commission_pct`** terisi dari mitra dan dapat diubah per Opportunity, atau selalu mengikuti mitra? | FR-CP-29; DEC-069 | PM/PO | **Terbuka 2026-10-29** — DEC-069 tidak menetapkan ada tidaknya override per deal |
+| Q-050 | **Daftar nilai priority** pada Activity — berapa tingkat, apa labelnya, tetap atau dapat diatur tenant? | FR-BA-01; DEC-071 | PM/PO | **Terjawab 2026-10-29 (DEC-077)** — priority **P0–P3**, empat tingkat, tetapan sistem (tidak dapat diatur tenant); bawaan Activity baru = P2 |
+| Q-051 | **Kolom Board untuk Activity tanpa tanggal jatuh tempo** — "Nanti" (usulan PM) atau kolom tersendiri? | FR-BA-11; DEC-071 | PM/PO | **Terjawab 2026-10-29 (DEC-078)** — Activity tanpa jatuh tempo masuk kolom **Nanti** dengan penanda |
+| Q-052 | **Batas "Minggu ini"** — Senin–Minggu atau 7 hari bergulir; mengikuti zona waktu tenant? | FR-BA-05; DEC-071 | PM/PO | **Terjawab 2026-10-29 (DEC-078)** — **Senin–Minggu** minggu berjalan, pada **zona waktu tenant**; bukan 7 hari bergulir |
+| Q-053 | **Mata uang harga produk** — satu per tenant atau per price book? | FR-CP-13; DEC-068 | PM/PO | **Terjawab 2026-10-29 (DEC-078)** — **satu mata uang per tenant**; multi-mata uang roadmap |
+| Q-054 | **Bentuk diskon line item** — persen, nominal, atau keduanya? | FR-CP-19; DEC-068 | PM/PO | **Terjawab 2026-10-29 (DEC-078)** — diskon line item dalam **persen** (0–100); diskon nominal roadmap |
+| Q-055 | **`commission_pct`** terisi dari mitra dan dapat diubah per Opportunity, atau selalu mengikuti mitra? | FR-CP-29; DEC-069 | PM/PO | **Terjawab 2026-10-29 (DEC-078)** — `commission_pct` dari mitra dan **dapat diubah per Opportunity**, dengan jejak perubahan |
 
 ---
 

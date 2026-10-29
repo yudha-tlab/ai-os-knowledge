@@ -4,10 +4,13 @@ type: project-profile
 project: bootcamp-crm
 client: tlab-internal
 status: active
-version: "2.2"
+version: "2.3"
 created: 2026-10-02
 modified: 2026-10-29
 changelog:
+  - version: "2.3"
+    date: 2026-10-29
+    purpose: "DEC-077..081 — Q-050..Q-055 tertutup; CR-20261029-003 (atribut produk, DEC-079/080) diajukan; FRD naik ke v1.1; baseline produk v1.2; R-026 baru"
   - version: "2.2"
     date: 2026-10-29
     purpose: "DEC-074..076 — CR-20261029-001 (katalog produk) dan CR-20261029-002 (Board Activity) diajukan sebagai draft; FRD katalog produk & Board Activity v1.0 didaftarkan di Dokumen Kunci; Sabtu dihitung hari kerja"
@@ -166,7 +169,7 @@ prioritas ditetapkan ulang melalui baseline produk (DEC-065).
 - **Stakeholder Register:** [[stakeholder-register]]
 - **Communication Plan:** [[communication-plan]]
 - **Requirement Analysis (bahan baku BRD):** [[requirement-analysis]]
-- **FRD Katalog Produk & Board Activity:** [[bootcamp-crm-frd-katalog-produk-dan-board-activity-v1]] (requirements/frd/) — era produk, **draft**. Rincian FR-CP-01..37, FR-BA-01..15
+- **FRD Katalog Produk & Board Activity:** [[bootcamp-crm-frd-katalog-produk-dan-board-activity-v1]] (requirements/frd/) v1.1 — era produk, **draft**. Rincian FR-CP-01..47 (termasuk atribut produk §4.8), FR-BA-01..15
 - **Baseline Produk:** [[baseline-produk-v1]] (requirements/) — visi produk, peta modul, batas lingkup, kesiapan arsitektur, kerangka peta rilis. **Draft** — bukan pengganti BRD
 - **BRD:** [[bootcamp-crm-brd-v1]] (requirements/brd/) — **baseline fase bootcamp** (13–22 Okt 2026), disetujui 2026-10-28
 - **Spesifikasi Proses Sales (pendamping BRD):** [[bootcamp-crm-sales-process-specification-v1]] (requirements/brd/) — inbound, field, laporan, workflow & pipeline, status lead
@@ -199,6 +202,7 @@ prioritas ditetapkan ulang melalui baseline produk (DEC-065).
 | Keputusan arsitektur: isolasi tenant, signing webhook, versi state machine (R-020..R-022) | Belum ditentukan | Belum Mulai — Head of Engineer |
 | CR katalog produk + price book + komisi + Partner (DEC-067..070) | 2026-10-29 | **Diajukan** — CR-20261029-001 (draft) |
 | CR tampilan Board Activity (DEC-071) | 2026-10-29 | **Diajukan** — CR-20261029-002 (draft) |
+| CR atribut produk (DEC-079/080) | 2026-10-29 | **Diajukan** — CR-20261029-003 (draft) |
 | **Jendela pengembangan katalog produk + Board Activity — 3 hari** | **2026-10-29 s/d 2026-10-31** (DEC-073) | **Berjalan** — Sabtu dihitung hari kerja (DEC-074); lihat R-025 |
 | **Demo hasil pengembangan** | **2026-11-02 (Senin)** (DEC-073) | Belum Mulai |
 | Uji merek "Optiva" (DJKI kelas 9 & 42) sebelum penggunaan eksternal (R-023) | Belum ditentukan | Belum Mulai |

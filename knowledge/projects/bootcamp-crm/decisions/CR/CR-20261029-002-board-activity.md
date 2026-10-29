@@ -3,11 +3,14 @@ title: "Change Request — Tampilan Board pada Halaman Activity"
 type: change-request
 status: draft
 created: 2026-10-29
-version: "1.0"
+version: "1.1"
 project: bootcamp-crm
 diajukan_oleh: "Yudha Pratama (PM / Product Owner)"
 sumber: "Arahan PO 2026-10-29 — DEC-071"
 changelog:
+  - version: "1.1"
+    date: 2026-10-29
+    purpose: "Disesuaikan dengan DEC-077/078 — Q-050 TERJAWAB (priority P0-P3) dan Q-051/Q-052 ditutup PM di bawah delegasi PO; status CR naik dari 'menunggu Q-050/Q-052' menjadi siap dibangun"
   - version: "1.0"
     date: 2026-10-29
     purpose: "CR diajukan — toggle Board/List pada halaman Activities, lima kolom waktu jatuh tempo, field priority, daftar status task, view Manager per Owner, aturan Activity terbuka ikut pindah saat convert lead"
@@ -19,7 +22,7 @@ changelog:
 **Tanggal:** 2026-10-29
 **Diajukan Oleh:** Yudha Pratama — PM, berperan sebagai Product Owner
 **Project Manager:** Yudha Pratama
-**Status:** Draft — menunggu jawaban Q-050 dan Q-052
+**Status:** Draft — siap dibangun; tidak ada pertanyaan yang menghambat
 
 ---
 
@@ -38,8 +41,8 @@ dengan tampilan Pipeline yang sudah dipakai produk — beserta **dua atribut bar
 3. **Kartu Activity** memuat judul, tanggal jatuh tempo, **priority**, tautan ke
    Lead/Opportunity, dan aksi selesai.
 4. **Tampilan kedua untuk Manager**, dikelompokkan per Owner.
-5. **Atribut baru**: field **priority** dan **daftar status task** yang dapat
-   dikonfigurasi tenant.
+5. **Atribut baru**: field **priority P0–P3** (DEC-077) dan **daftar status task**
+   yang dapat dikonfigurasi tenant.
 6. **Aturan wajib**: saat lead dikonversi menjadi Opportunity, **seluruh Activity
    terbuka ikut pindah** ke Opportunity hasil konversi.
 
@@ -98,10 +101,19 @@ tindak lanjut tiap sales terlihat dalam satu pandangan. Cakupan data mengikuti
 DEC-056: Sales melihat miliknya, Manager melihat timnya.
 
 **Atribut baru.**
-- **Field priority.** Nilai dan label daftarnya **belum ditetapkan PO** — tercatat
-  sebagai **Q-050**. Tidak diisi atas inisiatif sendiri.
+- **Field priority P0–P3.** Empat tingkat, **tetapan sistem** — tidak dapat diatur
+  tenant (DEC-077). P0 = harus selesai hari ini; P1 = penting, selesai minggu ini;
+  P2 = normal; P3 = rendah. Bawaan Activity baru = **P2**. Urutan kartu dalam satu
+  kolom: P0 paling atas, lalu P1–P3; di dalam priority sama, urut tanggal terdekat.
 - **Daftar status task.** Mengikuti model konfigurasi tenant (DEC-051): daftar nilai
   milik tenant, kategori sistem tetap.
+
+**Batas kolom (DEC-078).** Semua batas tanggal dihitung pada **zona waktu tenant**,
+bukan UTC. **Hari ini** = tanggal hari ini. **Minggu ini** = Senin s/d Minggu pada
+minggu berjalan yang memuat hari ini — **bukan** 7 hari bergulir. **Nanti** = setelah
+Minggu berjalan; Activity tanpa jatuh tempo juga masuk kolom ini dengan penanda.
+**Overdue** = sebelum hari ini dan belum selesai. Batas tanggal ditampilkan pada
+header kolom agar tidak ambigu.
 
 **Aturan perpindahan saat convert lead.** Seluruh Activity **terbuka** pindah ke
 Opportunity hasil konversi. Activity yang **sudah selesai** tetap tercatat pada lead
@@ -125,9 +137,7 @@ konversi. Perpindahan dicatat pada riwayat Activity.
 
 | Dependensi | Pemilik | Dampak bila belum ada |
 |---|---|---|
-| **Q-050** — daftar nilai priority | PM/PO | Kolom priority pada kartu tidak dapat dibangun; urutan kartu tidak dapat ditetapkan |
-| **Q-052** — batas "Minggu ini" | PM/PO | Penempatan kartu pada kolom Minggu ini tidak dapat dihitung |
-| **Q-051** — kolom untuk Activity tanpa jatuh tempo | PM/PO | Activity tanpa jatuh tempo berisiko tidak pernah terlihat |
+| **Zona waktu tenant** | Tenant Admin / TD-01 | Batas Board dihitung pada zona waktu tenant (DEC-078). Bila zona waktu belum tersedia di data tenant, Board memakai satu zona bawaan dan menandainya |
 | Estimasi effort | Head of Engineer | PO menunda (DEC-074); CR diajukan tanpa angka |
 | Mockup Board | PM | Tim bekerja dari FRD |
 
@@ -139,9 +149,9 @@ konversi. Perpindahan dicatat pada riwayat Activity.
 
 | Risiko | Probabilitas | Dampak | Mitigasi |
 |---|---|---|---|
-| **Q-050 belum dijawab** sehingga priority dibangun dengan asumsi | Sedang | Label priority salah; harus diubah setelah dipakai | Tetapkan daftar nilai **sebelum** kolom dikerjakan. Sampai itu, kerjakan kolom waktu dan kartu lebih dulu |
-| **Batas "Minggu ini" ditafsirkan berbeda** oleh pengguna dan sistem | Sedang | Dua orang melihat angka berbeda di hari yang sama; kepercayaan pada Board turun | Q-052 wajib dijawab; tampilkan batas tanggal pada header kolom agar tidak ambigu |
-| **Activity tanpa jatuh tempo tidak terlihat** | Sedang | Pekerjaan yang tidak dijadwalkan hilang dari pandangan — justru yang paling mudah terlupakan | Q-051; sementara Activity tanpa jatuh tempo ditempatkan pada kolom **Nanti** dan ditandai |
+| **Priority P0–P3 ditafsirkan berbeda** antar tim — P1 dan P2 dianggap sama penting | **Tinggi** | Board penuh kartu P2; priority kehilangan daya pisah | Arti tiap tingkat ditulis pada tooltip dan panduan singkat (DEC-077). Bawaan P2, bukan P1, agar kartu tidak menumpuk di atas |
+| **Batas "Minggu ini" ditafsirkan berbeda** oleh pengguna dan sistem | Sedang | Dua orang melihat angka berbeda di hari yang sama; kepercayaan pada Board turun | DEC-078 sudah menetapkan Senin–Minggu pada zona waktu tenant; **tampilkan batas tanggal pada header kolom** agar tidak ambigu |
+| **Activity tanpa jatuh tempo tidak terlihat** | Sedang | Pekerjaan yang tidak dijadwalkan hilang dari pandangan — justru yang paling mudah terlupakan | DEC-078 menempatkannya pada kolom **Nanti** dengan penanda visual. Penanda wajib, bukan opsional |
 | **Board dianggap menggantikan List** | Rendah | Pengguna kehilangan cara mencari satu Activity | Toggle dipertahankan; List tetap tersedia |
 | **Perpindahan Activity saat convert merusak riwayat** | Sedang | Activity lead hilang dari riwayat lead | FR-BA-13: Activity selesai tetap di lead asal; FR-BA-15 mencatat perpindahan |
 | Beban jendela 3 hari bertambah | Sedang | Board ditinggalkan setengah jadi | Board lebih ringan dari katalog produk dan **dapat berjalan paralel**; bila waktu habis, Board dipotong lebih dulu, bukan katalog |
@@ -176,7 +186,7 @@ konversi. Perpindahan dicatat pada riwayat Activity.
 | Aktivitas | Target Mulai | Target Selesai |
 |---|---|---|
 | Penulisan FRD & CR | 2026-10-29 | **Selesai (draft)** |
-| Jawaban Q-050, Q-051, Q-052 | 2026-10-29 | 2026-10-29 |
+| ~~Jawaban Q-050/Q-051/Q-052~~ — **selesai** (DEC-077, DEC-078) | 2026-10-29 | **2026-10-29** |
 | Toggle + lima kolom + kartu | 2026-10-30 | 2026-10-30 |
 | Field priority & daftar status task | 2026-10-30 | 2026-10-31 |
 | Tampilan Manager per Owner | 2026-10-31 | 2026-10-31 |
@@ -201,11 +211,11 @@ konversi. Perpindahan dicatat pada riwayat Activity.
 
 ## 8. Related Artifacts
 
-- **Decision Log:** [[decision-log]] — DEC-071, DEC-073, DEC-074
+- **Decision Log:** [[decision-log]] — DEC-071, DEC-073..078
 - **FRD:** [[bootcamp-crm-frd-katalog-produk-dan-board-activity-v1]] — §5
 - **Requirement Backlog:** [[requirement-backlog]] — REQ-069, REQ-030
 - **Requirement Analysis:** [[requirement-analysis]] — EP-005, US-078, US-079
-- **RAID Log:** [[raid-log]] — R-025, D-020
+- **RAID Log:** [[raid-log]] — R-025, R-026, D-020
 - **Mockup:** `mockup/activities.html`
-- **CR terkait:** CR-20261029-001 (katalog produk) — dapat berjalan paralel
+- **CR terkait:** CR-20261029-001 (katalog produk), CR-20261029-003 (atribut produk) — ketiganya dapat berjalan paralel
 - **Taiga:** belum dibuat

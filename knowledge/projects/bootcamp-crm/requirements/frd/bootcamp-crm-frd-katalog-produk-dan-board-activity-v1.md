@@ -3,12 +3,15 @@ title: "FRD — Katalog Produk, Harga, Nilai Deal, Mitra & Komisi + Board Activi
 type: frd
 project: bootcamp-crm
 status: draft
-version: "1.0"
+version: "1.1"
 created: 2026-10-29
 modified: 2026-10-29
 disusun_oleh: "Yudha Pratama (PM / Product Owner)"
 sumber_brd: "Tidak ada — BRD v5.3 adalah baseline fase bootcamp dan tidak memuat lingkup ini (DEC-065). Sumber langsung: DEC-067..071 (2026-10-29)"
 changelog:
+  - version: "1.1"
+    date: 2026-10-29
+    purpose: "Jawaban PO dan delegasi: priority P0–P3 (DEC-077); batas Board kalender mingguan zona waktu tenant + Q-051/053/054/055 ditutup PM di bawah delegasi (DEC-078); ATRIBUT PRODUK NAIK KE RILIS INI dengan pola definisi-lalu-nilai (DEC-079, DEC-080) — menambah FR-CP-38..47 dan membalik sebagian DEC-067"
   - version: "1.0"
     date: 2026-10-29
     purpose: "FRD pertama untuk era produk — katalog produk & pricing (DEC-067..070) dan Board Activity (DEC-071). Rincian field, aturan bisnis, alur proses, dan traceability ke REQ-063..069"
@@ -16,16 +19,16 @@ changelog:
 
 # FRD — Katalog Produk, Harga, Nilai Deal, Mitra & Komisi + Board Activity
 
-**Versi:** 1.0 — **Draft**, menunggu review PO
+**Versi:** 1.1 — **Draft**, jawaban PO 2026-10-29 sudah masuk
 **Tanggal:** 2026-10-29
 **Disusun Oleh:** Yudha Pratama — PM, berperan sebagai Product Owner
-**Sumber:** DEC-067..071 (keputusan PO 2026-10-29)
+**Sumber:** DEC-067..080 (keputusan PO 2026-10-29)
 
 ---
 
 ## 1. Tujuan Dokumen
 
-Dokumen ini menerjemahkan keputusan PO **DEC-067..071** menjadi kebutuhan
+Dokumen ini menerjemahkan keputusan PO **DEC-067..080** menjadi kebutuhan
 fungsional yang dapat dibangun. Ia menjawab pertanyaan "apa yang harus ada di
 sistem, dengan aturan apa", bukan "bagaimana kode ditulis".
 
@@ -40,8 +43,8 @@ sistem, dengan aturan apa", bukan "bagaimana kode ditulis".
 **Mengapa FRD ini tidak merujuk BRD.** DEC-065 menetapkan BRD v5.3 tetap baseline
 **fase bootcamp** dan tidak dinaikkan menjadi BRD produk. Lingkup di dokumen ini
 belum pernah ada di BRD. Merujuknya ke BRD akan menciptakan traceability palsu.
-Rujukan yang benar adalah keputusan PO: **DEC-067..071**, lalu `requirement-backlog`
-v3.14 (REQ-063..069).
+Rujukan yang benar adalah keputusan PO: **DEC-067..080**, lalu `requirement-backlog`
+v3.16 (REQ-063..071).
 
 **Konvensi ID:** `FR-CP-xx` untuk katalog produk & pricing, `FR-BA-xx` untuk Board
 Activity. Dipisah karena keduanya dapat dirilis terpisah (DEC-072 menyebut Board
@@ -59,16 +62,17 @@ Activity lebih ringan dan dapat berjalan paralel).
 | Price book per kanal | DEC-068 | Harga Direct dan Partner tidak tercampur |
 | Line item & nilai deal | DEC-068, DEC-070 | Penawaran tersusun dari produk; nilai deal tidak berubah saat harga berubah |
 | Mitra & komisi | DEC-069 | Biaya kanal mitra terlihat, terpisah dari revenue |
+| **Atribut produk** | **DEC-079, DEC-080** | **Produk bank terbaca sebagai produk nyata (tenor, suku bunga, plafon)** |
 | Board Activity | DEC-071 | Pekerjaan hari ini terlihat tanpa membuka satu per satu |
 
 ### 2.2 Yang **tidak** dibangun di rilis ini
 
 | Tidak dibangun | Dasar | Catatan |
 |---|---|---|
-| Atribut produk (tenor, suku bunga, plafon, agunan) | DEC-067 | **Skema disiapkan**, fitur tidak |
 | Bundle / nested product | DEC-067 | **Skema disiapkan**, fitur tidak |
+| Mesin validasi atribut kondisional/bersyarat | DEC-079 | Atribut **deskriptif** saja; tidak ada aturan "wajib bila field X terisi" |
 | Hierarki kategori lebih dari 2 tingkat | DEC-067 | `parent_id` disiapkan, fitur tidak |
-| Mesin konfigurasi atribut & validasi | DEC-067 | Tidak disiapkan, tidak dibangun |
+| Atribut turunan / rumus (mis. angsuran dihitung dari tenor × plafon) | DEC-080 | Tipe terbatas pada teks, angka, mata uang, tanggal, pilihan tunggal, centang |
 | Pajak (PPN) pada line item | **[tidak ada keputusan]** | Dekat dengan harga, tetapi tidak pernah dibahas di DEC-067..071. Tidak ditambahkan atas inisiatif sendiri |
 | Konversi mata uang | **[tidak ada keputusan]** | Lihat §9 pertanyaan terbuka |
 | Diskon per level transaksi (bukan per baris) | DEC-068 menyebut diskon pada line item | Diskon tingkat deal tidak diminta |
@@ -85,6 +89,11 @@ Activity lebih ringan dan dapat berjalan paralel).
 3. **Laporan memakai nilai deal, bukan penjumlahan line item (DEC-070).**
 4. **Komisi adalah biaya, bukan pengurang revenue atau quota attainment
    (DEC-069).** Revenue tetap closed-won (DEC-016).
+5. **Atribut produk bersifat deskriptif (DEC-079).** Atribut menjelaskan produk;
+   ia **tidak** mengubah harga, tidak mengubah nilai deal, dan tidak menggantikan
+   price book. Harga tetap dari price book (DEC-068).
+6. **Atribut memakai pola definisi-lalu-nilai (DEC-080).** Sama dengan custom field
+   (DEC-052): satu pola untuk dua kebutuhan, nilai dapat difilter dan dilaporkan.
 
 ---
 
@@ -93,6 +102,7 @@ Activity lebih ringan dan dapat berjalan paralel).
 ```text
 ProductCategory (1) ──< Product (N)
 Product (1) ──< PricebookEntry (N) >── (1) Pricebook
+Product (1) ──< ProductAttributeValue (N) >── (1) ProductAttributeDef
 Opportunity (1) ──< LineItem (N) >── (1) Product
 Opportunity (N) >── (0..1) Partner
 Activity (N) >── (0..1) Owner (User)
@@ -106,7 +116,8 @@ Activity (N) >── (0..1) Owner (User)
 | PricebookEntry | Harga satu produk pada satu price book | OB-040 |
 | LineItem | Baris produk pada Opportunity, harga dibekukan | OB-041 |
 | Partner | Mitra penjualan beserta komisi bawaannya | OB-042 |
-| ProductAttribute | Atribut produk — **skema saja** | OB-043 |
+| ProductAttributeDef | Definisi atribut produk milik tenant | OB-043 |
+| ProductAttributeValue | Nilai atribut per produk | OB-044 |
 | Opportunity | Diperluas: nilai deal, sumber nilai, mitra, komisi | OB-004 |
 | Activity | Diperluas: priority, status task, tampilan Board | OB-006 |
 
@@ -177,19 +188,39 @@ Activity (N) >── (0..1) Owner (User)
 | FR-CP-32 | Sistem **tidak** mengurangi revenue dan quota attainment dengan komisi | — | Komisi disimpan sebagai atribut biaya | Revenue dan attainment utuh | Revenue tetap closed-won (DEC-016) |
 | FR-CP-33 | Komisi tampil pada analisis margin/kanal, tidak pada laporan revenue | — | Pisahkan jalur tampilan | Laporan revenue bersih dari komisi | Sesuai batas DEC-069 |
 
-### 4.7 Kesiapan Skema untuk Roadmap (DEC-067)
+### 4.7 Kesiapan Skema untuk Sisa Roadmap (DEC-067)
 
 | ID | Deskripsi Fungsi | Aturan |
 |---|---|---|
-| FR-CP-34 | Skema menyediakan tabel **atribut produk terpisah** | Bukan kolom tetap pada tabel produk. Tabel dibuat, **tidak** dipakai antarmuka rilis ini |
-| FR-CP-35 | Skema menyediakan ruang **bundle / nested product** | Relasi komponen antar produk dapat ditambahkan tanpa mengubah tabel produk yang ada |
-| FR-CP-36 | Skema menyediakan **`parent_id`** pada kategori | Memungkinkan hierarki >2 tingkat tanpa migrasi |
-| FR-CP-37 | Tidak ada mesin konfigurasi atribut pada rilis ini | Keputusan DEC-067 eksplisit: disiapkan ≠ dibangun |
+| FR-CP-34 | Skema menyediakan tabel **atribut produk terpisah** | Bukan kolom tetap pada tabel produk. **Dipakai** di rilis ini — lihat §4.8 |
+| FR-CP-35 | Skema menyediakan ruang **bundle / nested product** | Relasi komponen antar produk dapat ditambahkan tanpa mengubah tabel produk yang ada. **Tidak** dibangun |
+| FR-CP-36 | Skema menyediakan **`parent_id`** pada kategori | Memungkinkan hierarki >2 tingkat tanpa migrasi. **Tidak** dibangun |
+| FR-CP-37 | Tidak ada mesin validasi atribut kondisional pada rilis ini | DEC-079: atribut deskriptif saja; aturan "wajib bila field X terisi" tidak dibuat |
 
-> **Batas yang harus dipahami bersama:** tanpa atribut produk, katalog ini
-> **belum** menjawab kebutuhan produk bank secara utuh — KPR tanpa tenor dan suku
-> bunga bukan representasi produk KPR. Ini dinyatakan terbuka, bukan disembunyikan
-> (lihat Baseline Produk §2.2).
+### 4.8 Atribut Produk (DEC-079, DEC-080)
+
+Atribut produk **dibangun di rilis ini**. Alasan perubahan haluan: demo Senin
+mempertunjukkan produk bank — KPR tanpa tenor dan suku bunga tidak terbaca sebagai
+produk KPR. Dekatan tetap sama seperti DEC-067: backend disiapkan, sehingga atribut
+datang sebagai **tabel**, bukan kolom tetap.
+
+| ID | Deskripsi Fungsi | Input | Proses | Output | Aturan |
+|---|---|---|---|---|---|
+| FR-CP-38 | Tenant Admin membuat **definisi atribut** produk | nama, tipe, wajib, urutan, daftar pilihan, aktif | Simpan dengan `tenant_id` | Definisi tersedia untuk semua produk | Nama unik per tenant. Definisi berlaku untuk seluruh produk tenant, bukan per produk |
+| FR-CP-39 | Sistem melayani **enam tipe** atribut | — | Validasi nilai menurut tipe | Nilai tervalidasi | **Teks, angka, mata uang, tanggal, pilihan tunggal, centang.** Pilihan ganda, rumus, dan atribut turunan **tidak** dilayani (DEC-080) |
+| FR-CP-40 | Tenant Admin mengelola **daftar nilai** untuk atribut bertipe pilihan tunggal | nilai, urutan, aktif | Simpan sebagai pilihan milik definisi | Pilihan tampil pada input produk | Mengikuti model konfigurasi tenant (DEC-051), tetapi **tidak** dapat diubah menjadi konstanta kode |
+| FR-CP-41 | Tenant Admin mengisi **nilai atribut** pada sebuah produk | nilai per definisi | Simpan per produk per definisi | Atribut produk terisi | Satu nilai per produk per definisi; mengubah nilai lama menimpa, jejak perubahan mengikuti aturan audit produk |
+| FR-CP-42 | Sistem menegakkan atribut **wajib** | — | Periksa definisi wajib sebelum produk disimpan atau diaktifkan | Pesan penolakan bila kosong | Berlaku pada produk **aktif**; produk nonaktif boleh tidak lengkap agar data lama tidak rusak |
+| FR-CP-43 | Sistem menolak **perubahan tipe** definisi yang sudah punya nilai | tipe baru | Periksa keberadaan nilai | Pesan penolakan | Mengubah **nama** dan **urutan** diizinkan; mengubah **tipe** setelah ada nilai akan menafsirkan ulang data lama secara diam-diam |
+| FR-CP-44 | Atribut tampil pada halaman produk dan pada saat memilih produk di baris penawaran | — | Baca nilai atribut | Atribut terlihat saat memilih produk | Hanya definisi **aktif** yang tampil pada input baru |
+| FR-CP-45 | Atribut dapat **difilter dan diurutkan** pada daftar produk | — | Terapkan pada tipe angka, pilihan tunggal, centang, tanggal | Daftar produk tersaring | Alasan memilih pola definisi-lalu-nilai ketimbang JSON bebas (DEC-080): filter dan laporan tanpa migrasi data |
+| FR-CP-46 | Tenant Admin menonaktifkan definisi atribut | status aktif | Definisi tidak muncul pada input baru | Nilai lama tetap tersimpan | Nonaktif bukan hapus; nilai pada produk tetap terbaca pada data historis |
+| FR-CP-47 | Baris penawaran **menyalin** nilai atribut produk saat baris disimpan | — | Simpan salinan sebagai teks pada baris | Penawaran dapat dicetak ulang apa adanya | **[Usulan PM]** — alasan sama dengan harga snapshot: spesifikasi yang disepakati tidak boleh berubah saat produk diubah. Dapat dipotong bila waktu tidak cukup (R-025) |
+
+> **Batas yang tetap berlaku:** atribut bersifat **deskriptif**. Ia tidak mengubah
+> harga, tidak mengubah nilai deal, dan tidak menggantikan price book (RB-10).
+> Atribut turunan — misalnya angsuran yang dihitung dari tenor × plafon — **tidak**
+> dibangun (DEC-080).
 
 ---
 
@@ -205,22 +236,22 @@ modul baru dan tidak mengubah entitas Activity yang sudah berjalan.
 
 | ID | Deskripsi Fungsi | Input | Aturan |
 |---|---|---|---|
-| FR-BA-01 | Field **priority** pada Activity | nilai prioritas | Daftar nilai prioritas **belum ditetapkan PO** — lihat Q-050. Tidak diisi angka atau label atas inisiatif sendiri |
+| FR-BA-01 | Field **priority** pada Activity | P0 / P1 / P2 / P3 | **Empat tingkat, tetapan sistem, tidak dapat diatur tenant** (DEC-077): **P0** harus selesai hari ini; **P1** penting, selesai minggu ini; **P2** normal; **P3** rendah. Bawaan Activity baru = **P2** |
 | FR-BA-02 | **Daftar status task** sebagai konfigurasi tenant | daftar status | Mengikuti model konfigurasi DEC-051: daftar nilai milik tenant; kategori sistem tetap agar laporan dapat dibandingkan |
-| FR-BA-03 | Priority dapat difilter dan diurutkan | — | Berlaku pada tampilan List maupun Board |
+| FR-BA-03 | Priority dapat difilter dan diurutkan | — | Berlaku pada tampilan List maupun Board. Urutan pada kolom Board: **P0 paling atas**, lalu P1, P2, P3; di dalam priority yang sama, urut tanggal jatuh tempo paling dekat |
 
 ### 5.3 Tampilan Board
 
 | ID | Deskripsi Fungsi | Aturan |
 |---|---|---|
 | FR-BA-04 | Halaman Activities memiliki **toggle Board / List** | Pilihan tampilan tidak mengubah data; hanya cara melihat |
-| FR-BA-05 | Board memiliki lima kolom: **Overdue · Hari ini · Minggu ini · Nanti · Selesai** | Nama kolom mengikuti DEC-071 |
-| FR-BA-06 | Sistem menempatkan Activity pada kolom menurut **tanggal jatuh tempo** dan statusnya | Activity berstatus selesai ke kolom **Selesai**, tanpa memandang tanggal |
+| FR-BA-05 | Board memiliki lima kolom: **Overdue · Hari ini · Minggu ini · Nanti · Selesai** | Nama kolom mengikuti DEC-071. Batas tanggal (DEC-078): **Hari ini** = tanggal hari ini; **Minggu ini** = Senin s/d Minggu pada minggu berjalan yang memuat hari ini — **bukan** 7 hari bergulir; **Nanti** = tanggal setelah Minggu berjalan; **Overdue** = sebelum hari ini dan belum selesai. Semua batas dihitung pada **zona waktu tenant**, bukan UTC. Batas tanggal ditampilkan pada header kolom |
+| FR-BA-06 | Sistem menempatkan Activity pada kolom menurut **tanggal jatuh tempo** dan statusnya | Activity berstatus selesai ke kolom **Selesai**, tanpa memandang tanggal. Perpindahan kolom terjadi karena tanggal berjalan, bukan karena pengguna memindahkan kartu — kecuali aksi selesai (FR-BA-10) |
 | FR-BA-07 | Kartu Activity memuat: judul, tanggal jatuh tempo, **priority**, tautan ke Lead/Opportunity, aksi selesai | Sesuai DEC-071 |
 | FR-BA-08 | Sales hanya melihat Activity miliknya; Manager melihat Activity timnya | Mengikuti cakupan data per peran (DEC-056) |
 | FR-BA-09 | Tampilan kedua untuk Manager: Board **dikelompokkan per Owner** | DEC-071 |
 | FR-BA-10 | Aksi **selesai** pada kartu memindahkan Activity ke kolom Selesai | Tidak menghapus Activity |
-| FR-BA-11 | Activity tanpa tanggal jatuh tempo ditempatkan pada kolom **Nanti** dan ditandai | **[Usulan PM]** — DEC-071 tidak menetapkan kolom untuk Activity tanpa jatuh tempo. Perlu konfirmasi PO (Q-051) |
+| FR-BA-11 | Activity tanpa tanggal jatuh tempo ditempatkan pada kolom **Nanti** dan ditandai | **Ditetapkan (DEC-078)** — kolom Nanti, dengan penanda visual. Tidak dibuat kolom tersendiri agar lima kolom DEC-071 tidak bertambah |
 
 ### 5.4 Aturan pindah Activity saat convert lead
 
@@ -230,6 +261,13 @@ modul baru dan tidak mengubah entitas Activity yang sudah berjalan.
 | FR-BA-13 | Activity yang sudah selesai **tetap tercatat** pada lead asal | Riwayat lead tidak hilang |
 | FR-BA-14 | Tautan Activity ke Contact dan Account mengikuti hasil konversi | Sesuai pemetaan lead → Contact + Account + Opportunity (BR-005) |
 | FR-BA-15 | Perpindahan Activity dicatat pada riwayat Activity | Dapat ditelusuri: dari Lead ke Opportunity, kapan, oleh siapa |
+### 5.5 Yang tidak dibangun pada Board
+
+| Tidak dibangun | Dasar |
+|---|---|
+| Geser kartu antar kolom (drag & drop) sebagai cara memindahkan tanggal | DEC-071 tidak menetapkan; kolom adalah turunan tanggal, bukan status yang dipilih. Memindahkan kartu berarti mengubah tanggal — perlu keputusan tersendiri |
+| Board lintas jenis Activity atau lintas pipeline | Tidak diminta |
+| Notifikasi otomatis saat Activity masuk Overdue | Tidak diminta di DEC-071 |
 
 ---
 
@@ -245,7 +283,11 @@ modul baru dan tidak mengubah entitas Activity yang sudah berjalan.
 | RB-06 | Objek yang sudah dirujuk transaksi tidak dapat dihapus, hanya dinonaktifkan | Konsistensi data historis |
 | RB-07 | Perubahan konfigurasi tidak mengubah data historis | DEC-051 |
 | RB-08 | Setiap perubahan nilai deal secara manual mencatat siapa dan kapan | DEC-070 |
-| RB-09 | Daftar pilihan (kategori, price book, status task, priority) adalah data tenant, bukan konstanta kode | DEC-051, DEC-067, DEC-068 |
+| RB-09 | Daftar pilihan (kategori, price book, status task) adalah data tenant, bukan konstanta kode | DEC-051, DEC-067, DEC-068 |
+| RB-10 | **Atribut produk bersifat deskriptif** — tidak mengubah harga, nilai deal, atau price book | DEC-079 |
+| RB-11 | **Priority adalah tetapan sistem P0–P3**, bukan daftar yang dapat diatur tenant | DEC-077 |
+| RB-12 | Batas waktu pada Board dihitung pada **zona waktu tenant**; minggu berjalan = Senin–Minggu | DEC-078 |
+| RB-13 | Diskonto line item dinyatakan dalam **persen** (0–100); harga satuan dan nilai deal dalam **satu mata uang per tenant** | DEC-078 |
 
 ---
 
@@ -254,13 +296,14 @@ modul baru dan tidak mengubah entitas Activity yang sudah berjalan.
 ### 7.1 Dari katalog sampai nilai deal
 
 1. Tenant Admin membuat **kategori**, lalu **produk** di dalamnya (FR-CP-01, FR-CP-06).
-2. Tenant Admin menetapkan **harga** produk pada **price book** beserta masa berlaku (FR-CP-13).
-3. Sales membuat Opportunity dan memilih **price book** (FR-CP-21).
-4. Sales menambahkan **baris produk**; sistem mengisi harga berlaku dan **membekukannya** (FR-CP-16, FR-CP-17).
-5. Sistem menjumlahkan baris sebagai **usulan** nilai deal (FR-CP-20, FR-CP-22).
-6. Bila nilai disepakati berbeda, Sales mengisi **nilai manual**; nilai manual berlaku dan dicatat (FR-CP-23, FR-CP-26).
-7. Bila Opportunity lewat **mitra**, Sales Manager menetapkan mitra; komisi dihitung dari nilai deal (FR-CP-29, FR-CP-30).
-8. Laporan membaca **nilai deal**, bukan penjumlahan baris (FR-CP-27).
+2. Tenant Admin mengisi **atribut** produk menurut definisi yang berlaku (FR-CP-38, FR-CP-41).
+3. Tenant Admin menetapkan **harga** produk pada **price book** beserta masa berlaku (FR-CP-13).
+4. Sales membuat Opportunity dan memilih **price book** (FR-CP-21).
+5. Sales menambahkan **baris produk**; sistem mengisi harga berlaku dan **membekukannya**, serta menyalin **atribut** produk ke baris (FR-CP-16, FR-CP-17, FR-CP-47).
+6. Sistem menjumlahkan baris sebagai **usulan** nilai deal (FR-CP-20, FR-CP-22).
+7. Bila nilai disepakati berbeda, Sales mengisi **nilai manual**; nilai manual berlaku dan dicatat (FR-CP-23, FR-CP-26).
+8. Bila Opportunity lewat **mitra**, Sales Manager menetapkan mitra; komisi dihitung dari nilai deal (FR-CP-29, FR-CP-30).
+9. Laporan membaca **nilai deal**, bukan penjumlahan baris (FR-CP-27).
 
 ### 7.2 Mengapa snapshot bukan sekadar rujukan
 
@@ -289,52 +332,66 @@ dicatat** dan **selisih ditampilkan**.
 | FR-CP-16..21 | REQ-065 | DEC-068 | OB-041 | US-073, US-074 |
 | FR-CP-22..27 | REQ-067 | DEC-070 | OB-004 | US-075 |
 | FR-CP-28..33 | REQ-066 | DEC-069 | OB-042 | US-076, US-077 |
-| FR-CP-34..37 | REQ-068 | DEC-067 | OB-043 | — (roadmap, belum ada US) |
-| FR-BA-01..15 | REQ-069, REQ-030 | DEC-071 | OB-006 | US-078, US-079 |
+| FR-CP-34..37 | REQ-068 | DEC-067 | OB-043 | — (kesiapan skema roadmap) |
+| FR-CP-38..47 | REQ-070 | DEC-079, DEC-080 | OB-043, OB-044 | US-080, US-081 |
+| FR-BA-01..15 | REQ-069, REQ-030 | DEC-071, DEC-077, DEC-078 | OB-006 | US-078, US-079 |
 
 Epic: EP-019 (Katalog Produk), EP-020 (Price Book), EP-021 (Penawaran & Nilai
-Deal), EP-022 (Mitra & Komisi), EP-005 (Activity).
+Deal), EP-022 (Mitra & Komisi), EP-023 (Atribut Produk), EP-005 (Activity).
 
 ---
 
 ## 9. Pertanyaan Terbuka
 
-| ID | Pertanyaan | Mengapa menghambat | Ditujukan ke |
-|---|---|---|---|
-| Q-050 | **Daftar nilai priority** — berapa tingkat dan apa labelnya (mis. Tinggi / Sedang / Rendah, atau empat tingkat)? Apakah tetap (sistem) atau dapat diatur tenant? | FR-BA-01 tidak dapat dibangun tanpa daftar nilai. Menentukan juga urutan pada kartu Board | PM/PO |
-| Q-051 | **Kolom Board untuk Activity tanpa tanggal jatuh tempo** — "Nanti" (usulan PM) atau kolom tersendiri? | FR-BA-11 masih usulan. Salah pilih berarti Activity tanpa jatuh tempo tidak pernah terlihat | PM/PO |
-| Q-052 | **Batas "Minggu ini"** — Senin–Minggu, atau 7 hari bergulir dari hari ini? Apakah mengikuti zona waktu tenant? | Menentukan penempatan kartu pada kolom Minggu ini. Tanpa ini, dua orang dapat melihat angka berbeda di hari yang sama | PM/PO |
-| Q-053 | **Mata uang harga produk** — satu mata uang per tenant, atau per price book? | Menentukan bentuk `PricebookEntry` dan pembulatan. **Belum pernah diputuskan** — Q-035 membahas mata uang paket langganan SaaS, bukan harga produk | PM/PO |
-| Q-054 | **Diskon line item** — persen, nominal, atau keduanya? | FR-CP-19 membutuhkan bentuknya. DEC-068 hanya menyebut "diskon" | PM/PO |
-| Q-055 | **Bawaan `commission_pct`** — terisi dari mitra dan dapat diubah per Opportunity (asumsi FR-CP-29), atau selalu mengikuti mitra? | Menentukan apakah ada override per deal. DEC-069 tidak menetapkan | PM/PO |
+**Tidak ada pertanyaan terbuka lagi pada lingkup dokumen ini.** Q-050..Q-055
+seluruhnya tertutup pada 2026-10-29.
 
-**Catatan:** Q-050..Q-055 **bukan** pertanyaan yang menghambat seluruh
-pengembangan. Yang menghambat tanpa jawaban: **Q-050** (Board kolom priority tidak
-dapat dibangun) dan **Q-052** (kolom Minggu ini tidak dapat dihitung). Empat
-lainnya dapat dipakai dengan nilai sementara yang ditandai.
+| ID | Pertanyaan | Jawaban | Dasar |
+|---|---|---|---|
+| Q-050 | Daftar nilai priority | **P0–P3**, empat tingkat, tetapan sistem | DEC-077 (PO) |
+| Q-051 | Kolom untuk Activity tanpa jatuh tempo | Kolom **Nanti**, diberi penanda | DEC-078 (PM, delegasi PO) |
+| Q-052 | Batas "Minggu ini" | **Senin–Minggu** minggu berjalan, zona waktu tenant | DEC-078 (PM, delegasi PO) |
+| Q-053 | Mata uang harga produk | **Satu mata uang per tenant** | DEC-078 (PM, delegasi PO) |
+| Q-054 | Bentuk diskon line item | **Persen** (0–100) | DEC-078 (PM, delegasi PO) |
+| Q-055 | Override `commission_pct` per Opportunity | **Boleh diubah**, dengan jejak perubahan | DEC-078 (PM, delegasi PO) |
+
+Empat jawaban (Q-051, Q-053, Q-054, Q-055) adalah **keputusan PM di bawah delegasi
+PO** — *"untuk yang lain ikut saranmu dulu aja"*. PO dapat mengubahnya tanpa melalui
+CR.
+
+**Pertanyaan yang masih menggantung di luar lingkup dokumen ini** — bukan penghambat
+pengembangan, tetapi belum terjawab: **TD-09** (bentuk tabel katalog & price book,
+milik Head of Engineer), Q-007/Q-008/Q-011 (Head of Engineer), Q-033..Q-039 (PM/PO,
+fase M9), Q-042/Q-043 (Head of Engineer, AI prediktif), Q-045 (urutan potong lingkup,
+objeknya bergeser).
 
 ---
 
 ## 10. Yang Tidak Dijanjikan oleh Dokumen Ini
 
-1. **Atribut produk tidak dibangun** (DEC-067). Untuk demo ke bank, atribut akan
-   diminta; dokumen ini tidak menjanjikannya.
-2. **Pajak tidak diatur.** Tidak ada keputusan tentang PPN.
-3. **Angka mandays tidak ada di sini.** Estimasi adalah milik Head of Engineer
-   (D-020). PO menetapkan jendela 3 hari (DEC-073/DEC-074) — itu alokasi waktu,
-   bukan estimasi effort.
-4. **Nomor modul katalog produk belum ditetapkan PO.** Dokumen ini memakai
-   EP-019..EP-022 tanpa memberi nomor modul.
+1. **Atribut produk dibangun, tetapi terbatas.** Enam tipe (teks, angka, mata uang,
+   tanggal, pilihan tunggal, centang), deskriptif, tanpa rumus dan tanpa validasi
+   kondisional (DEC-079, DEC-080). Bila demo menuntut atribut turunan — misalnya
+   angsuran dihitung dari tenor × plafon — itu **tidak** ada di rilis ini.
+2. **Bundle/nested product dan hierarki kategori >2 tingkat tidak dibangun**
+   (DEC-067). Hanya skemanya disiapkan.
+3. **Pajak tidak diatur.** Tidak ada keputusan tentang PPN.
+4. **Multi-mata uang tidak dibangun.** Satu mata uang per tenant (DEC-078).
+5. **Angka mandays tidak ada di sini.** Estimasi adalah milik Head of Engineer
+   (D-020); PO menundanya (DEC-074). Jendela 3 hari (DEC-073/DEC-074) adalah
+   alokasi waktu, bukan estimasi effort.
+6. **Nomor modul katalog produk belum ditetapkan PO.** Dokumen ini memakai
+   EP-019..EP-023 tanpa memberi nomor modul.
 
 ---
 
 ## Related
 
-- **Decision Log:** [[decision-log]] — DEC-067..074
-- **Requirement Backlog:** [[requirement-backlog]] — REQ-063..069
-- **Requirement Analysis:** [[requirement-analysis]] — EP-019..022, US-069..079, OB-037..043
+- **Decision Log:** [[decision-log]] — DEC-067..080
+- **Requirement Backlog:** [[requirement-backlog]] — REQ-063..071
+- **Requirement Analysis:** [[requirement-analysis]] — EP-019..023, US-069..081, OB-037..044
 - **Baseline Produk:** [[baseline-produk-v1]]
 - **RAID Log:** [[raid-log]] — R-024, R-025, D-020
 - **Technical Decisions:** [[open-tech-decisions]] — TD-09
-- **Change Request:** CR-20261029-001 (katalog produk), CR-20261029-002 (Board Activity)
+- **Change Request:** CR-20261029-001 (katalog produk), CR-20261029-002 (Board Activity), CR-20261029-003 (atribut produk)
 - **Mockup:** `mockup/activities.html`, `mockup/opportunity.html`

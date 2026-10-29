@@ -3,11 +3,14 @@ title: "Change Request — Katalog Produk, Harga per Kanal, Nilai Deal, Mitra & 
 type: change-request
 status: draft
 created: 2026-10-29
-version: "1.0"
+version: "1.1"
 project: bootcamp-crm
 diajukan_oleh: "Yudha Pratama (PM / Product Owner)"
 sumber: "Arahan PO 2026-10-29 — DEC-067..070"
 changelog:
+  - version: "1.1"
+    date: 2026-10-29
+    purpose: "Disesuaikan dengan DEC-077..081 — atribut produk TIDAK LAGI di luar lingkup CR ini (pindah ke CR-20261029-003, DEC-079); Q-050..Q-055 tertutup (DEC-077, DEC-078) sehingga bagian dependensi dan pertanyaan terbuka diperbarui"
   - version: "1.0"
     date: 2026-10-29
     purpose: "CR diajukan — katalog produk dua tingkat, price book per kanal, line item harga snapshot, nilai deal manual menang, entitas Partner + komisi dari nilai deal. Estimasi effort belum diisi (menunggu Head of Engineer)"
@@ -104,32 +107,35 @@ dihitung dari **nilai deal**. Batas tegas: **komisi adalah biaya** — tidak men
 revenue (revenue tetap closed-won, DEC-016) dan tidak mengurangi quota attainment.
 Komisi muncul pada analisis margin/kanal.
 
-**Atribut produk — disiapkan, tidak dibangun.** Skema menyediakan tabel atribut
-terpisah (bukan kolom tetap), ruang bundle/nested, dan `parent_id` pada kategori.
-Mesin konfigurasi atribut dan validasinya **tidak** dibuat.
+**Atribut produk — dipisah ke CR tersendiri.** Semula butir ini menyatakan atribut
+disiapkan tetapi tidak dibangun. **PO mengubahnya** (DEC-079): atribut produk
+**masuk rilis ini** dan diajukan lewat **CR-20261029-003**. Skema yang disiapkan di
+sini tetap berlaku — tabel atribut terpisah, ruang bundle/nested, dan `parent_id`
+pada kategori — sehingga CR-003 tidak perlu mengubah rancangan dasar katalog.
 
 ### 3.3 Dampak ke Dokumen Terkait
 
 | Dokumen | Dampak | Status |
 |---|---|---|
 | BRD v5.3 | **Tidak direvisi** — baseline fase bootcamp, tidak dinaikkan ke BRD produk (DEC-065) | Tidak berlaku |
-| FRD katalog produk & Board Activity v1.0 | **Dokumen baru** — §4.1–4.7, §6, §8 | **Selesai (draft)** |
-| Requirement Analysis v3.8 | Proses 16, OB-037..043, EP-019..022, US-069..077 | **Selesai** |
-| Requirement Backlog v3.14 | REQ-063..068 | **Selesai** |
-| Decision Log v14.1 | DEC-067..070, DEC-073, DEC-074 | **Selesai** |
-| RAID Log v12.1 | R-024 (model data), R-025 (jendela), D-020 (estimasi) | **Selesai** |
+| FRD katalog produk & Board Activity **v1.1** | **Dokumen baru** — §4.1–4.7, **§4.8 (atribut)**, §6, §8 | **Selesai (draft)** |
+| Requirement Analysis **v4.0** | Proses 16, OB-037..044, EP-019..023, US-069..081 | **Selesai** |
+| Requirement Backlog **v3.16** | REQ-063..071 | **Selesai** |
+| Decision Log **v14.3** | DEC-067..081 | **Selesai** |
+| RAID Log **v12.3** | R-024, R-025, **R-026** (beban atribut), D-020 (estimasi) | **Selesai** |
 | Technical Decisions | **TD-09** — model data katalog & price book | **Terbuka** — prasyarat desain |
-| Baseline Produk v1.1 | §2.1 M11, §2.2 yang disiapkan, §6 peta rilis | **Selesai** |
+| Baseline Produk **v1.2** | §2.1 M11, §2.2 yang disiapkan, §6 peta rilis | **Selesai** |
 | Mockup | Belum ada halaman katalog produk dan price book | **Belum** |
 
 ### 3.4 Dependensi
 
 | Dependensi | Pemilik | Dampak bila belum ada |
 |---|---|---|
-| **TD-09** — model data katalog produk & price book | Head of Engineer | Bentuk tabel belum final; pekerjaan dapat dimulai tetapi berisiko rework |
+| **TD-09** — model data katalog produk, price book, **dan atribut** | Head of Engineer | Bentuk tabel belum final; pekerjaan dapat dimulai tetapi berisiko rework |
 | **TD-01** — isolasi tenant | Head of Engineer | Seluruh objek baru wajib terisolasi per tenant (RB-01) |
 | Estimasi effort | Head of Engineer | PO menunda permintaan ini (DEC-074); CR tetap diajukan tanpa angka |
 | Mockup katalog produk | PM | Tim masih bekerja dari FRD |
+| **CR-20261029-003** — atribut produk | PM/PO | Atribut berdiri sebagai CR sendiri; katalog dapat dirilis tanpa menunggu atribut, tetapi demo Senin memerlukan keduanya |
 ---
 
 ## 4. Risk Analysis
@@ -143,7 +149,7 @@ Mesin konfigurasi atribut dan validasinya **tidak** dibuat.
 | **Harga snapshot dilewati** karena dianggap sederhana | Sedang | Nilai deal historis berubah mengikuti harga hari ini; laporan tidak dapat dipertanggungjawabkan | RB-02 sebagai aturan mengikat; FR-CP-17 diuji dengan skenario ubah harga setelah deal |
 | **Nilai manual dan total baris berbeda tanpa penjelasan** | Sedang | Manajemen melihat dua angka dan tidak tahu mana yang benar | FR-CP-24: keduanya ditampilkan beserta selisih; FR-CP-26 mencatat jejak pengisian |
 | **Komisi dianggap pengurang revenue** | Sedang | Revenue dan quota attainment turun tidak semestinya; pencapaian sales salah dinilai | RB-05 mengikat; FR-CP-32/33 memisahkan jalur tampilan |
-| **Ekspektasi berlebih pada demo** — PO menyebut contoh KPR/tabungan, audiens dapat mengira atribut sudah ada | **Tinggi** | Kekecewaan pada demo; kepercayaan produk turun | §10 FRD dan §3.2 CR menyatakan terbuka: atribut **tidak** dibangun. Demo menyampaikan batas ini lebih dulu, bukan setelah ditanya |
+| **Ekspektasi berlebih pada demo** — audiens mengira atribut sudah lengkap termasuk simulasi/angsuran | **Tinggi** | Kekecewaan pada demo; kepercayaan produk turun | Atribut **dibangun** lewat CR-20261029-003, tetapi **deskriptif**: tanpa rumus. Sampaikan batas ini lebih dulu (§10 FRD, CR-003 §3.2) |
 | Beban jendela 3 hari bertambah karena enam objek baru | **Tinggi** | Kluster lain tidak selesai sebelum demo | Lihat R-025 — urutan potong ditetapkan; katalog produk mendahului Board Activity |
 
 ### 4.2 Risiko Jika Perubahan **DITOLAK**
@@ -168,6 +174,9 @@ Mesin konfigurasi atribut dan validasinya **tidak** dibuat.
 | Kesiapan skema roadmap (FR-CP-34..37) | **Menunggu konfirmasi Head of Engineer** | — |
 | **Total** | **Belum ada data** | — |
 
+> **Atribut produk tidak termasuk tabel ini** — diajukan terpisah lewat CR-20261029-003
+> (DEC-079) agar keduanya dapat disetujui dan dipotong secara terpisah.
+>
 > **Catatan anti-fabrikasi.** Angka mandays **tidak diisi**. PO memerintahkan CR
 > ditulis tanpa menunggu estimasi (DEC-074). Yang mengikat saat ini adalah **jendela
 > 3 hari** (29–31 Okt 2026, demo 2 Nov 2026) — itu keputusan alokasi waktu, bukan
@@ -181,7 +190,7 @@ Mesin konfigurasi atribut dan validasinya **tidak** dibuat.
 | Aktivitas | Target Mulai | Target Selesai |
 |---|---|---|
 | Penulisan FRD & CR | 2026-10-29 | **Selesai (draft)** |
-| Review PO atas FRD & jawaban Q-050..Q-055 | 2026-10-29 | 2026-10-29 |
+| ~~Review PO & jawaban Q-050..Q-055~~ — **selesai** (DEC-077, DEC-078) | 2026-10-29 | **2026-10-29** |
 | Kategori & produk | 2026-10-29 | 2026-10-29 |
 | Price book & entri harga | 2026-10-29 | 2026-10-30 |
 | Baris produk & nilai deal | 2026-10-30 | 2026-10-30 |
@@ -209,12 +218,12 @@ Mesin konfigurasi atribut dan validasinya **tidak** dibuat.
 
 ## 8. Related Artifacts
 
-- **Decision Log:** [[decision-log]] — DEC-067..070, DEC-073, DEC-074
+- **Decision Log:** [[decision-log]] — DEC-067..070, DEC-073..081
 - **FRD:** [[bootcamp-crm-frd-katalog-produk-dan-board-activity-v1]] — §4.1–4.7
-- **Requirement Backlog:** [[requirement-backlog]] — REQ-063..068
-- **Requirement Analysis:** [[requirement-analysis]] — EP-019..022, US-069..077
-- **RAID Log:** [[raid-log]] — R-024, R-025, D-020
+- **Requirement Backlog:** [[requirement-backlog]] — REQ-063..071
+- **Requirement Analysis:** [[requirement-analysis]] — EP-019..023, US-069..081
+- **RAID Log:** [[raid-log]] — R-024, R-025, R-026, D-020
 - **Technical Decisions:** [[open-tech-decisions]] — TD-09, TD-01
 - **Baseline Produk:** [[baseline-produk-v1]] — §2.1, §2.2
-- **CR terkait:** CR-20261029-002 (Board Activity) — dapat berjalan paralel
+- **CR terkait:** CR-20261029-002 (Board Activity), CR-20261029-003 (atribut produk) — ketiganya dapat berjalan paralel
 - **Taiga:** belum dibuat
