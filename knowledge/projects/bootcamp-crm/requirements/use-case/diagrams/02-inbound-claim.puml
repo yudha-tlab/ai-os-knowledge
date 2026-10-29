@@ -1,0 +1,31 @@
+@startuml
+!include style.iuml
+title 1-2 · Lead masuk lewat webhook → Queue → di-claim Sales
+participant "Website form\n(Sistem Klien)" as W
+participant "CRM\nInbound API" as API
+participant "Penugasan\n(aturan tenant)" as R
+database "Lead + Queue" as DB
+actor "Raka" as RK
+actor "Dewi" as DW
+participant "Webhook\noutbound" as OUT
+
+W -> API : POST /leads\n{name, email, source="Website form",\ncustom.jumlah_karyawan=640}
+activate API
+API -> API : validasi: nama + (email atau telepon) + source ✔
+API -> DB : cek duplikat (email, telepon, organisasi)
+DB --> API : tidak ada
+API -> R : tentukan Owner\n(tidak ada user login)
+R --> API : aturan 1 cocok → Queue "Inbound Web"
+API -> DB : simpan Lead\nstatus New · Owner kosong · masuk 08:41
+API --> W : 201 Created {lead_id}
+API -> OUT : event lead.created
+deactivate API
+
+== 08:55 · Dua Sales mengklaim lead yang sama ==
+RK -> DB : claim
+DW -> DB : claim (sedikit lebih lambat)
+DB --> RK : berhasil → Owner = Raka
+DB --> DW : ditolak: lead sudah diambil
+DB -> OUT : event lead.assigned
+note over DB : Riwayat: Owner — → Raka\n"Claim dari Queue"
+@enduml

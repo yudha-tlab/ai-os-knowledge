@@ -1,0 +1,36 @@
+@startuml
+!include style.iuml
+title Gambaran end-to-end: lead masuk sampai Closed-Won dan laporan
+|Tenant Admin|
+start
+:0 Atur proses sales tenant;
+|Sistem Klien|
+:1 Website form mengirim lead\n(webhook inbound);
+|CRM|
+:Validasi, cek duplikat,\naturan penugasan;
+:Lead masuk Queue Inbound Web;
+|Sales Rep|
+:2 Claim lead dari Queue;
+:3 Call pertama dicatat\nsebagai Activity;
+|CRM|
+:Waktu kontak pertama terisi otomatis;
+:Status New → In Progress;
+|AI Layer|
+:4 Draf outreach dari konteks lead;
+|Sales Rep|
+:Draf disimpan sebagai Activity;
+:5 Convert lead;
+|CRM|
+:Contact baru + Account yang ada\n+ Opportunity (Qualification);
+|Sales Rep|
+:6 Geser Opportunity antar-stage\n(mundur, lompat dengan syarat);
+:7 Close Won + alasan;
+|CRM|
+:Revenue dan Quota attainment\ndihitung ulang;
+:Event opportunity.closed_won;
+|ERP Klien|
+:Menerima event\n(retry bila gagal);
+|Sales Manager|
+:8 Melihat Performance dan Dashboard;
+stop
+@enduml

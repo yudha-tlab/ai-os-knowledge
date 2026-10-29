@@ -1,0 +1,32 @@
+skinparam shadowing false
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 12
+skinparam roundcorner 8
+skinparam ArrowColor #38425e
+skinparam titleFontSize 14
+skinparam sequence {
+  ParticipantBackgroundColor #eef2fc
+  ParticipantBorderColor #122e7c
+  LifeLineBorderColor #bcc5d6
+  GroupBorderColor #bcc5d6
+  ActorBackgroundColor #eef2fc
+  ActorBorderColor #122e7c
+  DividerBackgroundColor #eef2fc
+  DividerBorderColor #122e7c
+}
+skinparam note {
+  BackgroundColor #fff0d1
+  BorderColor #d9a441
+}
+skinparam activity {
+  BackgroundColor #eef2fc
+  BorderColor #122e7c
+}
+skinparam state {
+  BackgroundColor #eef2fc
+  BorderColor #122e7c
+}
+skinparam object {
+  BackgroundColor #eef2fc
+  BorderColor #122e7c
+}

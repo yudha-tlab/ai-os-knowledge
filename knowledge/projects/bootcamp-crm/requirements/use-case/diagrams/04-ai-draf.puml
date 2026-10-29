@@ -1,0 +1,26 @@
+@startuml
+!include style.iuml
+title 4 · Draf outreach dengan AI (M10), konteks dibatasi tenant
+actor "Raka" as RK
+participant "CRM UI" as UI
+participant "M10\nAI Assistance" as AI
+participant "Core API" as API
+participant "TLab LLM" as LLM
+database "Activity\n(tenant Arunika)" as ACT
+
+RK -> UI : "Buat draf outreach"\nsaluran WhatsApp
+UI -> AI : {lead_id, tenant="arunika", channel}
+AI -> API : baca konteks lead:\nprofil, qualification, riwayat activity\n**wajib scope tenant_id**
+API --> AI : konteks Andini (hanya milik Arunika)
+AI -> LLM : prompt + konteks
+LLM --> AI : draf pesan
+AI --> UI : draf (dapat diedit)
+RK -> UI : edit lalu "Simpan sebagai activity"
+UI -> API : simpan "WhatsApp · Draf outreach"\n(ditandai Draf AI)
+API -> ACT : tersimpan di timeline lead
+
+alt layanan AI gagal / timeout
+  AI --> UI : galat jelas + "Coba lagi"
+  note right : Pekerjaan lain di lead\ntidak terblokir
+end
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+!include style.iuml
+title Tiga tahap perjalanan calon pelanggan di CRM kita
+left to right direction
+rectangle "**LEAD**\n(belum tentu layak)\n\nPertanyaan: layakkah\njadi Opportunity?\n\nPenanda: **status kerja**\nmis. Connected" as A #dde6fa
+rectangle "**OPPORTUNITY**\n(ada kebutuhan nyata)\n\nPertanyaan: bagaimana\nposisi pembeli?\n\nPenanda: **stage**\nmis. Demo" as B #cfe3ff
+rectangle "**CUSTOMER**\n(Closed-Won)\n\nPertanyaan: berapa\nnilai yang dimenangkan?\n\nPenanda: **Revenue**" as C #dff4ea
+rectangle "**Lost**\n(dengan alasan)" as L #fde8e6
+A -[#0a7a54,bold]-> B : Convert
+B -[#0a7a54,bold]-> C : Closed-Won
+A -[#b42318]-> L
+B -[#b42318]-> L : Closed-Lost
+L -[#122e7c,dashed]-> A : buka kembali\n(Nurturing)
+note bottom of A
+  HubSpot menyebut ini "lifecycle stage"
+  (Lead → Opportunity → Customer).
+  Di CRM kita tahap ini = jenis record,
+  jadi tidak perlu properti terpisah.
+end note
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+!include style.iuml
+title 9 · Kasus negatif: isolasi tenant
+actor "User tenant lain\n(workspace: bumi)" as X
+participant "Core API" as API
+database "DB" as DB
+X -> API : GET /leads/1042\n(token: tenant = bumi)
+API -> DB : SELECT … WHERE id = 1042\nAND tenant_id = 'bumi'
+DB --> API : 0 baris
+API --> X : **404 Not Found**
+note over API
+  404, bukan 403: keberadaan record
+  tidak boleh bocor ke tenant lain.
+  Berlaku juga untuk webhook, konteks AI,
+  import, dan laporan.
+end note
+@enduml

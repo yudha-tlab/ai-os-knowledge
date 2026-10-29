@@ -1,0 +1,29 @@
+@startuml
+!include style.iuml
+title Usulan: satu daftar status kerja, Path = dropdown
+left to right direction
+state "New" as S1 #dde6fa
+state "Attempted\nto Contact" as S2 #dde6fa
+state "Connected" as S3 #cfe3ff
+state "Qualifying" as S4 #cfe3ff
+state "Converted" as C #dff4ea
+state "Lost" as L #fde8e6
+[*] --> S1 : lead masuk
+S1 -[#122e7c,bold]-> S2
+S2 -[#122e7c,bold]-> S3
+S3 -[#122e7c,bold]-> S4
+S4 -[#0a7a54,bold]-> C : Convert
+S2 -[#122e7c,dashed]-> S1 : boleh mundur
+S3 -[#122e7c,dashed]-> S2
+S4 -[#122e7c,dashed]-> S3
+S1 -[#b42318]-> L
+S2 -[#b42318]-> L
+S3 -[#b42318]-> L
+S4 -[#b42318]-> L : Mark as Lost\n(alasan wajib)
+L -[#122e7c,dashed]-> S3 : Buka kembali
+legend bottom
+  Biru muda = status kerja (aktif). Urutan dan nama diatur tenant.
+  Mundur antar status kerja boleh dan tidak butuh alasan. Hanya Lost yang butuh alasan.
+  Keluar dari New butuh Owner (lead di Queue belum bisa dikerjakan).
+endlegend
+@enduml

@@ -1,0 +1,23 @@
+@startuml
+!include style.iuml
+title 8 · Data yang terbentuk di akhir skenario (semua baris membawa tenant_id = arunika)
+left to right direction
+object "Lead #1042\nAndini Prameswari\nstatus: Converted\nsource: Website form\nkontak pertama: 21 menit\ncustom: jumlah_karyawan = 640" as L
+object "Contact\nAndini Prameswari\nHead of HR" as CT
+object "Account (sudah ada)\nPT Surya Kencana Farma" as AC
+object "Opportunity\nHRIS 4 pabrik\nRp 350 jt · Closed-Won\nalasan: Kecocokan fitur" as OP
+object "Activity × 5\nCall · WhatsApp (Draf AI)\nTask · Meeting Demo · Call tindak lanjut" as AT
+object "Stage history\n8 baris: 1 mundur,\n1 lompat (Proposal skipped)" as SH
+object "Delivery log\nclosed_won → ERP\n503 · 503 · 200" as WD
+object "Quota attainment\nRaka · Okt\n770 jt / 800 jt = 96%" as QA
+L --> CT : menjadi
+L --> OP : menjadi
+CT --> AC : bekerja di
+OP --> AC : untuk
+OP --> CT : kontak utama
+AT --> L
+AT --> OP
+OP --> SH
+OP --> WD
+OP --> QA
+@enduml

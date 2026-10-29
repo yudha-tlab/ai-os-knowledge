@@ -1,0 +1,25 @@
+@startuml
+!include style.iuml
+title 3 · Perjalanan status Lead (jalur Andini ditebalkan)
+state "New" as N
+state "In Progress" as P
+state "Lost" as L
+state "Converted" as C
+[*] -[#122e7c,bold]-> N : 08:41 masuk (Queue)
+N -[#122e7c,bold]-> P : 09:02 Owner ada + Call pertama tercatat\nstatus turunan: Connected
+P -[#122e7c,bold]-> C : 10:20 Convert
+C -[#122e7c,bold]-> [*]
+N -[#bcc5d6,dashed]-> L : duplikat / data tidak valid
+P -[#bcc5d6,dashed]-> L : tidak cocok / waktu belum sesuai\n(alasan wajib)
+L -[#bcc5d6,dashed]-> P : dibuka kembali (+catatan)
+note right of N
+  08:55 di-claim Raka
+  kontak pertama otomatis: **21 menit**
+  (waktu masuk 08:41 → Call 09:02)
+end note
+note bottom of P
+  Next step otomatis =
+  Activity open terdekat:
+  "Kirim penawaran awal & jadwalkan demo"
+end note
+@enduml

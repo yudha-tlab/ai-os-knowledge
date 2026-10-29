@@ -1,0 +1,29 @@
+@startmindmap
+<style>
+mindmapDiagram {
+  node { BackgroundColor #eef2fc; LineColor #122e7c; FontSize 12 }
+  :depth(0) { BackgroundColor #122e7c; FontColor white }
+}
+</style>
+title 0 · Konfigurasi tenant yang dipakai skenario (diatur Fajar, Tenant Admin)
+* Tenant\nArunika Teknologi\nworkspace: arunika
+** Lead
+*** Status turunan\nNew, Attempted to Contact,\nConnected, Qualifying
+*** Source\nWebsite form, Referral,\nEvent, Import CSV
+*** Alasan Lost\n"Waktu belum sesuai" =\nboleh dihubungi lagi
+*** Custom field\nJumlah karyawan (angka)
+** Penugasan
+*** Mode aktif\nManager assign + Sales claim\n+ Owner otomatis
+*** Aturan 1\nSource = Website form\n→ Queue Inbound Web
+*** Cadangan\nQueue Inbound Web
+** Pipeline B2B Sales
+*** 6 stage\nProposal = Blocking
+*** Stale per stage\n7 / 10 / 10 / 14 / 14 / 21 hari
+*** Maju\nlompat diizinkan
+*** Probability\nnonaktif
+** Quota
+*** Bulanan\nambang performa 80%
+*** Raka Rp 800 jt (Okt)
+** Webhook
+*** Sinkron ke ERP\nopportunity.closed_won
+@endmindmap

@@ -1,0 +1,30 @@
+@startuml
+!include style.iuml
+title Siapa yang mengubah apa: dropdown, tombol aksi, atau aturan
+left to right direction
+state "New\n(kategori New)" as S1 #dde6fa
+state "Attempted to Contact\n(kategori New)" as S2 #dde6fa
+state "Connected\n(kategori In Progress)" as S3 #cfe3ff
+state "Qualifying\n(kategori In Progress)" as S4 #cfe3ff
+state "Lost" as L #fde8e6
+state "Converted" as C #dff4ea
+
+[*] --> S1 : lead masuk
+S1 -[#122e7c]-> S2 : dropdown
+S2 -[#122e7c]-> S1 : dropdown
+S3 -[#122e7c]-> S4 : dropdown
+S4 -[#122e7c]-> S3 : dropdown
+S2 -[#0a7a54,bold]-> S3 : **lintas kategori**\nsyarat: Owner ada\n+ kontak awal tercatat
+S4 -[#b42318,dashed]-> S1 : **belum ada aturan**\n(mockup saat ini mengizinkan)
+S3 -[#b42318,bold]-> L : tombol Mark as Lost\n(alasan wajib)
+S4 -[#b42318,bold]-> L : tombol Mark as Lost
+S3 -[#0a7a54,bold]-> C : tombol Convert
+S4 -[#0a7a54,bold]-> C : tombol Convert
+L -[#122e7c,bold]-> S3 : tombol Buka kembali\n(catatan wajib)
+C --> [*]
+legend bottom
+  Biru = dropdown, dalam kategori yang sama
+  Hijau = maju ke kategori berikutnya
+  Merah = Lost, atau perpindahan yang belum diatur
+endlegend
+@enduml

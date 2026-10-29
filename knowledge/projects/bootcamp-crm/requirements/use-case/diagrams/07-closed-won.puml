@@ -1,0 +1,27 @@
+@startuml
+!include style.iuml
+title 7 · Close Won → Revenue, Quota, webhook ke ERP
+actor "Raka" as RK
+participant "Core API" as API
+database "DB tenant" as DB
+participant "Reporting" as RPT
+participant "Webhook\noutbound" as OUT
+participant "ERP Klien" as ERP
+
+RK -> API : Close Won\nalasan "Kecocokan fitur"
+activate API
+API -> API : alasan wajib ✔ · Account/Contact terkait ✔
+API -> DB : Opportunity Closed-Won (30 Okt)\nriwayat stage dicatat
+API -> RPT : hitung ulang attainment Raka
+RPT --> API : 420 jt + 350 jt = **770 jt / 800 jt = 96%**\n≥ ambang 80% → "Mencapai target"
+API -> OUT : event opportunity.closed_won
+deactivate API
+== Pengiriman (asynchronous) ==
+OUT -> ERP : POST (percobaan 1)
+ERP --> OUT : 503
+OUT -> ERP : POST (percobaan 2, backoff)
+ERP --> OUT : 503
+OUT -> ERP : POST (percobaan 3, backoff)
+ERP --> OUT : 200 OK
+note over OUT : Delivery log: 3 percobaan, akhirnya sukses.\nProses Sales tidak menunggu ERP.
+@enduml

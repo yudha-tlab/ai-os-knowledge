@@ -1,0 +1,28 @@
+@startuml
+!include style.iuml
+title 5 · Convert: memakai Account yang sudah ada
+actor "Raka" as RK
+participant "CRM UI" as UI
+participant "Core API" as API
+database "DB tenant" as DB
+participant "Webhook\noutbound" as OUT
+
+RK -> UI : Convert (Lead Andini)
+UI -> API : cek kecocokan Account / Contact
+API -> DB : cari domain skfarma.co.id, nama organisasi
+DB --> API : Account "PT Surya Kencana Farma" cocok\nContact: tidak ada yang cocok
+API --> UI : tawarkan: pakai Account yang ada / buat baru / tanpa Account
+RK -> UI : pilih "Gunakan Account yang ada"\nDeal value Rp 350 jt · Close date 10 Des
+UI -> API : convert
+activate API
+API -> DB : **satu transaksi**
+note right of DB
+  1 Contact baru: Andini Prameswari
+  2 Tautkan ke Account yang ada
+  3 Opportunity stage Qualification
+  4 Lead → Converted (+ riwayat)
+end note
+API -> OUT : lead.converted, opportunity.created
+deactivate API
+API --> UI : Opportunity dibuat di Qualification
+@enduml

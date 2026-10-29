@@ -1,0 +1,33 @@
+@startuml
+!include style.iuml
+title Dua tingkat status Lead: kategori (tetap) dan status turunan (diatur tenant)
+skinparam rectangle {
+  RoundCorner 12
+}
+rectangle "KATEGORI SISTEM\n(tetap, dibaca laporan dan logika sistem)" as ROOT #white {
+  rectangle "**New**" as N #dde6fa {
+    rectangle "New" as N1
+    rectangle "Attempted to Contact" as N2
+    rectangle "+ status lain\nbuatan tenant" as N3 #white
+  }
+  rectangle "**In Progress**" as P #dde6fa {
+    rectangle "Connected" as P1
+    rectangle "Qualifying" as P2
+    rectangle "+ status lain\nbuatan tenant" as P3 #white
+  }
+  rectangle "**Lost**" as L #fde8e6 {
+    rectangle "alasan wajib\n(daftar milik tenant)" as L1
+  }
+  rectangle "**Converted**" as C #dff4ea {
+    rectangle "tidak ada\nstatus turunan" as C1
+  }
+}
+N -[hidden]right-> P
+P -[hidden]right-> L
+L -[hidden]right-> C
+legend bottom
+  Status turunan = isi dropdown "Status" di halaman Lead.
+  Path (New › In Progress › Converted) menampilkan **kategori** dari status yang dipilih.
+  Lost dan Converted dicapai lewat **aksi** (Mark as Lost, Convert), bukan lewat dropdown.
+endlegend
+@enduml

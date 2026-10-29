@@ -1,0 +1,31 @@
+@startuml
+!include style.iuml
+title 6 · Perjalanan Opportunity di pipeline B2B Sales (Oktober)
+left to right direction
+state "Qualification" as S1
+state "Needs Analysis" as S2
+state "Demo" as S3
+state "Proposal\n(Blocking)" as S4
+state "Negotiation" as S5
+state "Decision Pending" as S6
+state "Closed-Won" as W #d7f2e5
+[*] --> S1 : 12 Okt Convert
+S1 -[hidden]-> S2
+S2 -[hidden]-> S3
+S3 -[hidden]-> S4
+S4 -[hidden]-> S5
+S5 -[hidden]-> S6
+S6 -[hidden]-> W
+S1 -[#122e7c,bold]-> S2 : 13 Okt
+S2 -[#122e7c,bold]-> S3 : 14 Okt
+S3 -[#b42318,dashed,bold]-> S2 : 16 Okt **MUNDUR**\nalasan: cakupan berubah besar
+S2 -[#122e7c,bold]-> S3 : 19 Okt
+S3 -[#d97706,bold]-> S5 : 22 Okt **LOMPAT**\nProposal dilewati (skipped)\nsyarat Proposal dicek ✔
+S5 -[#122e7c,bold]-> S6 : 27 Okt
+S6 -[#0a7a54,bold]-> W : 30 Okt Rp 350 jt
+note bottom of S4
+  Dilewati: tercatat **skipped**
+  di riwayat, tidak dianggap
+  pernah dilalui.
+end note
+@enduml
