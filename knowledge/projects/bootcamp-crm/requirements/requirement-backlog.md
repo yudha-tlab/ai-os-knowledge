@@ -3,10 +3,13 @@ title: "Requirement Backlog — Bootcamp Internal CRM"
 type: requirement-backlog
 project: bootcamp-crm
 status: active
-version: "3.16"
+version: "3.17"
 created: 2026-10-02
 modified: 2026-10-29
 changelog:
+  - version: "3.17"
+    date: 2026-10-29
+    purpose: "Perbaikan konsistensi: REQ-064 mencantumkan satu mata uang per tenant (DEC-078); REQ-065 diskon dalam persen; sinkron dengan FRD v1.2 (FR-CP-48 baru)"
   - version: "3.16"
     date: 2026-10-29
     purpose: "Q-050 dijawab PO (priority P0-P3, DEC-077); Q-051..Q-055 ditutup PM di bawah delegasi PO (DEC-078); +REQ-070/071 (atribut produk, DEC-079/080), REQ-068 dipersempit ke bundle/hierarki; status REQ-063..069 menjadi Ditetapkan setelah CR-20261029-001/002/003 diajukan"
@@ -229,8 +232,8 @@ PO pada 2026-10-29.
 | ID | Deskripsi | Sumber | Tipe | Prioritas | Epic | Status |
 |---|---|---|---|---|---|---|
 | REQ-063 | **Katalog produk dua tingkat: Product Category → Product.** Kategori dikelola tenant (nama, urutan, aktif) mengikuti model konfigurasi DEC-051; Produk memuat nama, kode/SKU, `category_id`, tipe (barang/jasa), unit, harga dasar, aktif, deskripsi | Arahan PO 2026-10-29 (DEC-067) | Functional | Must | EP-019 | **Ditetapkan** — CR-20261029-001 |
-| REQ-064 | **Harga per kanal memakai Price Book.** Bawaan: **Direct** dan **Partner**; tenant dapat menambah price book lain tanpa batas jumlah (bukan dua nilai tetap di kode). Model `Product → PricebookEntry → LineItem`; Opportunity menyimpan rujukan price book | Arahan PO 2026-10-29 (DEC-068) | Functional | Must | EP-020 | **Ditetapkan** — CR-20261029-001 |
-| REQ-065 | **Line item pada Opportunity**: produk, qty, **harga snapshot saat transaksi**, diskon, subtotal, `commission_pct`. Harga **disimpan**, bukan hanya merujuk PricebookEntry, agar perubahan harga tidak mengubah nilai deal historis | Arahan PO 2026-10-29 (DEC-068) | Functional | Must | EP-021 | **Ditetapkan** — CR-20261029-001 |
+| REQ-064 | **Harga per kanal memakai Price Book.** Bawaan: **Direct** dan **Partner**; tenant dapat menambah price book lain tanpa batas jumlah (bukan dua nilai tetap di kode). Model `Product → PricebookEntry → LineItem`; Opportunity menyimpan rujukan price book. **Satu mata uang per tenant** (DEC-078) — entri harga tidak memilih mata uang sendiri | Arahan PO 2026-10-29 (DEC-068) | Functional | Must | EP-020 | **Ditetapkan** — CR-20261029-001 |
+| REQ-065 | **Line item pada Opportunity**: produk, qty, **harga snapshot saat transaksi**, `discount_pct` (diskon dalam persen, DEC-078), subtotal, `commission_pct`. Harga **disimpan**, bukan hanya merujuk PricebookEntry, agar perubahan harga tidak mengubah nilai deal historis | Arahan PO 2026-10-29 (DEC-068) | Functional | Must | EP-021 | **Ditetapkan** — CR-20261029-001 |
 | REQ-066 | **Komisi dihitung dari NILAI DEAL, menempel pada Opportunity** (bukan per line item): `partner`, `commission_pct`, `commission_amount`. **Entitas Partner** tersendiri: nama, kontak, price book bawaan, persentase komisi bawaan. Batas tegas: komisi adalah **biaya** — tidak mengurangi revenue (DEC-016) maupun quota attainment | Arahan PO 2026-10-29 (DEC-069) | Functional | Must | EP-022 | **Ditetapkan** — CR-20261029-001 |
 | REQ-067 | **Nilai deal berasal dari line item ATAU diisi manual; bila manual diisi, nilai manual yang berlaku.** `amount_source` (`manual`/`line_item`) mencatat sumber berlaku; bila berbeda keduanya ditampilkan; jejak pengisian manual (siapa, kapan) dicatat. **Laporan memakai nilai deal**, tidak pernah menjumlah line item langsung | Arahan PO 2026-10-29 (DEC-070) | Functional | Must | EP-021 | **Ditetapkan** — CR-20261029-001 |
 | REQ-068 | **Bundle/nested dan hierarki kategori >2 tingkat — tetap roadmap.** Skema **disiapkan** sejak rilis pertama: `parent_id` pada kategori, ruang relasi komponen. **Tidak diimplementasikan** di rilis ini. *Catatan: atribut produk yang semula ikut di butir ini sudah dinaikkan ke RILIS INI dan menjadi REQ-070 (DEC-079)* | Arahan PO 2026-10-29 (DEC-067, dipersempit DEC-079) | Functional | Could | EP-019 | **Roadmap** — skema disiapkan, fitur tidak dibangun |

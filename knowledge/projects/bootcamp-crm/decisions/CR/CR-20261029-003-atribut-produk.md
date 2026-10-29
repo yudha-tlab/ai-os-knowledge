@@ -44,7 +44,7 @@ dua tingkat, atribut turunan/rumus, dan validasi kondisional.
 **Atribut bersifat deskriptif.** Ia tidak mengubah harga, tidak mengubah nilai deal,
 dan tidak menggantikan price book. Batas ini mengikat (RB-10).
 
-Rincian fungsi: FRD v1.1 §4.8 (FR-CP-38..47).
+Rincian fungsi: FRD v1.2 §4.8 (FR-CP-38..47).
 
 ---
 
@@ -110,9 +110,9 @@ kandidat potong pertama bila jendela habis (FR-CP-47).
 | Dokumen | Dampak | Status |
 |---|---|---|
 | BRD v5.3 | Tidak direvisi (DEC-065) | Tidak berlaku |
-| FRD katalog produk & Board Activity **v1.1** | §2.1, §2.2, §2.3, §3, **§4.8 baru (FR-CP-38..47)**, §4.7 dipersempit, §6 (RB-10..13), §8, §9, §10 | **Selesai** |
-| Requirement Analysis **v4.0** | EP-023, OB-043 (naik dari roadmap), OB-044, US-080/081, proses 16.07/16.08, SPOK | **Selesai** |
-| Requirement Backlog **v3.16** | REQ-070, REQ-071; REQ-068 dipersempit | **Selesai** |
+| FRD katalog produk & Board Activity **v1.2** | §2.1, §2.2, §2.3, §3, **§4.8 baru (FR-CP-38..47)**, §4.7 dipersempit, §6 (RB-10..13), §8, §9, §10 | **Selesai** |
+| Requirement Analysis **v4.1** | EP-023, OB-043 (naik dari roadmap), OB-044, US-080/081, proses 16.07/16.08, SPOK | **Selesai** |
+| Requirement Backlog **v3.17** | REQ-070, REQ-071; REQ-068 dipersempit | **Selesai** |
 | Decision Log **v14.3** | DEC-077..080 | **Selesai** |
 | RAID Log **v12.3** | R-026 baru (beban jendela); R-024 berubah bentuk | **Selesai** |
 | Baseline Produk **v1.2** | §2.1 (objek atribut), §2.2 (tabel siap-dibangun berubah), §5 (batas lingkup), §6 | **Selesai** |

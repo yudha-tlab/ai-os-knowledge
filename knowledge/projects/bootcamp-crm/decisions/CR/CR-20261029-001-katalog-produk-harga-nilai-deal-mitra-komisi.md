@@ -91,7 +91,7 @@ Dua tingkat: kategori → produk.
 lain tanpa batas. Satu produk boleh punya banyak harga, satu per price book, dengan
 masa berlaku. Model: `Product → PricebookEntry → LineItem`.
 
-**Baris produk.** Produk, qty, **harga snapshot**, diskon, subtotal. Harga **disimpan**
+**Baris produk.** Produk, qty, **harga snapshot**, diskon persen, subtotal. Harga **disimpan**
 ke baris, bukan sekadar merujuk entri harga. Alasan: bila hanya merujuk, menaikkan
 harga hari ini mengubah nilai deal tahun lalu, dan laporan bergerak sendiri.
 
@@ -118,9 +118,9 @@ pada kategori — sehingga CR-003 tidak perlu mengubah rancangan dasar katalog.
 | Dokumen | Dampak | Status |
 |---|---|---|
 | BRD v5.3 | **Tidak direvisi** — baseline fase bootcamp, tidak dinaikkan ke BRD produk (DEC-065) | Tidak berlaku |
-| FRD katalog produk & Board Activity **v1.1** | **Dokumen baru** — §4.1–4.7, **§4.8 (atribut)**, §6, §8 | **Selesai (draft)** |
-| Requirement Analysis **v4.0** | Proses 16, OB-037..044, EP-019..023, US-069..081 | **Selesai** |
-| Requirement Backlog **v3.16** | REQ-063..071 | **Selesai** |
+| FRD katalog produk & Board Activity **v1.2** | **Dokumen baru** — §4.1–4.8, §6, §8 | **Selesai (draft)** |
+| Requirement Analysis **v4.1** | Proses 16, OB-037..044, EP-019..023, US-069..081 | **Selesai** |
+| Requirement Backlog **v3.17** | REQ-063..071 | **Selesai** |
 | Decision Log **v14.3** | DEC-067..081 | **Selesai** |
 | RAID Log **v12.3** | R-024, R-025, **R-026** (beban atribut), D-020 (estimasi) | **Selesai** |
 | Technical Decisions | **TD-09** — model data katalog & price book | **Terbuka** — prasyarat desain |

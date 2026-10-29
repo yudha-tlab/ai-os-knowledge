@@ -3,12 +3,15 @@ title: "FRD — Katalog Produk, Harga, Nilai Deal, Mitra & Komisi + Board Activi
 type: frd
 project: bootcamp-crm
 status: draft
-version: "1.1"
+version: "1.2"
 created: 2026-10-29
 modified: 2026-10-29
 disusun_oleh: "Yudha Pratama (PM / Product Owner)"
-sumber_brd: "Tidak ada — BRD v5.3 adalah baseline fase bootcamp dan tidak memuat lingkup ini (DEC-065). Sumber langsung: DEC-067..071 (2026-10-29)"
+sumber_brd: "Tidak ada — BRD v5.3 adalah baseline fase bootcamp dan tidak memuat lingkup ini (DEC-065). Sumber langsung: DEC-067..081 (2026-10-29)"
 changelog:
+  - version: "1.2"
+    date: 2026-10-29
+    purpose: "Perbaikan konsistensi setelah review: FR-CP-19 memakai diskon persen (DEC-078, bukan nominal); FR-CP-13 tanpa mata uang per entri; mata uang per tenant dilipat ke FR-CP-11 (tanpa ID tambahan, agar urutan FR tetap 1..47); rujukan DEC-072 yang salah diganti DEC-076; Baseline v1.2; §2.2 konversi mata uang tidak lagi 'tanpa keputusan'; FR-CP-29 tidak lagi merujuk Q-055 yang sudah tertutup; traceability FR-CP-34/35..37 dipisah; §5.5 dipisah baris"
   - version: "1.1"
     date: 2026-10-29
     purpose: "Jawaban PO dan delegasi: priority P0–P3 (DEC-077); batas Board kalender mingguan zona waktu tenant + Q-051/053/054/055 ditutup PM di bawah delegasi (DEC-078); ATRIBUT PRODUK NAIK KE RILIS INI dengan pola definisi-lalu-nilai (DEC-079, DEC-080) — menambah FR-CP-38..47 dan membalik sebagian DEC-067"
@@ -19,16 +22,16 @@ changelog:
 
 # FRD — Katalog Produk, Harga, Nilai Deal, Mitra & Komisi + Board Activity
 
-**Versi:** 1.1 — **Draft**, jawaban PO 2026-10-29 sudah masuk
+**Versi:** 1.2 — **Draft**, jawaban PO 2026-10-29 sudah masuk
 **Tanggal:** 2026-10-29
 **Disusun Oleh:** Yudha Pratama — PM, berperan sebagai Product Owner
-**Sumber:** DEC-067..080 (keputusan PO 2026-10-29)
+**Sumber:** DEC-067..081 (keputusan PO & delegasi 2026-10-29)
 
 ---
 
 ## 1. Tujuan Dokumen
 
-Dokumen ini menerjemahkan keputusan PO **DEC-067..080** menjadi kebutuhan
+Dokumen ini menerjemahkan keputusan **DEC-067..081** menjadi kebutuhan
 fungsional yang dapat dibangun. Ia menjawab pertanyaan "apa yang harus ada di
 sistem, dengan aturan apa", bukan "bagaimana kode ditulis".
 
@@ -38,17 +41,17 @@ sistem, dengan aturan apa", bukan "bagaimana kode ditulis".
 |---|---|---|
 | BRD v5.3 | Business requirement fase bootcamp (BR-001..BR-058) | 13–22 Okt 2026 — **selesai** |
 | **FRD ini** | Fungsi & aturan untuk lingkup katalog produk + Board Activity | Era produk, rilis berikutnya |
-| Baseline Produk v1.1 | Visi, peta modul, batas lingkup, peta rilis | Era produk |
+| Baseline Produk v1.2 | Visi, peta modul, batas lingkup, peta rilis | Era produk |
 
 **Mengapa FRD ini tidak merujuk BRD.** DEC-065 menetapkan BRD v5.3 tetap baseline
 **fase bootcamp** dan tidak dinaikkan menjadi BRD produk. Lingkup di dokumen ini
 belum pernah ada di BRD. Merujuknya ke BRD akan menciptakan traceability palsu.
-Rujukan yang benar adalah keputusan PO: **DEC-067..080**, lalu `requirement-backlog`
-v3.16 (REQ-063..071).
+Rujukan yang benar adalah keputusan PO: **DEC-067..081**, lalu `requirement-backlog`
+v3.17 (REQ-063..071).
 
 **Konvensi ID:** `FR-CP-xx` untuk katalog produk & pricing, `FR-BA-xx` untuk Board
-Activity. Dipisah karena keduanya dapat dirilis terpisah (DEC-072 menyebut Board
-Activity lebih ringan dan dapat berjalan paralel).
+Activity. Dipisah karena keduanya dapat dirilis terpisah — Board berdiri sendiri dan
+dapat berjalan paralel dengan kluster katalog (DEC-076, R-025).
 
 ---
 
@@ -73,8 +76,8 @@ Activity lebih ringan dan dapat berjalan paralel).
 | Mesin validasi atribut kondisional/bersyarat | DEC-079 | Atribut **deskriptif** saja; tidak ada aturan "wajib bila field X terisi" |
 | Hierarki kategori lebih dari 2 tingkat | DEC-067 | `parent_id` disiapkan, fitur tidak |
 | Atribut turunan / rumus (mis. angsuran dihitung dari tenor × plafon) | DEC-080 | Tipe terbatas pada teks, angka, mata uang, tanggal, pilihan tunggal, centang |
-| Pajak (PPN) pada line item | **[tidak ada keputusan]** | Dekat dengan harga, tetapi tidak pernah dibahas di DEC-067..071. Tidak ditambahkan atas inisiatif sendiri |
-| Konversi mata uang | **[tidak ada keputusan]** | Lihat §9 pertanyaan terbuka |
+| Pajak (PPN) pada line item | **[tidak ada keputusan]** | Dekat dengan harga, tetapi tidak pernah dibahas di DEC-067..080. Tidak ditambahkan atas inisiatif sendiri |
+| Konversi mata uang | DEC-078 | **Satu mata uang per tenant** — multi-mata uang dan kurs masuk roadmap, bukan rilis ini |
 | Diskon per level transaksi (bukan per baris) | DEC-068 menyebut diskon pada line item | Diskon tingkat deal tidak diminta |
 | Approval/diskon berjenjang | — | Tidak pernah diminta |
 | Sinkronisasi katalog ke sistem luar | DEC-012 | Jalurnya webhook, bukan bagian FRD ini |
@@ -94,6 +97,8 @@ Activity lebih ringan dan dapat berjalan paralel).
    price book. Harga tetap dari price book (DEC-068).
 6. **Atribut memakai pola definisi-lalu-nilai (DEC-080).** Sama dengan custom field
    (DEC-052): satu pola untuk dua kebutuhan, nilai dapat difilter dan dilaporkan.
+7. **Satu mata uang per tenant (DEC-078).** Seluruh harga dan nilai deal memakai
+   mata uang tenant. Tidak ada konversi; multi-mata uang masuk roadmap.
 
 ---
 
@@ -149,9 +154,9 @@ Activity (N) >── (0..1) Owner (User)
 
 | ID | Deskripsi Fungsi | Input | Proses | Output | Aturan |
 |---|---|---|---|---|---|
-| FR-CP-11 | Sistem menyediakan dua price book bawaan saat tenant dibuat: **Direct** dan **Partner** | — | Dibuat otomatis pada onboarding tenant | Dua price book aktif | Bawaan, bukan konstanta kode — dapat diubah namanya, tidak dapat dihapus bila sudah dipakai |
+| FR-CP-11 | Sistem menyiapkan price book dan **mata uang** tenant saat tenant dibuat: **Direct** dan **Partner** | mata uang tenant | Dibuat otomatis pada onboarding tenant | Dua price book aktif; satu mata uang tenant | Bawaan, bukan konstanta kode — price book dapat diubah namanya, tidak dapat dihapus bila sudah dipakai. **Mata uang ditetapkan sekali per tenant (DEC-078)**; tidak ada pemilihan mata uang per entri harga, per Opportunity, atau per baris |
 | FR-CP-12 | Tenant Admin menambah price book baru | nama, kanal, aktif | Simpan dengan `tenant_id` | Price book tersedia pada pilihan | **Jumlah tidak dibatasi** (DEC-068). Nama unik per tenant |
-| FR-CP-13 | Tenant Admin menetapkan harga produk pada price book | produk, price book, harga, mata uang, berlaku mulai, berlaku sampai | Simpan sebagai `PricebookEntry` | Entri harga | Satu produk boleh punya banyak entri pada satu price book selama **masa berlaku tidak bertumpang tindih** |
+| FR-CP-13 | Tenant Admin menetapkan harga produk pada price book | produk, price book, harga, berlaku mulai, berlaku sampai | Simpan sebagai `PricebookEntry` | Entri harga | Satu produk boleh punya banyak entri pada satu price book selama **masa berlaku tidak bertumpang tindih**. Mata uang **tidak** dipilih per entri — mengikuti tetapan tenant (DEC-078) |
 | FR-CP-14 | Sistem memilih entri harga yang berlaku pada tanggal transaksi | produk, price book, tanggal | Pilih entri dengan masa berlaku mencakup tanggal tersebut | Harga terisi otomatis pada line item | Bila tidak ada entri berlaku: line item **tetap dapat disimpan** dengan harga diisi manual, dan sistem menandai bahwa harga tidak berasal dari price book |
 | FR-CP-15 | Sistem menolak entri harga dengan masa berlaku bertumpang tindih | produk, price book, masa berlaku | Periksa irisan tanggal | Pesan penolakan | Berlaku juga untuk perubahan tanggal pada entri yang sudah ada |
 
@@ -159,10 +164,10 @@ Activity (N) >── (0..1) Owner (User)
 
 | ID | Deskripsi Fungsi | Input | Proses | Output | Aturan |
 |---|---|---|---|---|---|
-| FR-CP-16 | Sales menambahkan baris produk ke Opportunity | produk, qty, diskon | Ambil harga berlaku dari price book (FR-CP-14); hitung subtotal | Line item tersimpan | Opportunity wajib sudah memilih price book sebelum baris pertama ditambahkan |
+| FR-CP-16 | Sales menambahkan baris produk ke Opportunity | produk, qty, `discount_pct` | Ambil harga berlaku dari price book (FR-CP-14); hitung subtotal | Line item tersimpan | Opportunity wajib sudah memilih price book sebelum baris pertama ditambahkan |
 | FR-CP-17 | Sistem **membekukan harga** saat baris disimpan | — | Simpan `unit_price` sebagai salinan, bukan rujukan | Harga historis tidak berubah | Perubahan `PricebookEntry` setelahnya **tidak** mengubah line item yang sudah ada |
-| FR-CP-18 | Sales mengubah atau menghapus baris | qty, diskon | Hitung ulang subtotal baris | Line item diperbarui | Menghapus baris **tidak** menghapus riwayat nilai deal yang sudah ditetapkan manual |
-| FR-CP-19 | Sistem menghitung subtotal baris | qty, harga satuan, diskon | `subtotal = qty × unit_price − diskon` | Subtotal per baris | Pembulatan ke satuan mata uang terkecil |
+| FR-CP-18 | Sales mengubah atau menghapus baris | qty, `discount_pct` | Hitung ulang subtotal baris | Line item diperbarui | Menghapus baris **tidak** menghapus riwayat nilai deal yang sudah ditetapkan manual |
+| FR-CP-19 | Sistem menghitung subtotal baris | qty, harga satuan, `discount_pct` | `subtotal = qty × unit_price × (1 − discount_pct/100)` | Subtotal per baris | Diskon dalam **persen 0–100** (DEC-078); diskon nominal tidak dilayani. Pembulatan ke satuan mata uang terkecil |
 | FR-CP-20 | Sistem menampilkan total seluruh baris sebagai **usulan** nilai deal | semua baris | Jumlahkan subtotal | Nilai usulan | Nilai ini **bukan** nilai deal selama nilai manual diisi (FR-CP-23) |
 | FR-CP-21 | Sales memilih price book pada Opportunity | price book | Simpan rujukan | Seluruh baris baru memakai price book tersebut | Mengganti price book pada Opportunity yang sudah punya baris **tidak** mengubah harga baris lama; baris baru memakai price book baru |
 
@@ -182,7 +187,7 @@ Activity (N) >── (0..1) Owner (User)
 | ID | Deskripsi Fungsi | Input | Proses | Output | Aturan |
 |---|---|---|---|---|---|
 | FR-CP-28 | Tenant Admin mengelola data mitra | nama, kontak, price book bawaan, persentase komisi bawaan | Simpan dengan `tenant_id` | Mitra dapat dipilih pada Opportunity | Nama mitra unik per tenant |
-| FR-CP-29 | Sales Manager menetapkan mitra pada Opportunity | mitra | Persentase komisi terisi dari bawaan mitra | Komisi terhitung | Nilai bawaan terisi dan **dapat diubah** per Opportunity — lihat Q-055 |
+| FR-CP-29 | Sales Manager menetapkan mitra pada Opportunity | mitra | Persentase komisi terisi dari bawaan mitra | Komisi terhitung | Nilai bawaan terisi dan **dapat diubah** per Opportunity, dengan jejak siapa dan kapan mengubahnya (DEC-078) |
 | FR-CP-30 | Sistem menghitung komisi dari **nilai deal** | `amount`, `commission_pct` | `commission_amount = amount × commission_pct` | Komisi pada Opportunity | Menempel pada Opportunity, **bukan** per line item |
 | FR-CP-31 | Sistem menghitung ulang komisi saat nilai deal berubah | — | Hitung ulang setiap nilai deal atau persentase berubah | Nilai komisi terkini | Selalu mengikuti nilai deal yang berlaku |
 | FR-CP-32 | Sistem **tidak** mengurangi revenue dan quota attainment dengan komisi | — | Komisi disimpan sebagai atribut biaya | Revenue dan attainment utuh | Revenue tetap closed-won (DEC-016) |
@@ -201,7 +206,7 @@ Activity (N) >── (0..1) Owner (User)
 
 Atribut produk **dibangun di rilis ini**. Alasan perubahan haluan: demo Senin
 mempertunjukkan produk bank — KPR tanpa tenor dan suku bunga tidak terbaca sebagai
-produk KPR. Dekatan tetap sama seperti DEC-067: backend disiapkan, sehingga atribut
+produk KPR. Pendekatan tetap sama seperti DEC-067: backend disiapkan, sehingga atribut
 datang sebagai **tabel**, bukan kolom tetap.
 
 | ID | Deskripsi Fungsi | Input | Proses | Output | Aturan |
@@ -261,6 +266,7 @@ modul baru dan tidak mengubah entitas Activity yang sudah berjalan.
 | FR-BA-13 | Activity yang sudah selesai **tetap tercatat** pada lead asal | Riwayat lead tidak hilang |
 | FR-BA-14 | Tautan Activity ke Contact dan Account mengikuti hasil konversi | Sesuai pemetaan lead → Contact + Account + Opportunity (BR-005) |
 | FR-BA-15 | Perpindahan Activity dicatat pada riwayat Activity | Dapat ditelusuri: dari Lead ke Opportunity, kapan, oleh siapa |
+
 ### 5.5 Yang tidak dibangun pada Board
 
 | Tidak dibangun | Dasar |
@@ -332,8 +338,9 @@ dicatat** dan **selisih ditampilkan**.
 | FR-CP-16..21 | REQ-065 | DEC-068 | OB-041 | US-073, US-074 |
 | FR-CP-22..27 | REQ-067 | DEC-070 | OB-004 | US-075 |
 | FR-CP-28..33 | REQ-066 | DEC-069 | OB-042 | US-076, US-077 |
-| FR-CP-34..37 | REQ-068 | DEC-067 | OB-043 | — (kesiapan skema roadmap) |
-| FR-CP-38..47 | REQ-070 | DEC-079, DEC-080 | OB-043, OB-044 | US-080, US-081 |
+| FR-CP-34 | REQ-070 | DEC-080 | OB-043 | US-080 |
+| FR-CP-35..37 | REQ-068 | DEC-067, DEC-079 | OB-037, OB-038 | — (kesiapan skema roadmap) |
+| FR-CP-38..47 | REQ-070, REQ-071 | DEC-079, DEC-080 | OB-043, OB-044 | US-080, US-081 |
 | FR-BA-01..15 | REQ-069, REQ-030 | DEC-071, DEC-077, DEC-078 | OB-006 | US-078, US-079 |
 
 Epic: EP-019 (Katalog Produk), EP-020 (Price Book), EP-021 (Penawaran & Nilai
@@ -387,11 +394,11 @@ objeknya bergeser).
 
 ## Related
 
-- **Decision Log:** [[decision-log]] — DEC-067..080
+- **Decision Log:** [[decision-log]] — DEC-067..081
 - **Requirement Backlog:** [[requirement-backlog]] — REQ-063..071
 - **Requirement Analysis:** [[requirement-analysis]] — EP-019..023, US-069..081, OB-037..044
-- **Baseline Produk:** [[baseline-produk-v1]]
-- **RAID Log:** [[raid-log]] — R-024, R-025, D-020
+- **Baseline Produk:** [[baseline-produk-v1]] v1.2
+- **RAID Log:** [[raid-log]] — R-024, R-025, R-026, D-020
 - **Technical Decisions:** [[open-tech-decisions]] — TD-09
 - **Change Request:** CR-20261029-001 (katalog produk), CR-20261029-002 (Board Activity), CR-20261029-003 (atribut produk)
 - **Mockup:** `mockup/activities.html`, `mockup/opportunity.html`

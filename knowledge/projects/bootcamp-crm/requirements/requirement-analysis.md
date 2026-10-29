@@ -3,11 +3,14 @@ title: "Requirement Analysis — CRM Multi-Tenant TLab"
 type: requirement-analysis
 project: bootcamp-crm
 status: draft
-version: "4.0"
+version: "4.1"
 created: 2026-10-02
 modified: 2026-10-29
 sumber: "Arahan Product Owner (Yudha Pratama) via sesi brainstorm 2026-10-02"
 changelog:
+  - version: "4.1"
+    date: 2026-10-29
+    purpose: "Perbaikan konsistensi dengan FRD v1.2 — OB-040 tanpa mata uang per entri (DEC-078); 16.03.02 dan 16.04.01 diselaraskan (mata uang ikut tenant, diskon persen)"
   - version: "4.0"
     date: 2026-10-29
     purpose: "Q-050 dijawab PO (priority P0-P3, DEC-077); Q-051..Q-055 ditutup PM di bawah delegasi PO (DEC-078); ATRIBUT PRODUK NAIK KE RILIS INI (DEC-079/080) — +EP-023, +OB-043/044 (OB-043 diubah dari roadmap menjadi era produk), +US-080/081, +proses 16.07/16.08"
@@ -220,8 +223,8 @@ rekonsiliasi dengan DEC-028 ada di Q-031.
 | Pelaksanaan | **16. Katalog Produk & Pricing** (DEC-067..070) — era produk | 16.01 Kategori produk | 16.01.01 Kategori dikelola tenant (nama, urutan, aktif); dua tingkat kategori → produk (DEC-067) |
 | Pelaksanaan | 16. Katalog Produk & Pricing | 16.02 Pengelolaan produk | 16.02.01 CRUD produk: nama, kode/SKU, kategori, tipe (barang/jasa), unit, harga dasar, aktif |
 | Pelaksanaan | 16. Katalog Produk & Pricing | 16.03 Price book | 16.03.01 Price book per kanal (**Direct**, **Partner** bawaan); tenant dapat menambah kanal tanpa batas (DEC-068) |
-| Pelaksanaan | 16. Katalog Produk & Pricing | 16.03 Price book | 16.03.02 Entri harga per produk per price book (harga, mata uang, masa berlaku) |
-| Pelaksanaan | 16. Katalog Produk & Pricing | 16.04 Line item Opportunity | 16.04.01 Penambahan produk ke Opportunity (qty, diskon, **harga snapshot**) (DEC-068) |
+| Pelaksanaan | 16. Katalog Produk & Pricing | 16.03 Price book | 16.03.02 Entri harga per produk per price book (harga, masa berlaku; mata uang mengikuti tenant — DEC-078) |
+| Pelaksanaan | 16. Katalog Produk & Pricing | 16.04 Line item Opportunity | 16.04.01 Penambahan produk ke Opportunity (qty, **diskon persen**, **harga snapshot**) (DEC-068, DEC-078) |
 | Pelaksanaan | 16. Katalog Produk & Pricing | 16.05 Nilai deal | 16.05.01 Nilai deal dari line item **atau** manual; **manual menang**; `amount_source` mencatat sumber berlaku (DEC-070) |
 | Pelaksanaan | 16. Katalog Produk & Pricing | 16.06 Mitra & komisi | 16.06.01 Entitas Partner (nama, kontak, price book bawaan, komisi bawaan); komisi dari **nilai deal**, tercatat sebagai biaya (DEC-069) |
 | Pelaksanaan | 16. Katalog Produk & Pricing | 16.07 Atribut produk | 16.07.01 Definisi atribut per tenant: nama, tipe (teks/angka/mata uang/tanggal/pilihan tunggal/centang), wajib, urutan, daftar pilihan (DEC-079/080) |
@@ -359,7 +362,7 @@ inisiatif internal terpisah.
 | OB-037 | **Kategori Produk** | Kategori produk milik tenant: nama, urutan, aktif, `parent_id` (disiapkan untuk hierarki >2 tingkat, belum dipakai) — DEC-067 | **Era produk** |
 | OB-038 | **Produk** | Produk yang dijual: nama, kode/SKU, kategori, tipe (barang/jasa), unit, harga dasar, aktif, deskripsi — DEC-067 | **Era produk** |
 | OB-039 | **Price Book** | Daftar harga per kanal penjualan; bawaan **Direct** dan **Partner**, jumlah kanal tidak dibatasi — DEC-068 | **Era produk** |
-| OB-040 | **Entri Harga (Pricebook Entry)** | Harga satu produk pada satu price book: harga, mata uang, berlaku mulai/sampai — DEC-068 | **Era produk** |
+| OB-040 | **Entri Harga (Pricebook Entry)** | Harga satu produk pada satu price book: harga, berlaku mulai/sampai. Mata uang mengikuti tetapan tenant (DEC-078), bukan per entri — DEC-068 | **Era produk** |
 | OB-041 | **Line Item Opportunity** | Baris produk pada Opportunity: produk, qty, **harga snapshot**, diskon, subtotal, `commission_pct` — DEC-068 | **Era produk** |
 | OB-042 | **Mitra (Partner)** | Entitas mitra penjualan: nama, kontak, price book bawaan, persentase komisi bawaan — DEC-069 | **Era produk** |
 | OB-043 | **Definisi Atribut Produk** | Definisi atribut milik tenant: nama, tipe, wajib, urutan, daftar pilihan, aktif. Tabel terpisah, bukan kolom tetap — DEC-079, DEC-080 | **Era produk** |
