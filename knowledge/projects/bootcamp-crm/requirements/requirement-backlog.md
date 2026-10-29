@@ -3,10 +3,13 @@ title: "Requirement Backlog — Bootcamp Internal CRM"
 type: requirement-backlog
 project: bootcamp-crm
 status: active
-version: "3.12"
+version: "3.13"
 created: 2026-10-02
-modified: 2026-10-13
+modified: 2026-10-29
 changelog:
+  - version: "3.13"
+    date: 2026-10-29
+    purpose: "Era produk (DEC-065) — tambah REQ-063..069 untuk DEC-067..071: kategori+produk dua tingkat, price book per kanal, harga snapshot line item, komisi + entitas Partner, nilai deal manual yang menang, board Activity + priority; REQ-030 dicatat diperluas DEC-071"
   - version: "3.12"
     date: 2026-10-13
     purpose: "DEC-060 — REQ-059 diperluas (lompat maju sesuai kebijakan pipeline, syarat kumulatif, skipped)"
@@ -56,7 +59,9 @@ changelog:
 
 # Requirement Backlog — Bootcamp Internal CRM
 
-**Terakhir Diperbarui:** 2026-10-08 — sinkron dengan [[decision-log]] v7.0 (DEC-021 s/d DEC-043, CR-20261008-001)
+**Terakhir Diperbarui:** 2026-10-29 — sinkron dengan [[decision-log]] v14.0
+(DEC-063 s/d DEC-072, era produk). Rincian per keputusan ada di riwayat versi
+frontmatter.
 
 Backlog kerja untuk requirement yang sedang dikumpulkan/divalidasi. Setelah
 requirement matang dan disepakati, promosikan ke BRD/FRD/SRS resmi mengikuti
@@ -98,8 +103,12 @@ dan autentikasi — bukan fitur yang dapat ditambahkan kemudian tanpa rework.
 
 ## Bagian B — Requirement Produk CRM
 
-Sumber: sesi brainstorm Product Owner 2026-10-02. Setiap requirement diturunkan
-ke Epic di [[requirement-analysis]]. Status **Draft** — menunggu BRD (DEC-017).
+Sumber: sesi brainstorm Product Owner 2026-10-02, dilanjutkan sesi 2026-10-12/13
+(CR-20261013-001) dan 2026-10-29 (era produk, DEC-067..071). Setiap requirement
+diturunkan ke Epic di [[requirement-analysis]].
+BRD v5.3 **sudah disetujui** 2026-10-28 (DEC-064) dan berlaku sebagai **baseline
+fase bootcamp**. Untuk era produk, baseline masih berupa
+[[baseline-produk-v1]] (draft) — lihat DEC-065.
 
 | ID | Deskripsi | Sumber | Tipe | Prioritas | Epic | Status |
 |---|---|---|---|---|---|---|
@@ -125,7 +134,7 @@ ke Epic di [[requirement-analysis]]. Status **Draft** — menunggu BRD (DEC-017)
 | REQ-027 | Pelaporan pipeline dan forecast | Arahan PO 2026-10-02 (DEC-015) | Functional | Should | EP-008 | Draft |
 | REQ-028 | Pelaporan performa sales (quota attainment per sales) | Arahan PO 2026-10-02 (DEC-018) | Functional | Must | EP-008 | Draft |
 | REQ-029 | Pelaporan tiket (volume, status penanganan, dan kepatuhan SLA) | Arahan PO 2026-10-02 (DEC-019, DEC-025) | Functional | Should | EP-009 | **Ditutup 2026-10-08 — keluar lingkup (CR-20261008-001 / DEC-043)** |
-| REQ-030 | Pengelolaan **activity** (call/meeting/email/task/note) terhubung ke lead, peluang, kontak, akun — dicatat atau dijadwalkan; owner, jatuh tempo, status; **versi minimal** | Arahan PO 2026-10-12 (DEC-049) | Functional | **Must** | EP-005 | **MVP minimal** — naik dari Could (CR-20261013-001) |
+| REQ-030 | Pengelolaan **activity** (call/meeting/email/task/note) terhubung ke lead, peluang, kontak, akun — dicatat atau dijadwalkan; owner, jatuh tempo, status; **versi minimal**. **Diperluas DEC-071:** tampilan Board + field **priority** + daftar status task (rinci di REQ-069) | Arahan PO 2026-10-12 (DEC-049); diperluas 2026-10-29 (DEC-071) | Functional | **Must** | EP-005 | **MVP minimal** — naik dari Could (CR-20261013-001); perluasan DEC-071 menunggu CR |
 | REQ-031 | Assessment tim sales (HR) — **dikeluarkan dari lingkup produk CRM** (DEC-031) | Arahan PO 2026-10-02 | — | — | ~~EP-012~~ | **Ditutup 2026-10-02** |
 | REQ-037 | Kriteria "prototype selesai": **modul mandatory berjalan end-to-end**, dibangun dalam **2 hari pengembangan** (DEC-037). **Direkonsiliasi (DEC-042):** titik pengukuran "end-to-end" = kapabilitas backend, bukan kelengkapan UI | Arahan PO 2026-10-02 (DEC-028, DEC-037) | Functional | Must | EP-001..EP-011 | Draft |
 | REQ-039 | **Sasaran output: core platform CRM (backend)** — desain core backend harus mampu menyelesaikan seluruh fitur mandatory; **kesiapan frontend bukan penghambat kelulusan** | Arahan PO 2026-10-02 (DEC-041) | Business | Must | EP-001..EP-011 | Draft |
@@ -174,8 +183,10 @@ Use case **prediktif tidak masuk MVP** karena memerlukan data historis yang
 belum dimiliki tenant pada saat bootcamp (REQ-049..051 → roadmap).
 
 Catatan: seluruh REQ di atas **di luar lingkup MVP** — menjadi fase roadmap
-M9 (DEC-045). Modul mandatory bootcamp tetap **6**. Namun **tenant model M1 wajib
-menyimpan status langganan** sejak awal agar tidak perlu rework.
+M9 (DEC-045). Pada fase bootcamp modul mandatory berjumlah **7** setelah M5
+Activity naik (CR-20261013-001); fase itu sudah ditutup 2026-10-22 (DEC-063).
+Yang tetap mengikat di era produk: **tenant model M1 wajib menyimpan status
+langganan** sejak awal agar tidak perlu rework (TD-06).
 
 **Dimensi paket pricing (usulan):** seat · batas data (Kontak+Akun+Lead+Peluang) ·
 modul aktif · kuota webhook (event/bulan + target fan-out) · dukungan & SLA ·
@@ -184,26 +195,90 @@ Enterprise + add-on. Angka & harga **belum ditetapkan** (Q-033..Q-035) — tidak
 diisi agar tidak menciptakan target fiktif. Detail: `requirement-analysis.md`
 section 5.6.
 
-Catatan prioritas: REQ-016, REQ-027, REQ-060, dan REQ-061 berstatus Should —
-tidak menahan kelulusan prototype. REQ-030 naik ke Must (CR-20261013-001).
+**Catatan prioritas:** REQ-016, REQ-027, REQ-060, dan REQ-061 berstatus Should.
+REQ-030 naik ke Must (CR-20261013-001). Seluruh REQ-063..069 berstatus **Must**,
+kecuali REQ-068 (Could — roadmap).
 
-**Catatan jendela pengembangan (DEC-037):** seluruh requirement modul mandatory
-harus selesai dalam **hari 2-3**. Bila hari 1 tidak berhasil memfinalkan
-requirement, jendela pengembangan berkurang lagi — lihat R-001 dan R-015.
+**Catatan jendela pengembangan (DEC-037) — arsip fase bootcamp:** seluruh
+requirement modul mandatory harus selesai dalam **hari 2-3**. Aturan ini
+**tidak berlaku** untuk REQ-063..069 — fase bootcamp ditutup 2026-10-22
+(DEC-063), lihat §"Konsekuensi era produk pada requirement lama".
 
 **Inkonsistensi MVP vs prioritas — SUDAH TERSELESAIKAN:** keberatan PM atas
 status *nice to have* modul M8 (DEC-015) diterima PO pada 2026-10-02 — **M8 masuk
 MVP secara minimal** (DEC-021). REQ-015/REQ-016/REQ-035/REQ-036 kini berada di
 dalam lingkup MVP. **M5 Activity naik ke mandatory minimal** (REQ-030, DEC-049); tidak ada lagi modul *nice to have*.
 
+### Katalog Produk & Pricing — era produk (DEC-067..070)
+
+Ditambahkan 2026-10-29. Sebelumnya **tidak ada satu pun** requirement katalog
+produk di backlog (pencarian `katalog`, `product`, `price book`, `SKU` → 0
+kecocokan). Status **Draft** — CR belum ditulis karena estimasi mandays belum
+tersedia (permintaan ke Head of Engineer). Semua butir di bawah **[Ditetapkan]**
+PO pada 2026-10-29.
+
+| ID | Deskripsi | Sumber | Tipe | Prioritas | Epic | Status |
+|---|---|---|---|---|---|---|
+| REQ-063 | **Katalog produk dua tingkat: Product Category → Product.** Kategori dikelola tenant (nama, urutan, aktif) mengikuti model konfigurasi DEC-051; Produk memuat nama, kode/SKU, `category_id`, tipe (barang/jasa), unit, harga dasar, aktif, deskripsi | Arahan PO 2026-10-29 (DEC-067) | Functional | Must | **— (epic belum ditetapkan)** | Draft — menunggu CR |
+| REQ-064 | **Harga per kanal memakai Price Book.** Bawaan: **Direct** dan **Partner**; tenant dapat menambah price book lain tanpa batas jumlah (bukan dua nilai tetap di kode). Model `Product → PricebookEntry → LineItem`; Opportunity menyimpan rujukan price book | Arahan PO 2026-10-29 (DEC-068) | Functional | Must | **— (epic belum ditetapkan)** | Draft — menunggu CR |
+| REQ-065 | **Line item pada Opportunity**: produk, qty, **harga snapshot saat transaksi**, diskon, subtotal, `commission_pct`. Harga **disimpan**, bukan hanya merujuk PricebookEntry, agar perubahan harga tidak mengubah nilai deal historis | Arahan PO 2026-10-29 (DEC-068) | Functional | Must | **— (epic belum ditetapkan)** | Draft — menunggu CR |
+| REQ-066 | **Komisi dihitung dari NILAI DEAL, menempel pada Opportunity** (bukan per line item): `partner`, `commission_pct`, `commission_amount`. **Entitas Partner** tersendiri: nama, kontak, price book bawaan, persentase komisi bawaan. Batas tegas: komisi adalah **biaya** — tidak mengurangi revenue (DEC-016) maupun quota attainment | Arahan PO 2026-10-29 (DEC-069) | Functional | Must | **— (epic belum ditetapkan)** | Draft — menunggu CR |
+| REQ-067 | **Nilai deal berasal dari line item ATAU diisi manual; bila manual diisi, nilai manual yang berlaku.** `amount_source` (`manual`/`line_item`) mencatat sumber berlaku; bila berbeda keduanya ditampilkan; jejak pengisian manual (siapa, kapan) dicatat. **Laporan memakai nilai deal**, tidak pernah menjumlah line item langsung | Arahan PO 2026-10-29 (DEC-070) | Functional | Must | EP-004 | Draft — menunggu CR |
+| REQ-068 | **Atribut produk, bundle/nested, dan hierarki kategori >2 tingkat — roadmap.** Skema **disiapkan** sejak rilis pertama: `ProductAttribute` sebagai tabel terpisah (bukan kolom tetap), `parent_id` pada kategori, ruang relasi komponen. **Tidak diimplementasikan** di rilis pertama | Arahan PO 2026-10-29 (DEC-067) | Functional | Could | **— (epic belum ditetapkan)** | **Roadmap** — skema disiapkan, fitur tidak dibangun |
+
+Catatan REQ-063..066, REQ-068: kolom Epic sengaja **tidak diisi nomor**.
+`requirement-analysis.md` masih memuat EP-001..EP-018 dan belum punya epic untuk
+katalog produk. Mengisi nomor epic yang belum terdaftar akan menciptakan rujukan
+palsu; pendaftaran epic adalah pekerjaan terpisah saat dokumen itu diperbarui.
+
+### Board Activity — era produk (DEC-071)
+
+| ID | Deskripsi | Sumber | Tipe | Prioritas | Epic | Status |
+|---|---|---|---|---|---|---|
+| REQ-069 | **Tampilan Board pada halaman Activity** — toggle Board/List, kolom **Overdue · Hari ini · Minggu ini · Nanti · Selesai**. Kartu memuat judul, jatuh tempo, **priority**, tautan Lead/Opportunity, aksi selesai. Tampilan kedua untuk Manager: dikelompokkan per Owner. Atribut baru: **field priority** dan **daftar status task**. Aturan wajib: saat convert lead, **seluruh Activity terbuka ikut pindah** ke Opportunity | Arahan PO 2026-10-29 (DEC-071) | Functional | Must | EP-005 | Draft — perluasan REQ-030 |
+
+Catatan REQ-069: **bukan modul baru.** Activity sudah mandatory sejak DEC-049
+(REQ-030); penambahan bersifat tampilan + dua atribut. REQ-030 tetap berlaku dan
+tidak digantikan.
+
+### Konsekuensi era produk pada requirement lama
+
+Sejak **DEC-065** (2026-10-29) project bukan lagi fase bootcamp. Tiga butir di
+Bagian B berhenti berlaku sebagai kriteria penilaian, dan dicatat di sini agar
+tidak dikutip sebagai dasar di era produk:
+
+| REQ | Isi semula | Status di era produk |
+|---|---|---|
+| REQ-037 | Kriteria "prototype selesai" = modul mandatory end-to-end dalam 2 hari pengembangan | **Berhenti** — objeknya (bootcamp) selesai 2026-10-22 (DEC-063) |
+| REQ-039 | Sasaran output = core backend; kesiapan frontend bukan penghambat | **Berhenti** sebagai kriteria (DEC-065); UI kini bagian dari penilaian |
+| REQ-008 | Metrik efektivitas AI | Tetap **terbuka**, tetapi objeknya bergeser: mengukur hasil produk, bukan kelulusan bootcamp |
+
+Catatan jendela pengembangan (DEC-037), R-001, dan R-015 **tidak berlaku** untuk
+REQ-063..069 — ketiganya milik fase bootcamp yang sudah ditutup (lihat
+[[raid-log]]). Kebutuhan yang mengikat sekarang adalah prasyarat rilis: TD-01,
+TD-02, TD-06, TD-08, TD-09.
+
 ---
 
 ## Requirement yang Masih Perlu Klarifikasi
 
 Penomoran Q-xxx identik dengan `requirement-analysis.md` section 7 agar
-`traceable` antar dokumen. Status mutakhir per 2026-10-02: **tidak ada pertanyaan
-terbuka milik PM/PO**; tersisa tiga pertanyaan milik **Head of Engineer**: Q-007,
-Q-008, Q-011.
+`traceable` antar dokumen.
+
+**Status per 2026-10-29:** tidak ada pertanyaan terbuka milik PM/PO. Yang terbuka:
+tiga milik **Head of Engineer** (Q-007, Q-008, Q-011), empat milik **PM/PO untuk
+M9** (Q-033..Q-039) yang berada di fase roadmap, dan dua milik **Head of
+Engineer untuk AI prediktif** (Q-042, Q-043).
+
+Keputusan 2026-10-29 (DEC-067..071) **tidak membuka satu pun pertanyaan Q baru** —
+seluruh butir yang diajukan PM dijawab langsung oleh PO pada hari yang sama.
+Dua hal yang belum terjawab dari rangkaian itu **bukan pertanyaan requirement**,
+melainkan keputusan pemilik lain:
+
+| Hal yang belum ada | Pemilik | Sifat |
+|---|---|---|
+| Estimasi mandays katalog produk, price book, line item, komisi, Partner, board Activity | Head of Engineer | Prasyarat CR — tanpa angka, CR tidak lengkap |
+| Model data katalog & price book (TD-09), isolasi tenant (TD-01) | Head of Engineer | Prasyarat desain sebelum CR dieksekusi |
 
 | ID | Pertanyaan | Ditujukan ke | Status |
 |---|---|---|---|
@@ -253,7 +328,10 @@ Q-008, Q-011.
 ## Related
 
 - **Requirement Analysis (bahan baku BRD):** [[requirement-analysis]]
+- **Baseline Produk (era produk, draft):** [[baseline-produk-v1]]
 - **Project Profile:** [[project-profile]]
 - **Decision Log:** [[decision-log]]
+- **RAID Log:** [[raid-log]]
+- **Technical Decisions:** [[open-tech-decisions]]
 - **Requirement Traceability Matrix:** [[requirement-traceability-matrix-template]]
 - **BRD Template:** [[brd-template]]
