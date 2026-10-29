@@ -4,6 +4,7 @@
 *.pem
 *.cert
 secrets/
+Akses-Website-dan-Credential*.docx
 
 # Generated artifacts
 outputs/
