@@ -151,7 +151,7 @@ terbuka agar tidak dijanjikan diam-diam.
 
 | Keputusan lama | Mengapa dulu dibuat | Konsekuensi sekarang |
 |---|---|---|
-| **DEC-041** — sasaran = core backend, frontend bukan penghambat | Jendela 2 hari tidak cukup untuk backend + UI | **Berhenti.** Produk dinilai dari pengalaman pengguna. Mockup 20 halaman adalah aset produk, bukan bukti tambahan |
+| **DEC-041** — sasaran = core backend, frontend bukan penghambat | Jendela 2 hari tidak cukup untuk backend + UI | **Berhenti.** Produk dinilai dari pengalaman pengguna. Mockup 17 halaman HTML adalah aset produk, bukan bukti tambahan |
 | **DEC-042** — "end-to-end" diukur pada kapabilitas backend | Menyatukan DEC-028 dan DEC-041 | **Berhenti.** Tidak ada lagi verifikasi "cukup lewat API" |
 | **M9 = fase roadmap di luar MVP** | Bootcamp tidak boleh menanggung kontrol plane | **Naik.** SaaS komersial tanpa kontrol plane tidak dapat menagih, membatasi, atau menonaktifkan tenant |
 
