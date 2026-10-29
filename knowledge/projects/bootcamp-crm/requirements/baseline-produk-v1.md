@@ -3,11 +3,14 @@ title: "Baseline Produk — Optiva CRM"
 type: product-baseline
 project: bootcamp-crm
 status: draft
-version: "1.0"
+version: "1.1"
 created: 2026-10-29
 modified: 2026-10-29
 owner: Yudha Pratama
 changelog:
+  - version: "1.1"
+    date: 2026-10-29
+    purpose: "DEC-073 — catat penyimpangan urutan (CR mendahului baseline) dan jendela 3 hari + demo Senin 2 Nov; butir 5 (estimasi mandays) menjadi mendesak"
   - version: "1.0"
     date: 2026-10-29
     purpose: "Dokumen baseline produk pertama — dipisahkan dari BRD fase bootcamp (DEC-065). Memuat visi, peta modul, batas lingkup, kesiapan arsitektur, dan kerangka peta rilis"
@@ -249,8 +252,16 @@ M10 AI diperluas + AI prediktif
 **Urutan ini [Usulan].** Yang **[Ditetapkan]** hanya DEC-072: governance → RAID →
 baseline → CR fitur — dan itu sudah dijalankan sampai titik ini.
 
+**Penyimpangan yang disengaja (DEC-073):** PO menetapkan jendela pengembangan
+**3 hari, 29–31 Oktober 2026, dengan demo Senin 2 November 2026** untuk kelima
+kluster DEC-067..071. Konsekuensinya CR fitur harus ditulis **sebelum** baseline
+produk selesai — kebalikan urutan DEC-072. Penyimpangan dicatat, bukan
+disembunyikan; alasannya pengembangan tidak dapat menunggu baseline.
+
 **Yang dibutuhkan untuk mengisi tanggal:** kapasitas tim (jumlah engineer,
-alokasi waktu per minggu) — **[Belum ada data]**.
+alokasi waktu per minggu) — **[Belum ada data]**. Alokasi 3 hari dari PO adalah
+**keputusan anggaran waktu**, bukan hasil estimasi engineering; rincian per
+kluster tetap **belum ada** (R-025, D-020).
 
 ---
 
@@ -265,6 +276,11 @@ alokasi waktu per minggu) — **[Belum ada data]**.
 | 5 | Estimasi mandays katalog produk + pricing + komisi + Partner | Head of Engineer |
 | 6 | Kapasitas tim & tanggal peta rilis | PM/PO + Head of Engineer |
 | 7 | Uji merek "Optiva" (DJKI kelas 9 & 42) | PM/PO + Legal |
+
+**Catatan (DEC-073):** PO sudah menetapkan **jendela 3 hari (29–31 Okt) dan demo
+2 Nov 2026** sebelum butir 4, 5, dan 6 terjawab. Butir 5 kini menjadi **mendesak** —
+tanpa estimasi per kluster, tidak ada dasar memilih apa yang dipotong bila waktu
+habis sebelum demo (R-025, D-020).
 
 Dokumen ini berstatus **draft** sampai sedikitnya butir 1, 4, dan 5 terjawab.
 Menjadikannya baseline sebelum itu berarti membekukan keputusan yang belum diambil.

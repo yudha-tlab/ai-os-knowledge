@@ -3,10 +3,13 @@ title: "Requirement Backlog — Bootcamp Internal CRM"
 type: requirement-backlog
 project: bootcamp-crm
 status: active
-version: "3.13"
+version: "3.14"
 created: 2026-10-02
 modified: 2026-10-29
 changelog:
+  - version: "3.14"
+    date: 2026-10-29
+    purpose: "Epic katalog produk terdaftar — REQ-063..068 kini memetakan ke EP-019..EP-022 (requirement-analysis v3.8); catatan 'epic belum ditetapkan' dihapus"
   - version: "3.13"
     date: 2026-10-29
     purpose: "Era produk (DEC-065) — tambah REQ-063..069 untuk DEC-067..071: kategori+produk dua tingkat, price book per kanal, harga snapshot line item, komisi + entitas Partner, nilai deal manual yang menang, board Activity + priority; REQ-030 dicatat diperluas DEC-071"
@@ -219,17 +222,20 @@ PO pada 2026-10-29.
 
 | ID | Deskripsi | Sumber | Tipe | Prioritas | Epic | Status |
 |---|---|---|---|---|---|---|
-| REQ-063 | **Katalog produk dua tingkat: Product Category → Product.** Kategori dikelola tenant (nama, urutan, aktif) mengikuti model konfigurasi DEC-051; Produk memuat nama, kode/SKU, `category_id`, tipe (barang/jasa), unit, harga dasar, aktif, deskripsi | Arahan PO 2026-10-29 (DEC-067) | Functional | Must | **— (epic belum ditetapkan)** | Draft — menunggu CR |
-| REQ-064 | **Harga per kanal memakai Price Book.** Bawaan: **Direct** dan **Partner**; tenant dapat menambah price book lain tanpa batas jumlah (bukan dua nilai tetap di kode). Model `Product → PricebookEntry → LineItem`; Opportunity menyimpan rujukan price book | Arahan PO 2026-10-29 (DEC-068) | Functional | Must | **— (epic belum ditetapkan)** | Draft — menunggu CR |
-| REQ-065 | **Line item pada Opportunity**: produk, qty, **harga snapshot saat transaksi**, diskon, subtotal, `commission_pct`. Harga **disimpan**, bukan hanya merujuk PricebookEntry, agar perubahan harga tidak mengubah nilai deal historis | Arahan PO 2026-10-29 (DEC-068) | Functional | Must | **— (epic belum ditetapkan)** | Draft — menunggu CR |
-| REQ-066 | **Komisi dihitung dari NILAI DEAL, menempel pada Opportunity** (bukan per line item): `partner`, `commission_pct`, `commission_amount`. **Entitas Partner** tersendiri: nama, kontak, price book bawaan, persentase komisi bawaan. Batas tegas: komisi adalah **biaya** — tidak mengurangi revenue (DEC-016) maupun quota attainment | Arahan PO 2026-10-29 (DEC-069) | Functional | Must | **— (epic belum ditetapkan)** | Draft — menunggu CR |
-| REQ-067 | **Nilai deal berasal dari line item ATAU diisi manual; bila manual diisi, nilai manual yang berlaku.** `amount_source` (`manual`/`line_item`) mencatat sumber berlaku; bila berbeda keduanya ditampilkan; jejak pengisian manual (siapa, kapan) dicatat. **Laporan memakai nilai deal**, tidak pernah menjumlah line item langsung | Arahan PO 2026-10-29 (DEC-070) | Functional | Must | EP-004 | Draft — menunggu CR |
-| REQ-068 | **Atribut produk, bundle/nested, dan hierarki kategori >2 tingkat — roadmap.** Skema **disiapkan** sejak rilis pertama: `ProductAttribute` sebagai tabel terpisah (bukan kolom tetap), `parent_id` pada kategori, ruang relasi komponen. **Tidak diimplementasikan** di rilis pertama | Arahan PO 2026-10-29 (DEC-067) | Functional | Could | **— (epic belum ditetapkan)** | **Roadmap** — skema disiapkan, fitur tidak dibangun |
+| REQ-063 | **Katalog produk dua tingkat: Product Category → Product.** Kategori dikelola tenant (nama, urutan, aktif) mengikuti model konfigurasi DEC-051; Produk memuat nama, kode/SKU, `category_id`, tipe (barang/jasa), unit, harga dasar, aktif, deskripsi | Arahan PO 2026-10-29 (DEC-067) | Functional | Must | EP-019 | Draft — menunggu CR |
+| REQ-064 | **Harga per kanal memakai Price Book.** Bawaan: **Direct** dan **Partner**; tenant dapat menambah price book lain tanpa batas jumlah (bukan dua nilai tetap di kode). Model `Product → PricebookEntry → LineItem`; Opportunity menyimpan rujukan price book | Arahan PO 2026-10-29 (DEC-068) | Functional | Must | EP-020 | Draft — menunggu CR |
+| REQ-065 | **Line item pada Opportunity**: produk, qty, **harga snapshot saat transaksi**, diskon, subtotal, `commission_pct`. Harga **disimpan**, bukan hanya merujuk PricebookEntry, agar perubahan harga tidak mengubah nilai deal historis | Arahan PO 2026-10-29 (DEC-068) | Functional | Must | EP-021 | Draft — menunggu CR |
+| REQ-066 | **Komisi dihitung dari NILAI DEAL, menempel pada Opportunity** (bukan per line item): `partner`, `commission_pct`, `commission_amount`. **Entitas Partner** tersendiri: nama, kontak, price book bawaan, persentase komisi bawaan. Batas tegas: komisi adalah **biaya** — tidak mengurangi revenue (DEC-016) maupun quota attainment | Arahan PO 2026-10-29 (DEC-069) | Functional | Must | EP-022 | Draft — menunggu CR |
+| REQ-067 | **Nilai deal berasal dari line item ATAU diisi manual; bila manual diisi, nilai manual yang berlaku.** `amount_source` (`manual`/`line_item`) mencatat sumber berlaku; bila berbeda keduanya ditampilkan; jejak pengisian manual (siapa, kapan) dicatat. **Laporan memakai nilai deal**, tidak pernah menjumlah line item langsung | Arahan PO 2026-10-29 (DEC-070) | Functional | Must | EP-021 | Draft — menunggu CR |
+| REQ-068 | **Atribut produk, bundle/nested, dan hierarki kategori >2 tingkat — roadmap.** Skema **disiapkan** sejak rilis pertama: `ProductAttribute` sebagai tabel terpisah (bukan kolom tetap), `parent_id` pada kategori, ruang relasi komponen. **Tidak diimplementasikan** di rilis pertama | Arahan PO 2026-10-29 (DEC-067) | Functional | Could | EP-019 | **Roadmap** — skema disiapkan, fitur tidak dibangun |
 
-Catatan REQ-063..066, REQ-068: kolom Epic sengaja **tidak diisi nomor**.
-`requirement-analysis.md` masih memuat EP-001..EP-018 dan belum punya epic untuk
-katalog produk. Mengisi nomor epic yang belum terdaftar akan menciptakan rujukan
-palsu; pendaftaran epic adalah pekerjaan terpisah saat dokumen itu diperbarui.
+Catatan REQ-063..068 (epic kini terdaftar): epic-nya didaftarkan di
+`requirement-analysis.md` v3.8 sebagai **EP-019** (Katalog Produk), **EP-020**
+(Harga per Kanal / Price Book), **EP-021** (Penawaran Produk & Nilai Deal), dan
+**EP-022** (Mitra & Komisi). Pemetaan: REQ-063 dan REQ-068 → EP-019; REQ-064 →
+EP-020; REQ-065 dan REQ-067 → EP-021; REQ-066 → EP-022. User story EP-019..022 =
+US-069..077. Nomor modul produk masih **belum ditetapkan PO** — tidak diisi
+dengan asumsi.
 
 ### Board Activity — era produk (DEC-071)
 
@@ -265,10 +271,12 @@ TD-02, TD-06, TD-08, TD-09.
 Penomoran Q-xxx identik dengan `requirement-analysis.md` section 7 agar
 `traceable` antar dokumen.
 
-**Status per 2026-10-29:** tidak ada pertanyaan terbuka milik PM/PO. Yang terbuka:
-tiga milik **Head of Engineer** (Q-007, Q-008, Q-011), empat milik **PM/PO untuk
-M9** (Q-033..Q-039) yang berada di fase roadmap, dan dua milik **Head of
-Engineer untuk AI prediktif** (Q-042, Q-043).
+**Status per 2026-10-29:** satu pertanyaan terbuka milik **PM/PO** — **Q-049**,
+apakah Sabtu 31 Oktober 2026 dihitung hari kerja dalam jendela 3 hari (DEC-073).
+Yang terbuka lainnya: tiga milik **Head of Engineer** (Q-007, Q-008, Q-011), empat
+milik **PM/PO untuk M9** (Q-033..Q-039) yang berada di fase roadmap, dua milik
+**Head of Engineer untuk AI prediktif** (Q-042, Q-043), dan **Q-045** (urutan potong
+lingkup — objeknya bergeser ke kluster DEC-067..071).
 
 Keputusan 2026-10-29 (DEC-067..071) **tidak membuka satu pun pertanyaan Q baru** —
 seluruh butir yang diajukan PM dijawab langsung oleh PO pada hari yang sama.
@@ -325,6 +333,7 @@ melainkan keputusan pemilik lain:
 | Q-041 | Use case AI minimum M10 (AI-01 vs AI-02) | PM/PO + peserta | **Terjawab 2026-10-08 (DEC-047)** — AI-01 draf pesan outreach |
 | Q-042 | Strategi prediktif (model per tenant vs global) | Head of Engineer | **Terbuka 2026-10-08** — roadmap |
 | Q-043 | Batas isolasi tenant pada prompt AI | Head of Engineer | **Terbuka 2026-10-08** |
+| Q-049 | Sabtu 31 Oktober 2026 dihitung hari kerja? (jendela 3 hari, DEC-073) | PM/PO | **Terbuka 2026-10-29** — menentukan jendela efektif 3 hari atau 2 hari |
 ## Related
 
 - **Requirement Analysis (bahan baku BRD):** [[requirement-analysis]]

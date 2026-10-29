@@ -4,10 +4,13 @@ type: project-profile
 project: bootcamp-crm
 client: tlab-internal
 status: active
-version: "2.0"
+version: "2.1"
 created: 2026-10-02
 modified: 2026-10-29
 changelog:
+  - version: "2.1"
+    date: 2026-10-29
+    purpose: "DEC-073 — milestone era produk bertanggal: jendela pengembangan katalog produk + Board Activity 29–31 Okt 2026, demo Senin 2 Nov 2026; rujukan R-025"
   - version: "2.0"
     date: 2026-10-29
     purpose: "Transisi ke era produk (DEC-065) — bootcamp selesai 22 Okt 2026, disetujui 28 Okt 2026 (DEC-063/DEC-064); status project menjadi Pengembangan Produk; 'Optiva' codename internal (DEC-066); milestone fase produk menggantikan milestone bootcamp"
@@ -192,10 +195,14 @@ prioritas ditetapkan ulang melalui baseline produk (DEC-065).
 | Keputusan arsitektur: isolasi tenant, signing webhook, versi state machine (R-020..R-022) | Belum ditentukan | Belum Mulai — Head of Engineer |
 | CR katalog produk + price book + komisi + Partner (DEC-067..070) | Belum ditentukan | Belum Mulai |
 | CR tampilan Board Activity (DEC-071) | Belum ditentukan | Belum Mulai |
+| **Jendela pengembangan katalog produk + Board Activity — 3 hari** | **2026-10-29 s/d 2026-10-31** (DEC-073) | **Berjalan** — hari ketiga jatuh Sabtu; lihat R-025 |
+| **Demo hasil pengembangan** | **2026-11-02 (Senin)** (DEC-073) | Belum Mulai |
 | Uji merek "Optiva" (DJKI kelas 9 & 42) sebelum penggunaan eksternal (R-023) | Belum ditentukan | Belum Mulai |
 
-Tanggal milestone era produk **belum ditentukan** — tidak diisi dengan asumsi.
-Penetapan tanggal adalah bagian dari penyusunan baseline produk.
+Dua milestone era produk kini **bertanggal** karena ditetapkan PO (DEC-073): jendela
+pengembangan 29–31 Okt 2026 dan demo 2 Nov 2026. Milestone lainnya **belum
+ditentukan** — tidak diisi dengan asumsi. Penetapan tanggal sisanya adalah bagian
+dari penyusunan baseline produk.
 
 ## Kebutuhan Keputusan (Belum Ada Data)
 

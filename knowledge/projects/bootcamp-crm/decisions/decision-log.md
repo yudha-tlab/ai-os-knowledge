@@ -3,10 +3,13 @@ title: "Decision Log — Bootcamp Internal CRM"
 type: decision-log
 project: bootcamp-crm
 status: active
-version: "14.0"
+version: "14.1"
 created: 2026-10-02
 modified: 2026-10-29
 changelog:
+  - version: "14.1"
+    date: 2026-10-29
+    purpose: "DEC-073 — jendela pengembangan katalog produk + Board Activity 3 hari mulai 29 Okt 2026, demo Senin 2 Nov 2026; penyimpangan urutan DEC-072 dicatat; dua hal belum ditetapkan (hari ketiga jatuh Sabtu, rincian mandays per kluster)"
   - version: "14.0"
     date: 2026-10-29
     purpose: "DEC-063..071 — penutupan bootcamp (22 Okt 2026), persetujuan manajemen (28 Okt 2026, Head of Product & Project), transisi ke produk matang; Optiva sebagai codename internal; katalog produk dua tingkat + price book Direct/Partner; komisi dari nilai deal + entitas Partner; nilai deal manual menang; board task pada Activities; urutan kerja era produk; BRD v5.3 tetap baseline fase bootcamp"
@@ -137,6 +140,7 @@ changelog:
 | DEC-070 | 2026-10-29 | **Nilai deal boleh berasal dari line item ATAU diisi manual — bila manual diisi, nilai manual yang berlaku.** Line item tetap tersimpan meski nilai manual dipakai. Field `amount_source` (`manual`/`line_item`) mencatat sumber yang berlaku; bila berbeda, keduanya ditampilkan agar selisih terlihat. **Seluruh laporan memakai nilai deal, tidak pernah menjumlah line item secara langsung.** Jejak pengisian manual (siapa, kapan) dicatat | Arahan PO 2026-10-29 (poin 4.4): *"deal bisa keduanya, jika diketik manual maka yang diketik manual ini yang menang"*. Aturan jejak dan larangan penjumlahan line item adalah usulan PM yang disetujui | Yudha Pratama | Active — lingkup baru |
 | DEC-071 | 2026-10-29 | **Tampilan Board untuk Activity ditambahkan — menyamakan pola dengan Pipeline.** Menu **Activities sudah ada** di mockup; yang belum ada adalah tampilan Board. Bentuk: toggle **Board/List** di halaman Activities, kolom **Overdue · Hari ini · Minggu ini · Nanti · Selesai**, kartu memuat judul, jatuh tempo, **priority**, tautan Lead/Opportunity, dan aksi selesai. Tampilan kedua untuk Manager: dikelompokkan per Owner. Requirement ditambah: **field priority** dan daftar status task. Aturan wajib: saat convert lead, **seluruh Activity terbuka ikut pindah** ke Opportunity | Arahan PO 2026-10-29 (poin 4.5). Ini **bukan modul baru** — Activity sudah mandatory sejak DEC-049; penambahan bersifat tampilan + dua atribut | Yudha Pratama | Active — perluasan BR-033 |
 | DEC-072 | 2026-10-29 | **Urutan kerja era produk ditetapkan: (1) tutup governance → (2) perbarui RAID → (3) susun baseline produk → (4) baru CR fitur.** Tiga pekerjaan yang tidak boleh berjalan bersamaan: penggantian nama, perubahan baseline, dan penambahan fitur | Persetujuan PO 2026-10-29 (poin 5) atas rekomendasi PM. Alasan: tanpa fakta penutupan tercatat, dokumen berikutnya berdiri di atas dasar yang tidak tercatat; tanpa baseline, CR tidak punya dasar menilai dampak | Yudha Pratama | Active |
+| DEC-073 | 2026-10-29 | **Jendela pengembangan katalog produk & Board Activity ditetapkan 3 hari mulai 29 Oktober 2026; Senin 2 November 2026 dipakai untuk demo.** Tiga hari itu adalah batas atas effort dari PO untuk seluruh kluster DEC-067..071 — kategori+produk, price book, line item+nilai deal, mitra+komisi, dan board Activity. **Dua hal yang belum ditetapkan dan tidak diisi dengan asumsi:** (1) hari ketiga jatuh pada **Sabtu 31 Oktober 2026** — apakah dihitung hari kerja; bila tidak, jendela efektif 2 hari (29–30 Okt); (2) rincian mandays per kluster tetap milik Head of Engineer — angka 3 hari adalah keputusan alokasi, bukan hasil estimasi engineering. **Penyimpangan urutan dicatat:** DEC-072 menempatkan baseline produk sebelum CR fitur, sedangkan jendela ini menuntut CR ditulis lebih dulu; penyimpangan disengaja agar pengembangan dapat berjalan hari ini | Arahan PO 2026-10-29: *"untuk mandays 3 hari dimulai dari hari ini, karena senin akan dipakai demo"* | Yudha Pratama | Active — jendela berjalan |
 
 ### Catatan atas DEC-015 (keberatan teknis PM — SELESAI)
 

@@ -3,11 +3,14 @@ title: "Requirement Analysis — CRM Multi-Tenant TLab"
 type: requirement-analysis
 project: bootcamp-crm
 status: draft
-version: "3.7"
+version: "3.8"
 created: 2026-10-02
-modified: 2026-10-13
+modified: 2026-10-29
 sumber: "Arahan Product Owner (Yudha Pratama) via sesi brainstorm 2026-10-02"
 changelog:
+  - version: "3.8"
+    date: 2026-10-29
+    purpose: "Era produk (DEC-065) — daftarkan katalog produk & pricing: proses 16, objek OB-037..043, EP-019..022, US-069..078 (termasuk Board Activity DEC-071); epic REQ-063..068 kini terdaftar"
   - version: "3.7"
     date: 2026-10-13
     purpose: "Q-045 — usulan awal urutan potong lingkup ditulis di BRD §9.4; tetap terbuka sampai dicocokkan dengan Head of Engineer pada hari 1"
@@ -58,9 +61,16 @@ changelog:
 # Requirement Analysis — CRM Multi-Tenant TLab
 
 **Posisi pipeline:** Langkah nol — output dokumen ini **telah diturunkan menjadi
-** **BRD v5.0** (`requirements/brd/bootcamp-crm-brd-v1.md`; v1.0 2026-10-02,
-direvisi 2026-10-08 oleh CR-20261008-001/002 dan 2026-10-13 oleh CR-20261013-001). FRD/SRS belum disusun (menunggu
-approval BRD).
+** **BRD v5.3** (`requirements/brd/bootcamp-crm-brd-v1.md`; v1.0 2026-10-02,
+direvisi 2026-10-08 oleh CR-20261008-001/002 dan 2026-10-13 oleh CR-20261013-001;
+**disetujui 2026-10-28** — DEC-064). BRD v5.3 adalah baseline **fase bootcamp**
+(13–22 Okt 2026) dan tetap sah untuk periode itu (DEC-065). FRD/SRS belum
+disusun.
+
+**Sejak 2026-10-29** project berada di **era produk** (DEC-065). Bagian 1–5
+dokumen ini adalah hasil analisis fase bootcamp; **proses 16, OB-037..043,
+EP-019..022, dan US-069..079** ditambahkan untuk era produk (DEC-067..071) dan
+**belum** masuk BRD v5.3. Rujukan requirement: `requirement-backlog.md` v3.13.
 
 **Sumber:** Arahan langsung Product Owner (Yudha Pratama) pada sesi brainstorm
 2026-10-02. Bukan hasil analisis dokumen klien — tidak ada dokumen CRM/klien di
@@ -201,6 +211,14 @@ rekonsiliasi dengan DEC-028 ada di Q-031.
 | Pendukung | 15. Konfigurasi Proses Sales per Tenant | 15.02 Pipeline & stage | 15.02.01 Multi-pipeline; stage, kriteria keluar, mode penegakan, batas stale per stage, probability opsional |
 | Pendukung | 15. Konfigurasi Proses Sales per Tenant | 15.03 Penugasan lead | 15.03.01 Mode penugasan, default per cara masuk, aturan berurutan, Queue cadangan |
 | Pendukung | 15. Konfigurasi Proses Sales per Tenant | 15.04 Custom field | 15.04.01 Custom field pada Lead, Contact, Account, Opportunity, Activity |
+| Pelaksanaan | **16. Katalog Produk & Pricing** (DEC-067..070) — era produk | 16.01 Kategori produk | 16.01.01 Kategori dikelola tenant (nama, urutan, aktif); dua tingkat kategori → produk (DEC-067) |
+| Pelaksanaan | 16. Katalog Produk & Pricing | 16.02 Pengelolaan produk | 16.02.01 CRUD produk: nama, kode/SKU, kategori, tipe (barang/jasa), unit, harga dasar, aktif |
+| Pelaksanaan | 16. Katalog Produk & Pricing | 16.03 Price book | 16.03.01 Price book per kanal (**Direct**, **Partner** bawaan); tenant dapat menambah kanal tanpa batas (DEC-068) |
+| Pelaksanaan | 16. Katalog Produk & Pricing | 16.03 Price book | 16.03.02 Entri harga per produk per price book (harga, mata uang, masa berlaku) |
+| Pelaksanaan | 16. Katalog Produk & Pricing | 16.04 Line item Opportunity | 16.04.01 Penambahan produk ke Opportunity (qty, diskon, **harga snapshot**) (DEC-068) |
+| Pelaksanaan | 16. Katalog Produk & Pricing | 16.05 Nilai deal | 16.05.01 Nilai deal dari line item **atau** manual; **manual menang**; `amount_source` mencatat sumber berlaku (DEC-070) |
+| Pelaksanaan | 16. Katalog Produk & Pricing | 16.06 Mitra & komisi | 16.06.01 Entitas Partner (nama, kontak, price book bawaan, komisi bawaan); komisi dari **nilai deal**, tercatat sebagai biaya (DEC-069) |
+| Pelaksanaan | 16. Katalog Produk & Pricing | 16.07 Atribut & hierarki *(roadmap)* | 16.07.01 Atribut produk, bundle/nested, hierarki >2 tingkat — **skema disiapkan, tidak dibangun** (DEC-067) |
 | **Roadmap** | **13. SaaS Platform Administration (Platform Owner / TLab)** — **fase roadmap terpisah (DEC-045)**, di luar MVP | 13.01 Pengelolaan paket pricing | 13.01.01 CRUD paket pricing (dimensi: seat, batas data, modul, kuota webhook, SLA/dukungan) |
 | **Roadmap** | 13. SaaS Platform Administration | 13.01 Pengelolaan paket pricing | 13.01.02 Penetapan kuota & batas per paket (nilai terukur, mis. jumlah seat / jumlah record) |
 | **Roadmap** | 13. SaaS Platform Administration | 13.02 Pengelolaan akun tenant | 13.02.01 Pembuatan akun tenant oleh Platform Owner |
@@ -254,6 +272,14 @@ Proses **15 Konfigurasi Proses Sales per Tenant** ditambahkan 2026-10-13
 **kategori sistem tetap** dan **label serta daftar pilihan milik tenant**. Proses
 05 (Aktivitas) kini masuk MVP sebagai **M5 minimal** (DEC-049). Penomoran proses
 06, 09, dan 12 tetap tidak dipakai ulang.
+
+Proses **16 Katalog Produk & Pricing** ditambahkan 2026-10-29 (DEC-067..070) pada
+**era produk** (DEC-065) — bukan penambahan lingkup fase bootcamp. Proses ini
+mengisi celah yang sebelumnya tidak ada: Opportunity dapat memuat produk yang
+dijual, harga per kanal, dan komisi mitra. Atribut produk dan hierarki lebih dari
+dua tingkat **tidak dibangun** di rilis pertama; skemanya disiapkan (DEC-067).
+Proses 16 **bukan** modul baru di luar M4 — ia memperluas M4 (Pipeline &
+Opportunity) dengan objek produk, harga, dan mitra.
 
 Proses 12 **dikeluarkan dari lingkup produk CRM** pada 2026-10-02 (DEC-031):
 kebutuhan ini bukan pakem CRM — CRM mengelola pelanggan, bukan penilaian
@@ -321,6 +347,13 @@ inisiatif internal terpisah.
 | OB-034 | **Aturan Penugasan** | Aturan berurutan (kriteria → Owner / Queue / pola round-robin) dan default per cara masuk (DEC-050) | **MVP** |
 | OB-035 | **Konfigurasi Tenant** | Daftar pilihan milik tenant: status turunan lead, source, alasan Lost/Won/Closed-Lost, jenis activity, ambang performa (DEC-051) | **MVP** |
 | OB-036 | **Definisi Custom Field** | Definisi field tambahan per tenant dan entitas: nama, tipe, wajib, tampil di daftar (DEC-052) | **MVP** |
+| OB-037 | **Kategori Produk** | Kategori produk milik tenant: nama, urutan, aktif, `parent_id` (disiapkan untuk hierarki >2 tingkat, belum dipakai) — DEC-067 | **Era produk** |
+| OB-038 | **Produk** | Produk yang dijual: nama, kode/SKU, kategori, tipe (barang/jasa), unit, harga dasar, aktif, deskripsi — DEC-067 | **Era produk** |
+| OB-039 | **Price Book** | Daftar harga per kanal penjualan; bawaan **Direct** dan **Partner**, jumlah kanal tidak dibatasi — DEC-068 | **Era produk** |
+| OB-040 | **Entri Harga (Pricebook Entry)** | Harga satu produk pada satu price book: harga, mata uang, berlaku mulai/sampai — DEC-068 | **Era produk** |
+| OB-041 | **Line Item Opportunity** | Baris produk pada Opportunity: produk, qty, **harga snapshot**, diskon, subtotal, `commission_pct` — DEC-068 | **Era produk** |
+| OB-042 | **Mitra (Partner)** | Entitas mitra penjualan: nama, kontak, price book bawaan, persentase komisi bawaan — DEC-069 | **Era produk** |
+| OB-043 | **Atribut Produk** | Atribut tambahan produk (tenor, suku bunga, plafon, agunan) sebagai **tabel terpisah** — skema disiapkan, **tidak diimplementasikan** di rilis pertama — DEC-067 | **Roadmap** — skema saja |
 
 ---
 
@@ -345,6 +378,13 @@ inisiatif internal terpisah.
 | 05.03 Activity tim | SH002 - Sales Manager | Melihat | OB-006-Activity | Filter menurut Sales, jenis, tanggal, status |
 | 15.01-15.03 Konfigurasi proses sales | SH005 - Tenant Admin | Mengonfigurasi | OB-035-Konfigurasi Tenant / OB-034-Aturan Penugasan | Daftar pilihan, pipeline dan stage, mode penugasan |
 | 15.04 Custom field | SH005 - Tenant Admin | Mengelola | OB-036-Definisi Custom Field | Field tambahan per tenant |
+| 16.01 Kategori produk | SH005 - Tenant Admin | Mengelola | OB-037-Kategori Produk | Kategori milik tenant; dua tingkat (DEC-067) |
+| 16.02 Pengelolaan produk | SH005 - Tenant Admin | Mengelola | OB-038-Produk | CRUD produk beserta harga dasar |
+| 16.03 Price book | SH005 - Tenant Admin | Mengelola | OB-039-Price Book / OB-040-Entri Harga | Price book per kanal + entri harga per produk (DEC-068) |
+| 16.04 Line item Opportunity | SH001 - Sales Rep | Menambahkan | OB-041-Line Item Opportunity | Produk, qty, diskon; harga snapshot disimpan |
+| 16.05 Nilai deal | SH001 - Sales Rep | Menetapkan | OB-004-Opportunity | Nilai dari line item atau manual; manual menang (DEC-070) |
+| 16.06 Mitra & komisi | SH005 - Tenant Admin | Mengelola | OB-042-Mitra (Partner) | Entitas mitra + komisi bawaan (DEC-069) |
+| 16.06 Mitra & komisi | Sistem CRM | Menghitung | OB-004-Opportunity | `commission_amount` dari nilai deal; biaya, bukan pengurang revenue |
 | 05.01 Pencatatan aktivitas | SH001 - Sales Rep | Mencatat | OB-006-Aktivitas | Call / meeting / task / note |
 | 07.01 Perhitungan pencapaian | Sistem CRM | Menghitung | OB-011-Skor Performa Sales | Nilai won aktual dibanding kuota |
 | 07.02 Penilaian performa | SH002 - Sales Manager | Melihat | OB-011-Skor Performa Sales | Status performa per sales |
@@ -597,6 +637,10 @@ bukan mengarang pipeline dari nol.
 | EP-016 | Analitik Prediktif Sales *(roadmap)* | — | **Roadmap** — CR-20261008-002; butuh data historis tenant |
 | EP-017 | **Konfigurasi Proses Sales per Tenant** | M1 | **Mandatory (DEC-051/052)** — daftar pilihan, pipeline, penugasan, custom field |
 | EP-018 | **Dashboard Beranda** | M7 | **MVP, *Should* (DEC-058)** |
+| EP-019 | **Katalog Produk** | *nomor modul belum ditetapkan* | **Era produk** — kategori + produk dua tingkat (DEC-067); atribut/bundle/hierarki >2 tingkat **roadmap** |
+| EP-020 | **Harga per Kanal (Price Book)** | *nomor modul belum ditetapkan* | **Era produk** — Direct & Partner bawaan, jumlah kanal tidak dibatasi (DEC-068) |
+| EP-021 | **Penawaran Produk & Nilai Deal** | *nomor modul belum ditetapkan* — memperluas M4 | **Era produk** — line item harga snapshot; nilai manual menang (DEC-068/070) |
+| EP-022 | **Mitra & Komisi** | *nomor modul belum ditetapkan* | **Era produk** — entitas Partner; komisi dari nilai deal, dicatat sebagai biaya (DEC-069) |
 
 ### User Story (dari SPOK)
 
@@ -658,6 +702,17 @@ bukan mengarang pipeline dari nol.
 | US-066 | Sebagai Pengguna, saya ingin masuk dengan mengidentifikasi workspace perusahaan saya, sehingga hanya data tenant saya yang terlihat. | EP-010 |
 | US-067 | Sebagai Sales Rep atau Sales Manager, saya ingin beranda yang menampilkan hal yang perlu ditindak hari ini, sehingga saya langsung tahu prioritas. *(Should)* | EP-018 |
 | US-068 | Sebagai Sales Rep, saya ingin memindahkan Opportunity maju melompat beberapa stage bila situasinya memang begitu, dengan syarat setiap stage yang dilewati tetap diperiksa dan stage yang dilewati tercatat sebagai skipped, sehingga data pipeline tetap jujur. | EP-004 |
+| US-069 | Sebagai Tenant Admin, saya ingin mengelola kategori produk milik perusahaan saya, sehingga katalog produk tersusun menurut pengelompokan yang kami pakai. | EP-019 |
+| US-070 | Sebagai Tenant Admin, saya ingin mengelola produk beserta kode, tipe, unit, dan harga dasarnya, sehingga produk yang kami jual tercatat sekali dan dipakai berulang di setiap deal. | EP-019 |
+| US-071 | Sebagai Tenant Admin, saya ingin mengelola daftar harga per kanal penjualan, sehingga harga untuk penjualan langsung dan lewat mitra tidak tercampur dan kanal baru dapat ditambah tanpa mengubah sistem. | EP-020 |
+| US-072 | Sebagai Tenant Admin, saya ingin menetapkan harga setiap produk pada setiap daftar harga beserta masa berlakunya, sehingga perubahan harga tidak mengubah deal yang sudah terjadi. | EP-020 |
+| US-073 | Sebagai Sales Rep, saya ingin menambahkan produk beserta jumlah dan diskon ke Opportunity, sehingga penawaran kepada pelanggan tersusun dari produk nyata, bukan satu angka yang diketik bebas. | EP-021 |
+| US-074 | Sebagai Sales Rep, saya ingin melihat nilai Opportunity terhitung dari baris produk yang saya tambahkan, sehingga nilai deal konsisten dengan penawaran yang saya susun. | EP-021 |
+| US-075 | Sebagai Sales Rep, saya ingin dapat mengetik nilai deal secara manual dan melihat nilai mana yang berlaku, sehingga deal yang nilainya disepakati langsung tetap tercatat apa adanya tanpa menghapus rincian produk yang sudah ada. | EP-021 |
+| US-076 | Sebagai Tenant Admin, saya ingin mengelola daftar mitra beserta daftar harga dan persentase komisi bawaannya, sehingga mitra yang sama tidak diinput ulang di setiap deal. | EP-022 |
+| US-077 | Sebagai Sales Manager, saya ingin menetapkan mitra pada Opportunity dan melihat komisi yang dihitung dari nilai deal, sehingga biaya kanal mitra terlihat terpisah dari revenue dan tidak mengacaukan pencapaian target. | EP-022 |
+| US-078 | Sebagai Sales Rep, saya ingin melihat Activity saya dalam tampilan Board yang dikelompokkan menurut waktu jatuh tempo dan prioritas, sehingga saya tahu apa yang harus dikerjakan hari ini tanpa membuka satu per satu. | EP-005 |
+| US-079 | Sebagai Sales Manager, saya ingin melihat Board Activity seluruh tim dikelompokkan per Owner, sehingga saya dapat menilai beban dan tindak lanjut setiap sales. | EP-005 |
 
 Task didekomposisi saat sprint planning (Taiga), bukan di tahap requirement ini.
 
@@ -674,6 +729,10 @@ teknologi).
 **Per 2026-10-08 (DEC-045):** terbuka **tujuh pertanyaan baru** — Q-033 s/d Q-039,
 seluruhnya menyangkut **fase roadmap SaaS Platform Administration**. Tidak
 menghambat pelaksanaan bootcamp.
+
+**Per 2026-10-29 (DEC-073):** terbuka **satu pertanyaan baru** — **Q-049**
+(Sabtu 31 Oktober 2026 dihitung hari kerja?) — menentukan apakah jendela 3 hari
+efektif 3 hari atau 2 hari.
 
 **Per 2026-10-13 (CR-20261013-001):** terbuka **lima pertanyaan baru** — Q-044 s/d Q-048. **Q-044, Q-046 (alur), Q-047, dan Q-048 terjawab pada hari yang sama**; tersisa Q-045 (urutan potong lingkup) dan bentuk alamat teknis workspace.
 
@@ -730,6 +789,7 @@ Q-040 s/d Q-043, menyangkut **integrasi AI (EP-015/M10)**. **Q-041 dan Q-040 sud
 | Q-046 | **Mekanisme login lewat alamat workspace**: subdomain atau path | US-066; DEC-059 | Head of Engineer | **Terjawab untuk alur 2026-10-13 (DEC-062)** — workspace, lalu email dan kata sandi. Bentuk alamat teknis (subdomain atau path) tetap bagian keputusan isolasi tenant (agenda hari 1 butir 4) |
 | Q-047 | **Cakupan data per peran** (Sales: milik + Queue; Manager: tim; Manajemen: tenant) | BR-057; DEC-056 | PM/PO | **Terjawab 2026-10-13 (DEC-056/060)** — dikonfirmasi PO |
 | Q-048 | **Isi bawaan exit criteria** untuk 6 stage templat | BUKA-04; DEC-051 | PM/PO + peserta | **Terjawab 2026-10-13 (DEC-060)** — templat spesifikasi §6.2 diterima PO sebagai isi bawaan; peserta menyesuaikan hari 1 |
+| Q-049 | **Apakah Sabtu 31 Oktober 2026 dihitung hari kerja** dalam jendela 3 hari (DEC-073)? | Rencana rilis; R-025 | PM/PO | **Terbuka 2026-10-29** — menentukan apakah jendela efektif 3 hari atau 2 hari (29–30 Okt); tanpa jawaban ini kapasitas tidak dapat dihitung |
 
 ---
 
