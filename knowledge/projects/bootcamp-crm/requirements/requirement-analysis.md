@@ -3,11 +3,14 @@ title: "Requirement Analysis — CRM Multi-Tenant TLab"
 type: requirement-analysis
 project: bootcamp-crm
 status: draft
-version: "4.1"
+version: "4.2"
 created: 2026-10-02
 modified: 2026-10-29
 sumber: "Arahan Product Owner (Yudha Pratama) via sesi brainstorm 2026-10-02"
 changelog:
+  - version: "4.2"
+    date: 2026-10-29
+    purpose: "Kepala dokumen diperbaiki — intro masih menyebut EP-019..022 / OB-037..043 / US-069..079 / DEC-067..071 dan backlog v3.13, sehingga pembaca menyimpulkan produk & Board belum ada padahal sudah. +peta dokumen era produk (FRD = rujukan utama); +baris M11 dan M5+ di §0.1"
   - version: "4.1"
     date: 2026-10-29
     purpose: "Perbaikan konsistensi dengan FRD v1.2 — OB-040 tanpa mata uang per entri (DEC-078); 16.03.02 dan 16.04.01 diselaraskan (mata uang ikut tenant, diskon persen)"
@@ -73,13 +76,25 @@ changelog:
 ** **BRD v5.3** (`requirements/brd/bootcamp-crm-brd-v1.md`; v1.0 2026-10-02,
 direvisi 2026-10-08 oleh CR-20261008-001/002 dan 2026-10-13 oleh CR-20261013-001;
 **disetujui 2026-10-28** — DEC-064). BRD v5.3 adalah baseline **fase bootcamp**
-(13–22 Okt 2026) dan tetap sah untuk periode itu (DEC-065). FRD/SRS belum
-disusun.
+(13–22 Okt 2026) dan tetap sah untuk periode itu (DEC-065).
 
 **Sejak 2026-10-29** project berada di **era produk** (DEC-065). Bagian 1–5
-dokumen ini adalah hasil analisis fase bootcamp; **proses 16, OB-037..043,
-EP-019..022, dan US-069..079** ditambahkan untuk era produk (DEC-067..071) dan
-**belum** masuk BRD v5.3. Rujukan requirement: `requirement-backlog.md` v3.13.
+dokumen ini adalah hasil analisis fase bootcamp; **proses 16, OB-037..044,
+EP-019..023, dan US-069..081** ditambahkan untuk era produk (DEC-067..081) dan
+**belum** masuk BRD v5.3 — memang tidak akan, karena BRD tetap baseline fase
+bootcamp. Rujukan requirement: `requirement-backlog.md` v3.17.
+
+**Peta dokumen era produk** — supaya tidak ada yang dikira belum ada:
+
+| Dokumen | Peran | Versi |
+|---|---|---|
+| `requirements/frd/bootcamp-crm-frd-katalog-produk-dan-board-activity-v1.md` | **Rujukan utama pembangunan** — 47 FR katalog + 15 FR Board + 13 aturan bisnis | v1.2 |
+| `requirements/requirement-backlog.md` | Register requirement (REQ-063..071) | v3.17 |
+| **Dokumen ini** | Proses, objek, EP, US — bahan analisis, bukan acuan field-level | v4.2 |
+| `decisions/CR/CR-20261029-001..003` | Tiga CR yang mengajukan lingkup di atas | draft |
+
+**Untuk membangun, yang dibaca FRD — bukan dokumen ini.** Dokumen ini menjelaskan
+*proses dan struktur*, FRD yang menetapkan *field, rumus, dan aturan*.
 
 **Sumber:** Arahan langsung Product Owner (Yudha Pratama) pada sesi brainstorm
 2026-10-02. Bukan hasil analisis dokumen klien — tidak ada dokumen CRM/klien di
@@ -133,6 +148,12 @@ Konsekuensi yang harus dipahami bersama:
 | ~~M6~~ | ~~Ticketing (internal + eksternal)~~ | **DIKELUARKAN** | **CR-20261008-001 / DEC-043** — domain *service*, bukan core CRM untuk sales tracking |
 | M7 | Reporting & Analytics | **Mandatory** | Revenue, pipeline, performa sales |
 | M8 | Webhook / Event Layer | **MVP minimal** (DEC-021) | Merevisi DEC-015 — event outbound inti + 1 endpoint inbound |
+| **M11** | **Katalog Produk & Pricing** *(era produk)* | **Wajib** (DEC-067..070, DEC-079/080) | Kategori → produk, price book per kanal, line item harga snapshot, nilai deal, mitra & komisi, **atribut produk**. Nomor modul masih [Usulan] |
+| **M5+** | **Board Activity** *(era produk)* | **Wajib** — perluasan M5 (DEC-071) | Toggle Board/List, lima kolom, priority P0–P3. Bukan modul baru |
+
+> **Catatan:** tabel di atas semula bernama "Ruang Lingkup MVP" fase bootcamp. Baris
+> M11 dan M5+ ditambahkan untuk **era produk** (DEC-065); keduanya tidak mengubah
+> status modul M1–M8 yang sudah ditetapkan.
 
 **DIPUTUSKAN 2026-10-02 (DEC-021):** keberatan PM diterima PO — M8 masuk MVP
 secara **minimal** (event outbound inti + 1 endpoint inbound), merevisi penetapan
@@ -828,7 +849,13 @@ Q-040 s/d Q-043, menyangkut **integrasi AI (EP-015/M10)**. **Q-041 dan Q-040 sud
 
 ## Related
 
-- **Requirement Backlog:** [[requirement-backlog]]
+- **FRD Katalog Produk & Board Activity:** [[bootcamp-crm-frd-katalog-produk-dan-board-activity-v1]] — **rujukan utama pembangunan**, v1.2
+- **CR Katalog Produk:** [[CR-20261029-001-katalog-produk-harga-nilai-deal-mitra-komisi]]
+- **CR Board Activity:** [[CR-20261029-002-board-activity]]
+- **CR Atribut Produk:** [[CR-20261029-003-atribut-produk]]
+- **Baseline Produk:** [[baseline-produk-v1]] — v1.2
+- **RAID Log:** [[raid-log]] — R-024, R-025, R-026
+- **Requirement Backlog:** [[requirement-backlog]] — v3.17
 - **Project Charter:** [[project-charter]]
 - **Decision Log:** [[decision-log]]
 - **Technical Decisions (Head of Engineer):** [[open-tech-decisions]]
