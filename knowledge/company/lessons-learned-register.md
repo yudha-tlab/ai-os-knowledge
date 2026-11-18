@@ -1,6 +1,6 @@
 ---
 title: "Lessons Learned Register — Lintas Proyek TLab"
-type: lessons-learned-register
+type: registry
 status: active
 version: "1.0"
 created: 2026-11-18
