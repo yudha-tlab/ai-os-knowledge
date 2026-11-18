@@ -21,6 +21,7 @@ Manager di Teknologi Kode Indonesia (TLAB).
 - [[mission]]
 - [[service]]
 - [[project-information-architecture-v1]] — dokumentasi struktur project AI OS (referensi utama)
+- [[lessons-learned-register]] — register lintas-proyek pelajaran dari setiap proyek (OPA)
 
 ## Dokumen Terkait (Domain Lain)
 
